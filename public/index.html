@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
+  <link rel="stylesheet" href="styles.css?v=2" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+</head>
+<body>
+
+  <!-- BARRE SUPÉRIEURE -->
+  <header class="topbar">
+    <div class="brand" id="brand-home">
+      <span class="brand-mark">QPC</span>
+      <span class="brand-text">Économie &amp; Sciences sociales</span>
+    </div>
+    <div class="who" id="who"></div>
+  </header>
+
+  <!-- ZONE PRINCIPALE — VIEWS -->
+  <main id="app"></main>
+
+  <!-- PIED -->
+  <footer class="bottombar">
+    <span id="footer-meta">Chargement…</span>
+    <span class="dot">·</span>
+    <span>Conçu par Kossi Nevame AGBENU · NEVAME Data House &amp; ESA Université de Lomé</span>
+  </footer>
+
+  <!-- TEMPLATES -->
+
+  <template id="tpl-login">
+    <section class="screen screen-login">
+      <div class="login-card">
+        <div class="login-brand">
+          <span class="brand-mark">QPC</span>
+          <span>Questions pour un Champion</span>
+        </div>
+        <h1 class="title-xl" style="margin-top:14px;">Connexion</h1>
+        <p class="lead">Entrez votre <strong>code d'accès</strong> personnel pour jouer. Le super-administrateur peut générer un code pour vous.</p>
+
+        <form id="form-user-login" class="form-row" style="margin-top:14px;">
+          <input type="text" id="login-code" placeholder="Code d'accès (ex. QPC-A3B7XK91)"
+            autocomplete="off" autocapitalize="characters" required style="text-transform:uppercase;letter-spacing:1px;font-weight:600;" />
+          <button class="btn btn-primary" type="submit">Entrer</button>
+        </form>
+        <div id="login-error" class="login-error" hidden></div>
+
+        <div class="login-admin-link">
+          <a href="#" id="show-admin-login">Accès super-administrateur →</a>
+        </div>
+
+        <form id="form-admin-login" class="form-row" style="margin-top:10px;" hidden>
+          <input type="password" id="admin-password" placeholder="Mot de passe super-admin" required />
+          <button class="btn" type="submit">Entrer admin</button>
+        </form>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-profiles">
+    <section class="screen">
+      <h1 class="title-xl">Bienvenue</h1>
+      <p class="lead">Choisissez un profil pour suivre vos parties, ou créez-en un nouveau.</p>
+
+      <div class="card" id="profiles-list-card">
+        <h2 class="card-title">Profils existants</h2>
+        <div id="profiles-list" class="profiles-list"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Créer un nouveau profil</h2>
+        <form id="form-create-profile" class="form-row">
+          <input type="text" id="new-profile-name" placeholder="Votre nom (ex. Rich)" maxlength="60" required />
+          <button type="submit" class="btn btn-primary">Créer</button>
+        </form>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-home">
+    <section class="screen">
+      <h1 class="title-xl">Que voulez-vous faire ?</h1>
+
+      <div id="resume-banner" class="banner banner-warn" hidden>
+        <div>
+          <strong>Partie en cours</strong> sauvegardée le <span id="resume-when"></span>.
+          Manche <span id="resume-where"></span>.
+        </div>
+        <div class="banner-actions">
+          <button id="btn-resume" class="btn btn-primary">Reprendre</button>
+          <button id="btn-discard" class="btn btn-ghost">Abandonner</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card card-action" id="card-new-game">
+          <div class="card-icon">▶</div>
+          <h2 class="card-title">Nouvelle partie</h2>
+          <p>Choisissez les manches et les domaines, puis jouez.</p>
+        </div>
+        <div class="card card-action" id="card-review">
+          <div class="card-icon">📖</div>
+          <h2 class="card-title">Révision libre</h2>
+          <p>Parcourir les 516 questions par domaine, sans timer ni score.</p>
+        </div>
+        <div class="card card-action" id="card-history">
+          <div class="card-icon">📊</div>
+          <h2 class="card-title">Mes parties</h2>
+          <p>Historique et statistiques.</p>
+        </div>
+        <div class="card card-action" id="card-switch">
+          <div class="card-icon">👤</div>
+          <h2 class="card-title">Changer de profil</h2>
+          <p>Reprendre avec un autre joueur.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <h2 class="card-title">Sauvegarde des profils</h2>
+        <p class="muted" style="margin-top:0;">Les profils sont enregistrés dans votre navigateur. Exportez-les pour les transférer sur un autre appareil ou en garder une copie.</p>
+        <div class="form-row">
+          <button id="btn-export-all" class="btn">Exporter tous les profils (.json)</button>
+          <label class="btn" for="file-import-all" style="cursor:pointer;">Importer un fichier .json</label>
+          <input id="file-import-all" type="file" accept="application/json,.json" hidden />
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-review">
+    <section class="screen">
+      <h1 class="title-xl">Révision libre</h1>
+      <p class="lead">Parcourez la base des 516 questions, sans timer ni score.</p>
+
+      <div class="card">
+        <h2 class="card-title">Filtres</h2>
+        <div class="checks-row" id="rev-manches">
+          <label class="check"><input type="checkbox" value="manche1" checked /> <span>Manche 1</span></label>
+          <label class="check"><input type="checkbox" value="manche2" checked /> <span>Manche 2</span></label>
+          <label class="check"><input type="checkbox" value="manche3" checked /> <span>Manche 3</span></label>
+        </div>
+        <div class="checks-grid" id="rev-domains" style="margin-top:10px;"></div>
+        <div class="form-row" style="margin-top:12px;">
+          <button id="btn-rev-all" class="btn btn-ghost">Tout cocher</button>
+          <button id="btn-rev-none" class="btn btn-ghost">Tout décocher</button>
+          <button id="btn-rev-shuffle" class="btn">🔀 Mélanger</button>
+          <button id="btn-rev-apply" class="btn btn-primary">Appliquer les filtres</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="rev-top">
+          <div id="rev-counter" class="muted">—</div>
+          <div id="rev-pack-info" class="muted"></div>
+        </div>
+        <div class="play-question" id="rev-question">Chargement…</div>
+        <div id="rev-reveal" hidden></div>
+        <div class="play-actions" style="margin-top:18px;">
+          <button id="btn-rev-prev" class="btn btn-ghost left">← Précédent</button>
+          <button id="btn-rev-toggle" class="btn btn-primary">Afficher la réponse</button>
+          <button id="btn-rev-next" class="btn">Suivant →</button>
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button id="btn-rev-home" class="btn btn-ghost">Retour à l'accueil</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-setup">
+    <section class="screen">
+      <h1 class="title-xl">Configurer la partie</h1>
+
+      <div class="card">
+        <h2 class="card-title">Manches à jouer</h2>
+        <div class="checks-row" id="manches-row">
+          <label class="check"><input type="checkbox" value="manche1" checked /> <span>Manche 1 — Les 4 à la suite</span></label>
+          <label class="check"><input type="checkbox" value="manche2" checked /> <span>Manche 2 — Face-à-face</span></label>
+          <label class="check"><input type="checkbox" value="manche3" checked /> <span>Manche 3 — Finale 9 points</span></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Domaines (filtrage des thèmes)</h2>
+        <p class="muted">Si aucun domaine n'est coché, tous les thèmes sont autorisés.</p>
+        <div class="checks-grid" id="domains-grid"></div>
+        <div class="form-row" style="margin-top:12px;">
+          <button id="btn-domains-all" class="btn btn-ghost">Tout cocher</button>
+          <button id="btn-domains-none" class="btn btn-ghost">Tout décocher</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Volume de la partie</h2>
+        <label class="field">
+          <span>Nombre de séries en Manche 1</span>
+          <input type="number" id="n-m1" min="1" max="20" value="3" />
+        </label>
+        <label class="field">
+          <span>Nombre de duels en Manche 2</span>
+          <input type="number" id="n-m2" min="1" max="10" value="2" />
+        </label>
+        <label class="field">
+          <span>Nombre de finales en Manche 3</span>
+          <input type="number" id="n-m3" min="1" max="4" value="1" />
+        </label>
+      </div>
+
+      <div class="actions-row">
+        <button id="btn-back-home" class="btn btn-ghost">Retour</button>
+        <button id="btn-start" class="btn btn-primary btn-lg">Démarrer la partie</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-play">
+    <section class="screen play">
+      <div class="play-top">
+        <div class="play-tag" id="play-tag">Manche</div>
+        <div class="play-score">Score : <strong id="play-score">0</strong></div>
+        <div class="play-timer" id="play-timer">--</div>
+      </div>
+
+      <div class="play-meta">
+        <div id="play-pack-title" class="play-pack-title"></div>
+        <div id="play-pack-sub" class="play-pack-sub"></div>
+      </div>
+
+      <div class="play-card" id="play-card">
+        <!-- contenu injecté selon la manche -->
+      </div>
+
+      <div class="play-actions" id="play-actions"></div>
+    </section>
+  </template>
+
+  <template id="tpl-result">
+    <section class="screen">
+      <h1 class="title-xl">Résultats</h1>
+      <div class="card">
+        <h2 class="card-title">Score total : <span id="res-total" class="big">0</span></h2>
+        <div id="res-breakdown" class="result-breakdown"></div>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Détail des questions</h2>
+        <div id="res-list" class="result-list"></div>
+      </div>
+      <div class="actions-row">
+        <button id="btn-result-home" class="btn btn-ghost">Retour à l'accueil</button>
+        <button id="btn-result-history" class="btn btn-primary">Voir l'historique</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-history">
+    <section class="screen">
+      <h1 class="title-xl">Mes parties</h1>
+      <div class="card">
+        <div id="stats-block" class="stats-block"></div>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Historique</h2>
+        <div id="history-list"></div>
+      </div>
+      <div class="actions-row">
+        <button id="btn-history-home" class="btn btn-ghost">Retour</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-admin">
+    <section class="screen">
+      <h1 class="title-xl">Tableau de bord administrateur</h1>
+      <p class="lead">Gérez les codes d'accès et suivez les parties des utilisateurs.</p>
+
+      <div class="card">
+        <h2 class="card-title">Résumé global</h2>
+        <div id="admin-summary" class="stats-block">Chargement…</div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Codes d'accès</h2>
+        <form id="form-new-code" class="form-row" style="margin-bottom:14px;">
+          <input type="text" id="new-code-name" placeholder="Nom optionnel (ex. Marie Dupont)" maxlength="60" />
+          <button type="submit" class="btn btn-primary">+ Générer un nouveau code</button>
+        </form>
+        <div id="admin-codes-list" class="admin-codes-list"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Classement par utilisateur</h2>
+        <div id="admin-leaderboard" class="admin-leaderboard"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Parties récentes (50 dernières)</h2>
+        <div id="admin-recent" class="admin-recent"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Sauvegarde de la base</h2>
+        <p class="muted" style="margin-top:0;">Sur Render free, les fichiers peuvent être effacés à un redémarrage majeur. Exportez régulièrement.</p>
+        <div class="form-row">
+          <button id="btn-admin-export" class="btn">📥 Exporter (.json)</button>
+          <label class="btn" for="file-admin-import" style="cursor:pointer;">📤 Importer un export</label>
+          <input id="file-admin-import" type="file" accept=".json,application/json" hidden />
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button id="btn-admin-logout" class="btn btn-ghost">Se déconnecter (admin)</button>
+      </div>
+    </section>
+  </template>
+
+  <script src="app.js?v=2"></script>
+</body>
+</html>

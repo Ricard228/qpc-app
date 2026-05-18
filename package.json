@@ -1,0 +1,19 @@
+{
+  "name": "qpc-app",
+  "version": "2.0.0",
+  "description": "Questions pour un Champion — Édition Économie & Sciences sociales — application web avec authentification",
+  "main": "server.js",
+  "scripts": {
+    "build": "node build-data.js",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Kossi Nevame AGBENU",
+  "license": "ISC"
+}

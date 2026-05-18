@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: qpc-champion
+    env: node
+    region: frankfurt   # le plus proche du Togo / Cameroun (latence ~120ms)
+    plan: free
+    branch: main
+    buildCommand: npm install
+    startCommand: node server.js
+    # Render free tier : pas de disque persistant. Les fichiers data/*.json
+    # peuvent être effacés à un redémarrage majeur. Faire des exports
+    # réguliers via le panneau admin (bouton "Exporter (.json)").
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: ADMIN_PASSWORD
+        sync: false        # à définir manuellement dans le dashboard Render
+      - key: TOKEN_SECRET
+        generateValue: true
