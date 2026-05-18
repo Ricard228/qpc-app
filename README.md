@@ -4,6 +4,8 @@ Application web qui transforme le recueil de **516 questions** en jeu interactif
 
 **Version 2.0** — authentification par codes d'accès générés par un super-administrateur, tableau de bord centralisé des scores.
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Ricard228/qpc-app)
+
 ---
 
 ## 🎯 Architecture
