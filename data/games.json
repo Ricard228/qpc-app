@@ -1,1 +1,37 @@
-{"games":[]}
+{
+  "games": [
+    {
+      "id": "76cb02d82722",
+      "code": "QPC-UJ2QSK5G",
+      "name": "Test Persistence",
+      "finishedAt": "2026-05-19T22:18:13.711Z",
+      "totalScore": 7,
+      "byManche": {
+        "manche1": 3,
+        "manche2": 4
+      },
+      "nbQuestions": 5,
+      "nbCorrect": 4,
+      "nbWrong": 1,
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "packsCount": 2
+      },
+      "log": [
+        {
+          "manche": "manche1",
+          "packTitle": "Macroeco",
+          "q": "Q1?",
+          "expected": "A",
+          "given": "A",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1
+        }
+      ]
+    }
+  ]
+}
