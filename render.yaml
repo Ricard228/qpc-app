@@ -2,14 +2,11 @@ services:
   - type: web
     name: qpc-champion
     env: node
-    region: frankfurt   # le plus proche du Togo / Cameroun (latence ~120ms)
+    region: frankfurt
     plan: free
     branch: main
     buildCommand: npm install
     startCommand: node server.js
-    # Render free tier : pas de disque persistant. Les fichiers data/*.json
-    # peuvent être effacés à un redémarrage majeur. Faire des exports
-    # réguliers via le panneau admin (bouton "Exporter (.json)").
     envVars:
       - key: NODE_VERSION
         value: 20
@@ -17,3 +14,11 @@ services:
         sync: false        # à définir manuellement dans le dashboard Render
       - key: TOKEN_SECRET
         generateValue: true
+      # Persistance permanente : auto-sync data/*.json vers la branche `data`
+      # du repo. À définir manuellement (token GitHub avec scope `repo`).
+      - key: GH_TOKEN
+        sync: false
+      - key: GH_REPO
+        value: Ricard228/qpc-app
+      - key: GH_BRANCH
+        value: data

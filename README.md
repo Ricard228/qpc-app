@@ -2,7 +2,7 @@
 
 Application web qui transforme le recueil de **516 questions** en jeu interactif, format inspiré de l'émission *Questions pour un Champion* (TV5 Monde).
 
-**Version 2.0** — authentification par codes d'accès générés par un super-administrateur, tableau de bord centralisé des scores.
+**Version 2.1** — authentification par codes d'accès permanents, tableau de bord centralisé, **persistance permanente** via branche `data` du repo GitHub, **export Excel**, **toggle Révision libre**.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Ricard228/qpc-app)
 
@@ -12,8 +12,9 @@ Application web qui transforme le recueil de **516 questions** en jeu interactif
 
 - **Backend** : Node.js + Express (server.js)
 - **Frontend** : SPA Vanilla JS (dossier `public/`)
-- **Stockage** : fichiers JSON (`data/auth.json` et `data/games.json`)
-- **Auth** : tokens HMAC signés, codes utilisateurs aléatoires `QPC-XXXXXXXX`
+- **Stockage** : fichiers JSON (`data/auth.json` et `data/games.json`) **synchronisés en permanence** sur la branche `data` du repo GitHub
+- **Auth** : tokens HMAC signés ; codes utilisateurs aléatoires `QPC-XXXXXXXX` permanents jusqu'à révocation par le super-admin
+- **Export** : JSON (complet) ou Excel `.xlsx` (3 feuilles : Codes, Parties, Détail réponses)
 
 ---
 
@@ -66,8 +67,13 @@ Dans le panneau du service, onglet **Environment** :
 | Clé | Valeur | Remarque |
 |-----|--------|----------|
 | `ADMIN_PASSWORD` | *(votre choix, 12+ caractères)* | Mot de passe super-admin |
-| `TOKEN_SECRET` | *(généré aléatoirement)* | Render le génère automatiquement si render.yaml est utilisé |
+| `GH_TOKEN` | *(token GitHub avec scope `repo`)* | **Indispensable** pour la persistance permanente des données |
+| `GH_REPO` | `Ricard228/qpc-app` | Repo cible pour la sync (déjà défini dans render.yaml) |
+| `GH_BRANCH` | `data` | Branche où sont stockées les données (déjà défini) |
+| `TOKEN_SECRET` | *(généré aléatoirement)* | Render le génère automatiquement |
 | `NODE_VERSION` | `20` | Version de Node |
+
+> **Comment obtenir un `GH_TOKEN` ?** Aller sur https://github.com/settings/tokens/new → cocher `repo` (accès complet aux repos privés/publics) → générer → copier le token (commence par `ghp_...`) → coller dans la variable `GH_TOKEN` sur Render.
 
 Cliquer **Save Changes** — Render redéploie automatiquement.
 
@@ -107,24 +113,33 @@ Une fois le déploiement terminé (1-2 minutes), Render donne une URL :
 
 ### Pour le super-admin
 
-- **Génération de codes** d'accès (avec nom optionnel)
+- **Génération de codes** d'accès (permanents jusqu'à révocation, avec nom optionnel)
 - **Révocation** instantanée d'un code
 - **Tableau de bord** : codes actifs, parties jouées, taux de bonnes réponses
 - **Classement** des utilisateurs par score
 - **Liste des parties récentes** (50 dernières)
-- **Export / import** de la base (sauvegarde manuelle JSON)
+- **Toggle « Révision libre »** : activer/désactiver le mode pour tous les utilisateurs (utile pour les sessions d'examen)
+- **Export Excel** (`.xlsx`) : 3 feuilles — Codes, Parties, Détail des réponses
+- **Export / import JSON** complet
+- **Suppression totale** de la base (zone dangereuse, double confirmation)
 
 ---
 
-## 🔄 Sauvegarde
+## 🔄 Persistance permanente — branche `data`
 
-Render free tier n'a pas de disque persistant. Pour éviter de perdre les codes et les scores :
+Pour pallier l'absence de disque persistant sur le free tier Render, les fichiers `data/auth.json` et `data/games.json` sont **automatiquement synchronisés** vers la branche `data` du repo GitHub :
 
-1. Dans le panneau admin → **Sauvegarde de la base → Exporter (.json)**
-2. Garder le fichier en lieu sûr
-3. Si redémarrage du conteneur efface tout : **Importer un export** restaure l'état complet
+- **Au démarrage** : le serveur télécharge les fichiers de la branche `data` (rétablit l'état)
+- **À chaque écriture** : le serveur pousse la nouvelle version (debounced 4 secondes)
 
-Pour zéro perte garantie, migrer vers **Render Postgres** (gratuit 90 jours) ou un plan payant avec disque persistant.
+**La branche `data` est la vraie source de vérité** — elle survit aux redémarrages, mises à jour, et même au crash complet du conteneur Render. Tant que ton repo GitHub existe, tes données existent.
+
+Si `GH_TOKEN` n'est pas défini, le serveur tombe en mode local-seul (les données ne survivent pas aux redémarrages). C'est utile en développement.
+
+Pour des exports manuels :
+- **Excel** : panneau admin → *Exporter en Excel (.xlsx)*
+- **JSON** : panneau admin → *Exporter en JSON*
+- **Restauration** : *Importer un JSON*
 
 ---
 
@@ -177,17 +192,21 @@ Toutes les routes hors `/api/auth/*` requièrent un header `Authorization: Beare
 |-------|--------|------|-------------|
 | POST | `/api/auth/login` | – | Login utilisateur avec un code |
 | POST | `/api/auth/admin` | – | Login admin avec le mot de passe |
-| GET | `/api/meta` | user | Méta-données + domaines |
+| GET | `/api/meta` | user | Méta-données + domaines + settings |
 | GET | `/api/packs/:manche` | user | Packs filtrés d'une manche |
 | POST | `/api/me/game` | user | Archive une partie terminée |
 | GET | `/api/me/games` | user | Historique personnel |
 | GET | `/api/admin/codes` | admin | Liste des codes |
 | POST | `/api/admin/codes` | admin | Génère un nouveau code |
 | DELETE | `/api/admin/codes/:code` | admin | Révoque un code |
+| GET | `/api/admin/settings` | admin | Réglages courants |
+| PUT | `/api/admin/settings` | admin | Modifier réglages (reviewEnabled) |
 | GET | `/api/admin/dashboard` | admin | Stats globales + classement |
 | GET | `/api/admin/game/:id` | admin | Détail d'une partie |
-| GET | `/api/admin/export` | admin | Export complet (auth + games) |
-| POST | `/api/admin/import` | admin | Restaure un export |
+| GET | `/api/admin/export` | admin | Export complet (JSON) |
+| GET | `/api/admin/export-excel` | admin | Export Excel `.xlsx` (3 feuilles) |
+| POST | `/api/admin/import` | admin | Restaure un export JSON |
+| DELETE | `/api/admin/all-data` | admin | Purge totale (corps `{confirm:"OUI-SUPPRIMER-TOUT"}`) |
 
 ---
 

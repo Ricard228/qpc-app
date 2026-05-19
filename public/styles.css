@@ -503,6 +503,32 @@ html, body {
 
 .admin-recent { display: flex; flex-direction: column; }
 
+/* Toggle switch (réglage révision libre) */
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+}
+.toggle { position: relative; display: inline-block; width: 52px; height: 28px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #C8CCD1; border-radius: 14px;
+  transition: background .2s;
+}
+.toggle-slider::before {
+  content: ""; position: absolute;
+  height: 22px; width: 22px; left: 3px; bottom: 3px;
+  background: #fff; border-radius: 50%;
+  transition: transform .2s;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+.toggle input:checked + .toggle-slider { background: #2E7D32; }
+.toggle input:checked + .toggle-slider::before { transform: translateX(24px); }
+
+/* Zone dangereuse */
+.card-danger { border-color: #F5C0C0; background: #FFFAFA; }
+
 /* ---------- Révision libre ---------- */
 .rev-top {
   display: flex; justify-content: space-between; align-items: center;

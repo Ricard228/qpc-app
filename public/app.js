@@ -68,8 +68,26 @@ const api = {
   adminDashboard:  ()     => apiFetch('/api/admin/dashboard', {}, true),
   adminGame:       (id)   => apiFetch(`/api/admin/game/${encodeURIComponent(id)}`, {}, true),
   adminExport:     ()     => apiFetch('/api/admin/export', {}, true),
-  adminImport:     (data) => apiFetch('/api/admin/import', { method: 'POST', body: JSON.stringify(data) }, true)
+  adminImport:     (data) => apiFetch('/api/admin/import', { method: 'POST', body: JSON.stringify(data) }, true),
+  adminGetSettings: ()    => apiFetch('/api/admin/settings', {}, true),
+  adminSetSettings: (s)   => apiFetch('/api/admin/settings', { method: 'PUT', body: JSON.stringify(s) }, true),
+  adminPurgeAll:    ()    => apiFetch('/api/admin/all-data', { method: 'DELETE', body: JSON.stringify({ confirm: 'OUI-SUPPRIMER-TOUT' }) }, true)
 };
+
+// Téléchargement direct (binaire) avec auth admin pour l'Excel
+async function downloadAdminExcel() {
+  const res = await fetch('/api/admin/export-excel', {
+    headers: { Authorization: `Bearer ${Session.admin}` }
+  });
+  if (!res.ok) { alert('Erreur lors du téléchargement Excel'); return; }
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `qpc-export-${new Date().toISOString().slice(0,10)}.xlsx`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
 
 // ---------- Helpers DOM ------------------------------------------------
 const $  = (sel, ctx = document) => ctx.querySelector(sel);
@@ -248,6 +266,10 @@ async function renderHome() {
     Session.clearUser();
     route('login');
   };
+
+  // Cacher la carte "Révision libre" si le super-admin l'a désactivée
+  const reviewEnabled = (State.meta && State.meta.settings && State.meta.settings.reviewEnabled !== false);
+  if (!reviewEnabled) $('#card-review').hidden = true;
 
   // Cacher les outils d'export/import des profils — plus pertinents
   const exportSection = $('#card-switch')?.closest('.grid')?.nextElementSibling;
@@ -664,6 +686,15 @@ function buildReviewPool(manches, domains, allPacks) {
 
 async function renderReview() {
   if (!Session.token) return route('login');
+  // Vérifier si la révision libre est encore autorisée
+  try {
+    const fresh = await api.meta();
+    if (fresh.settings && fresh.settings.reviewEnabled === false) {
+      alert('Le mode Révision libre est actuellement désactivé par l\'administrateur.');
+      return route('home');
+    }
+    State.meta = fresh;
+  } catch (e) {}
   mount('tpl-review');
 
   // Charger TOUS les packs (3 manches) en parallèle — server-side filtrage par manche
@@ -857,6 +888,40 @@ async function renderAdmin() {
       a.href = url; a.download = `qpc-backup-${new Date().toISOString().slice(0,10)}.json`;
       document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
+  $('#btn-admin-export-excel').onclick = async () => {
+    try { await downloadAdminExcel(); }
+    catch (e) { alert('Erreur Excel : ' + e.message); }
+  };
+
+  // Toggle révision libre
+  const toggle = $('#toggle-review');
+  try {
+    const s = await api.adminGetSettings();
+    toggle.checked = (s.reviewEnabled !== false);
+  } catch (e) {}
+  toggle.addEventListener('change', async () => {
+    try {
+      const s = await api.adminSetSettings({ reviewEnabled: toggle.checked });
+      // feedback visuel discret
+      toggle.parentElement.style.opacity = '0.6';
+      setTimeout(() => { toggle.parentElement.style.opacity = '1'; }, 300);
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+      toggle.checked = !toggle.checked;  // revenir en arrière
+    }
+  });
+
+  // Bouton purge
+  $('#btn-admin-purge').onclick = async () => {
+    const code1 = prompt('⚠️ Vous allez SUPPRIMER tous les codes et toutes les parties.\n\nTapez exactement "SUPPRIMER" pour continuer :');
+    if (code1 !== 'SUPPRIMER') return;
+    if (!confirm('Dernière confirmation : supprimer définitivement TOUTE la base ?')) return;
+    try {
+      await api.adminPurgeAll();
+      alert('Base purgée.');
+      refresh();
     } catch (e) { alert('Erreur : ' + e.message); }
   };
   $('#file-admin-import').onchange = async (e) => {

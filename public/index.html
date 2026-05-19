@@ -303,13 +303,34 @@
       </div>
 
       <div class="card">
-        <h2 class="card-title">Sauvegarde de la base</h2>
-        <p class="muted" style="margin-top:0;">Sur Render free, les fichiers peuvent être effacés à un redémarrage majeur. Exportez régulièrement.</p>
+        <h2 class="card-title">Paramètres de l'application</h2>
+        <div class="settings-row">
+          <div>
+            <strong>Mode « Révision libre »</strong>
+            <div class="muted" style="font-size:13px; margin-top:2px;">Permet aux utilisateurs de parcourir les 516 questions sans timer. Désactiver pour les sessions d'examen.</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-review" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Exporter la base</h2>
+        <p class="muted" style="margin-top:0;">Les fichiers <code>data/*.json</code> sont synchronisés en permanence vers la branche <code>data</code> du repo GitHub si <code>GH_TOKEN</code> est défini. Exports manuels :</p>
         <div class="form-row">
-          <button id="btn-admin-export" class="btn">📥 Exporter (.json)</button>
-          <label class="btn" for="file-admin-import" style="cursor:pointer;">📤 Importer un export</label>
+          <button id="btn-admin-export-excel" class="btn btn-primary">📊 Exporter en Excel (.xlsx)</button>
+          <button id="btn-admin-export" class="btn">📥 Exporter en JSON</button>
+          <label class="btn" for="file-admin-import" style="cursor:pointer;">📤 Importer un JSON</label>
           <input id="file-admin-import" type="file" accept=".json,application/json" hidden />
         </div>
+      </div>
+
+      <div class="card card-danger">
+        <h2 class="card-title" style="color: var(--accent);">Zone dangereuse</h2>
+        <p class="muted" style="margin-top:0;">Suppression définitive de tous les codes d'accès et de toutes les parties enregistrées.</p>
+        <button id="btn-admin-purge" class="btn btn-danger">🗑️ Supprimer toute la base</button>
       </div>
 
       <div class="actions-row">
