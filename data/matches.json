@@ -9,7 +9,7 @@
         "QPC-S799YED2",
         "QPC-YCEDXKK7"
       ],
-      "status": "pending",
+      "status": "completed",
       "config": {
         "manches": [
           "manche1"
@@ -68,7 +68,169 @@
       },
       "acceptances": {
         "QPC-S799YED2": "accepted",
-        "QPC-YCEDXKK7": "pending"
+        "QPC-YCEDXKK7": "accepted"
+      },
+      "results": {
+        "QPC-S799YED2": {
+          "startedAt": "2026-05-23T13:44:31.922Z",
+          "completedAt": "2026-05-23T13:44:31.922Z",
+          "totalScore": 3,
+          "byManche": {
+            "manche1": 3
+          },
+          "nbQuestions": 4,
+          "nbCorrect": 3,
+          "nbWrong": 1,
+          "log": []
+        },
+        "QPC-YCEDXKK7": {
+          "startedAt": "2026-05-23T13:44:32.070Z",
+          "completedAt": "2026-05-23T13:44:32.070Z",
+          "totalScore": 2,
+          "byManche": {
+            "manche1": 2
+          },
+          "nbQuestions": 4,
+          "nbCorrect": 2,
+          "nbWrong": 2,
+          "log": []
+        }
+      },
+      "winner": "QPC-S799YED2"
+    },
+    {
+      "id": "ec432b9e1f37b76f",
+      "type": "duel",
+      "createdAt": "2026-05-23T13:45:53.432Z",
+      "createdBy": "QPC-S799YED2",
+      "participants": [
+        "QPC-S799YED2",
+        "QPC-UJ2QSK5G"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "domains": [],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-9",
+              "type": "manche1",
+              "titre": "Monétarisme (3)",
+              "theme": "Théorie monétaire",
+              "domain": "Monnaie, finance et budget",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-9-q1",
+                  "q": "Quel coefficient relie la masse monétaire totale à la base monétaire émise par la banque centrale ?",
+                  "r": "Le multiplicateur monétaire",
+                  "e": "m = (1+c)/(c+r), c = billets/dépôts, r = réserves/dépôts.",
+                  "ref": "P. Cagan (1965) ; manuels de monétaire.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-9-q2",
+                  "q": "Selon l'approche post-keynésienne, quelle formule résume le mécanisme de création monétaire bancaire ?",
+                  "r": "« Les crédits font les dépôts »",
+                  "e": "La banque centrale fournit ensuite la liquidité nécessaire ; vue endogène de la monnaie.",
+                  "ref": "Bank of England Quarterly Bulletin, Q1 2014.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-9-q3",
+                  "q": "Quel sigle désigne la monnaie centrale, somme des billets en circulation et des réserves bancaires ?",
+                  "r": "M0 (ou MB, Monetary Base)",
+                  "e": "Distinguée des agrégats M1, M2, M3 contenant la monnaie scripturale.",
+                  "ref": "Fed, Statistical Release H.3.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-9-q4",
+                  "q": "Quel auteur suédois oppose, en 1898, le « taux d'intérêt naturel » au taux du marché ?",
+                  "r": "Knut Wicksell",
+                  "e": "Si le taux du marché est inférieur au taux naturel, l'investissement excède l'épargne et les prix montent.",
+                  "ref": "K. Wicksell, Interest and Prices, 1898.",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-21",
+              "type": "manche2",
+              "titre": "Duel 21",
+              "theme": "Économie agricole avancée",
+              "domain": "Économie agricole et agribusiness",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-21-q1",
+                  "q": "Quelle mesure exprime la quantité récoltée par unité de surface cultivée ?",
+                  "r": "Le rendement (yield, t/ha)",
+                  "e": "Indicateur clé de l'intensification ; modulé par variétés, intrants, agro-écologie.",
+                  "ref": "FAO, FAOSTAT.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-21-q2",
+                  "q": "Quel modèle d'offre agricole, publié en 1958, intègre des anticipations adaptatives sur les prix ?",
+                  "r": "Le modèle d'ajustement partiel de Nerlove",
+                  "e": "Influent en économétrie agricole, sur les cultures pluriannuelles.",
+                  "ref": "M. Nerlove, JFE, 1958.",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-21-q3",
+                  "q": "Quelle fonction de production agricole flexible, introduite en 1973, généralise la Cobb-Douglas ?",
+                  "r": "La fonction translog (transcendental logarithmic)",
+                  "e": "Permet d'estimer élasticités de substitution sans contraintes a priori.",
+                  "ref": "Christensen, Jorgenson & Lau, RES, 1973.",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-21-q4",
+                  "q": "Quel système de demande quadratique de 1997 généralise le système AIDS de Deaton et Muellbauer ?",
+                  "r": "Le système QUAIDS",
+                  "e": "Quadratic Almost Ideal Demand System ; flexibilité accrue de la courbe d'Engel.",
+                  "ref": "Banks, Blundell & Lewbel, RES, 1997.",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-21-q5",
+                  "q": "Quelle approche méso-économique cartographie les acteurs depuis les intrants jusqu'à la consommation d'un produit ?",
+                  "r": "L'analyse de filière (commodity / value chain analysis)",
+                  "e": "Approche structurée ; outils Filagri/AGRINATURA, CIRAD.",
+                  "ref": "Gereffi & Korzeniewicz, 1994 ; M. Fok, CIRAD.",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-21-q6",
+                  "q": "Quel article de 1974 modélise le contrat de partage de récolte comme un compromis optimal incitation-assurance ?",
+                  "r": "L'analyse de Stiglitz sur le sharecropping",
+                  "e": "Asymétrie d'information sur l'effort du métayer.",
+                  "ref": "J. Stiglitz, RES, 1974.",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-S799YED2": "accepted",
+        "QPC-UJ2QSK5G": "pending"
       },
       "results": {},
       "winner": null
