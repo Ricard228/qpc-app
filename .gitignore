@@ -11,6 +11,7 @@ node_modules/
 # le panneau admin.
 data/auth.json
 data/games.json
+data/matches.json
 data/profiles/
 
 # Macros de build / archives
