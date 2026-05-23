@@ -234,6 +234,145 @@
       },
       "results": {},
       "winner": null
+    },
+    {
+      "id": "c024bd8c0c97e9a6",
+      "type": "tournament",
+      "createdAt": "2026-05-23T13:46:05.994Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-YCEDXKK7",
+        "QPC-S799YED2",
+        "QPC-S9RSCRCD"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 0
+        },
+        "domains": [],
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-15",
+              "type": "manche1",
+              "titre": "Politique monétaire (5)",
+              "theme": "Politique monétaire en Afrique",
+              "domain": "Monnaie, finance et budget",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-15-q1",
+                  "q": "Quelle institution émet le franc CFA dans les huit pays de l'UEMOA depuis 1962 ?",
+                  "r": "La BCEAO",
+                  "e": "Banque Centrale des États de l'Afrique de l'Ouest ; siège à Dakar.",
+                  "ref": "Traité UMOA, 1962 ; statuts BCEAO.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-15-q2",
+                  "q": "Quelle banque centrale a son siège à Yaoundé et émet le franc CFA pour les six pays de la CEMAC ?",
+                  "r": "La BEAC",
+                  "e": "Banque des États de l'Afrique Centrale ; coopération monétaire avec la France.",
+                  "ref": "Convention de coopération monétaire CEMAC-France.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-15-q3",
+                  "q": "Comment se nomme le taux principal d'adjudication hebdomadaire utilisé par la BCEAO pour piloter la liquidité ?",
+                  "r": "Le taux des appels d'offres (taux directeur principal)",
+                  "e": "Encadré par le taux du guichet de prêt marginal.",
+                  "ref": "BCEAO, Cadre opérationnel de la politique monétaire.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-15-q4",
+                  "q": "Quelle monnaie unique régionale est portée par les chefs d'État de la CEDEAO depuis le sommet de 2019 ?",
+                  "r": "L'ECO",
+                  "e": "Projet relancé à Abuja en 2019 ; lancement initialement prévu 2020, reporté.",
+                  "ref": "Communiqués CEDEAO, sommets de Niamey 2019 et Abuja 2021.",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-8",
+              "type": "manche2",
+              "titre": "Duel 8",
+              "theme": "Économie agricole et rurale",
+              "domain": "Économie agricole et agribusiness",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-8-q1",
+                  "q": "Quel tubercule originaire d'Amérique du Sud est devenu le premier aliment glucidique d'Afrique de l'Ouest ?",
+                  "r": "Le manioc (Manihot esculenta)",
+                  "e": "Introduit par les Portugais au XVIᵉ siècle ; Nigeria premier producteur mondial.",
+                  "ref": "FAO, FAOSTAT, séries production manioc.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-8-q2",
+                  "q": "Quel ouvrage de 1964 défend la rationalité économique des paysans traditionnels et plaide pour l'innovation technique ?",
+                  "r": "Transforming Traditional Agriculture (T.W. Schultz)",
+                  "e": "Les paysans optimisent sous leurs contraintes ; il leur faut de nouvelles technologies.",
+                  "ref": "T.W. Schultz, 1964.",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-8-q3",
+                  "q": "Quel régime de propriété foncière, hérité de l'organisation lignagère, prévaut dans une grande partie de l'Afrique rurale ?",
+                  "r": "Le droit foncier coutumier (régime communautaire)",
+                  "e": "Coexiste souvent avec le droit moderne ; enjeu majeur de sécurisation foncière.",
+                  "ref": "Cadre et lignes directrices UA/BAD/CEA, 2010.",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-8-q4",
+                  "q": "Quelle réforme de la PAC adoptée en 2003 a découplé les aides de la production en introduisant le droit à paiement unique ?",
+                  "r": "La réforme Fischler",
+                  "e": "Lien rompu entre aide et volume produit ; conditionnalité environnementale renforcée.",
+                  "ref": "Règlement (CE) n° 1782/2003.",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-8-q5",
+                  "q": "Quel modèle pionnier de l'économie halieutique relie l'effort de pêche optimal au stock biologique exploité ?",
+                  "r": "Le modèle de Gordon-Schaefer",
+                  "e": "Capture optimale dérivée du surplus naturel et des coûts économiques.",
+                  "ref": "H. Gordon, JPE, 1954 ; M. Schaefer, JFRBC, 1957.",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-8-q6",
+                  "q": "Quelle thèse, opposée à Malthus, fait de la pression démographique le moteur de l'intensification agricole ?",
+                  "r": "L'intensification induite (thèse de Boserup)",
+                  "e": "Population croissante → innovation et intensification, non pas famine.",
+                  "ref": "E. Boserup, The Conditions of Agricultural Growth, 1965.",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-YCEDXKK7": "accepted",
+        "QPC-S799YED2": "accepted",
+        "QPC-S9RSCRCD": "accepted"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
