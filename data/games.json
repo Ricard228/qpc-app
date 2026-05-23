@@ -32,6 +32,48 @@
           "awarded": 1
         }
       ]
+    },
+    {
+      "id": "1abb10c12d31",
+      "code": "QPC-S799YED2",
+      "name": "Alice",
+      "finishedAt": "2026-05-23T13:44:31.922Z",
+      "totalScore": 3,
+      "byManche": {
+        "manche1": 3
+      },
+      "nbQuestions": 4,
+      "nbCorrect": 3,
+      "nbWrong": 1,
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "packsCount": 1,
+        "duelId": "aa2f35aff2872613"
+      },
+      "log": []
+    },
+    {
+      "id": "fb6716f83f86",
+      "code": "QPC-YCEDXKK7",
+      "name": "Bob",
+      "finishedAt": "2026-05-23T13:44:32.070Z",
+      "totalScore": 2,
+      "byManche": {
+        "manche1": 2
+      },
+      "nbQuestions": 4,
+      "nbCorrect": 2,
+      "nbWrong": 2,
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "packsCount": 1,
+        "duelId": "aa2f35aff2872613"
+      },
+      "log": []
     }
   ]
 }
