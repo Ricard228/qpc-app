@@ -1,0 +1,378 @@
+{
+  "matches": [
+    {
+      "id": "aa2f35aff2872613",
+      "type": "duel",
+      "createdAt": "2026-05-23T13:44:08.216Z",
+      "createdBy": "QPC-S799YED2",
+      "participants": [
+        "QPC-S799YED2",
+        "QPC-YCEDXKK7"
+      ],
+      "status": "completed",
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "counts": {
+          "manche1": 1
+        },
+        "domains": [],
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-61",
+              "type": "manche1",
+              "titre": "Agro-industrie et transformation (10)",
+              "theme": "Agroindustrie",
+              "domain": "Économie agricole et agribusiness",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-61-q1",
+                  "q": "Quel terme désigne la transformation des produits agricoles en biens à valeur ajoutée prêts à la consommation ?",
+                  "r": "L'agro-industrie (ou agro-transformation)",
+                  "e": "Maillon central des chaînes de valeur ; pierre angulaire des politiques d'industrialisation africaine.",
+                  "ref": "ONUDI, Agro-industries for Development, 2009.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-61-q2",
+                  "q": "Quelle technologie permet de prolonger la conservation des aliments par traitement thermique ménager ?",
+                  "r": "La pasteurisation",
+                  "e": "Mise au point par Louis Pasteur (1864) ; chauffage à 60-85°C suivi d'un refroidissement rapide.",
+                  "ref": "L. Pasteur, 1864 ; manuels de génie alimentaire.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-61-q3",
+                  "q": "Quel terme générique désigne les pertes alimentaires entre la récolte et l'arrivée chez le consommateur ?",
+                  "r": "Les pertes post-récolte (PHL, post-harvest losses)",
+                  "e": "FAO estime ~30 % de la production agricole mondiale perdue ou gaspillée chaque année.",
+                  "ref": "FAO, The State of Food and Agriculture, 2019.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-61-q4",
+                  "q": "Quel pôle agroindustriel intégré, promu en Afrique, regroupe exploitations, transformation et services autour d'un guichet unique ?",
+                  "r": "L'agropole (ou Special Agro-industrial Processing Zone)",
+                  "e": "Modèle déployé en Côte d'Ivoire, Togo, Sénégal, Bénin avec l'appui de la BAD.",
+                  "ref": "BAD, Note conceptuelle Agropoles, 2018.",
+                  "pts": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-S799YED2": "accepted",
+        "QPC-YCEDXKK7": "accepted"
+      },
+      "results": {
+        "QPC-S799YED2": {
+          "startedAt": "2026-05-23T13:44:31.922Z",
+          "completedAt": "2026-05-23T13:44:31.922Z",
+          "totalScore": 3,
+          "byManche": {
+            "manche1": 3
+          },
+          "nbQuestions": 4,
+          "nbCorrect": 3,
+          "nbWrong": 1,
+          "log": []
+        },
+        "QPC-YCEDXKK7": {
+          "startedAt": "2026-05-23T13:44:32.070Z",
+          "completedAt": "2026-05-23T13:44:32.070Z",
+          "totalScore": 2,
+          "byManche": {
+            "manche1": 2
+          },
+          "nbQuestions": 4,
+          "nbCorrect": 2,
+          "nbWrong": 2,
+          "log": []
+        }
+      },
+      "winner": "QPC-S799YED2"
+    },
+    {
+      "id": "ec432b9e1f37b76f",
+      "type": "duel",
+      "createdAt": "2026-05-23T13:45:53.432Z",
+      "createdBy": "QPC-S799YED2",
+      "participants": [
+        "QPC-S799YED2",
+        "QPC-UJ2QSK5G"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "domains": [],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-9",
+              "type": "manche1",
+              "titre": "Monétarisme (3)",
+              "theme": "Théorie monétaire",
+              "domain": "Monnaie, finance et budget",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-9-q1",
+                  "q": "Quel coefficient relie la masse monétaire totale à la base monétaire émise par la banque centrale ?",
+                  "r": "Le multiplicateur monétaire",
+                  "e": "m = (1+c)/(c+r), c = billets/dépôts, r = réserves/dépôts.",
+                  "ref": "P. Cagan (1965) ; manuels de monétaire.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-9-q2",
+                  "q": "Selon l'approche post-keynésienne, quelle formule résume le mécanisme de création monétaire bancaire ?",
+                  "r": "« Les crédits font les dépôts »",
+                  "e": "La banque centrale fournit ensuite la liquidité nécessaire ; vue endogène de la monnaie.",
+                  "ref": "Bank of England Quarterly Bulletin, Q1 2014.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-9-q3",
+                  "q": "Quel sigle désigne la monnaie centrale, somme des billets en circulation et des réserves bancaires ?",
+                  "r": "M0 (ou MB, Monetary Base)",
+                  "e": "Distinguée des agrégats M1, M2, M3 contenant la monnaie scripturale.",
+                  "ref": "Fed, Statistical Release H.3.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-9-q4",
+                  "q": "Quel auteur suédois oppose, en 1898, le « taux d'intérêt naturel » au taux du marché ?",
+                  "r": "Knut Wicksell",
+                  "e": "Si le taux du marché est inférieur au taux naturel, l'investissement excède l'épargne et les prix montent.",
+                  "ref": "K. Wicksell, Interest and Prices, 1898.",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-21",
+              "type": "manche2",
+              "titre": "Duel 21",
+              "theme": "Économie agricole avancée",
+              "domain": "Économie agricole et agribusiness",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-21-q1",
+                  "q": "Quelle mesure exprime la quantité récoltée par unité de surface cultivée ?",
+                  "r": "Le rendement (yield, t/ha)",
+                  "e": "Indicateur clé de l'intensification ; modulé par variétés, intrants, agro-écologie.",
+                  "ref": "FAO, FAOSTAT.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-21-q2",
+                  "q": "Quel modèle d'offre agricole, publié en 1958, intègre des anticipations adaptatives sur les prix ?",
+                  "r": "Le modèle d'ajustement partiel de Nerlove",
+                  "e": "Influent en économétrie agricole, sur les cultures pluriannuelles.",
+                  "ref": "M. Nerlove, JFE, 1958.",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-21-q3",
+                  "q": "Quelle fonction de production agricole flexible, introduite en 1973, généralise la Cobb-Douglas ?",
+                  "r": "La fonction translog (transcendental logarithmic)",
+                  "e": "Permet d'estimer élasticités de substitution sans contraintes a priori.",
+                  "ref": "Christensen, Jorgenson & Lau, RES, 1973.",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-21-q4",
+                  "q": "Quel système de demande quadratique de 1997 généralise le système AIDS de Deaton et Muellbauer ?",
+                  "r": "Le système QUAIDS",
+                  "e": "Quadratic Almost Ideal Demand System ; flexibilité accrue de la courbe d'Engel.",
+                  "ref": "Banks, Blundell & Lewbel, RES, 1997.",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-21-q5",
+                  "q": "Quelle approche méso-économique cartographie les acteurs depuis les intrants jusqu'à la consommation d'un produit ?",
+                  "r": "L'analyse de filière (commodity / value chain analysis)",
+                  "e": "Approche structurée ; outils Filagri/AGRINATURA, CIRAD.",
+                  "ref": "Gereffi & Korzeniewicz, 1994 ; M. Fok, CIRAD.",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-21-q6",
+                  "q": "Quel article de 1974 modélise le contrat de partage de récolte comme un compromis optimal incitation-assurance ?",
+                  "r": "L'analyse de Stiglitz sur le sharecropping",
+                  "e": "Asymétrie d'information sur l'effort du métayer.",
+                  "ref": "J. Stiglitz, RES, 1974.",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-S799YED2": "accepted",
+        "QPC-UJ2QSK5G": "pending"
+      },
+      "results": {},
+      "winner": null
+    },
+    {
+      "id": "c024bd8c0c97e9a6",
+      "type": "tournament",
+      "createdAt": "2026-05-23T13:46:05.994Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-YCEDXKK7",
+        "QPC-S799YED2",
+        "QPC-S9RSCRCD"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 0
+        },
+        "domains": [],
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-15",
+              "type": "manche1",
+              "titre": "Politique monétaire (5)",
+              "theme": "Politique monétaire en Afrique",
+              "domain": "Monnaie, finance et budget",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-15-q1",
+                  "q": "Quelle institution émet le franc CFA dans les huit pays de l'UEMOA depuis 1962 ?",
+                  "r": "La BCEAO",
+                  "e": "Banque Centrale des États de l'Afrique de l'Ouest ; siège à Dakar.",
+                  "ref": "Traité UMOA, 1962 ; statuts BCEAO.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-15-q2",
+                  "q": "Quelle banque centrale a son siège à Yaoundé et émet le franc CFA pour les six pays de la CEMAC ?",
+                  "r": "La BEAC",
+                  "e": "Banque des États de l'Afrique Centrale ; coopération monétaire avec la France.",
+                  "ref": "Convention de coopération monétaire CEMAC-France.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-15-q3",
+                  "q": "Comment se nomme le taux principal d'adjudication hebdomadaire utilisé par la BCEAO pour piloter la liquidité ?",
+                  "r": "Le taux des appels d'offres (taux directeur principal)",
+                  "e": "Encadré par le taux du guichet de prêt marginal.",
+                  "ref": "BCEAO, Cadre opérationnel de la politique monétaire.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-15-q4",
+                  "q": "Quelle monnaie unique régionale est portée par les chefs d'État de la CEDEAO depuis le sommet de 2019 ?",
+                  "r": "L'ECO",
+                  "e": "Projet relancé à Abuja en 2019 ; lancement initialement prévu 2020, reporté.",
+                  "ref": "Communiqués CEDEAO, sommets de Niamey 2019 et Abuja 2021.",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-8",
+              "type": "manche2",
+              "titre": "Duel 8",
+              "theme": "Économie agricole et rurale",
+              "domain": "Économie agricole et agribusiness",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-8-q1",
+                  "q": "Quel tubercule originaire d'Amérique du Sud est devenu le premier aliment glucidique d'Afrique de l'Ouest ?",
+                  "r": "Le manioc (Manihot esculenta)",
+                  "e": "Introduit par les Portugais au XVIᵉ siècle ; Nigeria premier producteur mondial.",
+                  "ref": "FAO, FAOSTAT, séries production manioc.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-8-q2",
+                  "q": "Quel ouvrage de 1964 défend la rationalité économique des paysans traditionnels et plaide pour l'innovation technique ?",
+                  "r": "Transforming Traditional Agriculture (T.W. Schultz)",
+                  "e": "Les paysans optimisent sous leurs contraintes ; il leur faut de nouvelles technologies.",
+                  "ref": "T.W. Schultz, 1964.",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-8-q3",
+                  "q": "Quel régime de propriété foncière, hérité de l'organisation lignagère, prévaut dans une grande partie de l'Afrique rurale ?",
+                  "r": "Le droit foncier coutumier (régime communautaire)",
+                  "e": "Coexiste souvent avec le droit moderne ; enjeu majeur de sécurisation foncière.",
+                  "ref": "Cadre et lignes directrices UA/BAD/CEA, 2010.",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-8-q4",
+                  "q": "Quelle réforme de la PAC adoptée en 2003 a découplé les aides de la production en introduisant le droit à paiement unique ?",
+                  "r": "La réforme Fischler",
+                  "e": "Lien rompu entre aide et volume produit ; conditionnalité environnementale renforcée.",
+                  "ref": "Règlement (CE) n° 1782/2003.",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-8-q5",
+                  "q": "Quel modèle pionnier de l'économie halieutique relie l'effort de pêche optimal au stock biologique exploité ?",
+                  "r": "Le modèle de Gordon-Schaefer",
+                  "e": "Capture optimale dérivée du surplus naturel et des coûts économiques.",
+                  "ref": "H. Gordon, JPE, 1954 ; M. Schaefer, JFRBC, 1957.",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-8-q6",
+                  "q": "Quelle thèse, opposée à Malthus, fait de la pression démographique le moteur de l'intensification agricole ?",
+                  "r": "L'intensification induite (thèse de Boserup)",
+                  "e": "Population croissante → innovation et intensification, non pas famine.",
+                  "ref": "E. Boserup, The Conditions of Agricultural Growth, 1965.",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-YCEDXKK7": "accepted",
+        "QPC-S799YED2": "accepted",
+        "QPC-S9RSCRCD": "accepted"
+      },
+      "results": {},
+      "winner": null
+    }
+  ]
+}

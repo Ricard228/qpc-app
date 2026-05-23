@@ -15,6 +15,7 @@ const ROOT           = __dirname;
 const DATA           = path.join(ROOT, 'data');
 const AUTH_PATH      = path.join(DATA, 'auth.json');
 const GAMES_PATH     = path.join(DATA, 'games.json');
+const MATCHES_PATH   = path.join(DATA, 'matches.json');
 const QUESTIONS_PATH = path.join(DATA, 'questions.json');
 
 // Mot de passe super-admin par défaut. À surcharger via ADMIN_PASSWORD.
@@ -68,6 +69,12 @@ function loadGames() { return readJson(GAMES_PATH, { games: [] }); }
 function saveGames(g) {
   writeJson(GAMES_PATH, g);
   scheduleGhSync('data/games.json');
+}
+
+function loadMatches() { return readJson(MATCHES_PATH, { matches: [] }); }
+function saveMatches(m) {
+  writeJson(MATCHES_PATH, m);
+  scheduleGhSync('data/matches.json');
 }
 
 // ---------- Synchronisation GitHub ------------------------------------
@@ -134,7 +141,7 @@ async function ghPullInitial() {
     return;
   }
   console.log(`🔁 Téléchargement initial depuis ${GH_REPO}#${GH_BRANCH}...`);
-  for (const remotePath of ['data/auth.json', 'data/games.json']) {
+  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json']) {
     try {
       const content = await ghGetFile(remotePath);
       if (content) {
@@ -241,7 +248,8 @@ app.get('/api/meta', requireUser, (req, res) => {
   res.json({
     ...QUESTIONS.meta,
     domains: QUESTIONS.domains,
-    settings: auth.settings || { reviewEnabled: true }
+    settings: auth.settings || { reviewEnabled: true },
+    hasActiveDuel: userHasActiveDuel(req.user.code)
   });
 });
 
@@ -467,6 +475,294 @@ app.get('/api/admin/export-excel', requireAdmin, (req, res) => {
   res.send(buf);
 });
 
+// =====================================================================
+// DUELS / CONFRONTATIONS
+// =====================================================================
+// Modèle d'un match :
+// { id, type: "duel"|"tournament", createdAt, createdBy: <code|"admin">,
+//   participants: [<code>, ...],
+//   status: "pending"|"active"|"completed"|"cancelled",
+//   config: { manches:[], counts:{}, domains:[], packs:[{manche,pack}] },
+//   acceptances: { <code>: "pending"|"accepted"|"declined" },
+//   results: { <code>: { startedAt, completedAt, totalScore, byManche, log } },
+//   winner: <code>|null
+// }
+
+function shuffleArr(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildMatchPacks(config) {
+  // Choisit les packs une fois pour tous les participants. Identiques pour tous.
+  const plan = [];
+  for (const m of (config.manches || [])) {
+    let packs = QUESTIONS[m] || [];
+    if (config.domains && config.domains.length) {
+      packs = packs.filter(p => config.domains.includes(p.domain));
+    }
+    if (packs.length === 0) continue;
+    const n = Math.min(config.counts && config.counts[m] || 1, packs.length);
+    const chosen = shuffleArr(packs).slice(0, n);
+    chosen.forEach(p => plan.push({ manche: m, pack: p }));
+  }
+  return plan;
+}
+
+function nameOfCode(code) {
+  const auth = loadAuth();
+  return (auth.codes[code] && auth.codes[code].name) || null;
+}
+
+function publicMatchView(m, viewerCode) {
+  // Vue allégée renvoyée au client. Cache `packs` aux participants qui
+  // n'ont pas encore accepté (pour éviter de spoiler les questions).
+  const accepted = (m.acceptances[viewerCode] === 'accepted');
+  const isAdmin = viewerCode === '__admin__';
+  return {
+    id: m.id,
+    type: m.type,
+    createdAt: m.createdAt,
+    createdBy: m.createdBy,
+    creatorName: m.createdBy === 'admin' ? null : nameOfCode(m.createdBy),
+    participants: m.participants.map(c => ({
+      code: c, name: nameOfCode(c),
+      status: m.acceptances[c] || 'pending',
+      hasPlayed: !!(m.results && m.results[c] && m.results[c].completedAt),
+      score: (m.results && m.results[c] && m.results[c].completedAt) ? m.results[c].totalScore : null
+    })),
+    status: m.status,
+    config: {
+      manches: m.config.manches,
+      counts: m.config.counts,
+      domains: m.config.domains,
+      packsCount: m.config.packs.length,
+      // packs disponibles uniquement si on a accepté ou si on est admin
+      packs: (accepted || isAdmin) ? m.config.packs : null
+    },
+    winner: m.winner || null,
+    youHavePlayed: !!(m.results && m.results[viewerCode] && m.results[viewerCode].completedAt),
+    yourStatus: m.acceptances[viewerCode] || null,
+    // résultats détaillés visibles si la partie est terminée pour tous
+    results: m.status === 'completed' ? m.participants.reduce((acc, c) => {
+      const r = m.results && m.results[c];
+      acc[c] = r ? { totalScore: r.totalScore, byManche: r.byManche, nbCorrect: r.nbCorrect, nbQuestions: r.nbQuestions, completedAt: r.completedAt } : null;
+      return acc;
+    }, {}) : null
+  };
+}
+
+function checkMatchCompletion(m) {
+  // Marque "completed" si tous les acceptants ont joué.
+  const accepted = m.participants.filter(c => m.acceptances[c] === 'accepted');
+  if (accepted.length === 0) return;
+  const allPlayed = accepted.every(c => m.results && m.results[c] && m.results[c].completedAt);
+  if (allPlayed && m.status !== 'completed') {
+    m.status = 'completed';
+    // Calcul du vainqueur (le score le plus élevé parmi ceux qui ont joué)
+    let best = null;
+    for (const c of accepted) {
+      const r = m.results[c];
+      if (!best || r.totalScore > m.results[best].totalScore) best = c;
+    }
+    m.winner = best;
+  }
+}
+
+function userHasActiveDuel(code) {
+  const { matches } = loadMatches();
+  return matches.some(m =>
+    m.participants.includes(code) &&
+    (m.status === 'pending' || m.status === 'active') &&
+    m.acceptances[code] === 'accepted' &&
+    !(m.results && m.results[code] && m.results[code].completedAt)
+  );
+}
+
+// ---------- API : duels utilisateur ----------------------------------
+app.get('/api/me/duels', requireUser, (req, res) => {
+  const { matches } = loadMatches();
+  const mine = matches.filter(m => m.participants.includes(req.user.code))
+    .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''))
+    .map(m => publicMatchView(m, req.user.code));
+  res.json(mine);
+});
+
+app.post('/api/me/duels', requireUser, (req, res) => {
+  const opponentCodeRaw = String(req.body.opponentCode || '').trim().toUpperCase();
+  if (!opponentCodeRaw) return res.status(400).json({ error: 'Code de l\'adversaire requis' });
+  if (opponentCodeRaw === req.user.code) return res.status(400).json({ error: 'Vous ne pouvez pas vous défier vous-même' });
+  const auth = loadAuth();
+  if (!auth.codes[opponentCodeRaw]) return res.status(404).json({ error: 'Code adversaire introuvable ou révoqué' });
+
+  const config = req.body.config || {};
+  config.manches = Array.isArray(config.manches) && config.manches.length ? config.manches : ['manche1'];
+  config.counts  = config.counts || { manche1: 1, manche2: 1, manche3: 1 };
+  config.domains = Array.isArray(config.domains) ? config.domains : [];
+  const packs = buildMatchPacks(config);
+  if (packs.length === 0) return res.status(400).json({ error: 'Aucun pack disponible pour cette configuration' });
+
+  const now = new Date().toISOString();
+  const id = crypto.randomBytes(8).toString('hex');
+  const match = {
+    id, type: 'duel', createdAt: now, createdBy: req.user.code,
+    participants: [req.user.code, opponentCodeRaw],
+    status: 'pending',
+    config: { ...config, packs },
+    acceptances: { [req.user.code]: 'accepted', [opponentCodeRaw]: 'pending' },
+    results: {}, winner: null
+  };
+  const store = loadMatches();
+  store.matches.push(match);
+  saveMatches(store);
+  res.json(publicMatchView(match, req.user.code));
+});
+
+app.post('/api/me/duels/:id/accept', requireUser, (req, res) => {
+  const store = loadMatches();
+  const m = store.matches.find(x => x.id === req.params.id);
+  if (!m) return res.status(404).json({ error: 'Duel introuvable' });
+  if (!m.participants.includes(req.user.code)) return res.status(403).json({ error: 'Vous n\'êtes pas dans ce duel' });
+  if (m.acceptances[req.user.code] === 'accepted') return res.json(publicMatchView(m, req.user.code));
+  m.acceptances[req.user.code] = 'accepted';
+  // Si tous les participants ont accepté → status = active
+  if (m.participants.every(c => m.acceptances[c] === 'accepted') && m.status === 'pending') {
+    m.status = 'active';
+  }
+  saveMatches(store);
+  res.json(publicMatchView(m, req.user.code));
+});
+
+app.post('/api/me/duels/:id/decline', requireUser, (req, res) => {
+  const store = loadMatches();
+  const m = store.matches.find(x => x.id === req.params.id);
+  if (!m) return res.status(404).json({ error: 'Duel introuvable' });
+  if (!m.participants.includes(req.user.code)) return res.status(403).json({ error: 'Vous n\'êtes pas dans ce duel' });
+  m.acceptances[req.user.code] = 'declined';
+  // Si quelqu'un refuse, on annule le duel entier (cas duel 2 personnes)
+  if (m.type === 'duel') m.status = 'cancelled';
+  saveMatches(store);
+  res.json({ ok: true });
+});
+
+app.get('/api/me/duels/:id', requireUser, (req, res) => {
+  const store = loadMatches();
+  const m = store.matches.find(x => x.id === req.params.id);
+  if (!m) return res.status(404).json({ error: 'Duel introuvable' });
+  if (!m.participants.includes(req.user.code)) return res.status(403).json({ error: 'Vous n\'êtes pas dans ce duel' });
+  res.json(publicMatchView(m, req.user.code));
+});
+
+app.post('/api/me/duels/:id/game', requireUser, (req, res) => {
+  const store = loadMatches();
+  const m = store.matches.find(x => x.id === req.params.id);
+  if (!m) return res.status(404).json({ error: 'Duel introuvable' });
+  if (!m.participants.includes(req.user.code)) return res.status(403).json({ error: 'Vous n\'êtes pas dans ce duel' });
+  if (m.acceptances[req.user.code] !== 'accepted') return res.status(400).json({ error: 'Vous devez accepter le duel avant de jouer' });
+  if (m.status === 'cancelled') return res.status(400).json({ error: 'Duel annulé' });
+  m.results = m.results || {};
+  if (m.results[req.user.code] && m.results[req.user.code].completedAt) {
+    return res.status(400).json({ error: 'Vous avez déjà joué ce duel' });
+  }
+  const s = req.body || {};
+  m.results[req.user.code] = {
+    startedAt: (m.results[req.user.code] && m.results[req.user.code].startedAt) || new Date().toISOString(),
+    completedAt: new Date().toISOString(),
+    totalScore: s.totalScore || 0,
+    byManche: s.byManche || {},
+    nbQuestions: s.nbQuestions || 0,
+    nbCorrect: s.nbCorrect || 0,
+    nbWrong: s.nbWrong || 0,
+    log: Array.isArray(s.log) ? s.log : []
+  };
+  // Aussi enregistrer la partie dans l'historique global de l'utilisateur
+  const games = loadGames();
+  games.games = games.games || [];
+  games.games.push({
+    id: crypto.randomBytes(6).toString('hex'),
+    code: req.user.code, name: req.user.name,
+    finishedAt: m.results[req.user.code].completedAt,
+    totalScore: m.results[req.user.code].totalScore,
+    byManche: m.results[req.user.code].byManche,
+    nbQuestions: m.results[req.user.code].nbQuestions,
+    nbCorrect: m.results[req.user.code].nbCorrect,
+    nbWrong: m.results[req.user.code].nbWrong,
+    config: { manches: m.config.manches, packsCount: m.config.packs.length, duelId: m.id },
+    log: m.results[req.user.code].log
+  });
+  saveGames(games);
+  // Marquer le statut active si pas déjà
+  if (m.status === 'pending') m.status = 'active';
+  checkMatchCompletion(m);
+  // Mettre à jour le compteur gamesPlayed du code
+  const auth = loadAuth();
+  if (auth.codes[req.user.code]) {
+    auth.codes[req.user.code].gamesPlayed = (auth.codes[req.user.code].gamesPlayed || 0) + 1;
+    auth.codes[req.user.code].lastUsed = new Date().toISOString();
+    saveAuth(auth);
+  }
+  saveMatches(store);
+  res.json(publicMatchView(m, req.user.code));
+});
+
+// ---------- API : duels admin ----------------------------------------
+app.get('/api/admin/duels', requireAdmin, (req, res) => {
+  const { matches } = loadMatches();
+  const list = matches.slice().sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || '')).map(m => publicMatchView(m, '__admin__'));
+  res.json(list);
+});
+
+app.post('/api/admin/duels', requireAdmin, (req, res) => {
+  const participants = Array.isArray(req.body.participants) ? req.body.participants.map(c => String(c).trim().toUpperCase()) : [];
+  if (participants.length < 2) return res.status(400).json({ error: 'Au moins 2 participants requis' });
+  const auth = loadAuth();
+  for (const c of participants) {
+    if (!auth.codes[c]) return res.status(400).json({ error: `Code ${c} introuvable ou révoqué` });
+  }
+  // Dédoublonner
+  const unique = [...new Set(participants)];
+  const config = req.body.config || {};
+  config.manches = Array.isArray(config.manches) && config.manches.length ? config.manches : ['manche1'];
+  config.counts  = config.counts || { manche1: 1, manche2: 1, manche3: 1 };
+  config.domains = Array.isArray(config.domains) ? config.domains : [];
+  const packs = buildMatchPacks(config);
+  if (packs.length === 0) return res.status(400).json({ error: 'Aucun pack disponible pour cette configuration' });
+
+  const acceptances = {};
+  // Les confrontations créées par l'admin sont AUTO-ACCEPTÉES pour tous les
+  // participants : la convocation est obligatoire. Les utilisateurs trouvent
+  // directement le match dans "Mes duels" avec status active.
+  unique.forEach(c => { acceptances[c] = 'accepted'; });
+
+  const now = new Date().toISOString();
+  const id = crypto.randomBytes(8).toString('hex');
+  const match = {
+    id, type: unique.length === 2 ? 'duel' : 'tournament',
+    createdAt: now, createdBy: 'admin',
+    participants: unique,
+    status: 'active',
+    config: { ...config, packs },
+    acceptances, results: {}, winner: null
+  };
+  const store = loadMatches();
+  store.matches.push(match);
+  saveMatches(store);
+  res.json(publicMatchView(match, '__admin__'));
+});
+
+app.delete('/api/admin/duels/:id', requireAdmin, (req, res) => {
+  const store = loadMatches();
+  const idx = store.matches.findIndex(x => x.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Duel introuvable' });
+  store.matches.splice(idx, 1);
+  saveMatches(store);
+  res.json({ ok: true });
+});
+
 // Admin : purge complète (suppression base de données)
 app.delete('/api/admin/all-data', requireAdmin, (req, res) => {
   if (req.body.confirm !== 'OUI-SUPPRIMER-TOUT') {
@@ -474,6 +770,7 @@ app.delete('/api/admin/all-data', requireAdmin, (req, res) => {
   }
   saveAuth({ codes: {}, settings: { reviewEnabled: true }, createdAt: new Date().toISOString() });
   saveGames({ games: [] });
+  saveMatches({ matches: [] });
   res.json({ ok: true });
 });
 
@@ -483,6 +780,7 @@ app.delete('/api/admin/all-data', requireAdmin, (req, res) => {
   // S'assurer que les fichiers existent
   loadAuth();
   if (!fs.existsSync(GAMES_PATH)) saveGames({ games: [] });
+  if (!fs.existsSync(MATCHES_PATH)) saveMatches({ matches: [] });
 
   app.listen(PORT, () => {
     console.log(`\n🎯  QPC Économie & Sciences sociales — v2.1`);

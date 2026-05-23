@@ -102,6 +102,11 @@
           <h2 class="card-title">Nouvelle partie</h2>
           <p>Choisissez les manches et les domaines, puis jouez.</p>
         </div>
+        <div class="card card-action" id="card-duels">
+          <div class="card-icon">⚔️</div>
+          <h2 class="card-title">Mes duels <span class="badge-pill" id="duels-badge" hidden>0</span></h2>
+          <p>Défier un autre joueur ou voir vos confrontations en cours.</p>
+        </div>
         <div class="card card-action" id="card-review">
           <div class="card-icon">📖</div>
           <h2 class="card-title">Révision libre</h2>
@@ -273,6 +278,70 @@
     </section>
   </template>
 
+  <template id="tpl-duels">
+    <section class="screen">
+      <h1 class="title-xl">Mes duels</h1>
+      <p class="lead">Défiez un autre joueur ou rejoignez les confrontations en cours.</p>
+
+      <div class="card">
+        <h2 class="card-title">Défier un joueur</h2>
+        <p class="muted" style="margin-top:0;">Entrez le code d'accès de votre adversaire. Il recevra une invitation à accepter dans sa propre interface.</p>
+        <form id="form-new-duel" style="display:flex; flex-direction:column; gap:12px;">
+          <input type="text" id="duel-opponent" placeholder="Code adversaire (ex. QPC-XXXXXXXX)"
+            autocomplete="off" autocapitalize="characters" required style="text-transform:uppercase;letter-spacing:1px;font-weight:600;padding:10px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;outline:none;" />
+          <div class="checks-row">
+            <label class="check"><input type="checkbox" name="duel-manche" value="manche1" checked /> <span>Manche 1</span></label>
+            <label class="check"><input type="checkbox" name="duel-manche" value="manche2" checked /> <span>Manche 2</span></label>
+            <label class="check"><input type="checkbox" name="duel-manche" value="manche3" /> <span>Manche 3</span></label>
+          </div>
+          <details>
+            <summary class="muted" style="cursor:pointer;">Filtrer par domaine (optionnel)</summary>
+            <div id="duel-domains" class="checks-grid" style="margin-top:10px;"></div>
+          </details>
+          <button type="submit" class="btn btn-primary">⚔️ Lancer le duel</button>
+        </form>
+        <div id="new-duel-error" class="login-error" hidden></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Invitations reçues</h2>
+        <div id="duels-pending"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Duels actifs</h2>
+        <div id="duels-active"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Duels terminés</h2>
+        <div id="duels-completed"></div>
+      </div>
+
+      <div class="actions-row">
+        <button id="btn-duels-home" class="btn btn-ghost">Retour à l'accueil</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-duel-result">
+    <section class="screen">
+      <h1 class="title-xl">Résultat du duel</h1>
+      <div class="card">
+        <h2 class="card-title" id="duel-result-title">—</h2>
+        <div id="duel-result-summary" class="result-breakdown"></div>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Vos scores</h2>
+        <div id="duel-result-table"></div>
+      </div>
+      <div class="actions-row">
+        <button id="btn-dr-duels" class="btn btn-ghost">Retour aux duels</button>
+        <button id="btn-dr-home" class="btn btn-primary">Accueil</button>
+      </div>
+    </section>
+  </template>
+
   <template id="tpl-admin">
     <section class="screen">
       <h1 class="title-xl">Tableau de bord administrateur</h1>
@@ -300,6 +369,32 @@
       <div class="card">
         <h2 class="card-title">Parties récentes (50 dernières)</h2>
         <div id="admin-recent" class="admin-recent"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Organiser une confrontation</h2>
+        <p class="muted" style="margin-top:0;">Sélectionnez 2 participants (duel) ou plus (tournoi). La confrontation est <strong>obligatoire</strong> — les participants n'ont pas besoin d'accepter.</p>
+        <div id="admin-conf-participants" class="admin-conf-participants"></div>
+        <div class="checks-row" style="margin-top:10px;">
+          <label class="check"><input type="checkbox" name="adm-conf-m" value="manche1" checked /> <span>Manche 1</span></label>
+          <label class="check"><input type="checkbox" name="adm-conf-m" value="manche2" checked /> <span>Manche 2</span></label>
+          <label class="check"><input type="checkbox" name="adm-conf-m" value="manche3" /> <span>Manche 3</span></label>
+        </div>
+        <div style="margin-top:10px;">
+          <label class="muted" style="font-size:13px;">Nb. séries Manche 1 : <input type="number" id="adm-conf-n1" value="1" min="1" max="5" style="width:60px;"/></label>
+          <label class="muted" style="font-size:13px; margin-left:10px;">Duels M2 : <input type="number" id="adm-conf-n2" value="1" min="0" max="5" style="width:60px;"/></label>
+          <label class="muted" style="font-size:13px; margin-left:10px;">Finales M3 : <input type="number" id="adm-conf-n3" value="0" min="0" max="3" style="width:60px;"/></label>
+        </div>
+        <details style="margin-top:10px;">
+          <summary class="muted" style="cursor:pointer;">Filtrer par domaine (optionnel)</summary>
+          <div id="adm-conf-domains" class="checks-grid" style="margin-top:10px;"></div>
+        </details>
+        <button id="btn-admin-create-duel" class="btn btn-primary" style="margin-top:12px;">⚔️ Lancer la confrontation</button>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Confrontations en cours et terminées</h2>
+        <div id="admin-duels-list"></div>
       </div>
 
       <div class="card">

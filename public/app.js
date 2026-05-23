@@ -71,7 +71,18 @@ const api = {
   adminImport:     (data) => apiFetch('/api/admin/import', { method: 'POST', body: JSON.stringify(data) }, true),
   adminGetSettings: ()    => apiFetch('/api/admin/settings', {}, true),
   adminSetSettings: (s)   => apiFetch('/api/admin/settings', { method: 'PUT', body: JSON.stringify(s) }, true),
-  adminPurgeAll:    ()    => apiFetch('/api/admin/all-data', { method: 'DELETE', body: JSON.stringify({ confirm: 'OUI-SUPPRIMER-TOUT' }) }, true)
+  adminPurgeAll:    ()    => apiFetch('/api/admin/all-data', { method: 'DELETE', body: JSON.stringify({ confirm: 'OUI-SUPPRIMER-TOUT' }) }, true),
+  // Duels — utilisateur
+  myDuels:        ()         => apiFetch('/api/me/duels'),
+  myDuelGet:      (id)       => apiFetch(`/api/me/duels/${id}`),
+  createDuel:     (body)     => apiFetch('/api/me/duels',                  { method: 'POST', body: JSON.stringify(body) }),
+  acceptDuel:     (id)       => apiFetch(`/api/me/duels/${id}/accept`,     { method: 'POST', body: '{}' }),
+  declineDuel:    (id)       => apiFetch(`/api/me/duels/${id}/decline`,    { method: 'POST', body: '{}' }),
+  submitDuelGame: (id, body) => apiFetch(`/api/me/duels/${id}/game`,       { method: 'POST', body: JSON.stringify(body) }),
+  // Duels — admin
+  adminDuels:        ()      => apiFetch('/api/admin/duels', {}, true),
+  adminCreateDuel:   (body)  => apiFetch('/api/admin/duels', { method: 'POST', body: JSON.stringify(body) }, true),
+  adminDeleteDuel:   (id)    => apiFetch(`/api/admin/duels/${id}`, { method: 'DELETE' }, true)
 };
 
 // Téléchargement direct (binaire) avec auth admin pour l'Excel
@@ -180,6 +191,8 @@ async function route(view, params = {}) {
     case 'result':   return renderResult(params.archived);
     case 'history':  return renderHistory();
     case 'review':   return renderReview();
+    case 'duels':    return renderDuels();
+    case 'duel-result': return renderDuelResult(params.duelId);
     case 'admin':    return renderAdmin();
     default:         return Session.token ? renderHome() : renderLogin();
   }
@@ -261,6 +274,7 @@ async function renderHome() {
 
   $('#card-new-game').onclick = () => route('setup');
   $('#card-review').onclick   = () => route('review');
+  $('#card-duels').onclick    = () => route('duels');
   $('#card-history').onclick  = () => route('history');
   $('#card-switch').onclick   = () => {
     Session.clearUser();
@@ -268,8 +282,29 @@ async function renderHome() {
   };
 
   // Cacher la carte "Révision libre" si le super-admin l'a désactivée
+  // OU si l'utilisateur a un duel actif en cours
   const reviewEnabled = (State.meta && State.meta.settings && State.meta.settings.reviewEnabled !== false);
-  if (!reviewEnabled) $('#card-review').hidden = true;
+  const hasActiveDuel = !!(State.meta && State.meta.hasActiveDuel);
+  if (!reviewEnabled || hasActiveDuel) {
+    $('#card-review').hidden = true;
+    if (hasActiveDuel) {
+      const note = el('div', { class: 'banner banner-warn', style: 'margin-top:0;' },
+        el('div', {}, el('strong', {}, '⚔️ Duel en cours.'), ' La révision libre est désactivée tant que vous n\'avez pas terminé vos duels actifs.'));
+      $('#card-duels').closest('.grid').parentElement.insertBefore(note, $('#card-duels').closest('.grid'));
+    }
+  }
+
+  // Badge invitations / duels en attente
+  api.myDuels().then(list => {
+    const pending = list.filter(d => d.yourStatus === 'pending' && d.status === 'pending').length;
+    const activeToPlay = list.filter(d => d.yourStatus === 'accepted' && (d.status === 'active' || d.status === 'pending') && !d.youHavePlayed).length;
+    const total = pending + activeToPlay;
+    const badge = $('#duels-badge');
+    if (badge && total > 0) {
+      badge.textContent = String(total);
+      badge.hidden = false;
+    }
+  }).catch(() => {});
 
   // Cacher les outils d'export/import des profils — plus pertinents
   const exportSection = $('#card-switch')?.closest('.grid')?.nextElementSibling;
@@ -595,6 +630,14 @@ async function finishGame() {
     log: g.log,
     config: { manches: [...new Set(g.plan.map(s => s.manche))], packsCount: g.plan.length }
   };
+  // Si on joue un DUEL, on uploade au endpoint spécifique
+  if (g.duelId) {
+    try { await api.submitDuelGame(g.duelId, summary); }
+    catch (e) { console.warn('upload duel échoué :', e); alert('Erreur upload duel : ' + e.message); }
+    window._lastResult = summary;
+    // Aller directement à la vue résultat du duel
+    return route('duel-result', { duelId: g.duelId });
+  }
   try { await api.archiveGame(summary); } catch (e) { console.warn('upload échoué :', e); }
   persistSavedGame(null);
   window._lastResult = summary;
@@ -692,6 +735,10 @@ async function renderReview() {
     if (fresh.settings && fresh.settings.reviewEnabled === false) {
       alert('Le mode Révision libre est actuellement désactivé par l\'administrateur.');
       return route('home');
+    }
+    if (fresh.hasActiveDuel) {
+      alert('Vous avez un duel en cours. Terminez-le d\'abord avant d\'accéder à la révision libre.');
+      return route('duels');
     }
     State.meta = fresh;
   } catch (e) {}
@@ -791,6 +838,183 @@ function renderReviewCard() {
   }
   $('#btn-rev-prev').disabled = (_reviewState.idx === 0);
   $('#btn-rev-next').disabled = (_reviewState.idx >= _reviewState.pool.length - 1);
+}
+
+// ---------- Vue : mes duels -------------------------------------------
+function statusLabel(d) {
+  if (d.status === 'cancelled') return { txt: 'Annulé', cls: 'lbl-mut' };
+  if (d.status === 'completed') return { txt: 'Terminé', cls: 'lbl-ok' };
+  if (d.yourStatus === 'pending') return { txt: 'Invitation reçue', cls: 'lbl-warn' };
+  if (d.yourStatus === 'declined') return { txt: 'Refusé', cls: 'lbl-mut' };
+  if (d.youHavePlayed) return { txt: 'Attente adversaire(s)', cls: 'lbl-info' };
+  return { txt: 'À jouer', cls: 'lbl-active' };
+}
+
+function renderDuelCard(d, ctx) {
+  const youCode = Session.code;
+  const opps = d.participants.filter(p => p.code !== youCode);
+  const lbl = statusLabel(d);
+  const lines = [];
+  lines.push(el('div', {},
+    el('strong', {}, d.createdBy === 'admin' ? '🛡️ Convocation admin · ' : ''),
+    el('span', {}, d.type === 'tournament' ? `Tournoi ${d.participants.length} joueurs` : 'Duel'),
+    ' · ',
+    el('span', { class: `duel-lbl ${lbl.cls}` }, lbl.txt)
+  ));
+  // Adversaires
+  const oppText = opps.map(p => `${p.name || p.code}${p.hasPlayed ? ` (✓ ${p.score} pts)` : ''}`).join(' · ');
+  lines.push(el('div', { class: 'duel-meta' }, 'Contre : ', oppText || '—'));
+  lines.push(el('div', { class: 'duel-meta' }, `Manches : ${(d.config.manches || []).join(', ')} · ${d.config.packsCount} pack(s) · créé le ${fmtDate(d.createdAt)}`));
+  if (d.status === 'completed' && d.results) {
+    const myr = d.results[youCode];
+    const yourScore = myr ? myr.totalScore : '—';
+    lines.push(el('div', {},
+      el('strong', { style: 'color: var(--primary)' }, `Vous : ${yourScore} pts · `),
+      el('span', { style: d.winner === youCode ? 'color:#2E7D32;font-weight:700;' : 'color:var(--muted);' },
+        d.winner === youCode ? '🏆 Vainqueur' : (d.winner ? `Vainqueur : ${nameOrCode(d, d.winner)}` : 'Égalité'))
+    ));
+  }
+  const actions = el('div', { class: 'duel-actions' });
+  if (d.status === 'pending' && d.yourStatus === 'pending') {
+    actions.appendChild(el('button', { class: 'btn btn-primary', onclick: async () => {
+      try { await api.acceptDuel(d.id); route('duels'); } catch (e) { alert('Erreur : ' + e.message); }
+    }}, '✓ Accepter'));
+    actions.appendChild(el('button', { class: 'btn btn-danger', onclick: async () => {
+      if (!confirm('Refuser ce duel ?')) return;
+      try { await api.declineDuel(d.id); route('duels'); } catch (e) { alert('Erreur : ' + e.message); }
+    }}, '✗ Refuser'));
+  }
+  if ((d.status === 'active' || d.status === 'pending') && d.yourStatus === 'accepted' && !d.youHavePlayed) {
+    actions.appendChild(el('button', { class: 'btn btn-primary', onclick: () => startDuelGame(d.id) }, '▶ Jouer maintenant'));
+  }
+  if (d.status === 'completed') {
+    actions.appendChild(el('button', { class: 'btn', onclick: () => route('duel-result', { duelId: d.id }) }, 'Voir les détails'));
+  }
+  return el('div', { class: 'duel-row' },
+    el('div', { class: 'duel-info' }, ...lines),
+    actions
+  );
+}
+
+function nameOrCode(d, code) {
+  const p = d.participants.find(x => x.code === code);
+  return p ? (p.name || p.code) : code;
+}
+
+async function renderDuels() {
+  if (!Session.token) return route('login');
+  // Refresh meta (pour hasActiveDuel)
+  try { State.meta = await api.meta(); } catch {}
+  mount('tpl-duels');
+
+  // Remplir les domaines
+  const grid = $('#duel-domains');
+  for (const d of State.meta.domains) {
+    grid.appendChild(el('label', { class: 'check' },
+      el('input', { type: 'checkbox', value: d.name }),
+      el('span', {}, d.name),
+      el('span', { class: 'badge' }, `${d.count}`)));
+  }
+
+  $('#btn-duels-home').onclick = () => route('home');
+
+  $('#form-new-duel').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const err = $('#new-duel-error'); err.hidden = true;
+    const opponent = $('#duel-opponent').value.trim().toUpperCase();
+    const manches = $$('input[name=duel-manche]:checked').map(c => c.value);
+    const domains = $$('#duel-domains input:checked').map(c => c.value);
+    if (!opponent) { err.textContent = 'Code adversaire requis'; err.hidden = false; return; }
+    if (manches.length === 0) { err.textContent = 'Sélectionnez au moins une manche'; err.hidden = false; return; }
+    try {
+      await api.createDuel({
+        opponentCode: opponent,
+        config: { manches, domains, counts: { manche1: 1, manche2: 1, manche3: 1 } }
+      });
+      $('#duel-opponent').value = '';
+      alert('Invitation envoyée à ' + opponent);
+      renderDuels();
+    } catch (e) {
+      err.textContent = e.message;
+      err.hidden = false;
+    }
+  });
+
+  let list = [];
+  try { list = await api.myDuels(); } catch (e) { console.warn(e); }
+  const pending = list.filter(d => d.status === 'pending' && d.yourStatus === 'pending');
+  const active  = list.filter(d => (d.status === 'active' || d.status === 'pending') && d.yourStatus === 'accepted' && !d.youHavePlayed);
+  const waitingOthers = list.filter(d => d.status === 'active' && d.yourStatus === 'accepted' && d.youHavePlayed);
+  const completed = list.filter(d => d.status === 'completed' || d.status === 'cancelled');
+
+  const fill = (box, items, emptyTxt) => {
+    if (items.length === 0) { box.appendChild(el('div', { class: 'muted' }, emptyTxt)); return; }
+    items.forEach(d => box.appendChild(renderDuelCard(d)));
+  };
+  fill($('#duels-pending'), pending, 'Aucune invitation en attente.');
+  fill($('#duels-active'), [...active, ...waitingOthers], 'Aucun duel actif.');
+  fill($('#duels-completed'), completed.slice(0, 30), 'Aucun duel terminé.');
+}
+
+async function renderDuelResult(duelId) {
+  if (!Session.token) return route('login');
+  mount('tpl-duel-result');
+  let d;
+  try { d = await api.myDuelGet(duelId); }
+  catch (e) { alert('Erreur : ' + e.message); return route('duels'); }
+  const winner = d.winner;
+  $('#duel-result-title').textContent =
+    winner === Session.code ? '🏆 Vous avez gagné !' :
+    (winner ? `Vainqueur : ${nameOrCode(d, winner)}` :
+    (d.status === 'completed' ? 'Égalité' : 'En cours'));
+  const summary = $('#duel-result-summary');
+  summary.innerHTML = '';
+  d.participants.forEach(p => {
+    const r = d.results && d.results[p.code];
+    summary.appendChild(el('div', { class: 'result-cell' + (p.code === winner ? ' winner' : '') },
+      el('div', { class: 'label' }, p.name || p.code),
+      el('div', { class: 'value' }, r && r.totalScore != null ? `${r.totalScore} pts` : '—')));
+  });
+
+  const table = $('#duel-result-table');
+  table.innerHTML = '';
+  if (d.results) {
+    d.participants.forEach(p => {
+      const r = d.results[p.code];
+      if (!r) return;
+      table.appendChild(el('div', { class: 'history-row' },
+        el('div', { class: 'history-when' },
+          el('div', {}, el('strong', {}, p.name || p.code), p.code === winner ? ' 🏆' : ''),
+          el('span', { class: 'small' }, `${r.nbCorrect}/${r.nbQuestions} bonnes réponses · M1: ${r.byManche.manche1||0} · M2: ${r.byManche.manche2||0} · M3: ${r.byManche.manche3||0}`)),
+        el('div', { class: 'history-score' }, `${r.totalScore} pts`)));
+    });
+  } else {
+    table.appendChild(el('div', { class: 'muted' }, 'Tous les participants n\'ont pas encore joué.'));
+  }
+
+  $('#btn-dr-duels').onclick = () => route('duels');
+  $('#btn-dr-home').onclick = () => route('home');
+}
+
+// Démarrer une partie de DUEL : les packs sont déjà fixés côté serveur
+async function startDuelGame(duelId) {
+  let d;
+  try { d = await api.myDuelGet(duelId); }
+  catch (e) { alert('Erreur : ' + e.message); return; }
+  if (!d.config.packs) {
+    alert('Erreur : packs non disponibles. Vérifiez votre acceptation.');
+    return;
+  }
+  // Construire le State.game avec les packs fixés
+  State.game = {
+    duelId: d.id,
+    plan: d.config.packs.map(x => ({ manche: x.manche, pack: x.pack })),
+    cursor: { planIdx: 0, qIdx: 0 },
+    score: { total: 0, byManche: { manche1: 0, manche2: 0, manche3: 0 } },
+    log: []
+  };
+  // Pas de persistance localStorage pour les duels (on joue d'une traite)
+  route('play');
 }
 
 // ---------- Vue : panneau admin ---------------------------------------
@@ -912,6 +1136,83 @@ async function renderAdmin() {
       toggle.checked = !toggle.checked;  // revenir en arrière
     }
   });
+
+  // ---- Organiser une confrontation ----
+  async function refreshAdminConf() {
+    const codes = await api.adminCodes();
+    const container = $('#admin-conf-participants');
+    container.innerHTML = '';
+    if (codes.length === 0) {
+      container.appendChild(el('div', { class: 'muted' }, 'Aucun code disponible. Générez d\'abord des codes.'));
+    } else {
+      codes.forEach(c => {
+        const lab = el('label', { class: 'check' },
+          el('input', { type: 'checkbox', value: c.code, 'data-code': c.code }),
+          el('span', { class: 'code-mono', style: 'display:inline-block;' }, c.code),
+          el('span', {}, c.name ? ` — ${c.name}` : ''));
+        container.appendChild(lab);
+      });
+    }
+    // Domaines
+    const dg = $('#adm-conf-domains');
+    dg.innerHTML = '';
+    if (State.meta && State.meta.domains) {
+      State.meta.domains.forEach(d => {
+        dg.appendChild(el('label', { class: 'check' },
+          el('input', { type: 'checkbox', value: d.name }),
+          el('span', {}, d.name),
+          el('span', { class: 'badge' }, `${d.count}`)));
+      });
+    }
+    // Liste confrontations
+    const lst = $('#admin-duels-list');
+    lst.innerHTML = '';
+    const all = await api.adminDuels();
+    if (all.length === 0) { lst.appendChild(el('div', { class: 'muted' }, 'Aucune confrontation pour le moment.')); return; }
+    all.slice(0, 30).forEach(d => {
+      const status = d.status === 'completed' ? '✓ Terminé' :
+                     d.status === 'cancelled' ? 'Annulé' :
+                     d.status === 'active' ? '⚔️ Actif' : '⏳ En attente';
+      const winner = d.winner ? ` · 🏆 ${d.results && d.results[d.winner] ? (d.participants.find(p => p.code === d.winner)?.name || d.winner) : d.winner}` : '';
+      const parts = d.participants.map(p => {
+        const sc = (d.results && d.results[p.code]) ? `${d.results[p.code].totalScore} pts` : (p.hasPlayed ? 'joué' : 'à jouer');
+        return `${p.name || p.code} (${sc})`;
+      }).join(' · ');
+      lst.appendChild(el('div', { class: 'duel-row' },
+        el('div', { class: 'duel-info' },
+          el('div', {}, el('strong', {}, d.type === 'tournament' ? `Tournoi ${d.participants.length} joueurs` : 'Duel'),
+            ` · ${status}`, winner),
+          el('div', { class: 'duel-meta' }, parts),
+          el('div', { class: 'duel-meta' }, `Créé par ${d.createdBy === 'admin' ? 'admin' : (d.creatorName || d.createdBy)} · ${fmtDate(d.createdAt)} · ${(d.config.manches||[]).join(',')} · ${d.config.packsCount} pack(s)`)),
+        el('div', { class: 'duel-actions' },
+          el('button', { class: 'btn btn-danger', onclick: async () => {
+            if (!confirm(`Supprimer cette confrontation ?`)) return;
+            await api.adminDeleteDuel(d.id);
+            refreshAdminConf();
+          }}, '✕ Supprimer'))));
+    });
+  }
+  refreshAdminConf();
+
+  $('#btn-admin-create-duel').onclick = async () => {
+    const participants = $$('#admin-conf-participants input:checked').map(c => c.value);
+    if (participants.length < 2) { alert('Sélectionnez au moins 2 participants.'); return; }
+    const manches = $$('input[name=adm-conf-m]:checked').map(c => c.value);
+    if (manches.length === 0) { alert('Sélectionnez au moins une manche.'); return; }
+    const counts = {
+      manche1: parseInt($('#adm-conf-n1').value, 10) || 0,
+      manche2: parseInt($('#adm-conf-n2').value, 10) || 0,
+      manche3: parseInt($('#adm-conf-n3').value, 10) || 0
+    };
+    const domains = $$('#adm-conf-domains input:checked').map(c => c.value);
+    try {
+      const r = await api.adminCreateDuel({ participants, config: { manches, counts, domains } });
+      alert(`Confrontation lancée (id ${r.id}). ${participants.length} participant(s) convoqué(s).`);
+      // décocher
+      $$('#admin-conf-participants input').forEach(c => c.checked = false);
+      refreshAdminConf();
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
 
   // Bouton purge
   $('#btn-admin-purge').onclick = async () => {

@@ -529,6 +529,57 @@ html, body {
 /* Zone dangereuse */
 .card-danger { border-color: #F5C0C0; background: #FFFAFA; }
 
+/* Duels */
+.badge-pill {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.duel-row {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #FCFCFD;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.duel-info { flex: 1 1 280px; }
+.duel-meta { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.duel-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.duel-lbl {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  padding: 2px 8px; border-radius: 999px;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.duel-lbl.lbl-warn   { background: var(--soft-gold); color: #7A5D00; }
+.duel-lbl.lbl-active { background: var(--soft-blue); color: var(--primary); }
+.duel-lbl.lbl-info   { background: #E8F0FE; color: #1A56DB; }
+.duel-lbl.lbl-ok     { background: var(--soft-green); color: #2E7D32; }
+.duel-lbl.lbl-mut    { background: var(--soft-grey); color: var(--muted); }
+
+.result-cell.winner { background: var(--soft-green); border: 2px solid #2E7D32; }
+.result-cell.winner .value { color: #2E7D32; }
+
+.admin-conf-participants {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: #FCFCFD;
+}
+
 /* ---------- Révision libre ---------- */
 .rev-top {
   display: flex; justify-content: space-between; align-items: center;

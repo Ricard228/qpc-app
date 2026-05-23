@@ -2,7 +2,7 @@
 
 Application web qui transforme le recueil de **516 questions** en jeu interactif, format inspiré de l'émission *Questions pour un Champion* (TV5 Monde).
 
-**Version 2.1** — authentification par codes d'accès permanents, tableau de bord centralisé, **persistance permanente** via branche `data` du repo GitHub, **export Excel**, **toggle Révision libre**.
+**Version 2.2** — codes d'accès permanents, dashboard centralisé, **persistance permanente** via branche `data` du repo GitHub, **export Excel**, **toggle Révision libre**, **duels utilisateur-à-utilisateur** et **confrontations admin** (2+ joueurs).
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Ricard228/qpc-app)
 
@@ -107,14 +107,18 @@ Une fois le déploiement terminé (1-2 minutes), Render donne une URL :
 
 - **Trois manches** chronométrées (40 s / 25 s / 15 s)
 - **Révision libre** : parcourir les 516 questions sans timer
+- **Mes duels** : défier un autre joueur via son code d'accès. Les deux joueurs reçoivent les **mêmes questions dans le même ordre** pour une comparaison équitable. L'adversaire peut accepter ou refuser.
 - **Pause / reprise** d'une partie
 - **Historique personnel** (parties terminées remontées depuis le serveur)
 - **Comparaison souple** des réponses (accents, articles, casse ignorés)
+- **Blocage automatique de la Révision libre** quand un duel est en cours
 
 ### Pour le super-admin
 
 - **Génération de codes** d'accès (permanents jusqu'à révocation, avec nom optionnel)
 - **Révocation** instantanée d'un code
+- **Organiser une confrontation** : sélectionner 2 participants (duel) ou plus (tournoi), même configuration pour tous, **acceptation forcée** (les participants sont convoqués)
+- **Liste de toutes les confrontations** : actives, terminées, avec vainqueur et scores
 - **Tableau de bord** : codes actifs, parties jouées, taux de bonnes réponses
 - **Classement** des utilisateurs par score
 - **Liste des parties récentes** (50 dernières)
@@ -207,6 +211,15 @@ Toutes les routes hors `/api/auth/*` requièrent un header `Authorization: Beare
 | GET | `/api/admin/export-excel` | admin | Export Excel `.xlsx` (3 feuilles) |
 | POST | `/api/admin/import` | admin | Restaure un export JSON |
 | DELETE | `/api/admin/all-data` | admin | Purge totale (corps `{confirm:"OUI-SUPPRIMER-TOUT"}`) |
+| GET | `/api/me/duels` | user | Liste de mes duels (invitations, actifs, terminés) |
+| POST | `/api/me/duels` | user | Défier un autre joueur `{opponentCode, config}` |
+| POST | `/api/me/duels/:id/accept` | user | Accepter une invitation |
+| POST | `/api/me/duels/:id/decline` | user | Refuser une invitation |
+| GET | `/api/me/duels/:id` | user | Détails d'un duel (packs visibles si accepté) |
+| POST | `/api/me/duels/:id/game` | user | Soumettre son résultat |
+| GET | `/api/admin/duels` | admin | Liste de tous les duels |
+| POST | `/api/admin/duels` | admin | Convoquer une confrontation `{participants[], config}` |
+| DELETE | `/api/admin/duels/:id` | admin | Supprimer une confrontation |
 
 ---
 
