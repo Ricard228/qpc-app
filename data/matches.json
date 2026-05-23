@@ -373,6 +373,143 @@
       },
       "results": {},
       "winner": null
+    },
+    {
+      "id": "f1962be3043026e4",
+      "type": "duel",
+      "createdAt": "2026-05-23T15:08:32.994Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-3VY2WXWP",
+        "QPC-NZXE8MYU"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 0
+        },
+        "domains": [],
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-46",
+              "type": "manche1",
+              "titre": "Sciences sociales (1)",
+              "theme": "Sociologie classique",
+              "domain": "Sciences sociales et politiques",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-46-q1",
+                  "q": "Quel ouvrage de 1905 articule l'ascétisme protestant et l'essor du capitalisme moderne ?",
+                  "r": "L'Éthique protestante et l'esprit du capitalisme (M. Weber)",
+                  "e": "L'épargne et l'accumulation comme signes de vocation ; concept de rationalisation.",
+                  "ref": "M. Weber, Die protestantische Ethik…, 1905.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-46-q2",
+                  "q": "Quel ouvrage de 1897 fonde l'étude statistique d'un fait social et propose une typologie en quatre catégories ?",
+                  "r": "Le Suicide (de Durkheim)",
+                  "e": "Typologie : égoïste, altruiste, anomique, fataliste ; principe : « expliquer le social par le social ».",
+                  "ref": "É. Durkheim, Le Suicide, 1897.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-46-q3",
+                  "q": "Quel concept marxien décrit la perte de maîtrise du travailleur sur son activité et ses produits ?",
+                  "r": "L'aliénation",
+                  "e": "Manuscrits de 1844 ; développé en « réification » par G. Lukács en 1923.",
+                  "ref": "K. Marx, Manuscrits de 1844.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-46-q4",
+                  "q": "Quel concept de Pierre Bourdieu désigne l'ensemble des dispositions intériorisées par la socialisation ?",
+                  "r": "L'habitus",
+                  "e": "Système de dispositions durables ; outil d'analyse de la reproduction sociale.",
+                  "ref": "P. Bourdieu, Le Sens pratique, 1980.",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-28",
+              "type": "manche2",
+              "titre": "Duel A3",
+              "theme": "Politique foncière en Afrique",
+              "domain": "Économie agricole et agribusiness",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-28-q1",
+                  "q": "Quels droits, hérités du système lignager, s'exercent collectivement sur la terre dans une grande partie de l'Afrique rurale ?",
+                  "r": "Les droits fonciers coutumiers (communautaires)",
+                  "e": "Souvent dualisme avec les droits modernes ; pluralisme juridique reconnu.",
+                  "ref": "UA/BAD/CEA, Cadre et lignes directrices sur les politiques foncières, 2010.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-28-q2",
+                  "q": "Quel document foncier alternatif au titre de propriété formalise un usage de la terre dans plusieurs pays ouest-africains ?",
+                  "r": "Le certificat foncier rural (ou attestation de possession foncière)",
+                  "e": "Promu par les lois foncières du Burkina Faso (2009), du Bénin (2013), de Madagascar (2005).",
+                  "ref": "Lois foncières nationales ; Documents IIED Lavigne Delville.",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-28-q3",
+                  "q": "Quelle institution togolaise centralise les opérations cadastrales et les droits enregistrés sur le foncier ?",
+                  "r": "L'OTR / Direction du Cadastre et de la Conservation Foncière (DCCF)",
+                  "e": "Office Togolais des Recettes ; gestion du Livre foncier et des titres fonciers.",
+                  "ref": "OTR Togo, organisation des services fonciers.",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-28-q4",
+                  "q": "Quel cadre adopté en 2012 par le Comité de la sécurité alimentaire encadre la gouvernance responsable des régimes fonciers ?",
+                  "r": "Les Directives volontaires sur la gouvernance responsable des régimes fonciers (VGGT)",
+                  "e": "Référence pour les politiques foncières nationales et les contrats d'investissement.",
+                  "ref": "FAO/CFS, VGGT, 2012.",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-28-q5",
+                  "q": "Quel phénomène de cessions massives de terres à des investisseurs étrangers s'est amplifié après la crise alimentaire de 2008 ?",
+                  "r": "L'accaparement des terres (land grabbing)",
+                  "e": "Suivi par la base Land Matrix ; enjeux de transparence et de droits humains.",
+                  "ref": "Land Matrix, Reports ; ILC, GRAIN.",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-28-q6",
+                  "q": "Quelle approche, défendue par H. De Soto, voit dans la formalisation des droits le levier principal de l'inclusion économique des pauvres ?",
+                  "r": "L'approche de De Soto (« capital mort »)",
+                  "e": "The Mystery of Capital (2000) ; thèse contestée empiriquement par les études d'impact.",
+                  "ref": "H. De Soto, The Mystery of Capital, 2000.",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-3VY2WXWP": "accepted",
+        "QPC-NZXE8MYU": "accepted"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
