@@ -3890,6 +3890,171 @@
           "ref": "I. Fisher, Econometrica, 1933."
         }
       ]
+    },
+    {
+      "id": "8d04a97dd81a",
+      "code": "QPC-NZXE8MYU",
+      "name": "Richard1",
+      "finishedAt": "2026-05-25T18:27:06.015Z",
+      "totalScore": 18,
+      "byManche": {
+        "manche1": 2,
+        "manche2": 16,
+        "manche3": 0
+      },
+      "nbQuestions": 10,
+      "nbCorrect": 7,
+      "nbWrong": 3,
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "packsCount": 2,
+        "duelId": "94e1dc150a8cf387"
+      },
+      "log": [
+        {
+          "manche": "manche1",
+          "packId": "manche1-53",
+          "packTitle": "Cultures vivrières africaines (2)",
+          "qid": "manche1-53-q1",
+          "q": "Quel tubercule à chair blanche, principalement cultivé en zone forestière humide, est appelé igname dans le golfe de Guinée ?",
+          "expected": "L'igname (Dioscorea spp.)",
+          "given": "Igname",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Nigeria, Ghana, Côte d'Ivoire, Bénin et Togo forment la « ceinture de l'igname ».",
+          "ref": "FAO, FAOSTAT, Yam production."
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-53",
+          "packTitle": "Cultures vivrières africaines (2)",
+          "qid": "manche1-53-q2",
+          "q": "Quelle céréale rustique à grains denses, proche du mil, est largement cultivée en zone soudano-sahélienne ?",
+          "expected": "Le sorgho (Sorghum bicolor)",
+          "given": "Sorgho",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Adapté aux climats arides ; aliment de base au Burkina Faso, Niger, Tchad, Soudan.",
+          "ref": "ICRISAT, Sorghum research."
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-53",
+          "packTitle": "Cultures vivrières africaines (2)",
+          "qid": "manche1-53-q3",
+          "q": "Quel tubercule sucré à chair généralement orange, riche en bêta-carotène, est promu pour lutter contre la carence en vitamine A ?",
+          "expected": "La patate douce (à chair orange)",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Variétés OFSP diffusées par le CIP/HarvestPlus ; impact nutritionnel démontré.",
+          "ref": "CIP/HarvestPlus, OFSP Project Reports."
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-53",
+          "packTitle": "Cultures vivrières africaines (2)",
+          "qid": "manche1-53-q4",
+          "q": "Quelle légumineuse à graines, surnommée « niébé » en Afrique de l'Ouest, est une source clé de protéines végétales ?",
+          "expected": "Le niébé (Vigna unguiculata) / dolique à œil noir",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Nigeria, Niger, Burkina Faso parmi les premiers producteurs mondiaux ; rôle dans la rotation.",
+          "ref": "IITA, Cowpea Research."
+        },
+        {
+          "manche": "manche2",
+          "packId": "manche2-6",
+          "packTitle": "Duel 6",
+          "qid": "manche2-6-q1",
+          "q": "Quelle probabilité, associée à la statistique de test observée, est comparée au seuil de significativité ?",
+          "expected": "La p-value (valeur-p)",
+          "given": "P-value",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "P(T ≥ t_obs | H₀) ; rejet si p < α ; débats sur son interprétation.",
+          "ref": "R.A. Fisher, Statistical Methods for Research Workers, 1925."
+        },
+        {
+          "manche": "manche2",
+          "packId": "manche2-6",
+          "packTitle": "Duel 6",
+          "qid": "manche2-6-q2",
+          "q": "Quel test paramétrique, publié sous le pseudonyme « Student », compare les moyennes de deux échantillons ?",
+          "expected": "Le test t",
+          "given": "test T",
+          "correct": true,
+          "pts": 2,
+          "awarded": 2,
+          "explain": "W. Gosset, employé chez Guinness, signait « Student » pour préserver le secret commercial.",
+          "ref": "Student, Biometrika, 1908."
+        },
+        {
+          "manche": "manche2",
+          "packId": "manche2-6",
+          "packTitle": "Duel 6",
+          "qid": "manche2-6-q3",
+          "q": "Quelle méthode d'estimation choisit les paramètres qui rendent les données observées les plus probables ?",
+          "expected": "Le maximum de vraisemblance (MLE)",
+          "given": "ML",
+          "correct": true,
+          "pts": 3,
+          "awarded": 3,
+          "explain": "L(θ) = Π f(xᵢ;θ) ; estimateur consistant, asymptotiquement normal et efficace.",
+          "ref": "R.A. Fisher, Phil. Trans. Royal Society A, 1922."
+        },
+        {
+          "manche": "manche2",
+          "packId": "manche2-6",
+          "packTitle": "Duel 6",
+          "qid": "manche2-6-q4",
+          "q": "Quelle approche statistique combine une distribution a priori et la vraisemblance pour mettre à jour les croyances ?",
+          "expected": "L'inférence bayésienne",
+          "given": "Bayésienne ",
+          "correct": true,
+          "pts": 4,
+          "awarded": 4,
+          "explain": "P(θ|x) ∝ P(x|θ) P(θ) ; choix du prior crucial.",
+          "ref": "T. Bayes, Phil. Trans. Royal Society, 1763 (posthume)."
+        },
+        {
+          "manche": "manche2",
+          "packId": "manche2-6",
+          "packTitle": "Duel 6",
+          "qid": "manche2-6-q5",
+          "q": "Quelle famille d'algorithmes échantillonne efficacement des distributions postérieures complexes en statistique bayésienne ?",
+          "expected": "Les méthodes MCMC (Metropolis-Hastings, Gibbs)",
+          "given": "Boostrap",
+          "correct": false,
+          "pts": 5,
+          "awarded": 0,
+          "explain": "Révolution bayésienne computationnelle des années 1990.",
+          "ref": "Metropolis et al. (1953) ; Hastings (1970)."
+        },
+        {
+          "manche": "manche2",
+          "packId": "manche2-6",
+          "packTitle": "Duel 6",
+          "qid": "manche2-6-q6",
+          "q": "Quel paradoxe illustre l'inversion possible d'une corrélation lorsqu'on agrège deux sous-populations ?",
+          "expected": "Le paradoxe de Simpson",
+          "given": "Simpson",
+          "correct": true,
+          "pts": 6,
+          "awarded": 6,
+          "explain": "Exemple classique : admissions à Berkeley, 1973 ; impose la stratification.",
+          "ref": "E. Simpson, JRSS B, 1951."
+        }
+      ]
     }
   ]
 }
