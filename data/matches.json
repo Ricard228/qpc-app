@@ -383,7 +383,7 @@
         "QPC-NZXE8MYU",
         "QPC-3VY2WXWP"
       ],
-      "status": "pending",
+      "status": "active",
       "config": {
         "manches": [
           "manche1",
@@ -506,7 +506,7 @@
       },
       "acceptances": {
         "QPC-NZXE8MYU": "accepted",
-        "QPC-3VY2WXWP": "pending"
+        "QPC-3VY2WXWP": "accepted"
       },
       "results": {},
       "winner": null
