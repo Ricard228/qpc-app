@@ -1309,7 +1309,7 @@
         "QPC-NZXE8MYU",
         "QPC-3VY2WXWP"
       ],
-      "status": "active",
+      "status": "completed",
       "config": {
         "manches": [
           "manche1",
@@ -1521,6 +1521,794 @@
       "acceptances": {
         "QPC-NZXE8MYU": "accepted",
         "QPC-3VY2WXWP": "accepted"
+      },
+      "results": {
+        "QPC-NZXE8MYU": {
+          "startedAt": "2026-05-25T16:57:23.660Z",
+          "completedAt": "2026-05-25T16:57:23.660Z",
+          "totalScore": 14,
+          "byManche": {
+            "manche1": 1,
+            "manche2": 6,
+            "manche3": 7
+          },
+          "nbQuestions": 19,
+          "nbCorrect": 11,
+          "nbWrong": 8,
+          "log": [
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q1",
+              "q": "Quelle technique d'analyse multivariée projette les données sur des axes non corrélés maximisant la variance ?",
+              "expected": "L'analyse en composantes principales (ACP)",
+              "given": "ACP",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Diagonalisation de la matrice de variance-covariance ; outil clé de réduction de dimension.",
+              "ref": "H. Hotelling, J. Educational Psychology, 1933."
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q2",
+              "q": "Quel test non paramétrique compare deux échantillons indépendants par les rangs des observations ?",
+              "expected": "Le test de Mann-Whitney (Wilcoxon rank-sum)",
+              "given": "Sperman",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Alternative au test t lorsque l'hypothèse de normalité est rejetée.",
+              "ref": "H. Mann & D. Whitney, Annals of Math. Statistics, 1947."
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q3",
+              "q": "Quelle méthode estime la précision d'un estimateur par tirages avec remise dans l'échantillon initial ?",
+              "expected": "Le bootstrap",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Procédure de rééchantillonnage proposée par Efron en 1979 ; B tirages avec remise.",
+              "ref": "B. Efron, Annals of Statistics, 1979."
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q4",
+              "q": "Quelle démarche, antérieure à l'inférence, repose sur la visualisation et le résumé des données sans modèle ?",
+              "expected": "La statistique descriptive (ou EDA)",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Approche promue par J. Tukey en 1977 ; outils : boîtes à moustaches, histogrammes, scatterplots.",
+              "ref": "J. Tukey, Exploratory Data Analysis, 1977."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q1",
+              "q": "Quel sigle anglo-saxon désigne la méthode des moindres carrés ordinaires ?",
+              "expected": "OLS (Ordinary Least Squares)",
+              "given": "Ols",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Minimise la somme des carrés des résidus ; estimateur le plus utilisé en régression linéaire.",
+              "ref": "Gauss-Legendre, début XIXᵉ siècle."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q2",
+              "q": "Quel test compare deux modèles emboîtés via la différence de leurs log-vraisemblances ?",
+              "expected": "Le test du rapport de vraisemblance (LR)",
+              "given": "LR",
+              "correct": true,
+              "pts": 2,
+              "awarded": 2,
+              "explain": "−2 ln(L₀/L₁) ~ χ²(k) ; à rapprocher des tests de Wald et de score (LM).",
+              "ref": "S. Wilks, Annals of Math. Statistics, 1938."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q3",
+              "q": "Quels deux critères d'information pénalisent la sur-paramétrisation lors de la sélection de modèles ?",
+              "expected": "Les critères AIC (Akaike) et BIC (Schwarz)",
+              "given": "Aic bic",
+              "correct": true,
+              "pts": 3,
+              "awarded": 3,
+              "explain": "AIC = −2L + 2k ; BIC = −2L + k·ln(n) ; le BIC est plus parcimonieux pour n grand.",
+              "ref": "H. Akaike, IEEE TAC, 1974 ; G. Schwarz, Annals of Statistics, 1978."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q4",
+              "q": "Quel concept économétrique distingue corrélation et capacité prédictive entre deux séries temporelles ?",
+              "expected": "La causalité au sens de Granger",
+              "given": "Aléatoire ",
+              "correct": false,
+              "pts": 4,
+              "awarded": 0,
+              "explain": "X cause Y au sens de Granger si le passé de X améliore la prévision de Y.",
+              "ref": "C. Granger, Econometrica, 1969."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q5",
+              "q": "Quelle hypothèse, formalisée par Muth puis Lucas, suppose que les agents utilisent toute l'information disponible ?",
+              "expected": "Les anticipations rationnelles",
+              "given": "Rationalisme ",
+              "correct": false,
+              "pts": 5,
+              "awarded": 0,
+              "explain": "Fonde les modèles RBC, néo-keynésiens, DSGE.",
+              "ref": "J. Muth, Econometrica, 1961."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q6",
+              "q": "Quel modèle DSGE estimé pour la zone euro est devenu un standard en banque centrale après 2003 ?",
+              "expected": "Le modèle Smets-Wouters",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 6,
+              "awarded": 0,
+              "explain": "Modèle néo-keynésien d'équilibre général dynamique stochastique ; calibration et estimation bayésienne.",
+              "ref": "F. Smets & R. Wouters, JEEA, 2003."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q1",
+              "q": "Quel théorème asymptotique fonde l'inférence sur la moyenne d'un grand échantillon ?",
+              "expected": "Le théorème central limite (TCL)",
+              "given": "Central limite ",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Pour Xᵢ i.i.d. à variance finie : √n(x̄−μ)/σ → N(0,1).",
+              "ref": "Lindeberg-Lévy ; Lyapunov."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q2",
+              "q": "Quelle méthode d'estimation linéaire minimise la somme des carrés des résidus ?",
+              "expected": "Les moindres carrés ordinaires (MCO)",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "β̂ = (X'X)⁻¹X'y ; BLUE sous les hypothèses de Gauss-Markov.",
+              "ref": "C.F. Gauss (1809), A. Legendre (1805)."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q3",
+              "q": "Quel test, conçu par un statisticien employé chez Guinness, compare deux moyennes en petit échantillon ?",
+              "expected": "Le test t (de Student)",
+              "given": "Test T",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Publié sous le pseudonyme « Student » par W. Gosset.",
+              "ref": "Student, Biometrika, 1908."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q4",
+              "q": "Quel problème pose la forte corrélation entre plusieurs variables explicatives dans un modèle de régression ?",
+              "expected": "La multicolinéarité",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Inflation des variances ; VIF > 10 problématique ; remèdes : Ridge, LASSO, ACP.",
+              "ref": "Belsley, Kuh & Welsch, Regression Diagnostics, 1980."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q5",
+              "q": "Quel test de racine unitaire, augmenté de retards pour traiter l'autocorrélation, évalue la stationnarité d'une série ?",
+              "expected": "Le test ADF (Augmented Dickey-Fuller)",
+              "given": "ADF",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "H₀ : présence d'une racine unitaire.",
+              "ref": "Said & Dickey, Biometrika, 1984."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q6",
+              "q": "Quel concept de 1969 teste si le passé d'une série améliore la prévision d'une autre ?",
+              "expected": "La causalité au sens de Granger",
+              "given": "Granger",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "C. Granger, Prix Nobel 2003.",
+              "ref": "C. Granger, Econometrica, 1969."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q7",
+              "q": "Quel modèle de 1982 capture la volatilité conditionnelle hétéroscédastique des séries financières ?",
+              "expected": "Le modèle ARCH (de R. Engle)",
+              "given": "arch",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Étendu en GARCH par Bollerslev (1986).",
+              "ref": "R. Engle, Econometrica, 1982."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q8",
+              "q": "Quel estimateur de panel élimine l'hétérogénéité individuelle constante en différentiant par rapport à la moyenne intra-individuelle ?",
+              "expected": "L'estimateur within (effets fixes)",
+              "given": "Within",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Test de Hausman pour comparer effets fixes et effets aléatoires.",
+              "ref": "Wooldridge, Econometric Analysis of Cross Section and Panel Data, 2010."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q9",
+              "q": "Quelle méthode d'évaluation d'impact compare l'évolution avant-après d'un groupe traité à celle d'un groupe témoin ?",
+              "expected": "Les doubles différences (DiD)",
+              "given": "DiD",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Hypothèse identifiante : tendances parallèles.",
+              "ref": "Card & Krueger, AER, 1994."
+            }
+          ]
+        },
+        "QPC-3VY2WXWP": {
+          "startedAt": "2026-05-25T16:57:41.231Z",
+          "completedAt": "2026-05-25T16:57:41.231Z",
+          "totalScore": 17,
+          "byManche": {
+            "manche1": 0,
+            "manche2": 13,
+            "manche3": 4
+          },
+          "nbQuestions": 19,
+          "nbCorrect": 8,
+          "nbWrong": 11,
+          "log": [
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q1",
+              "q": "Quelle technique d'analyse multivariée projette les données sur des axes non corrélés maximisant la variance ?",
+              "expected": "L'analyse en composantes principales (ACP)",
+              "given": "Acm",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Diagonalisation de la matrice de variance-covariance ; outil clé de réduction de dimension.",
+              "ref": "H. Hotelling, J. Educational Psychology, 1933."
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q2",
+              "q": "Quel test non paramétrique compare deux échantillons indépendants par les rangs des observations ?",
+              "expected": "Le test de Mann-Whitney (Wilcoxon rank-sum)",
+              "given": "Man withney",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Alternative au test t lorsque l'hypothèse de normalité est rejetée.",
+              "ref": "H. Mann & D. Whitney, Annals of Math. Statistics, 1947."
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q3",
+              "q": "Quelle méthode estime la précision d'un estimateur par tirages avec remise dans l'échantillon initial ?",
+              "expected": "Le bootstrap",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Procédure de rééchantillonnage proposée par Efron en 1979 ; B tirages avec remise.",
+              "ref": "B. Efron, Annals of Statistics, 1979."
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-30",
+              "packTitle": "Statistiques (4)",
+              "qid": "manche1-30-q4",
+              "q": "Quelle démarche, antérieure à l'inférence, repose sur la visualisation et le résumé des données sans modèle ?",
+              "expected": "La statistique descriptive (ou EDA)",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Approche promue par J. Tukey en 1977 ; outils : boîtes à moustaches, histogrammes, scatterplots.",
+              "ref": "J. Tukey, Exploratory Data Analysis, 1977."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q1",
+              "q": "Quel sigle anglo-saxon désigne la méthode des moindres carrés ordinaires ?",
+              "expected": "OLS (Ordinary Least Squares)",
+              "given": "Ols",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Minimise la somme des carrés des résidus ; estimateur le plus utilisé en régression linéaire.",
+              "ref": "Gauss-Legendre, début XIXᵉ siècle."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q2",
+              "q": "Quel test compare deux modèles emboîtés via la différence de leurs log-vraisemblances ?",
+              "expected": "Le test du rapport de vraisemblance (LR)",
+              "given": "Mmv",
+              "correct": false,
+              "pts": 2,
+              "awarded": 0,
+              "explain": "−2 ln(L₀/L₁) ~ χ²(k) ; à rapprocher des tests de Wald et de score (LM).",
+              "ref": "S. Wilks, Annals of Math. Statistics, 1938."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q3",
+              "q": "Quels deux critères d'information pénalisent la sur-paramétrisation lors de la sélection de modèles ?",
+              "expected": "Les critères AIC (Akaike) et BIC (Schwarz)",
+              "given": "Aic bic",
+              "correct": true,
+              "pts": 3,
+              "awarded": 3,
+              "explain": "AIC = −2L + 2k ; BIC = −2L + k·ln(n) ; le BIC est plus parcimonieux pour n grand.",
+              "ref": "H. Akaike, IEEE TAC, 1974 ; G. Schwarz, Annals of Statistics, 1978."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q4",
+              "q": "Quel concept économétrique distingue corrélation et capacité prédictive entre deux séries temporelles ?",
+              "expected": "La causalité au sens de Granger",
+              "given": "Granger",
+              "correct": true,
+              "pts": 4,
+              "awarded": 4,
+              "explain": "X cause Y au sens de Granger si le passé de X améliore la prévision de Y.",
+              "ref": "C. Granger, Econometrica, 1969."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q5",
+              "q": "Quelle hypothèse, formalisée par Muth puis Lucas, suppose que les agents utilisent toute l'information disponible ?",
+              "expected": "Les anticipations rationnelles",
+              "given": "Rationnelle ",
+              "correct": true,
+              "pts": 5,
+              "awarded": 5,
+              "explain": "Fonde les modèles RBC, néo-keynésiens, DSGE.",
+              "ref": "J. Muth, Econometrica, 1961."
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-5",
+              "packTitle": "Duel 5",
+              "qid": "manche2-5-q6",
+              "q": "Quel modèle DSGE estimé pour la zone euro est devenu un standard en banque centrale après 2003 ?",
+              "expected": "Le modèle Smets-Wouters",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 6,
+              "awarded": 0,
+              "explain": "Modèle néo-keynésien d'équilibre général dynamique stochastique ; calibration et estimation bayésienne.",
+              "ref": "F. Smets & R. Wouters, JEEA, 2003."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q1",
+              "q": "Quel théorème asymptotique fonde l'inférence sur la moyenne d'un grand échantillon ?",
+              "expected": "Le théorème central limite (TCL)",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Pour Xᵢ i.i.d. à variance finie : √n(x̄−μ)/σ → N(0,1).",
+              "ref": "Lindeberg-Lévy ; Lyapunov."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q2",
+              "q": "Quelle méthode d'estimation linéaire minimise la somme des carrés des résidus ?",
+              "expected": "Les moindres carrés ordinaires (MCO)",
+              "given": "Mco",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "β̂ = (X'X)⁻¹X'y ; BLUE sous les hypothèses de Gauss-Markov.",
+              "ref": "C.F. Gauss (1809), A. Legendre (1805)."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q3",
+              "q": "Quel test, conçu par un statisticien employé chez Guinness, compare deux moyennes en petit échantillon ?",
+              "expected": "Le test t (de Student)",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Publié sous le pseudonyme « Student » par W. Gosset.",
+              "ref": "Student, Biometrika, 1908."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q4",
+              "q": "Quel problème pose la forte corrélation entre plusieurs variables explicatives dans un modèle de régression ?",
+              "expected": "La multicolinéarité",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Inflation des variances ; VIF > 10 problématique ; remèdes : Ridge, LASSO, ACP.",
+              "ref": "Belsley, Kuh & Welsch, Regression Diagnostics, 1980."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q5",
+              "q": "Quel test de racine unitaire, augmenté de retards pour traiter l'autocorrélation, évalue la stationnarité d'une série ?",
+              "expected": "Le test ADF (Augmented Dickey-Fuller)",
+              "given": "Adf",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "H₀ : présence d'une racine unitaire.",
+              "ref": "Said & Dickey, Biometrika, 1984."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q6",
+              "q": "Quel concept de 1969 teste si le passé d'une série améliore la prévision d'une autre ?",
+              "expected": "La causalité au sens de Granger",
+              "given": "Arch",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "C. Granger, Prix Nobel 2003.",
+              "ref": "C. Granger, Econometrica, 1969."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q7",
+              "q": "Quel modèle de 1982 capture la volatilité conditionnelle hétéroscédastique des séries financières ?",
+              "expected": "Le modèle ARCH (de R. Engle)",
+              "given": "Arch",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Étendu en GARCH par Bollerslev (1986).",
+              "ref": "R. Engle, Econometrica, 1982."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q8",
+              "q": "Quel estimateur de panel élimine l'hétérogénéité individuelle constante en différentiant par rapport à la moyenne intra-individuelle ?",
+              "expected": "L'estimateur within (effets fixes)",
+              "given": "White",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Test de Hausman pour comparer effets fixes et effets aléatoires.",
+              "ref": "Wooldridge, Econometric Analysis of Cross Section and Panel Data, 2010."
+            },
+            {
+              "manche": "manche3",
+              "packId": "manche3-4",
+              "packTitle": "Finale 4",
+              "qid": "manche3-4-q9",
+              "q": "Quelle méthode d'évaluation d'impact compare l'évolution avant-après d'un groupe traité à celle d'un groupe témoin ?",
+              "expected": "Les doubles différences (DiD)",
+              "given": "Did",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Hypothèse identifiante : tendances parallèles.",
+              "ref": "Card & Krueger, AER, 1994."
+            }
+          ]
+        }
+      },
+      "winner": "QPC-3VY2WXWP"
+    },
+    {
+      "id": "cd9df0fe39890ce6",
+      "type": "duel",
+      "createdAt": "2026-05-25T17:10:07.386Z",
+      "createdBy": "QPC-NZXE8MYU",
+      "participants": [
+        "QPC-NZXE8MYU",
+        "QPC-3VY2WXWP"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2",
+          "manche3"
+        ],
+        "domains": [
+          "Statistiques et économétrie"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-31",
+              "type": "manche1",
+              "titre": "Économétrie (1)",
+              "theme": "Économétrie",
+              "domain": "Statistiques et économétrie",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-31-q1",
+                  "q": "Quel théorème établit que les MCO sont les meilleurs estimateurs linéaires sans biais sous certaines hypothèses ?",
+                  "r": "Le théorème de Gauss-Markov",
+                  "e": "BLUE (Best Linear Unbiased Estimator) ; nécessite exogénéité, homoscédasticité, non-corrélation des erreurs.",
+                  "ref": "C.F. Gauss (1809), A. Markov (1900).",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-31-q2",
+                  "q": "Quel test, fondé sur la régression du carré des résidus, détecte l'hétéroscédasticité de forme inconnue ?",
+                  "r": "Le test de White",
+                  "e": "Régresse e² sur les régresseurs, leurs carrés et produits croisés ; n·R² ~ χ²(k).",
+                  "ref": "H. White, Econometrica, 1980.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-31-q3",
+                  "q": "Quelle statistique proche de 2 indique l'absence d'autocorrélation d'ordre 1 des résidus ?",
+                  "r": "La statistique de Durbin-Watson",
+                  "e": "DW ≈ 2(1−ρ̂) ; valeurs proches de 2 = non-autocorrélation.",
+                  "ref": "Durbin & Watson, Biometrika, 1950.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-31-q4",
+                  "q": "Quel test étend le test de Dickey-Fuller en ajoutant des retards pour traiter l'autocorrélation des résidus ?",
+                  "r": "Le test ADF (Augmented Dickey-Fuller)",
+                  "e": "H₀ : présence de racine unitaire (série non stationnaire).",
+                  "ref": "Said & Dickey, Biometrika, 1984.",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-5",
+              "type": "manche2",
+              "titre": "Duel 5",
+              "theme": "Économétrie appliquée",
+              "domain": "Statistiques et économétrie",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-5-q1",
+                  "q": "Quel sigle anglo-saxon désigne la méthode des moindres carrés ordinaires ?",
+                  "r": "OLS (Ordinary Least Squares)",
+                  "e": "Minimise la somme des carrés des résidus ; estimateur le plus utilisé en régression linéaire.",
+                  "ref": "Gauss-Legendre, début XIXᵉ siècle.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-5-q2",
+                  "q": "Quel test compare deux modèles emboîtés via la différence de leurs log-vraisemblances ?",
+                  "r": "Le test du rapport de vraisemblance (LR)",
+                  "e": "−2 ln(L₀/L₁) ~ χ²(k) ; à rapprocher des tests de Wald et de score (LM).",
+                  "ref": "S. Wilks, Annals of Math. Statistics, 1938.",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-5-q3",
+                  "q": "Quels deux critères d'information pénalisent la sur-paramétrisation lors de la sélection de modèles ?",
+                  "r": "Les critères AIC (Akaike) et BIC (Schwarz)",
+                  "e": "AIC = −2L + 2k ; BIC = −2L + k·ln(n) ; le BIC est plus parcimonieux pour n grand.",
+                  "ref": "H. Akaike, IEEE TAC, 1974 ; G. Schwarz, Annals of Statistics, 1978.",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-5-q4",
+                  "q": "Quel concept économétrique distingue corrélation et capacité prédictive entre deux séries temporelles ?",
+                  "r": "La causalité au sens de Granger",
+                  "e": "X cause Y au sens de Granger si le passé de X améliore la prévision de Y.",
+                  "ref": "C. Granger, Econometrica, 1969.",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-5-q5",
+                  "q": "Quelle hypothèse, formalisée par Muth puis Lucas, suppose que les agents utilisent toute l'information disponible ?",
+                  "r": "Les anticipations rationnelles",
+                  "e": "Fonde les modèles RBC, néo-keynésiens, DSGE.",
+                  "ref": "J. Muth, Econometrica, 1961.",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-5-q6",
+                  "q": "Quel modèle DSGE estimé pour la zone euro est devenu un standard en banque centrale après 2003 ?",
+                  "r": "Le modèle Smets-Wouters",
+                  "e": "Modèle néo-keynésien d'équilibre général dynamique stochastique ; calibration et estimation bayésienne.",
+                  "ref": "F. Smets & R. Wouters, JEEA, 2003.",
+                  "pts": 6
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche3",
+            "pack": {
+              "id": "manche3-4",
+              "type": "manche3",
+              "titre": "Finale 4",
+              "theme": "Statistiques et économétrie",
+              "domain": "Statistiques et économétrie",
+              "timing": "Buzz libre — 1 min 30 — 1 point par bonne réponse — 9 points gagnants",
+              "questions": [
+                {
+                  "id": "manche3-4-q1",
+                  "q": "Quel théorème asymptotique fonde l'inférence sur la moyenne d'un grand échantillon ?",
+                  "r": "Le théorème central limite (TCL)",
+                  "e": "Pour Xᵢ i.i.d. à variance finie : √n(x̄−μ)/σ → N(0,1).",
+                  "ref": "Lindeberg-Lévy ; Lyapunov.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q2",
+                  "q": "Quelle méthode d'estimation linéaire minimise la somme des carrés des résidus ?",
+                  "r": "Les moindres carrés ordinaires (MCO)",
+                  "e": "β̂ = (X'X)⁻¹X'y ; BLUE sous les hypothèses de Gauss-Markov.",
+                  "ref": "C.F. Gauss (1809), A. Legendre (1805).",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q3",
+                  "q": "Quel test, conçu par un statisticien employé chez Guinness, compare deux moyennes en petit échantillon ?",
+                  "r": "Le test t (de Student)",
+                  "e": "Publié sous le pseudonyme « Student » par W. Gosset.",
+                  "ref": "Student, Biometrika, 1908.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q4",
+                  "q": "Quel problème pose la forte corrélation entre plusieurs variables explicatives dans un modèle de régression ?",
+                  "r": "La multicolinéarité",
+                  "e": "Inflation des variances ; VIF > 10 problématique ; remèdes : Ridge, LASSO, ACP.",
+                  "ref": "Belsley, Kuh & Welsch, Regression Diagnostics, 1980.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q5",
+                  "q": "Quel test de racine unitaire, augmenté de retards pour traiter l'autocorrélation, évalue la stationnarité d'une série ?",
+                  "r": "Le test ADF (Augmented Dickey-Fuller)",
+                  "e": "H₀ : présence d'une racine unitaire.",
+                  "ref": "Said & Dickey, Biometrika, 1984.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q6",
+                  "q": "Quel concept de 1969 teste si le passé d'une série améliore la prévision d'une autre ?",
+                  "r": "La causalité au sens de Granger",
+                  "e": "C. Granger, Prix Nobel 2003.",
+                  "ref": "C. Granger, Econometrica, 1969.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q7",
+                  "q": "Quel modèle de 1982 capture la volatilité conditionnelle hétéroscédastique des séries financières ?",
+                  "r": "Le modèle ARCH (de R. Engle)",
+                  "e": "Étendu en GARCH par Bollerslev (1986).",
+                  "ref": "R. Engle, Econometrica, 1982.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q8",
+                  "q": "Quel estimateur de panel élimine l'hétérogénéité individuelle constante en différentiant par rapport à la moyenne intra-individuelle ?",
+                  "r": "L'estimateur within (effets fixes)",
+                  "e": "Test de Hausman pour comparer effets fixes et effets aléatoires.",
+                  "ref": "Wooldridge, Econometric Analysis of Cross Section and Panel Data, 2010.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-4-q9",
+                  "q": "Quelle méthode d'évaluation d'impact compare l'évolution avant-après d'un groupe traité à celle d'un groupe témoin ?",
+                  "r": "Les doubles différences (DiD)",
+                  "e": "Hypothèse identifiante : tendances parallèles.",
+                  "ref": "Card & Krueger, AER, 1994.",
+                  "pts": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-NZXE8MYU": "accepted",
+        "QPC-3VY2WXWP": "pending"
       },
       "results": {},
       "winner": null
