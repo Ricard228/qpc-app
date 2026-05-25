@@ -373,6 +373,143 @@
       },
       "results": {},
       "winner": null
+    },
+    {
+      "id": "94e1dc150a8cf387",
+      "type": "duel",
+      "createdAt": "2026-05-25T16:19:04.057Z",
+      "createdBy": "QPC-NZXE8MYU",
+      "participants": [
+        "QPC-NZXE8MYU",
+        "QPC-3VY2WXWP"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "domains": [],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-53",
+              "type": "manche1",
+              "titre": "Cultures vivrières africaines (2)",
+              "theme": "Cultures vivrières",
+              "domain": "Économie agricole et agribusiness",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-53-q1",
+                  "q": "Quel tubercule à chair blanche, principalement cultivé en zone forestière humide, est appelé igname dans le golfe de Guinée ?",
+                  "r": "L'igname (Dioscorea spp.)",
+                  "e": "Nigeria, Ghana, Côte d'Ivoire, Bénin et Togo forment la « ceinture de l'igname ».",
+                  "ref": "FAO, FAOSTAT, Yam production.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-53-q2",
+                  "q": "Quelle céréale rustique à grains denses, proche du mil, est largement cultivée en zone soudano-sahélienne ?",
+                  "r": "Le sorgho (Sorghum bicolor)",
+                  "e": "Adapté aux climats arides ; aliment de base au Burkina Faso, Niger, Tchad, Soudan.",
+                  "ref": "ICRISAT, Sorghum research.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-53-q3",
+                  "q": "Quel tubercule sucré à chair généralement orange, riche en bêta-carotène, est promu pour lutter contre la carence en vitamine A ?",
+                  "r": "La patate douce (à chair orange)",
+                  "e": "Variétés OFSP diffusées par le CIP/HarvestPlus ; impact nutritionnel démontré.",
+                  "ref": "CIP/HarvestPlus, OFSP Project Reports.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-53-q4",
+                  "q": "Quelle légumineuse à graines, surnommée « niébé » en Afrique de l'Ouest, est une source clé de protéines végétales ?",
+                  "r": "Le niébé (Vigna unguiculata) / dolique à œil noir",
+                  "e": "Nigeria, Niger, Burkina Faso parmi les premiers producteurs mondiaux ; rôle dans la rotation.",
+                  "ref": "IITA, Cowpea Research.",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-6",
+              "type": "manche2",
+              "titre": "Duel 6",
+              "theme": "Statistiques inférentielles",
+              "domain": "Statistiques et économétrie",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-6-q1",
+                  "q": "Quelle probabilité, associée à la statistique de test observée, est comparée au seuil de significativité ?",
+                  "r": "La p-value (valeur-p)",
+                  "e": "P(T ≥ t_obs | H₀) ; rejet si p < α ; débats sur son interprétation.",
+                  "ref": "R.A. Fisher, Statistical Methods for Research Workers, 1925.",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-6-q2",
+                  "q": "Quel test paramétrique, publié sous le pseudonyme « Student », compare les moyennes de deux échantillons ?",
+                  "r": "Le test t",
+                  "e": "W. Gosset, employé chez Guinness, signait « Student » pour préserver le secret commercial.",
+                  "ref": "Student, Biometrika, 1908.",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-6-q3",
+                  "q": "Quelle méthode d'estimation choisit les paramètres qui rendent les données observées les plus probables ?",
+                  "r": "Le maximum de vraisemblance (MLE)",
+                  "e": "L(θ) = Π f(xᵢ;θ) ; estimateur consistant, asymptotiquement normal et efficace.",
+                  "ref": "R.A. Fisher, Phil. Trans. Royal Society A, 1922.",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-6-q4",
+                  "q": "Quelle approche statistique combine une distribution a priori et la vraisemblance pour mettre à jour les croyances ?",
+                  "r": "L'inférence bayésienne",
+                  "e": "P(θ|x) ∝ P(x|θ) P(θ) ; choix du prior crucial.",
+                  "ref": "T. Bayes, Phil. Trans. Royal Society, 1763 (posthume).",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-6-q5",
+                  "q": "Quelle famille d'algorithmes échantillonne efficacement des distributions postérieures complexes en statistique bayésienne ?",
+                  "r": "Les méthodes MCMC (Metropolis-Hastings, Gibbs)",
+                  "e": "Révolution bayésienne computationnelle des années 1990.",
+                  "ref": "Metropolis et al. (1953) ; Hastings (1970).",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-6-q6",
+                  "q": "Quel paradoxe illustre l'inversion possible d'une corrélation lorsqu'on agrège deux sous-populations ?",
+                  "r": "Le paradoxe de Simpson",
+                  "e": "Exemple classique : admissions à Berkeley, 1973 ; impose la stratification.",
+                  "ref": "E. Simpson, JRSS B, 1951.",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-NZXE8MYU": "accepted",
+        "QPC-3VY2WXWP": "pending"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
