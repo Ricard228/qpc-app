@@ -53,10 +53,11 @@ function loadAuth() {
   const data = readJson(AUTH_PATH, null);
   if (data) {
     // Migration : ajouter settings si absent
-    if (!data.settings) data.settings = { reviewEnabled: true };
+    if (!data.settings) data.settings = { reviewEnabled: true, qcmMode: 'user-choice' };
+    if (data.settings.qcmMode == null) data.settings.qcmMode = 'user-choice';
     return data;
   }
-  const init = { codes: {}, settings: { reviewEnabled: true }, createdAt: new Date().toISOString() };
+  const init = { codes: {}, settings: { reviewEnabled: true, qcmMode: 'user-choice' }, createdAt: new Date().toISOString() };
   writeJson(AUTH_PATH, init);
   return init;
 }
@@ -338,13 +339,16 @@ app.delete('/api/admin/codes/:code', requireAdmin, (req, res) => {
 // ---------- Admin : settings (toggle révision libre) -----------------
 app.get('/api/admin/settings', requireAdmin, (req, res) => {
   const auth = loadAuth();
-  res.json(auth.settings || { reviewEnabled: true });
+  res.json(auth.settings || { reviewEnabled: true, qcmMode: 'user-choice' });
 });
 
 app.put('/api/admin/settings', requireAdmin, (req, res) => {
   const auth = loadAuth();
   auth.settings = auth.settings || {};
   if (typeof req.body.reviewEnabled === 'boolean') auth.settings.reviewEnabled = req.body.reviewEnabled;
+  if (typeof req.body.qcmMode === 'string' && ['force-text', 'force-qcm', 'user-choice'].includes(req.body.qcmMode)) {
+    auth.settings.qcmMode = req.body.qcmMode;
+  }
   saveAuth(auth);
   res.json(auth.settings);
 });

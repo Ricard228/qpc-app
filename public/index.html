@@ -216,6 +216,15 @@
         </label>
       </div>
 
+      <div class="card" id="setup-qcm-card">
+        <h2 class="card-title">Mode de réponse</h2>
+        <p class="muted" style="margin-top:0;">En mode QCM, les questions qui en disposent affichent des propositions à cocher. Les autres questions restent en saisie libre.</p>
+        <div class="checks-row" id="setup-qcm-row">
+          <label class="check"><input type="radio" name="qcm-mode" value="text" checked /> <span>Saisie libre</span></label>
+          <label class="check"><input type="radio" name="qcm-mode" value="qcm" /> <span>QCM (choix multiples)</span></label>
+        </div>
+      </div>
+
       <div class="actions-row">
         <button id="btn-back-home" class="btn btn-ghost">Retour</button>
         <button id="btn-start" class="btn btn-primary btn-lg">Démarrer la partie</button>
@@ -402,12 +411,22 @@
         <div class="settings-row">
           <div>
             <strong>Mode « Révision libre »</strong>
-            <div class="muted" style="font-size:13px; margin-top:2px;">Permet aux utilisateurs de parcourir les 516 questions sans timer. Désactiver pour les sessions d'examen.</div>
+            <div class="muted" style="font-size:13px; margin-top:2px;">Permet aux utilisateurs de parcourir les questions sans timer. Désactiver pour les sessions d'examen.</div>
           </div>
           <label class="toggle">
             <input type="checkbox" id="toggle-review" />
             <span class="toggle-slider"></span>
           </label>
+        </div>
+
+        <div style="margin-top:18px; padding-top:18px; border-top:1px solid var(--line);">
+          <strong>Mode des questions</strong>
+          <div class="muted" style="font-size:13px; margin-top:2px;">Force le mode de réponse pour tous les joueurs, ou laisse-leur le choix au début de la partie.</div>
+          <div class="checks-row" id="admin-qcm-row" style="margin-top:10px;">
+            <label class="check"><input type="radio" name="admin-qcm" value="user-choice" /> <span>Laisser le choix au joueur</span></label>
+            <label class="check"><input type="radio" name="admin-qcm" value="force-text" /> <span>Forcer la saisie libre</span></label>
+            <label class="check"><input type="radio" name="admin-qcm" value="force-qcm" /> <span>Forcer QCM</span></label>
+          </div>
         </div>
       </div>
 

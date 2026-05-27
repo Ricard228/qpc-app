@@ -2645,6 +2645,1021 @@
           "pts": 1
         }
       ]
+    },
+    {
+      "id": "manche1-64",
+      "type": "manche1",
+      "titre": "Modèles linéaires avancés (1)",
+      "theme": "Économétrie",
+      "domain": "Statistiques et économétrie",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-64-q1",
+          "q": "Quel critère pénalise la complexité d'un modèle par 2k − 2 ln L où k = nombre de paramètres ?",
+          "r": "AIC",
+          "choices": [
+            "AIC",
+            "BIC",
+            "R² ajusté",
+            "Mallows Cp"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Akaike Information Criterion : équilibre vraisemblance et parcimonie.",
+          "ref": "Akaike, 1974.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-64-q2",
+          "q": "Quel critère pénalise plus fortement que l'AIC avec un terme k·ln(n) ?",
+          "r": "BIC (Schwarz)",
+          "choices": [
+            "BIC (Schwarz)",
+            "AIC corrigé",
+            "F-statistique",
+            "Durbin-Watson"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "BIC = k·ln(n) − 2·ln L : plus sévère sur la complexité, favorise les modèles parcimonieux.",
+          "ref": "Schwarz, 1978.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-64-q3",
+          "q": "Quelle statistique teste l'autocorrélation d'ordre 1 des résidus en MCO ?",
+          "r": "Durbin-Watson",
+          "choices": [
+            "Durbin-Watson",
+            "Breusch-Pagan",
+            "Jarque-Bera",
+            "White"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "DW ≈ 2 indique pas d'autocorrélation ; < 2 = positive ; > 2 = négative.",
+          "ref": "Durbin & Watson, 1950.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-64-q4",
+          "q": "Quel test détecte l'hétéroscédasticité des résidus ?",
+          "r": "Breusch-Pagan",
+          "choices": [
+            "Breusch-Pagan",
+            "Dickey-Fuller",
+            "Durbin-Watson",
+            "Wald"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Régresse les résidus² sur les variables explicatives ; test du multiplicateur de Lagrange.",
+          "ref": "Breusch & Pagan, 1979.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-65",
+      "type": "manche1",
+      "titre": "Séries temporelles (1)",
+      "theme": "Économétrie des séries",
+      "domain": "Statistiques et économétrie",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-65-q1",
+          "q": "Quel test vérifie la présence d'une racine unitaire (non-stationnarité) ?",
+          "r": "ADF (Dickey-Fuller augmenté)",
+          "choices": [
+            "ADF (Dickey-Fuller augmenté)",
+            "Jarque-Bera",
+            "Hausman",
+            "White"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "H0 : présence de racine unitaire → série non stationnaire.",
+          "ref": "Dickey & Fuller, 1979.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-65-q2",
+          "q": "Quel modèle combine AR, intégration (différenciation) et MA ?",
+          "r": "ARIMA",
+          "choices": [
+            "ARIMA",
+            "GARCH",
+            "VAR",
+            "VECM"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "AutoRegressive Integrated Moving Average ; notation ARIMA(p,d,q).",
+          "ref": "Box & Jenkins, 1976.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-65-q3",
+          "q": "Quel modèle décrit la volatilité conditionnelle (variance changeante) ?",
+          "r": "GARCH",
+          "choices": [
+            "GARCH",
+            "ARIMA",
+            "VAR",
+            "OLS"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Generalized Autoregressive Conditional Heteroskedasticity ; Bollerslev 1986.",
+          "ref": "Bollerslev, 1986.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-65-q4",
+          "q": "Le test de Johansen sert à détecter…",
+          "r": "Le rang de cointégration",
+          "choices": [
+            "Le rang de cointégration entre plusieurs séries",
+            "L'autocorrélation",
+            "L'hétéroscédasticité",
+            "La normalité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Test du rapport de vraisemblance ; identifie le nombre de vecteurs de cointégration dans un VAR.",
+          "ref": "Johansen, 1991.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-66",
+      "type": "manche1",
+      "titre": "Modèles non-linéaires",
+      "theme": "Économétrie qualitative",
+      "domain": "Statistiques et économétrie",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-66-q1",
+          "q": "Le modèle logit utilise quelle fonction de lien ?",
+          "r": "Fonction logistique",
+          "choices": [
+            "Fonction logistique",
+            "Fonction probit (Φ)",
+            "Fonction identité",
+            "Tangente hyperbolique"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "P(Y=1|X) = 1/(1+e^(-Xβ)) ; log-odds linéaire en X.",
+          "ref": "Berkson, 1944.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-66-q2",
+          "q": "Le modèle probit utilise quelle fonction de lien ?",
+          "r": "Φ (loi normale standard)",
+          "choices": [
+            "Fonction de répartition normale standard Φ",
+            "Logistique",
+            "Exponentielle",
+            "Logarithmique"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "P(Y=1|X) = Φ(Xβ) ; résultats proches du logit mais coefficients non-équivalents.",
+          "ref": "Bliss, 1934.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-66-q3",
+          "q": "Quel modèle pour variable dépendante de comptage (Y ∈ N) ?",
+          "r": "Modèle de Poisson",
+          "choices": [
+            "Poisson",
+            "Probit",
+            "Tobit",
+            "OLS"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "log(λ) = Xβ ; suppose E(Y) = Var(Y), sinon utiliser binomial négatif.",
+          "ref": "Cameron & Trivedi, 1998.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-66-q4",
+          "q": "Le modèle Tobit est utilisé quand la variable dépendante est…",
+          "r": "Censurée",
+          "choices": [
+            "Censurée (tronquée à 0 ou autre seuil)",
+            "Discrète binaire",
+            "De comptage",
+            "Catégorielle multinomiale"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Modélise une variable latente Y* dont seule la valeur tronquée est observée.",
+          "ref": "Tobin, 1958.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-67",
+      "type": "manche1",
+      "titre": "Données de panel",
+      "theme": "Économétrie panel",
+      "domain": "Statistiques et économétrie",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-67-q1",
+          "q": "Quel modèle de panel suppose que l'effet individuel αi est corrélé avec les régresseurs X ?",
+          "r": "Effets fixes",
+          "choices": [
+            "Effets fixes (within)",
+            "Effets aléatoires (RE)",
+            "Between",
+            "Pooled OLS"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Within estimator : élimine les effets individuels en différenciant ; biais réduit si α_i corrélé à X.",
+          "ref": "Wooldridge, Econometric Analysis of Cross Section and Panel Data.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-67-q2",
+          "q": "Quel test arbitre entre effets fixes et effets aléatoires ?",
+          "r": "Test de Hausman",
+          "choices": [
+            "Hausman",
+            "White",
+            "Jarque-Bera",
+            "Sargan"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "H0 : RE est cohérent et efficace. Rejet → préférer effets fixes.",
+          "ref": "Hausman, 1978.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-67-q3",
+          "q": "Le GMM en panel dynamique (Arellano-Bond) sert à…",
+          "r": "Instrumenter Y(t-1)",
+          "choices": [
+            "Instrumenter les retards endogènes Y(t-1)",
+            "Tester la stationnarité",
+            "Calculer les résidus",
+            "Estimer les effets quadratiques"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Arellano-Bond 1991 : différencie, puis instrumente avec les niveaux retardés.",
+          "ref": "Arellano & Bond, 1991.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-67-q4",
+          "q": "Quel test de Sargan vérifie en GMM ?",
+          "r": "Validité des instruments",
+          "choices": [
+            "La validité des instruments (sur-identification)",
+            "L'autocorrélation",
+            "La stationnarité",
+            "L'hétéroscédasticité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Test de sur-identification : H0 = instruments tous valides.",
+          "ref": "Sargan, 1958 ; Hansen J, 1982.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-68",
+      "type": "manche1",
+      "titre": "Métriques d'évaluation",
+      "theme": "Statistique appliquée",
+      "domain": "Statistiques et économétrie",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-68-q1",
+          "q": "Quel coefficient mesure la qualité d'ajustement d'une régression OLS ?",
+          "r": "R²",
+          "choices": [
+            "R² (coefficient de détermination)",
+            "AIC",
+            "F-statistique",
+            "Durbin-Watson"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "R² = 1 − SCR/SCT ; entre 0 et 1.",
+          "ref": "Wright, 1921.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-68-q2",
+          "q": "Le RMSE est la racine carrée de…",
+          "r": "MSE",
+          "choices": [
+            "L'erreur quadratique moyenne (MSE)",
+            "L'erreur absolue moyenne",
+            "La somme des erreurs",
+            "La variance des prédictions"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Root Mean Squared Error : sensible aux outliers, exprime l'erreur dans l'unité de la variable cible.",
+          "ref": "Hyndman & Athanasopoulos, Forecasting.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-68-q3",
+          "q": "La métrique MAPE exprime…",
+          "r": "MAPE",
+          "choices": [
+            "Erreur absolue moyenne en pourcentage",
+            "Erreur quadratique moyenne",
+            "Variance résiduelle",
+            "Information de Fisher"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Mean Absolute Percentage Error : (1/n)·Σ|y−ŷ|/|y| × 100 %.",
+          "ref": "Hyndman & Koehler, 2006.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-68-q4",
+          "q": "Le R² peut être négatif dans quelles conditions ?",
+          "r": "En hors-échantillon ou sans constante",
+          "choices": [
+            "En régression hors échantillon (test set) ou sans constante quand le modèle est pire que la moyenne",
+            "Jamais",
+            "Uniquement en régression non-linéaire",
+            "Quand n < k"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "En train OLS avec constante R² ∈ [0,1] ; sur test set ou sans intercept R² peut être < 0.",
+          "ref": "James, Witten, Hastie, Tibshirani, ISLR.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-69",
+      "type": "manche1",
+      "titre": "Fondamentaux ML (1)",
+      "theme": "Apprentissage supervisé",
+      "domain": "Machine learning et deep learning",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-69-q1",
+          "q": "Quel algorithme classe un point selon les k voisins les plus proches ?",
+          "r": "k-NN",
+          "choices": [
+            "k-NN (k-Nearest Neighbors)",
+            "k-means",
+            "SVM",
+            "Random Forest"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Classification : vote majoritaire des k plus proches voisins dans l'espace des features.",
+          "ref": "Cover & Hart, 1967.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-69-q2",
+          "q": "Quel algorithme cherche l'hyperplan séparateur de marge maximale ?",
+          "r": "SVM",
+          "choices": [
+            "SVM (Support Vector Machine)",
+            "k-NN",
+            "Régression linéaire",
+            "Naive Bayes"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Maximisation de la marge entre les classes ; kernels (RBF, polynomial) pour le non-linéaire.",
+          "ref": "Vapnik, 1995.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-69-q3",
+          "q": "Random Forest combine plusieurs…",
+          "r": "Arbres de décision (bagging)",
+          "choices": [
+            "Arbres de décision avec bagging + bootstrap des features",
+            "Réseaux de neurones",
+            "Régressions logistiques",
+            "SVM"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Bagging : bootstrap des échantillons + sélection aléatoire des features ; réduit la variance.",
+          "ref": "Breiman, 2001.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-69-q4",
+          "q": "Le gradient boosting construit les arbres…",
+          "r": "Séquentiellement",
+          "choices": [
+            "Séquentiellement, chaque arbre corrigeant les erreurs du précédent",
+            "En parallèle indépendamment",
+            "Par bagging",
+            "Par sélection aléatoire"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Chaque nouvel arbre apprend les résidus pondérés. XGBoost, LightGBM, CatBoost.",
+          "ref": "Friedman, 2001.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-70",
+      "type": "manche1",
+      "titre": "Réseaux de neurones",
+      "theme": "Deep learning",
+      "domain": "Machine learning et deep learning",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-70-q1",
+          "q": "Quelle fonction d'activation produit des sorties dans [0,1] et est sujette au vanishing gradient ?",
+          "r": "Sigmoïde",
+          "choices": [
+            "Sigmoïde",
+            "ReLU",
+            "Tanh",
+            "Softmax"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "σ(x) = 1/(1+e^(-x)) ; saturation pour |x| grand → gradient ≈ 0.",
+          "ref": "Goodfellow et al., Deep Learning, 2016.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-70-q2",
+          "q": "Quelle fonction d'activation vaut max(0, x) et accélère l'entraînement ?",
+          "r": "ReLU",
+          "choices": [
+            "ReLU",
+            "Sigmoïde",
+            "Tanh",
+            "Linéaire"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Rectified Linear Unit : pas de saturation pour x > 0 ; problème dying ReLU pour x < 0.",
+          "ref": "Nair & Hinton, 2010.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-70-q3",
+          "q": "Le dropout pendant l'entraînement consiste à…",
+          "r": "Désactiver des neurones aléatoirement",
+          "choices": [
+            "Désactiver aléatoirement une fraction des neurones",
+            "Augmenter la taille du batch",
+            "Réduire le learning rate",
+            "Ajouter du bruit aux poids"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Réduit l'overfitting en empêchant la co-adaptation des neurones.",
+          "ref": "Srivastava et al., 2014.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-70-q4",
+          "q": "La batch normalisation normalise…",
+          "r": "Les activations",
+          "choices": [
+            "Les activations à chaque couche (moyenne 0, variance 1)",
+            "Les poids initiaux",
+            "Les gradients en fin de backprop",
+            "Les biais des sorties"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Stabilise et accélère l'entraînement ; introduit β, γ apprenables.",
+          "ref": "Ioffe & Szegedy, 2015.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-71",
+      "type": "manche1",
+      "titre": "Architectures spécialisées",
+      "theme": "Deep learning",
+      "domain": "Machine learning et deep learning",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-71-q1",
+          "q": "Quel type de réseau est conçu pour les images via convolutions ?",
+          "r": "CNN",
+          "choices": [
+            "CNN (Convolutional Neural Network)",
+            "RNN",
+            "Transformer",
+            "MLP"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Filtres convolutifs + pooling ; partage de poids, invariance à la translation.",
+          "ref": "LeCun et al., 1989.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-71-q2",
+          "q": "Quel type de réseau gère naturellement les séquences avec état caché ?",
+          "r": "RNN",
+          "choices": [
+            "RNN (Recurrent Neural Network)",
+            "CNN",
+            "MLP",
+            "Autoencoder"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Récurrence h_t = f(h_{t-1}, x_t) ; sujet au vanishing gradient → LSTM/GRU.",
+          "ref": "Elman, 1990.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-71-q3",
+          "q": "L'architecture Transformer repose principalement sur…",
+          "r": "Self-attention",
+          "choices": [
+            "Le mécanisme d'attention (self-attention)",
+            "Les convolutions 3D",
+            "Les états récurrents",
+            "Le pooling spatial"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Attention multi-tête, pas de récurrence ; base de BERT, GPT, T5.",
+          "ref": "Vaswani et al., \"Attention Is All You Need\", 2017.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-71-q4",
+          "q": "Un autoencoder apprend à…",
+          "r": "Reconstruire l'entrée",
+          "choices": [
+            "Reconstruire son entrée via un goulot d'étranglement",
+            "Classer des images",
+            "Générer du texte",
+            "Maximiser la marge"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Encoder → représentation latente → decoder ; usage pour réduction de dimension, débruitage, anomalie.",
+          "ref": "Hinton & Salakhutdinov, 2006.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-72",
+      "type": "manche1",
+      "titre": "Évaluation et applications ML",
+      "theme": "Évaluation modèles",
+      "domain": "Machine learning et deep learning",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-72-q1",
+          "q": "Quelle métrique vaut TP / (TP+FP) en classification binaire ?",
+          "r": "Précision",
+          "choices": [
+            "Précision (precision)",
+            "Rappel (recall)",
+            "F1-score",
+            "Accuracy"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Proportion de prédictions positives qui sont correctes ; complémentaire au recall.",
+          "ref": "Manning et al., Information Retrieval, 2008.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-72-q2",
+          "q": "Quelle métrique vaut TP / (TP+FN) ?",
+          "r": "Rappel",
+          "choices": [
+            "Rappel (recall, sensibilité)",
+            "Précision",
+            "Spécificité",
+            "F1-score"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Proportion de positifs réels correctement détectés. Crucial en médical et fraude.",
+          "ref": "Manning et al., 2008.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-72-q3",
+          "q": "Le F1-score est…",
+          "r": "Moyenne harmonique de P et R",
+          "choices": [
+            "La moyenne harmonique de précision et rappel",
+            "La moyenne arithmétique",
+            "Le produit P × R",
+            "L'écart-type des deux"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "F1 = 2·P·R/(P+R) ; pénalise les déséquilibres entre P et R.",
+          "ref": "Van Rijsbergen, 1979.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-72-q4",
+          "q": "L'AUC-ROC mesure…",
+          "r": "Aire sous courbe ROC",
+          "choices": [
+            "L'aire sous la courbe ROC (TPR vs FPR)",
+            "La somme des résidus",
+            "L'erreur quadratique",
+            "L'entropie croisée"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "AUC ∈ [0,1] ; 0.5 = aléatoire, 1 = parfait. Insensible au seuil de décision.",
+          "ref": "Hanley & McNeil, 1982.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-73",
+      "type": "manche1",
+      "titre": "Cadre logique et GAR",
+      "theme": "Planification de projet",
+      "domain": "Suivi-évaluation des projets et politiques",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-73-q1",
+          "q": "Quels sont les 4 niveaux du cadre logique (logframe) ?",
+          "r": "Activités → Produits → Effets → Impact",
+          "choices": [
+            "Activités → Produits → Effets → Impact",
+            "Inputs → Outputs → Outcomes → Goals",
+            "Buts → Stratégies → Tactiques → Actions",
+            "Plan → Do → Check → Act"
+          ],
+          "correctIndices": [
+            0,
+            1
+          ],
+          "e": "Hiérarchie des résultats : Activités/Inputs, Produits (outputs), Effets (outcomes), Impact. Les deux formulations équivalentes sont acceptées.",
+          "ref": "Banque mondiale, manuel GAR ; USAID logframe.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-73-q2",
+          "q": "L'approche GAR signifie…",
+          "r": "Gestion Axée sur les Résultats",
+          "choices": [
+            "Gestion Axée sur les Résultats",
+            "Gestion Agile et Rapide",
+            "Garantie d'Aide au Recouvrement",
+            "Groupe d'Analyse des Risques"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Results-Based Management (RBM) : focus sur les résultats à atteindre, mesurés par des indicateurs.",
+          "ref": "PNUD Handbook on Planning, Monitoring and Evaluating for Development Results, 2009.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-73-q3",
+          "q": "Que signifie l'acronyme SMART pour les indicateurs ?",
+          "r": "Spécifique, Mesurable, Atteignable, Réaliste, Temporel",
+          "choices": [
+            "Spécifique, Mesurable, Atteignable, Réaliste, Temporel",
+            "Stratégique, Multidimensionnel, Axé, Réfléchi, Tangible",
+            "Solide, Mesurable, Adaptable, Réaliste, Total",
+            "Système de Mesure, d'Analyse et de Reporting Total"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Critères classiques de qualité d'un indicateur de performance.",
+          "ref": "Doran, 1981 ; repris par tous les bailleurs.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-73-q4",
+          "q": "La théorie du changement diffère du cadre logique car elle…",
+          "r": "Explicite les hypothèses causales",
+          "choices": [
+            "Explicite les hypothèses causales et les liens entre niveaux",
+            "Ne mentionne pas les indicateurs",
+            "Est un outil financier",
+            "Remplace les Termes de Référence"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "TdC : description narrative + diagramme des liens causaux et hypothèses sous-jacentes.",
+          "ref": "Weiss, 1995 ; CARE International ToC Guide.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-74",
+      "type": "manche1",
+      "titre": "Critères du CAD/OCDE",
+      "theme": "Évaluation de projets",
+      "domain": "Suivi-évaluation des projets et politiques",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-74-q1",
+          "q": "Combien de critères d'évaluation le CAD/OCDE a-t-il définis (révision 2019) ?",
+          "r": "6 critères",
+          "choices": [
+            "6 (pertinence, cohérence, efficacité, efficience, impact, durabilité)",
+            "5 (originaux : pertinence, efficacité, efficience, impact, durabilité)",
+            "4",
+            "7"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Mise à jour 2019 ajoute la \"cohérence\" aux 5 critères historiques.",
+          "ref": "OECD/DAC, \"Better Criteria for Better Evaluation\", 2019.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-74-q2",
+          "q": "Le critère \"efficience\" mesure…",
+          "r": "Ressources vs résultats",
+          "choices": [
+            "Le rapport entre ressources et résultats obtenus",
+            "L'atteinte des objectifs",
+            "La pertinence par rapport aux besoins",
+            "La durabilité dans le temps"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Efficiency : économie des moyens pour produire les résultats ; rapport coût-efficacité.",
+          "ref": "OECD/DAC, 2019.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-74-q3",
+          "q": "Le critère \"impact\" évalue…",
+          "r": "Effets directs/indirects, voulus/non voulus",
+          "choices": [
+            "Les effets positifs et négatifs, directs et indirects, voulus ou non",
+            "Uniquement les effets prévus",
+            "Les coûts du projet",
+            "La satisfaction des bailleurs"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Impact = changements de long terme attribuables (au moins en partie) à l'intervention.",
+          "ref": "OECD/DAC, 2019.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-74-q4",
+          "q": "Le critère \"durabilité\" examine…",
+          "r": "Continuité des bénéfices",
+          "choices": [
+            "Si les bénéfices se poursuivent après la fin de l'intervention",
+            "Le respect de l'environnement uniquement",
+            "Le calendrier du projet",
+            "La diversité des parties prenantes"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Sustainability : persistance des effets après la fin du financement ; appropriation locale.",
+          "ref": "OECD/DAC, 2019.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-75",
+      "type": "manche1",
+      "titre": "Bailleurs et outils de S&É",
+      "theme": "Acteurs du développement",
+      "domain": "Suivi-évaluation des projets et politiques",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-75-q1",
+          "q": "Que signifie SYGRI au FIDA ?",
+          "r": "Système de Gestion des Résultats et de l'Impact",
+          "choices": [
+            "Système de Gestion des Résultats et de l'Impact",
+            "Système Général de Recensement Intégré",
+            "Stratégie de Gestion des Risques d'Investissement",
+            "Sécurisation des Garanties pour les Routes d'Investissement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Outil du FIDA pour mesurer et rapporter les résultats des projets (indicateurs standards par catégorie).",
+          "ref": "IFAD, RIMS / SYGRI handbook.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-75-q2",
+          "q": "Le PNUD utilise principalement quel manuel pour le S&É ?",
+          "r": "PNUD Handbook on PMERR",
+          "choices": [
+            "Handbook on Planning, Monitoring and Evaluating for Development Results",
+            "World Development Report",
+            "Africa Competitiveness Report",
+            "Human Development Report"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "« HPMEDR » : référence méthodologique principale du PNUD depuis 2009.",
+          "ref": "UNDP, 2009.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-75-q3",
+          "q": "La Banque mondiale utilise les ICRR pour…",
+          "r": "Implementation Completion and Results Reports",
+          "choices": [
+            "Rapports de fin d'exécution et résultats (Implementation Completion and Results Reports)",
+            "Indicateurs Composites de Risques Régionaux",
+            "Investissements Conjoints en Recherche",
+            "Inventaire des Crédits Régionaux"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Document de clôture systématique pour tous les projets WB ; revu par l'IEG.",
+          "ref": "World Bank, Operations Manual.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-75-q4",
+          "q": "Quel cadre standard de l'ONU oriente les objectifs des projets de développement depuis 2015 ?",
+          "r": "Les 17 ODD",
+          "choices": [
+            "Les 17 Objectifs de Développement Durable (ODD)",
+            "Les Objectifs du Millénaire (OMD)",
+            "L'Agenda 21",
+            "Le Cadre de Sendai"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Agenda 2030 : succède aux OMD ; 17 objectifs, 169 cibles, 232 indicateurs.",
+          "ref": "ONU, Agenda 2030, 2015.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-76",
+      "type": "manche1",
+      "titre": "Méthodes d'évaluation d'impact",
+      "theme": "Évaluation d'impact",
+      "domain": "Suivi-évaluation des projets et politiques",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-76-q1",
+          "q": "Quelle est la méthode \"gold standard\" en évaluation d'impact ?",
+          "r": "RCT (Randomized Controlled Trial)",
+          "choices": [
+            "L'essai contrôlé randomisé (RCT)",
+            "L'étude de cas",
+            "L'enquête de satisfaction",
+            "L'analyse coût-bénéfice"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Assignation aléatoire au traitement → contre-factuel crédible. Banerjee, Duflo, Kremer (Nobel 2019).",
+          "ref": "J-PAL, World Bank IE Toolkit.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-76-q2",
+          "q": "La méthode des doubles différences (DID) requiert…",
+          "r": "Avant/après × traités/témoins",
+          "choices": [
+            "Une mesure avant/après pour traités ET témoins (hypothèse de tendances parallèles)",
+            "Une assignation aléatoire",
+            "Une discontinuité au seuil",
+            "Des variables instrumentales"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Difference-in-Differences : isole l'effet du traitement en supposant tendances parallèles.",
+          "ref": "Card & Krueger, 1994 ; Angrist & Pischke, Mostly Harmless Econometrics.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-76-q3",
+          "q": "L'appariement par score de propension (PSM) sert à…",
+          "r": "Construire un groupe témoin comparable",
+          "choices": [
+            "Construire un groupe témoin comparable sur covariables observables",
+            "Détecter l'autocorrélation",
+            "Estimer un VAR",
+            "Maximiser la vraisemblance"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Rosenbaum & Rubin 1983 : matching sur le score = P(Traité=1|X).",
+          "ref": "Rosenbaum & Rubin, 1983.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-76-q4",
+          "q": "La régression sur discontinuité (RDD) exploite…",
+          "r": "Un seuil d'éligibilité",
+          "choices": [
+            "Un seuil arbitraire qui détermine l'éligibilité au traitement",
+            "Une variable instrumentale",
+            "Une randomisation",
+            "Un placebo"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Compare les unités juste au-dessus / juste en-dessous du cutoff ; quasi-RCT local.",
+          "ref": "Thistlethwaite & Campbell, 1960 ; Hahn et al., 2001.",
+          "pts": 1
+        }
+      ]
     }
   ],
   "manche2": [
@@ -4503,6 +5518,342 @@
           "pts": 6
         }
       ]
+    },
+    {
+      "id": "manche2-33",
+      "type": "manche2",
+      "titre": "Économétrie avancée — duel",
+      "theme": "Économétrie",
+      "domain": "Statistiques et économétrie",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-33-q1",
+          "q": "Quelle méthode estime des paramètres en minimisant la somme des carrés des résidus ?",
+          "r": "MCO",
+          "choices": [
+            "MCO (OLS)",
+            "MV (vraisemblance maximale)",
+            "GMM",
+            "GLS"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Moindres Carrés Ordinaires ; β̂ = (X'X)⁻¹X'y.",
+          "ref": "Gauss, 1809 ; Legendre, 1805.",
+          "pts": 1
+        },
+        {
+          "id": "manche2-33-q2",
+          "q": "La MCG (GLS) est préférable à la MCO quand…",
+          "r": "Hétéroscédasticité ou autocorrélation",
+          "choices": [
+            "Les résidus sont hétéroscédastiques ou autocorrélés",
+            "Les régresseurs sont colinéaires",
+            "L'échantillon est petit",
+            "La variable dépendante est binaire"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Generalized Least Squares pondère selon la matrice de covariance Ω des erreurs.",
+          "ref": "Aitken, 1935.",
+          "pts": 2
+        },
+        {
+          "id": "manche2-33-q3",
+          "q": "Une variable instrumentale doit satisfaire deux conditions :",
+          "r": "Pertinence + exogénéité",
+          "choices": [
+            "Pertinence (cov(Z,X)≠0) et exogénéité (cov(Z,ε)=0)",
+            "Stationnarité et ergodicité",
+            "Normalité et indépendance",
+            "Linéarité et exclusion"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Z corrélé à X (force) mais non corrélé à ε (validité). Tests : F faible si pertinence douteuse.",
+          "ref": "Wooldridge, 2010.",
+          "pts": 3
+        },
+        {
+          "id": "manche2-33-q4",
+          "q": "Le test de spécification de Ramsey (RESET) vérifie…",
+          "r": "Forme fonctionnelle",
+          "choices": [
+            "Si la forme fonctionnelle est correctement spécifiée",
+            "L'hétéroscédasticité",
+            "La normalité",
+            "La cointégration"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Ajoute des puissances de ŷ aux régresseurs ; significatives → modèle mal spécifié.",
+          "ref": "Ramsey, 1969.",
+          "pts": 4
+        },
+        {
+          "id": "manche2-33-q5",
+          "q": "La méthode de Heckman corrige…",
+          "r": "Biais de sélection",
+          "choices": [
+            "Le biais de sélection (échantillonnage non-aléatoire)",
+            "L'autocorrélation",
+            "L'hétéroscédasticité",
+            "La multicolinéarité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Procédure en 2 étapes : probit de sélection + insertion du ratio inverse de Mills.",
+          "ref": "Heckman, 1979 (Nobel 2000).",
+          "pts": 5
+        },
+        {
+          "id": "manche2-33-q6",
+          "q": "Le test J de Hansen en GMM teste…",
+          "r": "Sur-identification (validité des instruments)",
+          "choices": [
+            "La validité des restrictions de sur-identification",
+            "La présence d'autocorrélation d'ordre 2",
+            "La normalité des résidus",
+            "L'hétéroscédasticité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Variante du test de Sargan robuste à l'hétéroscédasticité ; H0 = instruments valides.",
+          "ref": "Hansen, 1982.",
+          "pts": 6
+        }
+      ]
+    },
+    {
+      "id": "manche2-34",
+      "type": "manche2",
+      "titre": "Apprentissage et applications — duel",
+      "theme": "Machine learning",
+      "domain": "Machine learning et deep learning",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-34-q1",
+          "q": "Que cherche à minimiser une fonction de perte en classification binaire avec sortie probabiliste ?",
+          "r": "Entropie croisée binaire",
+          "choices": [
+            "L'entropie croisée binaire (log-loss)",
+            "L'erreur quadratique moyenne",
+            "L'erreur absolue moyenne",
+            "La distance de Manhattan"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L = −[y log(p) + (1−y) log(1−p)] ; pénalise fortement les prédictions confiantes mais fausses.",
+          "ref": "Goodfellow et al., 2016.",
+          "pts": 1
+        },
+        {
+          "id": "manche2-34-q2",
+          "q": "En clustering, quel algorithme partitionne les données en k groupes en minimisant l'inertie intra-classe ?",
+          "r": "k-means",
+          "choices": [
+            "k-means",
+            "DBSCAN",
+            "Random Forest",
+            "PCA"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Itère : (1) affectation au centroïde le plus proche, (2) mise à jour des centroïdes.",
+          "ref": "MacQueen, 1967 ; Lloyd, 1982.",
+          "pts": 2
+        },
+        {
+          "id": "manche2-34-q3",
+          "q": "L'analyse en composantes principales (PCA) cherche à…",
+          "r": "Maximiser la variance projetée",
+          "choices": [
+            "Projeter les données sur les axes de variance maximale",
+            "Classer des données",
+            "Estimer une densité",
+            "Trouver des règles d'association"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Décomposition en valeurs propres de la matrice de covariance ; axes orthogonaux décorrélés.",
+          "ref": "Pearson, 1901 ; Hotelling, 1933.",
+          "pts": 3
+        },
+        {
+          "id": "manche2-34-q4",
+          "q": "En deep learning, quel optimiseur adapte le learning rate par paramètre avec moments ?",
+          "r": "Adam",
+          "choices": [
+            "Adam",
+            "SGD vanille",
+            "L-BFGS",
+            "Newton-Raphson"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Adaptive Moment Estimation : moments d'ordre 1 et 2 ; corrige le biais initial.",
+          "ref": "Kingma & Ba, 2014.",
+          "pts": 4
+        },
+        {
+          "id": "manche2-34-q5",
+          "q": "Le fine-tuning d'un modèle pré-entraîné (transfer learning) consiste à…",
+          "r": "Ré-entraîner certaines couches",
+          "choices": [
+            "Réutiliser ses poids et ré-entraîner certaines couches sur une nouvelle tâche",
+            "Réduire le nombre de paramètres",
+            "Augmenter les données par bruit",
+            "Forcer la convergence"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Économise du temps et des données ; particulièrement efficace pour CV (ImageNet) et NLP (BERT, GPT).",
+          "ref": "Yosinski et al., 2014.",
+          "pts": 5
+        },
+        {
+          "id": "manche2-34-q6",
+          "q": "Le mécanisme d'attention multi-tête (multi-head attention) permet…",
+          "r": "Plusieurs types de relations en parallèle",
+          "choices": [
+            "De capturer plusieurs types de relations en parallèle dans différents sous-espaces",
+            "D'accélérer l'entraînement par gradient",
+            "De normaliser les couches",
+            "D'éviter le surapprentissage uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Chaque tête apprend une attention différente ; concaténées puis projetées.",
+          "ref": "Vaswani et al., 2017.",
+          "pts": 6
+        }
+      ]
+    },
+    {
+      "id": "manche2-35",
+      "type": "manche2",
+      "titre": "Suivi-évaluation — duel",
+      "theme": "Suivi et évaluation",
+      "domain": "Suivi-évaluation des projets et politiques",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-35-q1",
+          "q": "Quelle est la principale différence entre suivi et évaluation ?",
+          "r": "Suivi = continu, évaluation = ponctuelle",
+          "choices": [
+            "Le suivi est continu et opérationnel, l'évaluation est ponctuelle et analytique",
+            "Le suivi est qualitatif, l'évaluation est quantitative",
+            "Le suivi est externe, l'évaluation est interne",
+            "Aucune différence"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Monitoring suit l'avancement (outputs, activités) ; évaluation analyse pertinence, impact, etc.",
+          "ref": "OECD/DAC Glossary 2002.",
+          "pts": 1
+        },
+        {
+          "id": "manche2-35-q2",
+          "q": "La baseline (situation de référence) doit être collectée…",
+          "r": "Avant le démarrage",
+          "choices": [
+            "Avant le démarrage du projet (T0)",
+            "Au milieu du projet",
+            "À la fin",
+            "Une fois par an"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Permet la comparaison avant/après et le calcul des progrès.",
+          "ref": "World Bank IE Handbook ; PNUD HPMEDR.",
+          "pts": 2
+        },
+        {
+          "id": "manche2-35-q3",
+          "q": "L'attribution diffère de la contribution car elle…",
+          "r": "Lien causal exclusif vs plusieurs facteurs",
+          "choices": [
+            "Établit un lien causal exclusif, alors que la contribution reconnaît plusieurs facteurs",
+            "Concerne les coûts",
+            "Concerne le calendrier",
+            "Concerne les bénéficiaires"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Attribution = \"le résultat est dû au projet\" ; contribution = \"le projet est l'un des facteurs\".",
+          "ref": "Mayne, \"Contribution Analysis\", 2008.",
+          "pts": 3
+        },
+        {
+          "id": "manche2-35-q4",
+          "q": "La méthode Outcome Mapping du CRDI/IDRC se concentre sur…",
+          "r": "Changements de comportement des partenaires limitrophes",
+          "choices": [
+            "Les changements de comportement des partenaires limitrophes",
+            "Les coûts d'opportunité",
+            "Les indicateurs SMART",
+            "Les budgets"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Earl, Carden & Smutylo 2001 ; alternative au logframe pour projets complexes.",
+          "ref": "IDRC, Outcome Mapping, 2001.",
+          "pts": 4
+        },
+        {
+          "id": "manche2-35-q5",
+          "q": "Le critère \"additionnalité\" en évaluation financière mesure…",
+          "r": "Effet incrémental vs contre-factuel",
+          "choices": [
+            "L'effet incrémental d'un financement par rapport au contre-factuel sans financement",
+            "Le coût total du projet",
+            "Le nombre de bénéficiaires supplémentaires",
+            "Le rendement annuel"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Concept clé pour les banques de développement (BEI, IFC) ; justifie l'intervention publique.",
+          "ref": "BEI, Additionality Framework.",
+          "pts": 5
+        },
+        {
+          "id": "manche2-35-q6",
+          "q": "L'évaluation réaliste (realist evaluation) cherche à expliquer…",
+          "r": "Mécanismes-Contexte-Résultats (MCR)",
+          "choices": [
+            "\"Ce qui marche, pour qui, dans quelles circonstances et pourquoi\" via mécanismes-contexte-résultats",
+            "Le ROI financier",
+            "L'efficience pure",
+            "Les indicateurs SMART"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Pawson & Tilley 1997 ; alternative aux RCT pour les programmes complexes.",
+          "ref": "Pawson & Tilley, Realistic Evaluation, 1997.",
+          "pts": 6
+        }
+      ]
     }
   ],
   "manche3": [
@@ -5161,6 +6512,495 @@
           "pts": 1
         }
       ]
+    },
+    {
+      "id": "manche3-9",
+      "type": "manche3",
+      "titre": "Finale Statistique & Économétrie avancée",
+      "theme": "Économétrie",
+      "domain": "Statistiques et économétrie",
+      "timing": "Buzz libre — 1 min 30 — 1 point par bonne réponse — 9 points gagnants",
+      "questions": [
+        {
+          "id": "manche3-9-q1",
+          "q": "Quel est le test usuel de normalité des résidus en économétrie ?",
+          "r": "Jarque-Bera",
+          "choices": [
+            "Jarque-Bera",
+            "Durbin-Watson",
+            "White",
+            "Hausman"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Combine skewness et kurtosis ; distribution χ² à 2 ddl sous H0.",
+          "ref": "Jarque & Bera, 1980.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q2",
+          "q": "Quel test détecte la multicolinéarité ?",
+          "r": "VIF",
+          "choices": [
+            "VIF (Variance Inflation Factor)",
+            "Hausman",
+            "ADF",
+            "KPSS"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "VIF > 5 ou 10 signale une multicolinéarité élevée.",
+          "ref": "Belsley, Kuh & Welsch, 1980.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q3",
+          "q": "Que signifie ARIMA(p,d,q) ?",
+          "r": "p AR, d intégrations, q MA",
+          "choices": [
+            "p AR, d différenciations, q MA",
+            "p paramètres, d retards, q quantiles",
+            "puissance, dimension, qualité",
+            "persistance, drift, quasi-stationnarité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "AR(p) + différenciation d fois + MA(q).",
+          "ref": "Box & Jenkins, 1976.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q4",
+          "q": "KPSS teste H0 = stationnarité, contrairement à ADF qui teste H0 = non-stationnarité. Vrai ou faux ?",
+          "r": "Vrai",
+          "choices": [
+            "Vrai",
+            "Faux",
+            "KPSS et ADF testent la même chose",
+            "Aucun ne teste la stationnarité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "KPSS (Kwiatkowski, Phillips, Schmidt, Shin, 1992) est complémentaire à ADF.",
+          "ref": "KPSS, 1992.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q5",
+          "q": "Le test de Granger sert à détecter…",
+          "r": "Causalité de Granger",
+          "choices": [
+            "Une relation de causalité (au sens prédictif) entre deux séries",
+            "L'autocorrélation",
+            "L'hétéroscédasticité",
+            "La non-linéarité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "X cause Y si les valeurs passées de X améliorent la prédiction de Y.",
+          "ref": "Granger, 1969 (Nobel 2003).",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q6",
+          "q": "Que vise la régularisation L2 (ridge) en régression ?",
+          "r": "Pénalisation Σβ²",
+          "choices": [
+            "Réduire les coefficients en pénalisant Σβ²",
+            "Annuler certains coefficients",
+            "Maximiser R²",
+            "Tester la normalité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Stabilise les coefficients en cas de multicolinéarité ; ne fait pas de sélection (≠ Lasso L1).",
+          "ref": "Hoerl & Kennard, 1970.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q7",
+          "q": "Le Lasso (L1) effectue…",
+          "r": "Sélection de variables",
+          "choices": [
+            "Sélection de variables en annulant certains βj",
+            "Augmentation des coefficients",
+            "Régression non-paramétrique",
+            "Estimation Bayésienne"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Pénalité Σ|βj| ; sparse solutions, utile en haute dimension.",
+          "ref": "Tibshirani, 1996.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q8",
+          "q": "Un modèle GMM s'estime via…",
+          "r": "Moments empiriques",
+          "choices": [
+            "Minimisation de moments empiriques pondérés",
+            "Maximisation de la vraisemblance",
+            "Moindres carrés simples",
+            "Bootstrap"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Generalized Method of Moments ; ne suppose pas de loi paramétrique complète.",
+          "ref": "Hansen, 1982 (Nobel 2013).",
+          "pts": 1
+        },
+        {
+          "id": "manche3-9-q9",
+          "q": "La méthode bootstrap consiste à…",
+          "r": "Ré-échantillonnage avec remise",
+          "choices": [
+            "Ré-échantillonner avec remise pour estimer l'incertitude",
+            "Réduire la dimension",
+            "Lisser une série",
+            "Détecter les outliers"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Efron 1979 ; alternative non-paramétrique pour CI, biais, écarts-types.",
+          "ref": "Efron, 1979.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche3-10",
+      "type": "manche3",
+      "titre": "Finale Machine learning et IA",
+      "theme": "Intelligence artificielle",
+      "domain": "Machine learning et deep learning",
+      "timing": "Buzz libre — 1 min 30 — 1 point par bonne réponse — 9 points gagnants",
+      "questions": [
+        {
+          "id": "manche3-10-q1",
+          "q": "Quelle bibliothèque Python est la plus utilisée pour le ML classique ?",
+          "r": "scikit-learn",
+          "choices": [
+            "scikit-learn",
+            "TensorFlow",
+            "PyTorch",
+            "Keras"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Algorithmes classiques uniformisés via fit/predict ; pipeline, GridSearchCV, métriques.",
+          "ref": "Pedregosa et al., 2011.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q2",
+          "q": "Quels frameworks dominent le deep learning aujourd'hui ?",
+          "r": "PyTorch et TensorFlow",
+          "choices": [
+            "PyTorch et TensorFlow",
+            "Theano et Caffe",
+            "Torch et MXNet",
+            "JAX et XGBoost"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "PyTorch (Meta) prédominant en recherche ; TensorFlow/Keras encore présent en industrie.",
+          "ref": "—",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q3",
+          "q": "Le terme \"overfitting\" désigne…",
+          "r": "Sur-apprentissage",
+          "choices": [
+            "Un modèle qui mémorise l'entraînement et généralise mal",
+            "Une convergence trop rapide",
+            "Une under-parameterization",
+            "Un biais constant"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Signes : faible train error, grand test error ; remèdes : régularisation, plus de données, simplification.",
+          "ref": "James et al., ISLR.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q4",
+          "q": "La validation croisée k-fold consiste à…",
+          "r": "k blocs, k entraînements",
+          "choices": [
+            "Diviser les données en k blocs et entraîner k fois en alternant le bloc de test",
+            "Doubler les données",
+            "Répéter le test final k fois",
+            "Bootstrapper les résidus"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "k = 5 ou 10 ; estime la performance hors-échantillon.",
+          "ref": "Stone, 1974.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q5",
+          "q": "BERT (NLP) est un modèle…",
+          "r": "Encoder Transformer bidirectionnel",
+          "choices": [
+            "Encoder Transformer bidirectionnel pré-entraîné sur masked language modeling",
+            "Decoder Transformer comme GPT",
+            "RNN avec attention",
+            "Réseau convolutif 1D"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Devlin et al. 2018 ; pré-entraîné sur MLM + NSP, fine-tuné sur tâches downstream.",
+          "ref": "Devlin et al., 2018.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q6",
+          "q": "GPT est un modèle…",
+          "r": "Decoder Transformer auto-régressif",
+          "choices": [
+            "Decoder Transformer auto-régressif (prédit le token suivant)",
+            "Encoder bidirectionnel",
+            "CNN appliqué au texte",
+            "Word2Vec amélioré"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Generative Pre-trained Transformer ; entraînement causal sur de grands corpus.",
+          "ref": "Radford et al., 2018-2023.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q7",
+          "q": "Quelle technique d'augmentation est typique en vision par ordinateur ?",
+          "r": "Rotation/flip/crop/jitter",
+          "choices": [
+            "Rotation, flip, crop, color jitter",
+            "Tokenization",
+            "Stemming",
+            "Lemmatization"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Multiplie artificiellement les données ; réduit l'overfitting.",
+          "ref": "Goodfellow et al., 2016.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q8",
+          "q": "Le RAG (Retrieval-Augmented Generation) combine…",
+          "r": "Index + LLM",
+          "choices": [
+            "Un index documentaire et un LLM pour générer des réponses contextuelles",
+            "Plusieurs CNN en parallèle",
+            "Du reinforcement learning et de la régression",
+            "Un autoencoder et un GAN"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Lewis et al. 2020 ; améliore la précision et limite les hallucinations.",
+          "ref": "Lewis et al., 2020.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-10-q9",
+          "q": "Quelle métrique est usuelle pour évaluer les classifieurs déséquilibrés ?",
+          "r": "F1-score ou AUC-PR",
+          "choices": [
+            "F1-score ou AUC-PR",
+            "Accuracy",
+            "MSE",
+            "R²"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Accuracy trompeuse si classes déséquilibrées ; PR-AUC met l'accent sur la classe rare.",
+          "ref": "Saito & Rehmsmeier, 2015.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche3-11",
+      "type": "manche3",
+      "titre": "Finale Suivi-évaluation des projets",
+      "theme": "Suivi et évaluation",
+      "domain": "Suivi-évaluation des projets et politiques",
+      "timing": "Buzz libre — 1 min 30 — 1 point par bonne réponse — 9 points gagnants",
+      "questions": [
+        {
+          "id": "manche3-11-q1",
+          "q": "La pyramide des résultats du PNUD comprend, du plus immédiat au plus large :",
+          "r": "Inputs → Activités → Produits → Effets → Impact",
+          "choices": [
+            "Inputs → Activités → Produits → Effets → Impact",
+            "Impact → Effets → Produits → Activités → Inputs",
+            "Outputs → Outcomes → Goals → Mission",
+            "Inputs → Outputs → Outcomes → Vision"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Chaîne logique standard ; les 3 premiers niveaux sont la \"sphère de contrôle\" du projet.",
+          "ref": "PNUD HPMEDR, 2009.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q2",
+          "q": "Le ROI social (SROI) calcule…",
+          "r": "Bénéfices sociaux / coûts",
+          "choices": [
+            "Le ratio bénéfices sociaux monétisés sur coûts",
+            "Le rendement financier interne",
+            "L'efficience pure",
+            "Le délai de récupération"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Methodology SROI Network ; monétarise les impacts sociaux et environnementaux.",
+          "ref": "Nef, A Guide to SROI, 2009.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q3",
+          "q": "Au FIDA, le système RIMS (=SYGRI) couvre combien de niveaux d'indicateurs ?",
+          "r": "3 niveaux",
+          "choices": [
+            "Trois niveaux (1er = produits ; 2e = effets ; 3e = impact)",
+            "Deux niveaux",
+            "Cinq niveaux",
+            "Un seul niveau global"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Indicateurs standardisés par catégorie ; permet l'agrégation à l'échelle du portefeuille FIDA.",
+          "ref": "IFAD, RIMS Handbook.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q4",
+          "q": "Quel est l'IRR/TRI minimal généralement exigé par les bailleurs pour valider un projet ?",
+          "r": "≈ 12 %",
+          "choices": [
+            "12 % en moyenne (varie selon le secteur)",
+            "5 %",
+            "25 %",
+            "50 %"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Banque mondiale, BAD, AFD utilisent souvent 10-12 % comme taux d'actualisation économique.",
+          "ref": "World Bank Economic Analysis Guidelines.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q5",
+          "q": "Un évaluation \"ex-ante\" se réalise…",
+          "r": "Avant le démarrage",
+          "choices": [
+            "Avant le démarrage du projet (faisabilité, design)",
+            "À mi-parcours",
+            "À la fin",
+            "Trois ans après la clôture"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Évalue pertinence, faisabilité, théorie du changement, risques.",
+          "ref": "OECD/DAC Glossary.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q6",
+          "q": "Le CGAP est une référence pour l'évaluation…",
+          "r": "Microfinance / inclusion",
+          "choices": [
+            "Des programmes de microfinance et inclusion financière",
+            "De la gouvernance",
+            "Du secteur agricole",
+            "De l'éducation"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Consultative Group to Assist the Poor, hébergé par la Banque mondiale.",
+          "ref": "CGAP, World Bank.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q7",
+          "q": "Quelle technique combine méthodes quantitatives et qualitatives ?",
+          "r": "Mixed methods",
+          "choices": [
+            "Mixed methods",
+            "Big data analytics",
+            "Régression OLS",
+            "Analyse factorielle"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Triangulation : RCT + enquêtes + focus groups + études de cas.",
+          "ref": "Bamberger, \"Mixed Methods in IE\", 2012.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q8",
+          "q": "La théorie du programme (program theory) précise…",
+          "r": "Mécanismes causaux du programme",
+          "choices": [
+            "Comment et pourquoi l'intervention est censée produire les résultats attendus",
+            "Le budget détaillé",
+            "L'organigramme",
+            "Le calendrier d'exécution"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Description explicite de la chaîne d'effets et hypothèses ; base de l'évaluation par théorie.",
+          "ref": "Funnell & Rogers, \"Purposeful Program Theory\", 2011.",
+          "pts": 1
+        },
+        {
+          "id": "manche3-11-q9",
+          "q": "Quel principe interdit qu'une intervention nuise aux bénéficiaires ?",
+          "r": "Do no harm",
+          "choices": [
+            "\"Do no harm\"",
+            "\"Pareto-optimal\"",
+            "\"Cost-effective\"",
+            "\"Triple bottom line\""
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Principe transversal en aide humanitaire et développement ; OCHA, Sphere Standards.",
+          "ref": "Anderson, \"Do No Harm\", 1999.",
+          "pts": 1
+        }
+      ]
     }
   ],
   "domains": [
@@ -5173,12 +7013,12 @@
       "count": 89
     },
     {
-      "name": "Commerce, développement et Afrique",
-      "count": 65
+      "name": "Statistiques et économétrie",
+      "count": 88
     },
     {
-      "name": "Statistiques et économétrie",
-      "count": 53
+      "name": "Commerce, développement et Afrique",
+      "count": 65
     },
     {
       "name": "Microéconomie et théorie",
@@ -5186,6 +7026,14 @@
     },
     {
       "name": "Histoire de la pensée économique",
+      "count": 31
+    },
+    {
+      "name": "Machine learning et deep learning",
+      "count": 31
+    },
+    {
+      "name": "Suivi-évaluation des projets et politiques",
       "count": 31
     },
     {
@@ -5206,13 +7054,13 @@
     }
   ],
   "meta": {
-    "generatedAt": "2026-05-17T12:27:22.409Z",
-    "manche1Count": 63,
-    "manche2Count": 32,
-    "manche3Count": 8,
-    "questionsM1": 252,
-    "questionsM2": 192,
-    "questionsM3": 72,
-    "questionsTotal": 516
+    "generatedAt": "2026-05-27T14:39:49.644Z",
+    "manche1Count": 76,
+    "manche2Count": 35,
+    "manche3Count": 11,
+    "questionsM1": 304,
+    "questionsM2": 210,
+    "questionsM3": 99,
+    "questionsTotal": 613
   }
 }

@@ -128,7 +128,8 @@ const fmtDate = (iso) => iso ? new Date(iso).toLocaleString('fr-FR', { dateStyle
 // ---------- État global -----------------------------------------------
 const State = {
   meta: null,
-  game: null   // partie en cours
+  game: null,   // partie en cours
+  qcmMode: false  // mode QCM actif pour la partie en cours
 };
 
 // ---------- Save game local par code ----------------------------------
@@ -334,6 +335,15 @@ async function renderSetup() {
   $('#btn-domains-none').onclick = (e) => { e.preventDefault(); $$('#domains-grid input').forEach(c => c.checked = false); };
   $('#btn-back-home').onclick    = () => route('home');
 
+  // Gestion du mode QCM selon les settings admin
+  const qcmMode = (State.meta && State.meta.settings && State.meta.settings.qcmMode) || 'user-choice';
+  const qcmCard = $('#setup-qcm-card');
+  if (qcmMode === 'force-text') {
+    qcmCard.innerHTML = '<h2 class="card-title">Mode de réponse</h2><p class="muted">L\'administrateur a forcé le <strong>mode saisie libre</strong> pour cette partie.</p>';
+  } else if (qcmMode === 'force-qcm') {
+    qcmCard.innerHTML = '<h2 class="card-title">Mode de réponse</h2><p class="muted">L\'administrateur a forcé le <strong>mode QCM</strong> pour cette partie.</p>';
+  } // sinon user-choice : on garde la radio par défaut
+
   $('#btn-start').onclick = async () => {
     const manches = $$('#manches-row input:checked').map(c => c.value);
     if (manches.length === 0) { alert('Sélectionnez au moins une manche.'); return; }
@@ -343,6 +353,16 @@ async function renderSetup() {
       manche2: parseInt($('#n-m2').value, 10) || 1,
       manche3: parseInt($('#n-m3').value, 10) || 1
     };
+    // Déterminer le mode QCM effectif
+    let useQcm = false;
+    if (qcmMode === 'force-qcm') useQcm = true;
+    else if (qcmMode === 'force-text') useQcm = false;
+    else {
+      const pick = $$('#setup-qcm-row input[name=qcm-mode]:checked')[0];
+      useQcm = pick && pick.value === 'qcm';
+    }
+    State.qcmMode = useQcm;
+
     const plan = [];
     for (const m of manches) {
       let packs = await api.packs(m, domains);
@@ -354,7 +374,8 @@ async function renderSetup() {
       plan,
       cursor: { planIdx: 0, qIdx: 0, m2RemainingPts: null, m3StartedAt: null },
       score: { total: 0, byManche: { manche1: 0, manche2: 0, manche3: 0 } },
-      log: []
+      log: [],
+      qcmMode: useQcm
     };
     persistSavedGame(State.game);
     route('play');
@@ -375,6 +396,79 @@ let _timerId = null;
 
 function clearTimer() {
   if (_timerId) { clearInterval(_timerId); _timerId = null; }
+}
+
+// Construit un formulaire de réponse pour une question donnée.
+// Si State.qcmMode + q.choices : rend des radios/checkboxes selon
+// nombre de bonnes réponses ; sinon, input texte classique.
+// Retourne { node, getValue } où getValue() renvoie la string de réponse
+// (compatible avec checkAnswer).
+function buildAnswerForm(q, onSubmit, submitLabel) {
+  const useQcm = (State.qcmMode || (State.game && State.game.qcmMode)) && Array.isArray(q.choices) && q.choices.length >= 2;
+  if (useQcm) {
+    const multi = Array.isArray(q.correctIndices) && q.correctIndices.length > 1;
+    const form = el('form', { class: 'play-answer-form qcm-form' });
+    const list = el('div', { class: 'qcm-list' });
+    q.choices.forEach((c, i) => {
+      const inp = el('input', {
+        type: multi ? 'checkbox' : 'radio',
+        name: 'qcm-ans',
+        value: String(i)
+      });
+      list.appendChild(el('label', { class: 'qcm-choice' }, inp, el('span', {}, c)));
+    });
+    form.appendChild(list);
+    if (multi) form.appendChild(el('div', { class: 'muted', style: 'font-size:13px; margin-top:6px;' }, '⚠ Plusieurs bonnes réponses possibles : cochez toutes celles qui s\'appliquent.'));
+    form.appendChild(el('button', { class: 'btn btn-primary', type: 'submit' }, submitLabel || 'Valider'));
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      onSubmit(getQcmValue(form));
+    });
+    return form;
+  }
+  // Saisie libre
+  const form = el('form', { class: 'play-answer-form' });
+  const input = el('input', { class: 'play-answer-input', type: 'text', placeholder: 'Votre réponse…', autocomplete: 'off' });
+  form.appendChild(input);
+  form.appendChild(el('button', { class: 'btn btn-primary', type: 'submit' }, submitLabel || 'Valider'));
+  setTimeout(() => input.focus(), 50);
+  form.addEventListener('submit', (e) => { e.preventDefault(); onSubmit(input.value); });
+  return form;
+}
+
+function getQcmValue(form) {
+  // Retourne une string représentant la sélection : indices triés joints par |
+  // ou la valeur texte du seul choix sélectionné (utile pour fallback).
+  const inputs = [...form.querySelectorAll('input[name=qcm-ans]:checked')];
+  if (inputs.length === 0) return '';
+  const indices = inputs.map(i => parseInt(i.value, 10)).sort((a, b) => a - b);
+  // Marqueur spécial pour identifier le mode QCM dans checkAnswer
+  return `__QCM__${indices.join('|')}`;
+}
+
+// Vérifie une réponse en tenant compte du QCM si présent
+function evalAnswer(userInput, q) {
+  // Si réponse QCM : comparer aux correctIndices
+  if (typeof userInput === 'string' && userInput.startsWith('__QCM__') && Array.isArray(q.correctIndices)) {
+    const picked = userInput.slice(7).split('|').filter(x => x !== '').map(Number).sort((a, b) => a - b);
+    const correct = q.correctIndices.slice().sort((a, b) => a - b);
+    // Multi-réponses : toutes les bonnes ET seulement les bonnes
+    if (picked.length !== correct.length) return false;
+    for (let i = 0; i < correct.length; i++) if (picked[i] !== correct[i]) return false;
+    return true;
+  }
+  // Sinon : comparaison souple texte
+  return checkAnswer(userInput, q.r);
+}
+
+// Pour l'affichage user-friendly de la réponse donnée
+function displayGiven(userInput, q) {
+  if (typeof userInput === 'string' && userInput.startsWith('__QCM__') && q && Array.isArray(q.choices)) {
+    const picked = userInput.slice(7).split('|').filter(x => x !== '').map(Number);
+    if (picked.length === 0) return '(passée)';
+    return picked.map(i => q.choices[i]).join(' + ');
+  }
+  return userInput || '(passée)';
 }
 function startTimer(seconds, onTick, onEnd) {
   clearTimer();
@@ -414,17 +508,11 @@ function renderManche1() {
   card.appendChild(el('div', { class: 'play-question' },
     el('span', { class: 'qnum' }, String(qIdx + 1)),
     document.createTextNode(q.q)));
-  const form = el('form', { class: 'play-answer-form' });
-  const input = el('input', { class: 'play-answer-input', type: 'text', placeholder: 'Votre réponse…', autocomplete: 'off' });
-  form.appendChild(input);
-  form.appendChild(el('button', { class: 'btn btn-primary', type: 'submit' }, 'Valider'));
-  card.appendChild(form);
+  card.appendChild(buildAnswerForm(q, (val) => answerM1(val)));
 
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   actions.appendChild(el('button', { class: 'btn btn-ghost', onclick: () => answerM1('') }, 'Passer'));
-  setTimeout(() => input.focus(), 50);
-  form.addEventListener('submit', (e) => { e.preventDefault(); answerM1(input.value); });
 
   startTimer(g.cursor.m1Remaining,
     (r) => {
@@ -442,11 +530,11 @@ function answerM1(userInput) {
   clearTimer();
   const g = State.game, step = g.plan[g.cursor.planIdx], pack = step.pack;
   const qIdx = g.cursor.qIdx, q = pack.questions[qIdx];
-  const correct = checkAnswer(userInput, q.r);
+  const correct = evalAnswer(userInput, q);
   const awarded = correct ? 1 : 0;
   g.score.total += awarded; g.score.byManche.manche1 += awarded;
   g.log.push({ manche: 'manche1', packId: pack.id, packTitle: pack.titre, qid: q.id,
-    q: q.q, expected: q.r, given: userInput || '(passée)', correct, pts: 1, awarded,
+    q: q.q, expected: q.r, given: displayGiven(userInput, q), correct, pts: 1, awarded,
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
   showReveal(correct, q, userInput);
@@ -523,16 +611,10 @@ function renderM2Question(pack, pts) {
   const card = $('#play-card'); card.innerHTML = '';
   card.appendChild(el('div', { class: 'play-question' },
     el('span', { class: 'qnum' }, `${pts}`), document.createTextNode(q.q)));
-  const form = el('form', { class: 'play-answer-form' });
-  const input = el('input', { class: 'play-answer-input', type: 'text', placeholder: 'Votre réponse…', autocomplete: 'off' });
-  form.appendChild(input);
-  form.appendChild(el('button', { class: 'btn btn-primary', type: 'submit' }, `Valider (${pts} pt${pts > 1 ? 's' : ''})`));
-  card.appendChild(form);
+  card.appendChild(buildAnswerForm(q, (val) => answerM2(val), `Valider (${pts} pt${pts > 1 ? 's' : ''})`));
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   actions.appendChild(el('button', { class: 'btn btn-ghost', onclick: () => answerM2('') }, 'Passer'));
-  setTimeout(() => input.focus(), 50);
-  form.addEventListener('submit', (e) => { e.preventDefault(); answerM2(input.value); });
   startTimer(25,
     (r) => {
       const t = $('#play-timer'); t.textContent = `${r}s`; t.classList.remove('warn', 'danger');
@@ -546,11 +628,11 @@ function answerM2(userInput) {
   const g = State.game, step = g.plan[g.cursor.planIdx], pack = step.pack;
   const pts = g.cursor.m2Picked;
   const q = pack.questions.find(qq => qq.pts === pts);
-  const correct = checkAnswer(userInput, q.r);
+  const correct = evalAnswer(userInput, q);
   const awarded = correct ? pts : 0;
   g.score.total += awarded; g.score.byManche.manche2 += awarded;
   g.log.push({ manche: 'manche2', packId: pack.id, packTitle: pack.titre, qid: q.id,
-    q: q.q, expected: q.r, given: userInput || '(passée)', correct, pts, awarded,
+    q: q.q, expected: q.r, given: displayGiven(userInput, q), correct, pts, awarded,
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
   showReveal(correct, q, userInput);
@@ -577,16 +659,12 @@ function renderManche3() {
   card.appendChild(el('div', { class: 'play-question' },
     el('span', { class: 'qnum' }, `${g.cursor.qIdx + 1}`), document.createTextNode(q.q)));
   card.appendChild(el('div', { class: 'muted', html: `Finale en cours : <strong>${g.cursor.m3Score}</strong>/9 points.` }));
-  const form = el('form', { class: 'play-answer-form', style: 'margin-top:14px;' });
-  const input = el('input', { class: 'play-answer-input', type: 'text', placeholder: 'Votre réponse…', autocomplete: 'off' });
-  form.appendChild(input);
-  form.appendChild(el('button', { class: 'btn btn-primary', type: 'submit' }, 'Valider'));
-  card.appendChild(form);
+  const wrap = el('div', { style: 'margin-top:14px;' });
+  wrap.appendChild(buildAnswerForm(q, (val) => answerM3(val)));
+  card.appendChild(wrap);
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   actions.appendChild(el('button', { class: 'btn btn-ghost', onclick: () => answerM3('') }, 'Passer'));
-  setTimeout(() => input.focus(), 50);
-  form.addEventListener('submit', (e) => { e.preventDefault(); answerM3(input.value); });
   startTimer(15,
     (r) => {
       const t = $('#play-timer'); t.textContent = `${r}s`; t.classList.remove('warn', 'danger');
@@ -599,12 +677,12 @@ function answerM3(userInput) {
   clearTimer();
   const g = State.game, step = g.plan[g.cursor.planIdx], pack = step.pack;
   const q = pack.questions[g.cursor.qIdx];
-  const correct = checkAnswer(userInput, q.r);
+  const correct = evalAnswer(userInput, q);
   const awarded = correct ? 1 : 0;
   g.score.total += awarded; g.score.byManche.manche3 += awarded;
   if (correct) g.cursor.m3Score = (g.cursor.m3Score || 0) + 1;
   g.log.push({ manche: 'manche3', packId: pack.id, packTitle: pack.titre, qid: q.id,
-    q: q.q, expected: q.r, given: userInput || '(passée)', correct, pts: 1, awarded,
+    q: q.q, expected: q.r, given: displayGiven(userInput, q), correct, pts: 1, awarded,
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
   showReveal(correct, q, userInput);
@@ -1005,13 +1083,24 @@ async function startDuelGame(duelId) {
     alert('Erreur : packs non disponibles. Vérifiez votre acceptation.');
     return;
   }
+  // Déterminer le mode QCM selon les settings admin
+  const qcmMode = (State.meta && State.meta.settings && State.meta.settings.qcmMode) || 'user-choice';
+  let useQcm = false;
+  if (qcmMode === 'force-qcm') useQcm = true;
+  else if (qcmMode === 'force-text') useQcm = false;
+  else {
+    // Demander à l'utilisateur
+    useQcm = confirm('Mode QCM (choix multiples) ? Annuler pour saisie libre.');
+  }
+  State.qcmMode = useQcm;
   // Construire le State.game avec les packs fixés
   State.game = {
     duelId: d.id,
     plan: d.config.packs.map(x => ({ manche: x.manche, pack: x.pack })),
     cursor: { planIdx: 0, qIdx: 0 },
     score: { total: 0, byManche: { manche1: 0, manche2: 0, manche3: 0 } },
-    log: []
+    log: [],
+    qcmMode: useQcm
   };
   // Pas de persistance localStorage pour les duels (on joue d'une traite)
   route('play');
@@ -1119,22 +1208,34 @@ async function renderAdmin() {
     catch (e) { alert('Erreur Excel : ' + e.message); }
   };
 
-  // Toggle révision libre
+  // Toggle révision libre + mode QCM
   const toggle = $('#toggle-review');
   try {
     const s = await api.adminGetSettings();
     toggle.checked = (s.reviewEnabled !== false);
+    const qm = s.qcmMode || 'user-choice';
+    const radio = document.querySelector(`#admin-qcm-row input[name=admin-qcm][value="${qm}"]`);
+    if (radio) radio.checked = true;
   } catch (e) {}
   toggle.addEventListener('change', async () => {
     try {
       const s = await api.adminSetSettings({ reviewEnabled: toggle.checked });
-      // feedback visuel discret
       toggle.parentElement.style.opacity = '0.6';
       setTimeout(() => { toggle.parentElement.style.opacity = '1'; }, 300);
     } catch (e) {
       alert('Erreur : ' + e.message);
-      toggle.checked = !toggle.checked;  // revenir en arrière
+      toggle.checked = !toggle.checked;
     }
+  });
+  $$('#admin-qcm-row input[name=admin-qcm]').forEach(r => {
+    r.addEventListener('change', async () => {
+      if (!r.checked) return;
+      try {
+        await api.adminSetSettings({ qcmMode: r.value });
+        r.parentElement.style.opacity = '0.6';
+        setTimeout(() => { r.parentElement.style.opacity = '1'; }, 300);
+      } catch (e) { alert('Erreur : ' + e.message); }
+    });
   });
 
   // ---- Organiser une confrontation ----

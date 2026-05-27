@@ -2,7 +2,7 @@
 
 Application web qui transforme le recueil de **516 questions** en jeu interactif, format inspiré de l'émission *Questions pour un Champion* (TV5 Monde).
 
-**Version 2.2** — codes d'accès permanents, dashboard centralisé, **persistance permanente** via branche `data` du repo GitHub, **export Excel**, **toggle Révision libre**, **duels utilisateur-à-utilisateur** et **confrontations admin** (2+ joueurs).
+**Version 2.3** — codes d'accès permanents, dashboard centralisé, **persistance permanente** via branche `data` du repo GitHub, **export Excel**, **toggle Révision libre**, **duels utilisateur-à-utilisateur** et **confrontations admin** (2+ joueurs), **613 questions sur 12 domaines** (Statistique/Économétrie étendue, **Machine learning & Deep learning**, **Suivi-évaluation des projets et politiques**), **mode QCM** avec 1 ou plusieurs bonnes réponses.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Ricard228/qpc-app)
 
@@ -106,7 +106,8 @@ Une fois le déploiement terminé (1-2 minutes), Render donne une URL :
 ### Pour les utilisateurs
 
 - **Trois manches** chronométrées (40 s / 25 s / 15 s)
-- **Révision libre** : parcourir les 516 questions sans timer
+- **Mode QCM ou saisie libre** : choisi au début de la partie (sauf si l'admin l'a forcé)
+- **Révision libre** : parcourir les 613 questions sans timer
 - **Mes duels** : défier un autre joueur via son code d'accès. Les deux joueurs reçoivent les **mêmes questions dans le même ordre** pour une comparaison équitable. L'adversaire peut accepter ou refuser.
 - **Pause / reprise** d'une partie
 - **Historique personnel** (parties terminées remontées depuis le serveur)
@@ -123,6 +124,7 @@ Une fois le déploiement terminé (1-2 minutes), Render donne une URL :
 - **Classement** des utilisateurs par score
 - **Liste des parties récentes** (50 dernières)
 - **Toggle « Révision libre »** : activer/désactiver le mode pour tous les utilisateurs (utile pour les sessions d'examen)
+- **Mode QCM global** : `user-choice` (joueur choisit) · `force-text` (saisie libre obligatoire) · `force-qcm` (QCM obligatoire)
 - **Export Excel** (`.xlsx`) : 3 feuilles — Codes, Parties, Détail des réponses
 - **Export / import JSON** complet
 - **Suppression totale** de la base (zone dangereuse, double confirmation)

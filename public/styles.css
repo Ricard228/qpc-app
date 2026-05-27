@@ -568,6 +568,22 @@ html, body {
 .result-cell.winner { background: var(--soft-green); border: 2px solid #2E7D32; }
 .result-cell.winner .value { color: #2E7D32; }
 
+/* QCM */
+.qcm-form { display: flex; flex-direction: column; gap: 10px; }
+.qcm-list { display: flex; flex-direction: column; gap: 8px; }
+.qcm-choice {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.qcm-choice:hover { background: var(--soft-blue); border-color: var(--primary); }
+.qcm-choice input { margin-top: 3px; cursor: pointer; flex-shrink: 0; }
+.qcm-choice span { line-height: 1.4; }
+
 .admin-conf-participants {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
