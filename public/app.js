@@ -282,6 +282,81 @@ function renderLogin() {
       err.hidden = false;
     }
   });
+
+  setupInstallButtons();
+}
+
+// ---------- PWA install buttons (sur la page de garde) ---------------
+// L'événement beforeinstallprompt est mémorisé globalement par init() ;
+// on l'utilise ici pour brancher le bouton "Installer (rapide)".
+function setupInstallButtons() {
+  const btnInstall = $('#btn-install-pwa');
+  const btnApk     = $('#btn-download-apk');
+  const btnHelp    = $('#btn-install-help');
+  const iosHelp    = $('#install-ios-help');
+  const hint       = $('#install-hint');
+  if (!btnInstall) return;
+
+  const ua = navigator.userAgent || '';
+  const isIOS     = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                    || window.navigator.standalone === true;
+
+  // URL Render à utiliser pour PWABuilder et le download APK Releases
+  const PWA_URL = 'https://qpc-champion-58rn.onrender.com';
+  // PWABuilder accepte une URL + génère APK / iOS / Windows directement
+  const pwaBuilderUrl = `https://www.pwabuilder.com/reportcard?site=${encodeURIComponent(PWA_URL)}`;
+
+  // Lien APK : pointe vers les releases GitHub où le workflow va publier l'APK
+  // (en attendant la première release, on redirige vers PWABuilder)
+  btnApk.href = 'https://github.com/Ricard228/qpc-app/releases/latest';
+  btnHelp.href = pwaBuilderUrl;
+
+  // Cas : déjà installée
+  if (isStandalone) {
+    hint.textContent = '✓ Application déjà installée — vous y accédez actuellement.';
+    btnInstall.disabled = true;
+    btnInstall.textContent = '✓ Déjà installée';
+    return;
+  }
+
+  // Cas iOS Safari : pas de prompt natif, on affiche les instructions
+  if (isIOS) {
+    iosHelp.hidden = false;
+    btnInstall.textContent = '📱 Voir les instructions';
+    btnInstall.onclick = (e) => {
+      e.preventDefault();
+      iosHelp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    return;
+  }
+
+  // Cas Android / desktop Chrome avec prompt natif disponible
+  if (window._deferredInstallPrompt) {
+    btnInstall.onclick = async () => {
+      const prompt = window._deferredInstallPrompt;
+      window._deferredInstallPrompt = null;
+      try {
+        await prompt.prompt();
+        const result = await prompt.userChoice;
+        if (result.outcome === 'accepted') {
+          hint.textContent = '✓ Installation acceptée !';
+          btnInstall.disabled = true;
+          btnInstall.textContent = '✓ Installée';
+        }
+      } catch (e) { console.warn('install prompt error:', e); }
+    };
+  } else {
+    // Prompt non encore disponible : on remplace par un bouton vers PWABuilder
+    btnInstall.textContent = '🛠 Générer un APK signé';
+    btnInstall.onclick = (e) => {
+      e.preventDefault();
+      window.open(pwaBuilderUrl, '_blank', 'noopener,noreferrer');
+    };
+    hint.innerHTML = 'Sur <strong>Android Chrome</strong> : menu ⋮ → « Installer l\'application ». ' +
+                     'Sinon, générez un APK signé via PWABuilder (Microsoft, gratuit) en cliquant ci-dessous.';
+  }
 }
 
 // ---------- Vue : accueil ---------------------------------------------
@@ -1440,6 +1515,25 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
+// Capter l'événement d'installation PWA pour pouvoir le déclencher
+// au clic du bouton « Installer » de la page de garde.
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window._deferredInstallPrompt = e;
+  // Si la page de garde est déjà affichée, rebrancher le bouton maintenant
+  const btn = document.getElementById('btn-install-pwa');
+  if (btn && typeof setupInstallButtons === 'function') setupInstallButtons();
+});
+
+// Détecter l'installation réussie (Chrome Android, Edge…)
+window.addEventListener('appinstalled', () => {
+  window._deferredInstallPrompt = null;
+  const hint = document.getElementById('install-hint');
+  const btn = document.getElementById('btn-install-pwa');
+  if (hint) hint.textContent = '✓ Application installée avec succès !';
+  if (btn) { btn.disabled = true; btn.textContent = '✓ Installée'; }
+});
 
 // ---------- Démarrage -------------------------------------------------
 (async function init() {

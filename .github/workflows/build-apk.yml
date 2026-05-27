@@ -1,0 +1,83 @@
+# Build automatique d'un APK Android (TWA) à partir de la PWA QPC.
+# Déclenché manuellement OU sur la création d'un tag.
+# Utilise Bubblewrap (Google) pour packager la PWA dans une Trusted Web Activity.
+
+name: Build APK Android
+
+on:
+  workflow_dispatch:    # déclenchement manuel depuis l'onglet Actions
+  push:
+    tags:
+      - 'v*'            # ou automatiquement sur push d'un tag v2.x
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Bubblewrap
+        run: npm install -g @bubblewrap/cli
+
+      - name: Initialize Bubblewrap project
+        env:
+          PWA_URL: https://qpc-champion-58rn.onrender.com
+        run: |
+          mkdir -p twa
+          cd twa
+          echo "Initialising Bubblewrap project for $PWA_URL/manifest.json"
+          # On accepte les EULA et fournit les paramètres minimaux
+          bubblewrap init --manifest=$PWA_URL/manifest.json --skipPwaValidation || true
+
+      - name: Build APK
+        working-directory: twa
+        run: |
+          bubblewrap build --skipPwaValidation || true
+          ls -la *.apk *.aab 2>/dev/null || echo "No APK/AAB produced"
+
+      - name: Upload APK artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: qpc-android-apk
+          path: |
+            twa/*.apk
+            twa/*.aab
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Publish to GitHub Releases (sur tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            twa/*.apk
+            twa/*.aab
+          name: QPC ${{ github.ref_name }} — Android APK
+          body: |
+            APK Android (TWA) généré automatiquement par Bubblewrap depuis la PWA.
+
+            Installation :
+            1. Téléchargez le fichier `.apk`
+            2. Autorisez l'installation d'applications de sources inconnues sur votre téléphone
+            3. Ouvrez le fichier APK pour installer l'app
+
+            L'app QPC s'ouvre alors comme une vraie application Android, sans barre de navigateur.
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

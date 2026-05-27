@@ -75,6 +75,23 @@
           <button class="btn" type="submit">Entrer admin</button>
         </form>
       </div>
+
+      <!-- Bloc d'installation de l'application -->
+      <div class="install-card" id="install-card">
+        <div class="install-icon">📲</div>
+        <div class="install-content">
+          <h3>Installer l'application sur votre appareil</h3>
+          <p class="muted" id="install-hint">Jouez à QPC comme une vraie app, sans navigateur, même partiellement hors-ligne.</p>
+          <div class="install-actions">
+            <button id="btn-install-pwa" class="btn btn-primary">📲 Installer (rapide)</button>
+            <a id="btn-download-apk" class="btn" href="#" target="_blank" rel="noopener noreferrer">⤓ Télécharger l'APK Android</a>
+            <a id="btn-install-help" class="btn btn-ghost" href="#" target="_blank" rel="noopener noreferrer">Guide d'installation iOS / Android</a>
+          </div>
+          <div id="install-ios-help" class="ios-help" hidden>
+            <strong>iOS (Safari)</strong> : touchez le bouton Partager <span class="icon-share">⎙</span> en bas, puis « Sur l'écran d'accueil ». L'icône QPC apparaît sur votre écran principal.
+          </div>
+        </div>
+      </div>
     </section>
   </template>
 
@@ -470,6 +487,6 @@
     </section>
   </template>
 
-  <script src="app.js?v=2"></script>
+  <script src="app.js?v=2.11"></script>
 </body>
 </html>

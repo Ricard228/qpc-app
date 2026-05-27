@@ -463,6 +463,51 @@ html, body {
 }
 .login-admin-link a:hover { color: var(--primary); text-decoration: underline; }
 
+/* Bloc Installer l'application */
+.install-card {
+  margin-top: 18px;
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  background: linear-gradient(135deg, #E8F0FE 0%, #F0F4FB 100%);
+  border: 1px solid var(--soft-blue);
+  border-radius: var(--radius);
+  align-items: flex-start;
+}
+.install-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.install-content { flex: 1; min-width: 0; }
+.install-content h3 {
+  margin: 0 0 4px;
+  color: var(--primary);
+  font-size: 16px;
+}
+.install-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.install-actions .btn { flex: 0 1 auto; }
+.ios-help {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--soft-gold);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.icon-share {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 0 4px;
+}
+
 /* ---------- Admin panel ---------- */
 .code-mono {
   font-family: "SF Mono", Menlo, Consolas, monospace;
