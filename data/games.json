@@ -4542,6 +4542,85 @@
           "ref": "FAO, Climate-Smart Agriculture Sourcebook, 2013."
         }
       ]
+    },
+    {
+      "id": "bb46734e9d81",
+      "code": "QPC-WC4E22GK",
+      "name": "David",
+      "finishedAt": "2026-05-27T14:47:18.893Z",
+      "totalScore": 3,
+      "byManche": {
+        "manche1": 3,
+        "manche2": 0,
+        "manche3": 0
+      },
+      "nbQuestions": 4,
+      "nbCorrect": 3,
+      "nbWrong": 1,
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "packsCount": 1
+      },
+      "log": [
+        {
+          "manche": "manche1",
+          "packId": "manche1-69",
+          "packTitle": "Fondamentaux ML (1)",
+          "qid": "manche1-69-q1",
+          "q": "Quel algorithme classe un point selon les k voisins les plus proches ?",
+          "expected": "k-NN",
+          "given": "k-NN (k-Nearest Neighbors)",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Classification : vote majoritaire des k plus proches voisins dans l'espace des features.",
+          "ref": "Cover & Hart, 1967."
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-69",
+          "packTitle": "Fondamentaux ML (1)",
+          "qid": "manche1-69-q2",
+          "q": "Quel algorithme cherche l'hyperplan séparateur de marge maximale ?",
+          "expected": "SVM",
+          "given": "k-NN",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Maximisation de la marge entre les classes ; kernels (RBF, polynomial) pour le non-linéaire.",
+          "ref": "Vapnik, 1995."
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-69",
+          "packTitle": "Fondamentaux ML (1)",
+          "qid": "manche1-69-q3",
+          "q": "Random Forest combine plusieurs…",
+          "expected": "Arbres de décision (bagging)",
+          "given": "Arbres de décision avec bagging + bootstrap des features",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Bagging : bootstrap des échantillons + sélection aléatoire des features ; réduit la variance.",
+          "ref": "Breiman, 2001."
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-69",
+          "packTitle": "Fondamentaux ML (1)",
+          "qid": "manche1-69-q4",
+          "q": "Le gradient boosting construit les arbres…",
+          "expected": "Séquentiellement",
+          "given": "Séquentiellement, chaque arbre corrigeant les erreurs du précédent",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Chaque nouvel arbre apprend les résidus pondérés. XGBoost, LightGBM, CatBoost.",
+          "ref": "Friedman, 2001."
+        }
+      ]
     }
   ]
 }
