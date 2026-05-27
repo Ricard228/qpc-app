@@ -415,13 +415,24 @@ function buildAnswerForm(q, onSubmit, submitLabel) {
     const multi = Array.isArray(q.correctIndices) && q.correctIndices.length > 1;
     const form = el('form', { class: 'play-answer-form qcm-form' });
     const list = el('div', { class: 'qcm-list' });
-    q.choices.forEach((c, i) => {
+
+    // Randomisation runtime : on mélange l'ordre d'affichage des choix
+    // à chaque rendu. La valeur stockée sur l'input reste l'index ORIGINAL,
+    // donc evalAnswer/getQcmValue n'ont pas besoin d'être modifiés.
+    const n = q.choices.length;
+    const order = Array.from({ length: n }, (_, i) => i);
+    for (let i = n - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+
+    order.forEach(originalIdx => {
       const inp = el('input', {
         type: multi ? 'checkbox' : 'radio',
         name: 'qcm-ans',
-        value: String(i)
+        value: String(originalIdx)
       });
-      list.appendChild(el('label', { class: 'qcm-choice' }, inp, el('span', {}, c)));
+      list.appendChild(el('label', { class: 'qcm-choice' }, inp, el('span', {}, q.choices[originalIdx])));
     });
     form.appendChild(list);
     if (multi) form.appendChild(el('div', { class: 'muted', style: 'font-size:13px; margin-top:6px;' }, '⚠ Plusieurs bonnes réponses possibles : cochez toutes celles qui s\'appliquent.'));
