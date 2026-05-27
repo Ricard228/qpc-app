@@ -1396,6 +1396,15 @@ $('#brand-home').addEventListener('click', () => {
   else route('login');
 });
 
+// ---------- Service Worker (PWA) -------------------------------------
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => {
+      console.warn('[PWA] Échec d\'enregistrement du service worker :', err.message);
+    });
+  });
+}
+
 // ---------- Démarrage -------------------------------------------------
 (async function init() {
   try {

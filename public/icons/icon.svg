@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#1F3864"/>
+  <text x="50%" y="44%" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+        font-size="180" font-weight="800" fill="#FFFFFF" text-anchor="middle"
+        letter-spacing="-4">QPC</text>
+  <text x="50%" y="68%" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+        font-size="48" font-weight="500" fill="#FFFFFF" opacity="0.85"
+        text-anchor="middle">Éco &amp; Sci. sociales</text>
+  <circle cx="84" cy="84" r="26" fill="#C00000"/>
+  <circle cx="428" cy="428" r="26" fill="#C00000"/>
+</svg>
