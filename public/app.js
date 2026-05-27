@@ -125,6 +125,42 @@ const mount = (tplId) => {
 };
 const fmtDate = (iso) => iso ? new Date(iso).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : '—';
 
+// Transforme un texte contenant des URLs en éléments DOM avec liens cliquables
+// (target=_blank, rel=noopener noreferrer pour sécurité). Utilisé pour le
+// champ `ref` des questions qui contient typiquement un texte + une ou deux URLs.
+function linkify(text) {
+  const frag = document.createDocumentFragment();
+  if (!text) return frag;
+  const urlRe = /(https?:\/\/[^\s)]+)/g;
+  let lastIndex = 0;
+  let match;
+  while ((match = urlRe.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+    }
+    const url = match[0];
+    // Raccourcir l'URL affichée pour ne pas casser la lecture
+    let label = url;
+    try {
+      const u = new URL(url);
+      label = u.hostname.replace(/^www\./, '') + (u.pathname && u.pathname !== '/' ? u.pathname : '');
+      if (label.length > 50) label = label.slice(0, 47) + '…';
+    } catch {}
+    const a = document.createElement('a');
+    a.href = url;
+    a.textContent = label;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.className = 'ref-link';
+    frag.appendChild(a);
+    lastIndex = match.index + url.length;
+  }
+  if (lastIndex < text.length) {
+    frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+  }
+  return frag;
+}
+
 // ---------- État global -----------------------------------------------
 const State = {
   meta: null,
@@ -584,7 +620,7 @@ function showReveal(correct, q, given) {
     el('div', { class: 'reveal-label' }, correct ? '✓ Bonne réponse' : '✗ Mauvaise / passée'),
     el('div', { class: 'reveal-answer' }, 'Réponse : ', el('strong', {}, q.r)),
     q.e ? el('div', { class: 'reveal-explain' }, q.e) : null,
-    q.ref ? el('div', { class: 'reveal-ref' }, q.ref) : null);
+    q.ref ? el('div', { class: 'reveal-ref' }, linkify(q.ref)) : null);
   card.appendChild(div);
 }
 
@@ -931,7 +967,7 @@ function renderReviewCard() {
     reveal.appendChild(el('div', { class: 'reveal-label' }, 'Réponse'));
     reveal.appendChild(el('div', { class: 'reveal-answer' }, el('strong', {}, item.r)));
     if (item.e) reveal.appendChild(el('div', { class: 'reveal-explain' }, item.e));
-    if (item.ref) reveal.appendChild(el('div', { class: 'reveal-ref' }, item.ref));
+    if (item.ref) reveal.appendChild(el('div', { class: 'reveal-ref' }, linkify(item.ref)));
     $('#btn-rev-toggle').textContent = 'Masquer la réponse';
   } else {
     reveal.hidden = true;
