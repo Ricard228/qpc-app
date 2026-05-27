@@ -2,7 +2,7 @@
 
 Application web qui transforme le recueil de **516 questions** en jeu interactif, format inspiré de l'émission *Questions pour un Champion* (TV5 Monde).
 
-**Version 2.5** — codes d'accès permanents, dashboard centralisé, **persistance permanente** via branche `data` du repo GitHub, **export Excel**, **toggle Révision libre**, **duels utilisateur-à-utilisateur** et **confrontations admin** (2+ joueurs), **708 questions sur 13 domaines** (Microéconomie 64q, Macroéconomie 64q, Statistique/Économétrie 88q, Machine learning & Deep learning 31q, Suivi-évaluation projets 31q, Marchés financiers UEMOA / BRVM 35q…), **mode QCM** avec 1 ou plusieurs bonnes réponses.
+**Version 2.6** — codes d'accès permanents, dashboard centralisé, **persistance permanente** via branche `data` du repo GitHub, **export Excel**, **toggle Révision libre**, **duels utilisateur-à-utilisateur** et **confrontations admin** (2+ joueurs), **766 questions sur 16 domaines** dont **Comptabilité générale et analytique**, **Fiscalité (Togo)** et **Marchés publics et passation (Togo)**, **mode QCM** avec 1 ou plusieurs bonnes réponses.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Ricard228/qpc-app)
 

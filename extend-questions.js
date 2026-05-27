@@ -9,6 +9,7 @@ const path = require('path');
 const extra     = require('./data_extra.js');
 const extraMF   = require('./data_extra_mf.js');
 const extraEcon = require('./data_extra_econ.js');
+const extraTogo = require('./data_extra_togo.js');
 
 const QPATH = path.join(__dirname, 'data', 'questions.json');
 const Q = JSON.parse(fs.readFileSync(QPATH, 'utf8'));
@@ -66,6 +67,11 @@ const r1e = appendPacks(Q.manche1, 'manche1', extraEcon.m1Packs);
 const r2e = appendPacks(Q.manche2, 'manche2', extraEcon.m2Packs);
 const r3e = appendPacks(Q.manche3, 'manche3', extraEcon.m3Packs);
 
+// v2.6 — Compta + Fiscalité Togo + Marchés publics Togo
+const r1t = appendPacks(Q.manche1, 'manche1', extraTogo.m1Packs);
+const r2t = appendPacks(Q.manche2, 'manche2', extraTogo.m2Packs);
+const r3t = appendPacks(Q.manche3, 'manche3', extraTogo.m3Packs);
+
 // Recalculer meta + domains
 const allQuestions = []
   .concat(...Q.manche1.map(p => p.questions))
@@ -97,9 +103,9 @@ Q.domains = Object.entries(domainCounts)
 fs.writeFileSync(QPATH, JSON.stringify(Q, null, 2), 'utf8');
 
 console.log('✅ Fusion terminée');
-console.log(`  Manche 1 : +${r1.added + r1mf.added + r1e.added} packs (extra=${r1.added}, mf=${r1mf.added}, econ=${r1e.added})`);
-console.log(`  Manche 2 : +${r2.added + r2mf.added + r2e.added} packs (extra=${r2.added}, mf=${r2mf.added}, econ=${r2e.added})`);
-console.log(`  Manche 3 : +${r3.added + r3mf.added + r3e.added} packs (extra=${r3.added}, mf=${r3mf.added}, econ=${r3e.added})`);
+console.log(`  Manche 1 : +${r1.added + r1mf.added + r1e.added + r1t.added} packs (extra=${r1.added}, mf=${r1mf.added}, econ=${r1e.added}, togo=${r1t.added})`);
+console.log(`  Manche 2 : +${r2.added + r2mf.added + r2e.added + r2t.added} packs (extra=${r2.added}, mf=${r2mf.added}, econ=${r2e.added}, togo=${r2t.added})`);
+console.log(`  Manche 3 : +${r3.added + r3mf.added + r3e.added + r3t.added} packs (extra=${r3.added}, mf=${r3mf.added}, econ=${r3e.added}, togo=${r3t.added})`);
 console.log(`  Total packs : M1=${Q.meta.manche1Count} M2=${Q.meta.manche2Count} M3=${Q.meta.manche3Count}`);
 console.log(`  Total questions : ${Q.meta.questionsTotal}`);
 console.log(`  Domaines :`);

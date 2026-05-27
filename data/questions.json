@@ -4986,6 +4986,786 @@
           "pts": 1
         }
       ]
+    },
+    {
+      "id": "manche1-94",
+      "type": "manche1",
+      "titre": "Plan comptable OHADA",
+      "theme": "Comptabilité générale",
+      "domain": "Comptabilité générale et analytique",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-94-q1",
+          "q": "Quel référentiel comptable s'applique au Togo en 2024 pour les entreprises ?",
+          "r": "SYSCOHADA révisé / AUDCIF",
+          "choices": [
+            "SYSCOHADA révisé / AUDCIF",
+            "IFRS uniquement",
+            "US GAAP",
+            "Plan Comptable Général français"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le Togo, État membre de l'OHADA depuis 1995, applique le Système Comptable OHADA révisé entré en vigueur le 1ᵉʳ janvier 2018 pour les comptes personnels et le 1ᵉʳ janvier 2019 pour les comptes consolidés. Cadre conceptuel défini par l'Acte Uniforme relatif au Droit Comptable et à l'Information Financière (AUDCIF). Les sociétés cotées et faisant appel public à l'épargne appliquent en plus les IFRS (consolidation).",
+          "ref": "OHADA, AUDCIF du 26/01/2017 — JO OHADA du 15/02/2017.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-94-q2",
+          "q": "Combien de classes le plan comptable OHADA comporte-t-il ?",
+          "r": "9 classes",
+          "choices": [
+            "9 classes (1 à 9)",
+            "7 classes",
+            "8 classes",
+            "10 classes"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Classe 1 : ressources durables (capitaux propres et dettes financières). Classe 2 : actif immobilisé. Classe 3 : stocks. Classe 4 : tiers (clients, fournisseurs, personnel, État, organismes sociaux). Classe 5 : trésorerie. Classe 6 : charges des activités ordinaires. Classe 7 : produits des activités ordinaires. Classe 8 : autres charges et produits HAO. Classe 9 : comptabilité analytique de gestion.",
+          "ref": "OHADA AUDCIF, Liste des comptes — Norme révisée 2017.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-94-q3",
+          "q": "Quels sont les états financiers obligatoires selon le SYSCOHADA pour le système normal ?",
+          "r": "Bilan, CR, TFT, Notes annexes",
+          "choices": [
+            "Bilan, Compte de résultat, Tableau des flux de trésorerie, Notes annexes",
+            "Uniquement le bilan et le compte de résultat",
+            "Bilan, CR et budget prévisionnel",
+            "Compte de résultat et trésorerie"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Pour le système normal (entreprises dépassant les seuils) : Bilan, Compte de résultat, Tableau des flux de trésorerie (TFT) et Notes annexes. Le système minimal de trésorerie (SMT) s'applique aux très petites entreprises avec un chiffre d'affaires < 60 millions FCFA pour les négociants ou < 30 millions FCFA pour les prestataires de services.",
+          "ref": "OHADA AUDCIF, art. 11 et art. 25 ; système minimal art. 13.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-94-q4",
+          "q": "Que représente la classe 4 dans le plan comptable OHADA ?",
+          "r": "Comptes de tiers",
+          "choices": [
+            "Les comptes de tiers (clients, fournisseurs, État, personnel)",
+            "Les immobilisations",
+            "Les capitaux propres",
+            "Les stocks"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Subdivisions principales : 40 (fournisseurs), 41 (clients), 42 (personnel), 43 (organismes sociaux), 44 (État et collectivités publiques), 45 (organismes internationaux), 46 (associés/groupe), 47 (débiteurs et créditeurs divers), 48 (créances et dettes hors activités ordinaires), 49 (dépréciations et provisions).",
+          "ref": "OHADA AUDCIF, Liste des comptes.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-95",
+      "type": "manche1",
+      "titre": "Opérations comptables courantes",
+      "theme": "Comptabilité générale",
+      "domain": "Comptabilité générale et analytique",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-95-q1",
+          "q": "En partie double, toute opération économique est enregistrée par…",
+          "r": "Débit = Crédit",
+          "choices": [
+            "Au moins un débit et un crédit d'égal montant",
+            "Un seul mouvement comptable",
+            "Un débit uniquement",
+            "Un crédit uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Principe fondamental hérité de Luca Pacioli (1494). Chaque opération doit respecter l'équilibre Actif = Passif + Capitaux propres. Tout débit a une contrepartie créditrice d'un montant identique. Garantit l'égalité du bilan et permet le contrôle arithmétique.",
+          "ref": "Pacioli, \"Summa de Arithmetica\", 1494 ; OHADA AUDCIF.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-95-q2",
+          "q": "L'amortissement d'une immobilisation reflète…",
+          "r": "Perte de valeur due à l'usage et au temps",
+          "choices": [
+            "La constatation comptable de la perte de valeur due à l'usage et au temps",
+            "Le remboursement du prêt qui l'a financée",
+            "La revente prévue",
+            "Une provision pour litige"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'amortissement est une charge calculée (compte 68) qui répartit le coût d'acquisition d'une immobilisation amortissable sur sa durée d'utilité économique. Modes : linéaire (le plus courant), dégressif, unités d'œuvre. La contrepartie est un compte 28 (amortissements cumulés) qui vient en diminution de l'actif.",
+          "ref": "OHADA AUDCIF, art. 45 ; IAS 16.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-95-q3",
+          "q": "Que sont les \"produits constatés d'avance\" ?",
+          "r": "Produits encaissés à imputer à un exercice futur",
+          "choices": [
+            "Des produits encaissés mais relatifs à un exercice futur (au passif du bilan)",
+            "Des créances non encore facturées",
+            "Des stocks vendus",
+            "Des revenus financiers"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Régularisation de clôture (principe d'indépendance des exercices) : par exemple loyer reçu le 1ᵉʳ déc. pour la période déc.-fév., les 2/3 perçus sont à reporter sur l'exercice suivant. Comptablement : compte 477 au passif. Symétrique des \"charges constatées d'avance\" à l'actif (compte 476).",
+          "ref": "OHADA AUDCIF, principe d'indépendance des exercices, art. 59.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-95-q4",
+          "q": "Quelles sont les composantes du bilan SYSCOHADA ?",
+          "r": "Actif et Passif structurés",
+          "choices": [
+            "Actif (immobilisé, circulant, trésorerie) + Passif (capitaux propres, dettes financières, passif circulant, trésorerie passif)",
+            "Actif et passif uniquement, sans subdivision",
+            "Capitaux propres seulement",
+            "Charges et produits"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le bilan SYSCOHADA présente : à l'actif (1) immobilisations (incorporelles, corporelles, financières), (2) actif circulant (stocks, créances), (3) trésorerie-actif (banques, caisses) ; au passif (1) capitaux propres, (2) dettes financières et provisions, (3) passif circulant (dettes fournisseurs, fiscales, sociales), (4) trésorerie-passif (concours bancaires).",
+          "ref": "OHADA AUDCIF, modèle de bilan.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-96",
+      "type": "manche1",
+      "titre": "Comptabilité analytique — méthodes",
+      "theme": "Comptabilité de gestion",
+      "domain": "Comptabilité générale et analytique",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-96-q1",
+          "q": "Que désigne la méthode des coûts complets ?",
+          "r": "Tous les coûts (directs + indirects)",
+          "choices": [
+            "Méthode imputant à chaque produit tous les coûts (directs + indirects via clés de répartition)",
+            "Une méthode ne retenant que les coûts variables",
+            "Une méthode standardisée par produit",
+            "La méthode comptable légale obligatoire"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Méthode traditionnelle française, dite des \"sections homogènes\" développée par le Colonel Rimailho (1928). Étapes : (1) charges directes affectées, (2) charges indirectes regroupées dans des centres d'analyse, (3) imputation aux produits via une unité d'œuvre. Permet de calculer un coût de revient unitaire complet et un résultat analytique.",
+          "ref": "Rimailho, \"Établissement des prix de revient\", 1928 ; CNOF.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-96-q2",
+          "q": "La méthode ABC (Activity-Based Costing) consiste à…",
+          "r": "Imputation par activités (inducteurs)",
+          "choices": [
+            "Imputer les charges indirectes via les activités qui les génèrent (inducteurs de coûts)",
+            "Classer les produits A, B, C selon leur rentabilité",
+            "Ne traiter que les coûts directs",
+            "Comparer trois budgets alternatifs"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Méthode développée par Cooper & Kaplan à Harvard dans les années 1980. Critique la méthode traditionnelle qui sous-évalue le coût des produits complexes en faible volume. Étapes : identifier activités, mesurer inducteurs (cost drivers), allouer les charges. Particulièrement adaptée aux entreprises industrielles et de service avec forte diversité de produits.",
+          "ref": "Cooper & Kaplan, \"Activity-Based Costing\", HBR 1988.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-96-q3",
+          "q": "Le \"seuil de rentabilité\" est atteint lorsque…",
+          "r": "Marge sur coût variable = charges fixes",
+          "choices": [
+            "La marge sur coût variable couvre exactement les charges fixes (résultat = 0)",
+            "Le chiffre d'affaires est maximum",
+            "Les ventes égalent le stock",
+            "Les dettes égalent les créances"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Seuil de rentabilité (point mort) en valeur = CF / Taux de MCV ; en quantité = CF / MCV unitaire. Permet de calculer la marge de sécurité et l'indice de sécurité. Concept central du contrôle de gestion pour évaluer la viabilité d'une activité et son levier opérationnel (= MCV/Résultat).",
+          "ref": "Lassègue, \"Contrôle de gestion\" ; Burlaud & Simon.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-96-q4",
+          "q": "Que désigne un écart sur coût standard \"favorable\" ?",
+          "r": "Réel < Standard",
+          "choices": [
+            "Coût réel < coût standard préétabli",
+            "Coût réel > coût standard",
+            "Coût réel = coût standard",
+            "Le standard a été réévalué"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "En contrôle budgétaire, on calcule des écarts entre standard préétabli et réalité, décomposés en écart sur quantité (efficacité) et écart sur prix (productivité). Un écart favorable indique une performance meilleure que prévue. Méthode initiée par Taylor (1911) et formalisée par Émile Rimailho et les méthodes de gestion budgétaire.",
+          "ref": "Taylor, \"Scientific Management\", 1911 ; Anthony, \"Management Control Systems\".",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-97",
+      "type": "manche1",
+      "titre": "Analyse financière et ratios",
+      "theme": "Diagnostic financier",
+      "domain": "Comptabilité générale et analytique",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-97-q1",
+          "q": "Que mesure le ratio de liquidité générale (current ratio) ?",
+          "r": "Actif circulant / Passif circulant",
+          "choices": [
+            "Actif circulant / Passif circulant",
+            "Capitaux propres / Total bilan",
+            "Résultat net / CA",
+            "Dettes / Capitaux propres"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Mesure la capacité de l'entreprise à honorer ses dettes à court terme avec ses actifs circulants. Ratio > 1 généralement attendu. La liquidité réduite (quick ratio) exclut les stocks : (Actif circulant − Stocks) / Passif circulant, plus prudente notamment pour les services.",
+          "ref": "Vernimmen, \"Finance d'entreprise\", chap. 17.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-97-q2",
+          "q": "Que représente le BFR (Besoin en Fonds de Roulement) ?",
+          "r": "Stocks + Créances − Dettes d'exploitation",
+          "choices": [
+            "Besoin de financement du cycle d'exploitation = Stocks + Créances − Dettes d'exploitation",
+            "Le résultat d'exploitation",
+            "L'investissement net annuel",
+            "Le chiffre d'affaires moyen"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le BFR représente le décalage de trésorerie entre encaissements et décaissements d'exploitation. Si > 0, besoin à financer ; si < 0 (cas distribution, grande surface), excédent de trésorerie. Le FR (Fonds de Roulement) = Ressources stables − Emplois stables doit en principe couvrir le BFR ; la différence est la trésorerie nette.",
+          "ref": "OHADA AUDCIF, états financiers ; Vernimmen chap. 17-18.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-97-q3",
+          "q": "La rentabilité économique (ROCE) mesure…",
+          "r": "REX après IS / Capitaux engagés",
+          "choices": [
+            "Résultat d'exploitation après impôt / Capitaux engagés (capitaux propres + dette financière nette)",
+            "Résultat net / CA",
+            "Dividende / Cours",
+            "Capitalisation / Bénéfice"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Return On Capital Employed mesure la performance de l'outil économique avant prise en compte de la structure financière. Comparé au CMPC : si ROCE > CMPC, l'entreprise crée de la valeur (EVA positive). Décomposition : ROCE = Marge × Rotation des capitaux.",
+          "ref": "Vernimmen chap. 13 ; Stern Stewart, EVA, 1991.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-97-q4",
+          "q": "Que désigne la CAF (Capacité d'Autofinancement) ?",
+          "r": "RN + Dotations − Reprises − Plus-values",
+          "choices": [
+            "Flux potentiel de trésorerie généré par l'activité = Résultat net + Dotations − Reprises − Plus-values",
+            "Le chiffre d'affaires moyen",
+            "Le résultat d'exploitation",
+            "L'investissement programmé"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Indicateur clé : représente les ressources internes que l'entreprise génère pour financer ses investissements, rembourser ses dettes ou distribuer des dividendes. À distinguer du cash-flow d'exploitation (qui tient compte des variations de BFR). CAF / CA donne un indicateur de la capacité à dégager des ressources.",
+          "ref": "Vernimmen chap. 4 ; PCG / SYSCOHADA, tableaux de flux.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-98",
+      "type": "manche1",
+      "titre": "OTR et organisation fiscale du Togo",
+      "theme": "Administration fiscale togolaise",
+      "domain": "Fiscalité (Togo)",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-98-q1",
+          "q": "Que signifie OTR au Togo ?",
+          "r": "Office Togolais des Recettes",
+          "choices": [
+            "Office Togolais des Recettes",
+            "Organisation Togolaise des Régies",
+            "Office du Trésor et du Recouvrement",
+            "Organe Togolais de Régulation"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'OTR est l'administration fiscale et douanière togolaise, créé par la loi n° 2012-016 du 14 décembre 2012 et opérationnel depuis le 1ᵉʳ janvier 2014. Il a fusionné la Direction Générale des Impôts (DGI) et la Direction Générale des Douanes (DGD) sous un même organe. Statut d'autorité administrative autonome avec personnalité juridique, sous la tutelle du ministère chargé des Finances.",
+          "ref": "Loi n° 2012-016 du 14/12/2012 portant création de l'OTR.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-98-q2",
+          "q": "Quel texte constitue la base de la fiscalité directe et indirecte au Togo ?",
+          "r": "CGI togolais",
+          "choices": [
+            "Le Code Général des Impôts (CGI)",
+            "Le Code OHADA",
+            "Le Code du commerce",
+            "Le Code du travail"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le CGI consolide l'ensemble des dispositions relatives aux impôts directs (IRPP, IS, IMF) et indirects (TVA, droits d'enregistrement, etc.). Il est mis à jour annuellement par la Loi de Finances. La version applicable aux opérations de 2024 intègre les évolutions de la LF 2024 votée par l'Assemblée nationale.",
+          "ref": "CGI Togo, édition annuelle OTR ; LF 2024.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-98-q3",
+          "q": "Quel taux normal de TVA s'applique au Togo ?",
+          "r": "18 %",
+          "choices": [
+            "18 %",
+            "15 %",
+            "20 %",
+            "10 %"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Taux normal harmonisé au sein de l'UEMOA (Directive n° 02/98/CM/UEMOA modifiée). Certains biens et services sont exonérés (produits de première nécessité, services médicaux, financiers, éducation), d'autres en taux zéro (exportations). La TVA togolaise applique le mécanisme de la déduction en cascade. Seuil de franchise de TVA : CA annuel < 60 M FCFA (régime simplifié).",
+          "ref": "CGI Togo, Livre II ; Directive UEMOA TVA.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-98-q4",
+          "q": "Quel est l'organe de recours administratif gracieux contre une imposition au Togo ?",
+          "r": "Commission Paritaire de Conciliation Fiscale",
+          "choices": [
+            "La Commission Paritaire de Conciliation Fiscale",
+            "La Cour Suprême",
+            "L'Assemblée nationale",
+            "Le Conseil d'État français"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "En cas de contestation, le contribuable peut introduire un recours gracieux auprès du Commissaire Général de l'OTR (délai 30 jours), puis saisir la Commission Paritaire de Conciliation Fiscale (CPCF) qui comprend des représentants de l'administration et du secteur privé. En dernier recours : tribunaux administratifs / Cour Suprême.",
+          "ref": "CGI Togo, Livre des Procédures Fiscales, art. relatifs aux recours.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-99",
+      "type": "manche1",
+      "titre": "Impôts directs au Togo",
+      "theme": "IS, IRPP, IMF",
+      "domain": "Fiscalité (Togo)",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-99-q1",
+          "q": "Quel est le taux normal de l'Impôt sur les Sociétés (IS) au Togo en 2024 ?",
+          "r": "27 %",
+          "choices": [
+            "27 %",
+            "30 %",
+            "25 %",
+            "15 %"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le taux normal de l'IS au Togo est fixé à 27 % (LF 2018-2019). Un taux réduit de 27 % uniforme s'applique désormais (auparavant 29 % pour la généralité et 27 % pour les industries). Certaines activités spécifiques bénéficient d'incitations (zone franche, code des investissements, agréments BCEAO).",
+          "ref": "CGI Togo, art. 96 et suivants ; LF Togo 2019 et 2024.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-99-q2",
+          "q": "Quel est l'Impôt Minimum Forfaitaire (IMF) au Togo ?",
+          "r": "1 % du CA hors taxes (plancher)",
+          "choices": [
+            "Un impôt plancher de 1 % du chiffre d'affaires hors taxes",
+            "Un impôt sur le bénéfice seul",
+            "Une taxe foncière",
+            "Un acompte sur la TVA"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'IMF est dû par les sociétés soumises à l'IS lorsque l'IS calculé est inférieur à ce minimum. Taux usuel de 1 % du CA HT (avec un minimum forfaitaire en valeur). L'IMF est imputable sur l'IS de l'exercice et reportable. Vise à garantir un minimum de prélèvement sur les entreprises déficitaires ou faiblement bénéficiaires.",
+          "ref": "CGI Togo, art. 122 et suivants.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-99-q3",
+          "q": "Le barème de l'Impôt sur le Revenu des Personnes Physiques (IRPP) au Togo est…",
+          "r": "Progressif par tranches",
+          "choices": [
+            "Progressif par tranches",
+            "Proportionnel à taux unique 20 %",
+            "Forfaitaire selon la catégorie professionnelle",
+            "Calculé en fonction du seul nombre d'enfants"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Barème progressif appliqué au revenu net imposable. Tranches successives (LF récente) ex. : 0 % jusqu'à un certain seuil, puis 5 %, 10 %, 15 %, 20 %, 25 %, 30 %, jusqu'à 35 % au-delà d'un plafond. Système de quotient familial limité. Les salariés bénéficient d'un abattement forfaitaire (frais professionnels) sur le salaire brut.",
+          "ref": "CGI Togo, Livre I, IRPP — barème en LF annuelle.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-99-q4",
+          "q": "Que sont les impôts locaux togolais ?",
+          "r": "Patente, foncier, taxe d'habitation, taxes communales",
+          "choices": [
+            "Patente, contribution foncière, taxe d'habitation et taxes communales diverses",
+            "IRPP et IS",
+            "TVA et droits de douane",
+            "Impôt sur le revenu uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Impôts locaux : contribution des patentes (activité commerciale/industrielle), contribution foncière des propriétés bâties et non bâties, taxe d'habitation, taxe sur les terrains non bâtis urbains, taxes sur les véhicules. Sont perçus par l'État puis reversés en partie aux collectivités. Réforme de la fiscalité locale en cours dans le cadre de la décentralisation (élections locales 2019).",
+          "ref": "CGI Togo, Livre IV ; loi sur la décentralisation 2007.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-100",
+      "type": "manche1",
+      "titre": "TVA et obligations fiscales au Togo",
+      "theme": "TVA et procédures",
+      "domain": "Fiscalité (Togo)",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-100-q1",
+          "q": "Quelles entreprises sont soumises à la TVA au Togo ?",
+          "r": "CA > seuils définis par catégorie",
+          "choices": [
+            "Entreprises dont le CA annuel dépasse 60 millions FCFA (services) ou 100 M FCFA (négoce)",
+            "Toutes les entreprises sans seuil",
+            "Uniquement les sociétés cotées",
+            "Uniquement les exportateurs"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Au Togo, le régime du réel normal (assujettissement TVA) s'applique au-delà des seuils fixés par la LF. En dessous, l'entreprise relève du régime simplifié ou de la Taxe Professionnelle Unique (TPU) selon son CA. Les exonérations subjectives concernent certaines activités (médecins, enseignants, banques pour les opérations spécifiques, etc.).",
+          "ref": "CGI Togo, art. 295 et suivants ; LF annuelle pour les seuils.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-100-q2",
+          "q": "Quelle est la périodicité normale de déclaration de TVA au Togo ?",
+          "r": "Mensuelle, au plus tard le 15",
+          "choices": [
+            "Mensuelle (déclaration et paiement avant le 15 du mois suivant)",
+            "Trimestrielle",
+            "Annuelle",
+            "Bi-annuelle"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La déclaration et le paiement de la TVA collectée nette (après imputation de la TVA déductible) doivent intervenir au plus tard le 15 du mois suivant la période imposable. Tout retard expose le redevable à des intérêts de retard (10 %) et des pénalités (40 % en cas de défaut, voire majoration en cas de mauvaise foi).",
+          "ref": "CGI Togo, Livre des Procédures Fiscales, art. relatifs à la TVA.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-100-q3",
+          "q": "Que désigne la TPU (Taxe Professionnelle Unique) au Togo ?",
+          "r": "Impôt synthétique pour petits contribuables",
+          "choices": [
+            "Impôt synthétique remplaçant plusieurs impôts pour les petits contribuables",
+            "Une taxe sur les véhicules",
+            "L'impôt sur les loyers commerciaux",
+            "La contribution patente uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La TPU regroupe en un seul versement la patente, l'IRPP-BIC et la TVA pour les contribuables réalisant un faible chiffre d'affaires (généralement < 30 M FCFA / an pour les prestataires et < 60 M FCFA pour les négociants). Régime simplifié destiné aux petits commerçants, artisans et prestataires. Versement périodique simplifié.",
+          "ref": "CGI Togo, dispositions sur le régime simplifié et la TPU.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-100-q4",
+          "q": "Quel mécanisme caractérise principalement la TVA ?",
+          "r": "Paiement fractionné avec déduction",
+          "choices": [
+            "Le mécanisme du paiement fractionné avec droit à déduction",
+            "Un impôt sur le bénéfice",
+            "Un impôt sur le patrimoine",
+            "Une taxe sur les exportations"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La TVA est collectée par l'assujetti à chaque stade du circuit économique. Il déduit la TVA qu'il a lui-même supportée sur ses achats et investissements (TVA déductible) et reverse uniquement la différence (TVA nette à payer). Ce mécanisme assure neutralité du marché et porte la charge fiscale sur le consommateur final.",
+          "ref": "Maurice Lauré, 1954 — inventeur français de la TVA ; Directive UEMOA TVA.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-101",
+      "type": "manche1",
+      "titre": "Cadre juridique des marchés publics au Togo",
+      "theme": "Réglementation et organes",
+      "domain": "Marchés publics et passation (Togo)",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-101-q1",
+          "q": "Quel texte principal régit les marchés publics au Togo ?",
+          "r": "Décret 2009-277/PR",
+          "choices": [
+            "Décret n° 2009-277/PR du 11 novembre 2009 (Code des marchés publics)",
+            "Code OHADA des contrats",
+            "Loi de finances annuelle",
+            "Code civil"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le décret n° 2009-277/PR du 11 novembre 2009 porte Code des Marchés Publics et délégations de Service Public au Togo. Il a été modifié notamment par le décret n° 2017-097/PR du 25 août 2017 et complété par divers textes d'application (manuel de procédures, dossiers types). La loi n° 2021-034 du 29 décembre 2021 traite spécifiquement des partenariats public-privé (PPP).",
+          "ref": "Décret 2009-277/PR ; loi PPP 2021-034.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-101-q2",
+          "q": "Quel organe assure la régulation des marchés publics au Togo ?",
+          "r": "ARMP",
+          "choices": [
+            "ARMP — Autorité de Régulation des Marchés Publics",
+            "OTR — Office Togolais des Recettes",
+            "Cour des Comptes",
+            "BCEAO"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'Autorité de Régulation des Marchés Publics (ARMP) est un organe indépendant créé par le code des marchés publics togolais. Missions : régulation, conseil, formation, audit des marchés a posteriori, traitement des recours non-juridictionnels. Composition tripartite : représentants de l'administration, du secteur privé et de la société civile. Distincte de la DNCMP qui assure le contrôle a priori.",
+          "ref": "Décret 2009-277/PR, Titre III ; statuts ARMP.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-101-q3",
+          "q": "Quel organe assure le contrôle a priori des marchés publics au Togo ?",
+          "r": "DNCMP",
+          "choices": [
+            "DNCMP — Direction Nationale du Contrôle des Marchés Publics",
+            "ARMP",
+            "OTR",
+            "Cour des Comptes"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La Direction Nationale du Contrôle des Marchés Publics, sous tutelle du ministère chargé des Finances, intervient en amont (contrôle préalable) sur les dossiers d'appel d'offres et les marchés au-dessus de certains seuils. Elle vérifie la régularité avant publication et avant signature. Distincte de l'ARMP qui agit en aval (régulation, audit).",
+          "ref": "Décret 2009-277/PR, dispositions sur la DNCMP.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-101-q4",
+          "q": "Qui est la PRMP au Togo dans une autorité contractante ?",
+          "r": "Personne Responsable des Marchés Publics",
+          "choices": [
+            "La Personne Responsable des Marchés Publics — autorité de la procédure de passation",
+            "Le Premier ministre",
+            "Le Président de l'ARMP",
+            "Le Procureur de la République"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La PRMP représente l'autorité contractante (ministère, agence, mairie, EPN) tout au long de la procédure : approbation du DAO, lancement, ouverture des plis, attribution. Pour les marchés importants, elle est assistée d'une Commission de Passation des Marchés Publics (CPMP) et d'une Commission de Contrôle des Marchés Publics (CCMP) internes à l'institution.",
+          "ref": "Décret 2009-277/PR, Titre II.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-102",
+      "type": "manche1",
+      "titre": "Procédures de passation au Togo",
+      "theme": "Types de procédures",
+      "domain": "Marchés publics et passation (Togo)",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-102-q1",
+          "q": "Quelle est la procédure de droit commun de passation au Togo ?",
+          "r": "Appel d'Offres Ouvert (AOO)",
+          "choices": [
+            "L'Appel d'Offres Ouvert (AOO)",
+            "Le gré à gré",
+            "La demande de cotation",
+            "L'attribution directe"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'AOO est la procédure de droit commun selon le décret 2009-277/PR (art. 50 et suivants). Elle implique une publication large (presse, BOMP, site ARMP), l'ouverture à tous les candidats éligibles, l'évaluation selon des critères annoncés au DAO, et l'attribution au moins-disant techniquement qualifié. Les autres procédures (AOR, gré à gré, DRP) sont l'exception, à motiver.",
+          "ref": "Décret 2009-277/PR, art. 49 et suivants.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-102-q2",
+          "q": "Quand peut-on recourir à l'Appel d'Offres Restreint (AOR) au Togo ?",
+          "r": "Spécificité technique limitant les candidats",
+          "choices": [
+            "Lorsque la nature très spécifique des prestations limite le nombre de candidats potentiels",
+            "À la discrétion du ministre",
+            "Toujours pour les marchés > 100 M FCFA",
+            "Pour les marchés de fournitures uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'AOR est justifié lorsque le nombre de fournisseurs/prestataires potentiels est intrinsèquement limité (haute technicité, monopole de fait, spécialisation). La présélection des candidats est encadrée et doit être motivée. La DNCMP donne son avis préalable. Toute restriction abusive de la concurrence expose à des recours et sanctions de l'ARMP.",
+          "ref": "Décret 2009-277/PR, art. 53.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-102-q3",
+          "q": "Le gré à gré (entente directe) au Togo est admis…",
+          "r": "Exception avec autorisation et avis préalables",
+          "choices": [
+            "À titre exceptionnel et après autorisation du ministre chargé des Marchés sur avis DNCMP/ARMP",
+            "À la discrétion de la PRMP",
+            "Pour tous les marchés < 50 M FCFA",
+            "Sans aucun encadrement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le gré à gré (procédure non concurrentielle) est limitativement énuméré : urgence impérieuse, fournitures complémentaires, brevet exclusif, défense nationale, etc. Doit faire l'objet d'un avis motivé de la DNCMP/ARMP et d'une autorisation expresse de l'autorité de tutelle. Limité strictement pour préserver la concurrence et lutter contre la corruption.",
+          "ref": "Décret 2009-277/PR, art. 73 et suivants.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-102-q4",
+          "q": "Qu'est-ce que la \"demande de renseignements et de prix\" (DRP) au Togo ?",
+          "r": "Procédure simplifiée pour faibles montants",
+          "choices": [
+            "Procédure simplifiée pour marchés de faible montant en dessous d'un seuil défini",
+            "Une procédure d'agrément des entreprises",
+            "Une étude de marché préalable au DAO",
+            "Une demande d'avis fiscal"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La DRP est utilisée pour les marchés de fournitures, services courants ou travaux dont le montant est inférieur aux seuils de passation par appel d'offres. Au moins 3 fournisseurs/prestataires sont consultés par écrit, les offres sont comparées et le moins-disant qualifié est retenu. Procédure rapide mais documentée. Les seuils sont fixés par arrêté du ministre des Finances.",
+          "ref": "Décret 2009-277/PR, art. 64 et arrêtés sur les seuils.",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-103",
+      "type": "manche1",
+      "titre": "Exécution et recours dans les marchés publics du Togo",
+      "theme": "Suivi des contrats",
+      "domain": "Marchés publics et passation (Togo)",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-103-q1",
+          "q": "Que désigne un \"avenant\" dans un marché public togolais ?",
+          "r": "Acte modifiant le marché signé",
+          "choices": [
+            "Un acte modifiant le marché initial après sa signature",
+            "La caution définitive",
+            "La garantie de soumission",
+            "L'ordre de service initial"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'avenant porte modification du marché initial (quantité, délai, montant, prestations). Encadré : ne peut bouleverser l'économie générale du marché, soumis à approbation des organes de contrôle (DNCMP), limité en montant cumulé (souvent < 25-30 % du marché initial). Tout dépassement systémique exposerait au constat de marché irrégulier.",
+          "ref": "Décret 2009-277/PR, dispositions sur l'exécution et art. relatif aux avenants.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-103-q2",
+          "q": "Qu'est-ce que la \"garantie de bonne exécution\" ?",
+          "r": "Caution pour la bonne exécution",
+          "choices": [
+            "Caution déposée par le titulaire pour garantir la bonne réalisation du marché",
+            "Un dépôt obligatoire à la BCEAO",
+            "Une provision fiscale",
+            "Une attestation de capacité financière"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Généralement 5 à 10 % du montant du marché, déposée à la signature par le titulaire (sous forme de caution bancaire ou retenue sur paiements). Restituée après réception définitive et règlement de toutes les obligations. Vise à protéger l'autorité contractante contre les défauts d'exécution. Distincte de la garantie de soumission (1-3 % du montant prévisionnel, déposée pour participer à l'AO).",
+          "ref": "Décret 2009-277/PR, art. sur les garanties.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-103-q3",
+          "q": "Quel recours non-juridictionnel un soumissionnaire écarté peut-il exercer au Togo ?",
+          "r": "Comité de Règlement des Différends de l'ARMP",
+          "choices": [
+            "Recours devant l'ARMP (Comité de Règlement des Différends)",
+            "Saisine directe de la Cour Suprême",
+            "Recours auprès de la BCEAO",
+            "Plainte auprès de l'UEMOA"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'ARMP dispose d'un Comité de Règlement des Différends (CRD) qui examine les recours des soumissionnaires s'estimant lésés. Procédure rapide (délai légal de réponse), gratuite, contradictoire. Les décisions sont contraignantes et peuvent annuler une attribution irrégulière. Voie juridictionnelle (tribunal administratif) reste ouverte si insatisfaction.",
+          "ref": "Décret 2009-277/PR, art. relatifs aux recours ; règlement intérieur ARMP.",
+          "pts": 1
+        },
+        {
+          "id": "manche1-103-q4",
+          "q": "Que dit le principe de l'allotissement dans les marchés publics togolais ?",
+          "r": "Privilégier le découpage en lots",
+          "choices": [
+            "L'autorité contractante doit privilégier le découpage en lots pour favoriser la concurrence et les PME",
+            "Tous les marchés doivent être globaux",
+            "L'allotissement est interdit",
+            "Seules les autorités locales peuvent allotir"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Principe favorisant l'accès des PME aux commandes publiques. Le DAO doit motiver tout choix de marché global au-dessus d'un seuil. L'allotissement géographique, fonctionnel ou technique est encouragé. Vise aussi à éviter les ententes et à diversifier le tissu de fournisseurs. Principe également retenu dans les directives UEMOA et les bonnes pratiques internationales (Banque mondiale, OCDE).",
+          "ref": "Décret 2009-277/PR ; Directive UEMOA n° 04/2005/CM/UEMOA.",
+          "pts": 1
+        }
+      ]
     }
   ],
   "manche2": [
@@ -7516,6 +8296,342 @@
           "pts": 6
         }
       ]
+    },
+    {
+      "id": "manche2-39",
+      "type": "manche2",
+      "titre": "Comptabilité OHADA — duel",
+      "theme": "SYSCOHADA approfondi",
+      "domain": "Comptabilité générale et analytique",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-39-q1",
+          "q": "Quel principe comptable impose de comptabiliser charges et produits dans l'exercice où ils sont engagés ?",
+          "r": "Indépendance des exercices",
+          "choices": [
+            "Principe d'indépendance des exercices",
+            "Principe de prudence",
+            "Principe de continuité",
+            "Principe de coût historique"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'un des 9 principes fondamentaux du SYSCOHADA (avec continuité, permanence des méthodes, intangibilité du bilan d'ouverture, coût historique, prudence, importance significative, transparence, prééminence du fond sur la forme). Exige rattachement précis des opérations à l'exercice concerné via les régularisations (CCA, PCA, FNP, AAR, etc.).",
+          "ref": "OHADA AUDCIF, art. 6 et suivants.",
+          "pts": 1
+        },
+        {
+          "id": "manche2-39-q2",
+          "q": "Que sont les états financiers consolidés ?",
+          "r": "Groupe présenté comme une seule entité",
+          "choices": [
+            "Comptes présentant un groupe d'entreprises comme une seule entité économique",
+            "États financiers prévisionnels",
+            "Comptes annexes obligatoires",
+            "États financiers en monnaie étrangère"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Application des méthodes : intégration globale (filiales contrôlées exclusivement), intégration proportionnelle (contrôle conjoint, supprimée en IFRS) ou mise en équivalence (influence notable, 20-50 %). Au sens OHADA, le périmètre est défini par le contrôle et l'influence. Les comptes consolidés sont obligatoires au-delà d'un seuil. Norme IFRS 10 pour la pratique internationale.",
+          "ref": "OHADA AUDCIF Livre II ; IFRS 10/11/12.",
+          "pts": 2
+        },
+        {
+          "id": "manche2-39-q3",
+          "q": "Quelle méthode d'évaluation des stocks consiste à valoriser en supposant que les premiers entrés sont les premiers sortis ?",
+          "r": "FIFO / PEPS",
+          "choices": [
+            "FIFO (First-In, First-Out) / PEPS",
+            "LIFO (Last-In, First-Out)",
+            "CUMP (Coût Unitaire Moyen Pondéré)",
+            "Méthode du coût standard"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Premier Entré, Premier Sorti : les sorties sont valorisées au coût des unités les plus anciennes ; les stocks au bilan sont valorisés au coût des dernières entrées (proche du coût actuel). Le SYSCOHADA admet FIFO et CUMP (moyenne pondérée). Le LIFO (dernier entré premier sorti) est interdit en OHADA et IFRS (autorisé en US GAAP).",
+          "ref": "OHADA AUDCIF, art. relatif aux stocks ; IAS 2.",
+          "pts": 3
+        },
+        {
+          "id": "manche2-39-q4",
+          "q": "Que représente l'EBE (Excédent Brut d'Exploitation) ?",
+          "r": "Production − Consommations − Personnel − Impôts (hors IS)",
+          "choices": [
+            "Production + Subventions − Achats consommés − Charges externes − Charges de personnel − Impôts et taxes",
+            "Le résultat net après impôt",
+            "Le chiffre d'affaires",
+            "Le résultat financier"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'EBE mesure la performance économique brute de l'entreprise avant la politique d'amortissement et de provisionnement, et avant la structure financière. Indicateur central des Soldes Intermédiaires de Gestion (SIG) en OHADA et PCG. Équivalent approximatif de l'EBITDA international (différences sur certains traitements).",
+          "ref": "OHADA AUDCIF, SIG ; Vernimmen chap. 9.",
+          "pts": 4
+        },
+        {
+          "id": "manche2-39-q5",
+          "q": "Que dit le principe de \"prééminence de la réalité économique sur l'apparence juridique\" ?",
+          "r": "Substance over form",
+          "choices": [
+            "Une opération doit être traduite selon sa substance économique, pas seulement sa forme juridique",
+            "Le droit l'emporte toujours sur l'économie",
+            "Les pertes sont anticipées, jamais les gains",
+            "Les méthodes doivent rester stables"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Ce principe (substance over form), inscrit dans le SYSCOHADA révisé en 2017 (rapprochement avec les IFRS), impose par exemple de comptabiliser un bien acquis en crédit-bail à l'actif du preneur (et la dette au passif) alors que juridiquement il appartient encore au bailleur. Évolution majeure par rapport au SYSCOA initial qui privilégiait la forme juridique.",
+          "ref": "OHADA AUDCIF révisé 2017, art. 6 ; IAS 1.",
+          "pts": 5
+        },
+        {
+          "id": "manche2-39-q6",
+          "q": "Quelle norme IFRS spécifique régit le chiffre d'affaires depuis 2018 ?",
+          "r": "IFRS 15",
+          "choices": [
+            "IFRS 15 (Produits des activités ordinaires tirés de contrats avec des clients)",
+            "IFRS 9",
+            "IAS 18 (en vigueur)",
+            "IFRS 16"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Entrée en vigueur le 1ᵉʳ janvier 2018 (remplace IAS 18 et IAS 11). Modèle en 5 étapes : (1) identifier le contrat, (2) identifier les obligations de prestation, (3) déterminer le prix de la transaction, (4) allouer le prix aux obligations, (5) reconnaître le revenu à mesure (ou à un moment précis) que les obligations sont satisfaites. Impact majeur en télécoms, BTP, logiciels.",
+          "ref": "IASB, IFRS 15 (2014) ; FASB ASC 606.",
+          "pts": 6
+        }
+      ]
+    },
+    {
+      "id": "manche2-40",
+      "type": "manche2",
+      "titre": "Fiscalité du Togo — duel",
+      "theme": "Approfondissement fiscal",
+      "domain": "Fiscalité (Togo)",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-40-q1",
+          "q": "Le Togo a-t-il signé des conventions fiscales internationales ?",
+          "r": "Oui (France, UEMOA…)",
+          "choices": [
+            "Oui, notamment avec la France, l'UEMOA et d'autres partenaires",
+            "Non, aucune",
+            "Uniquement avec les pays de la CEDEAO",
+            "Uniquement avec la Chine"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le Togo a signé une convention fiscale bilatérale avec la France visant à éviter les doubles impositions (signée 1971, mises à jour). Au niveau régional, plusieurs directives UEMOA harmonisent la fiscalité indirecte (TVA, droits d'accise) et certains aspects des impôts directs. Le Togo participe également à l'Inclusive Framework BEPS de l'OCDE/G20.",
+          "ref": "MFOFIN Togo ; OCDE Forum mondial sur la transparence fiscale.",
+          "pts": 1
+        },
+        {
+          "id": "manche2-40-q2",
+          "q": "Quelle est la nature de la \"retenue à la source\" sur les paiements aux non-résidents au Togo ?",
+          "r": "Prélèvement sur paiements aux non-résidents",
+          "choices": [
+            "Prélèvement libératoire ou non, opéré sur certains paiements (intérêts, redevances, prestations) à destination de non-résidents",
+            "Un impôt sur les exportations",
+            "Une taxe douanière",
+            "Une cotisation sociale"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Mécanisme : le débiteur togolais retient l'impôt et le reverse à l'OTR. Taux variables (15-20 % selon nature du paiement et selon convention). Vise à imposer le revenu de source togolaise versé à l'étranger. Les conventions fiscales bilatérales peuvent réduire ces taux.",
+          "ref": "CGI Togo, art. sur les revenus de capitaux mobiliers et retenues à la source.",
+          "pts": 2
+        },
+        {
+          "id": "manche2-40-q3",
+          "q": "Que désigne le contrôle fiscal \"sur pièces\" ?",
+          "r": "Contrôle sur la base des déclarations",
+          "choices": [
+            "Contrôle effectué par l'administration sur la base des déclarations et documents transmis, sans déplacement",
+            "Contrôle physique en entreprise",
+            "Audit comptable externe",
+            "Inspection des stocks"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le contrôle sur pièces est mené depuis les bureaux de l'OTR par recoupement des déclarations TVA, IS, IRPP et d'éventuelles informations externes (banques, douanes, comptes sociaux). Distinct du contrôle sur place (vérification de comptabilité en entreprise) qui est plus poussé et formalisé. Garanties du contribuable encadrées par le Livre des Procédures Fiscales.",
+          "ref": "CGI Togo, LPF, art. sur les contrôles.",
+          "pts": 3
+        },
+        {
+          "id": "manche2-40-q4",
+          "q": "Quel régime fiscal s'applique aux entreprises agréées en zone franche au Togo ?",
+          "r": "Régime privilégié temporaire",
+          "choices": [
+            "Exonération partielle ou totale d'impôts pendant une durée déterminée (régime privilégié)",
+            "Taxation au taux maximal",
+            "Aucun avantage fiscal",
+            "Le même régime que les sociétés ordinaires"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La loi sur la zone franche industrielle (créée 1989, plusieurs réformes) accorde des exonérations d'IS, IMF, droits de douane, TVA sur les inputs et exportations pendant les premières années, avec retour progressif à la fiscalité de droit commun. Conditionnée à la création d'emplois et au caractère exportateur. Géré par la SAZOF (Société d'Administration de la Zone Franche).",
+          "ref": "Loi 89-14 du 18/09/1989 et révisions ; SAZOF.",
+          "pts": 4
+        },
+        {
+          "id": "manche2-40-q5",
+          "q": "Quels sont les délais légaux de prescription en matière fiscale au Togo ?",
+          "r": "3 ans (droit commun), allongée en cas de fraude",
+          "choices": [
+            "En général 3 ans pour la prescription de droit commun, allongée en cas de fraude",
+            "1 an",
+            "10 ans systématiquement",
+            "Aucun délai"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'OTR dispose en général d'un délai de reprise de 3 ans pour redresser les impôts (compté à partir de l'année qui suit celle de la déclaration). Ce délai peut être prorogé en cas de fraude, défaut de déclaration, opérations transfrontalières ou activités occultes (porté à 5-10 ans). Le contribuable bénéficie de garanties procédurales (notifications, droits de la défense).",
+          "ref": "CGI Togo, LPF, art. sur la prescription.",
+          "pts": 5
+        },
+        {
+          "id": "manche2-40-q6",
+          "q": "Quel impôt spécifique frappe l'activité bancaire au Togo ?",
+          "r": "TAF/TOB en plus du droit commun",
+          "choices": [
+            "Une taxe sur les activités financières (TAF / TOB selon les juridictions) en sus du droit commun",
+            "Une exonération totale",
+            "Le seul IS au taux normal",
+            "Aucun impôt particulier"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Les opérations bancaires bénéficient d'une exonération de TVA, compensée par des taxes spécifiques sur les opérations financières (TAF — Taxe sur les Activités Financières, ou équivalent), prélevées sur les commissions, intérêts et opérations de change. Vise à compenser la non-déductibilité de la TVA en amont. Taux et assiette précisés par la LF.",
+          "ref": "CGI Togo, dispositions sur la TAF ; Directive UEMOA TAF.",
+          "pts": 6
+        }
+      ]
+    },
+    {
+      "id": "manche2-41",
+      "type": "manche2",
+      "titre": "Marchés publics du Togo — duel",
+      "theme": "Procédures et bonnes pratiques",
+      "domain": "Marchés publics et passation (Togo)",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-41-q1",
+          "q": "Quel principe interdit à un agent public d'attribuer un marché à une entreprise dans laquelle il a un intérêt ?",
+          "r": "Prévention des conflits d'intérêts",
+          "choices": [
+            "Principe de prévention des conflits d'intérêts",
+            "Principe d'allotissement",
+            "Principe d'avenant",
+            "Principe de continuité"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Principe fondamental de la commande publique. L'agent doit déclarer tout intérêt direct ou indirect dans une entreprise candidate et se déporter de la procédure. L'ARMP et la DNCMP veillent au respect. Le non-respect est sanctionné disciplinairement et pénalement (corruption, prise illégale d'intérêts).",
+          "ref": "Décret 2009-277/PR ; Code pénal togolais.",
+          "pts": 1
+        },
+        {
+          "id": "manche2-41-q2",
+          "q": "Que désigne le \"Plan de Passation des Marchés\" (PPM) au Togo ?",
+          "r": "Programme annuel des marchés prévus",
+          "choices": [
+            "Programme annuel prévisionnel des marchés que chaque autorité contractante prévoit de lancer",
+            "Le plan stratégique du ministère",
+            "Le calendrier budgétaire général",
+            "La planification financière nationale"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le PPM est élaboré par chaque autorité contractante à partir de son budget annuel, publié et transmis à la DNCMP/ARMP. Permet la transparence, l'organisation des consultations, la planification des AO et la programmation budgétaire. Sa publication conditionne le lancement de toute procédure de passation.",
+          "ref": "Décret 2009-277/PR, art. sur la planification.",
+          "pts": 2
+        },
+        {
+          "id": "manche2-41-q3",
+          "q": "Quel délai minimum de publication d'un Appel d'Offres Ouvert international au Togo ?",
+          "r": "45 jours minimum (AOO international)",
+          "choices": [
+            "Au moins 45 jours entre publication et date limite de remise des offres",
+            "15 jours",
+            "7 jours",
+            "Pas de minimum"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Pour un AO international, le délai minimum entre publication de l'avis et date limite de remise des plis est de 45 jours. Pour un AO national (AON), le délai minimum est de 30 jours. Pour une DRP, généralement 7 à 15 jours. Ces délais visent à garantir une réelle mise en concurrence et la qualité des offres reçues.",
+          "ref": "Décret 2009-277/PR, art. sur les délais de publicité.",
+          "pts": 3
+        },
+        {
+          "id": "manche2-41-q4",
+          "q": "Que sont les \"critères de qualification\" d'un soumissionnaire ?",
+          "r": "Capacité technique, financière et juridique",
+          "choices": [
+            "Critères vérifiant la capacité technique, financière et juridique du soumissionnaire (≠ critères d'évaluation de l'offre)",
+            "Le seul prix proposé",
+            "La nationalité",
+            "L'ancienneté de l'entreprise uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Étape \"pré-qualification\" : vérification que le soumissionnaire est habilité à exécuter le marché (CA minimum, références similaires, attestations fiscales et sociales à jour, personnel, équipements). Distinct des critères d'évaluation des offres (prix, valeur technique). Système typiquement \"pass/fail\" sur les critères de qualification.",
+          "ref": "Décret 2009-277/PR, DAO type ARMP.",
+          "pts": 4
+        },
+        {
+          "id": "manche2-41-q5",
+          "q": "Que sont les \"documents standards d'appel d'offres\" (DAO type) au Togo ?",
+          "r": "Modèles harmonisés obligatoires",
+          "choices": [
+            "Modèles harmonisés validés par l'ARMP et obligatoires pour tous les marchés",
+            "Documents facultatifs",
+            "Brochures publicitaires de l'ARMP",
+            "Manuels internes des entreprises"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'ARMP a élaboré des DAO types pour chaque catégorie (fournitures, travaux, services, prestations intellectuelles) et chaque procédure (AOO national, AOO international, AOR, DRP). Leur utilisation est obligatoire et garantit la conformité aux directives UEMOA et aux bonnes pratiques internationales (notamment celles de la Banque mondiale et de la BAD).",
+          "ref": "ARMP Togo, DAO types ; Directive UEMOA 04/2005/CM/UEMOA.",
+          "pts": 5
+        },
+        {
+          "id": "manche2-41-q6",
+          "q": "Que désigne un \"contrat de partenariat public-privé\" (PPP) au Togo ?",
+          "r": "Contrat global de longue durée",
+          "choices": [
+            "Contrat de longue durée par lequel une autorité confie à un partenaire privé tout ou partie de la conception, construction, financement et gestion d'un ouvrage ou service public",
+            "Un simple marché de travaux",
+            "Une privatisation",
+            "Une délégation de service public uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La loi n° 2021-034 du 29/12/2021 a refondé le cadre des PPP au Togo. Englobe les contrats de concession, contrats de partenariat (à paiement public) et délégations de service public. Caractéristiques : durée longue (10-30 ans), partage des risques, financement privé, paiement par l'usager (concession) ou par l'autorité (PPP à paiement public). Procédures de passation spécifiques (dialogue compétitif possible).",
+          "ref": "Loi 2021-034 du 29/12/2021 sur les PPP au Togo ; décret d'application.",
+          "pts": 6
+        }
+      ]
     }
   ],
   "manche3": [
@@ -8874,7 +9990,19 @@
       "count": 22
     },
     {
+      "name": "Comptabilité générale et analytique",
+      "count": 22
+    },
+    {
       "name": "Sciences sociales et politiques",
+      "count": 18
+    },
+    {
+      "name": "Fiscalité (Togo)",
+      "count": 18
+    },
+    {
+      "name": "Marchés publics et passation (Togo)",
       "count": 18
     },
     {
@@ -8883,13 +10011,13 @@
     }
   ],
   "meta": {
-    "generatedAt": "2026-05-27T15:48:14.168Z",
-    "manche1Count": 93,
-    "manche2Count": 38,
+    "generatedAt": "2026-05-27T16:00:05.900Z",
+    "manche1Count": 103,
+    "manche2Count": 41,
     "manche3Count": 12,
-    "questionsM1": 372,
-    "questionsM2": 228,
+    "questionsM1": 412,
+    "questionsM2": 246,
     "questionsM3": 108,
-    "questionsTotal": 708
+    "questionsTotal": 766
   }
 }
