@@ -277,6 +277,12 @@ async function renderHome() {
   $('#card-review').onclick   = () => route('review');
   $('#card-duels').onclick    = () => route('duels');
   $('#card-history').onclick  = () => route('history');
+
+  // Mettre à jour le nombre de questions affiché sur la carte Révision
+  const reviewCount = $('#card-review-count');
+  if (reviewCount && State.meta && State.meta.questionsTotal) {
+    reviewCount.textContent = State.meta.questionsTotal;
+  }
   $('#card-switch').onclick   = () => {
     Session.clearUser();
     route('login');
@@ -821,6 +827,12 @@ async function renderReview() {
     State.meta = fresh;
   } catch (e) {}
   mount('tpl-review');
+
+  // Afficher dynamiquement le nombre total de questions dans le lead
+  const revTotal = $('#rev-total-count');
+  if (revTotal && State.meta && State.meta.questionsTotal) {
+    revTotal.textContent = State.meta.questionsTotal;
+  }
 
   // Charger TOUS les packs (3 manches) en parallèle — server-side filtrage par manche
   const allPacks = {
@@ -1395,8 +1407,8 @@ $('#brand-home').addEventListener('click', () => {
         Session.clearUser();
       }
     }
-    // Sinon login
-    $('#footer-meta').textContent = '516 questions · 10 domaines';
+    // Sinon login (le footer sera renseigné après authentification)
+    $('#footer-meta').textContent = 'Connectez-vous pour accéder aux questions';
     route('login');
   } catch (e) {
     $('#app').innerHTML = `<div class="screen"><div class="card"><h2 class="card-title">Erreur de démarrage</h2><p>Impossible de joindre le serveur. Détail : <code>${e.message}</code></p></div></div>`;
