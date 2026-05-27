@@ -6,7 +6,8 @@
 
 const fs   = require('fs');
 const path = require('path');
-const extra = require('./data_extra.js');
+const extra   = require('./data_extra.js');
+const extraMF = require('./data_extra_mf.js');
 
 const QPATH = path.join(__dirname, 'data', 'questions.json');
 const Q = JSON.parse(fs.readFileSync(QPATH, 'utf8'));
@@ -54,6 +55,11 @@ const r1 = appendPacks(Q.manche1, 'manche1', extra.m1Packs);
 const r2 = appendPacks(Q.manche2, 'manche2', extra.m2Packs);
 const r3 = appendPacks(Q.manche3, 'manche3', extra.m3Packs);
 
+// v2.4 — Marchés financiers UEMOA / BRVM
+const r1mf = appendPacks(Q.manche1, 'manche1', extraMF.m1Packs);
+const r2mf = appendPacks(Q.manche2, 'manche2', extraMF.m2Packs);
+const r3mf = appendPacks(Q.manche3, 'manche3', extraMF.m3Packs);
+
 // Recalculer meta + domains
 const allQuestions = []
   .concat(...Q.manche1.map(p => p.questions))
@@ -85,9 +91,9 @@ Q.domains = Object.entries(domainCounts)
 fs.writeFileSync(QPATH, JSON.stringify(Q, null, 2), 'utf8');
 
 console.log('✅ Fusion terminée');
-console.log(`  Manche 1 : +${r1.added} packs (${r1.skipped} doublons ignorés)`);
-console.log(`  Manche 2 : +${r2.added} packs (${r2.skipped} doublons ignorés)`);
-console.log(`  Manche 3 : +${r3.added} packs (${r3.skipped} doublons ignorés)`);
+console.log(`  Manche 1 : +${r1.added + r1mf.added} packs (data_extra=${r1.added}, mf=${r1mf.added}, doublons ignorés ${r1.skipped + r1mf.skipped})`);
+console.log(`  Manche 2 : +${r2.added + r2mf.added} packs (data_extra=${r2.added}, mf=${r2mf.added}, doublons ignorés ${r2.skipped + r2mf.skipped})`);
+console.log(`  Manche 3 : +${r3.added + r3mf.added} packs (data_extra=${r3.added}, mf=${r3mf.added}, doublons ignorés ${r3.skipped + r3mf.skipped})`);
 console.log(`  Total packs : M1=${Q.meta.manche1Count} M2=${Q.meta.manche2Count} M3=${Q.meta.manche3Count}`);
 console.log(`  Total questions : ${Q.meta.questionsTotal}`);
 console.log(`  Domaines :`);
