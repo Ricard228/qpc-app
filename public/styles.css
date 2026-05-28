@@ -431,38 +431,37 @@ html, body {
   gap: 8px;
 }
 
-/* Illustration de page de garde : livre d'économie ouvert */
+/* Illustration de page de garde : livre d'économie ouvert + nuage domaines */
 .login-illustration {
   width: 100%;
-  max-width: 540px;
-  margin: 0 auto 4px;
+  max-width: 720px;
+  margin: 0 auto 8px;
   text-align: center;
   pointer-events: none;
 }
 .login-illustration img {
   width: 100%;
   height: auto;
-  max-height: 220px;
+  max-height: 260px;
   filter: drop-shadow(0 4px 16px rgba(31, 56, 100, 0.15));
 }
 
-/* Sur grand écran : layout 2 colonnes (illustration à gauche, formulaire à droite) */
+/* Sur grand écran : illustration pleine largeur au-dessus, login + install côte à côte dessous */
 @media (min-width: 900px) {
   .screen-login {
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-top: 40px;
-    gap: 28px;
-    flex-wrap: wrap;
+    padding-top: 30px;
+    gap: 18px;
   }
   .login-illustration {
-    flex: 0 0 400px;
-    max-width: 400px;
-    margin: 0;
+    max-width: 760px;
   }
   .login-illustration img {
     max-height: 340px;
+  }
+  .login-card {
+    margin-top: 0;
   }
 }
 .login-card {
