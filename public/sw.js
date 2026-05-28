@@ -6,7 +6,7 @@
 //   - questions.json (gros fichier)  : cache-first après le 1er chargement
 // =====================================================================
 
-const VERSION = 'qpc-v2.12-1';
+const VERSION = 'qpc-v2.13-1';
 const STATIC_CACHE = `${VERSION}-static`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -14,7 +14,8 @@ const STATIC_ASSETS = [
   './',
   './index.html',
   './styles.css?v=2',
-  './app.js?v=2.12',
+  './app.js?v=2.13',
+  './icons/economy-book.svg',
   './manifest.json',
   './icons/icon.svg',
   './icons/icon-192.png',
