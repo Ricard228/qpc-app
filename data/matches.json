@@ -3031,6 +3031,129 @@
         }
       },
       "winner": "QPC-NZXE8MYU"
+    },
+    {
+      "id": "4dc9f69d08692de3",
+      "type": "duel",
+      "createdAt": "2026-05-30T23:22:23.705Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-V5BUDXWX",
+        "QPC-96MR4NMA"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "counts": {
+          "manche1": 1
+        },
+        "liveScoreboard": true,
+        "domains": [],
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-63",
+              "type": "manche1",
+              "titre": "Agriculture togolaise (12)",
+              "theme": "Agriculture du Togo",
+              "domain": "Économie agricole et agribusiness",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-63-q1",
+                  "q": "Quel institut public togolais conduit la recherche agronomique et fournit les variétés sélectionnées ?",
+                  "r": "L'ITRA (Institut Togolais de Recherche Agronomique)",
+                  "e": "Créé en 1997 ; programmes cultures vivrières, cultures de rente, élevage, agroforesterie.",
+                  "ref": "MAEH Togo, décret portant création de l'ITRA, 1997.  → https://fr.wikipedia.org/w/index.php?search=ITRA  → https://fr.wikipedia.org/wiki/Fonds_international_de_d%C3%A9veloppement_agricole",
+                  "pts": 1,
+                  "choices": [
+                    "L'ITRA (Institut Togolais de Recherche Agronomique)",
+                    "L'OTR / Direction du Cadastre et de la Conservation Foncière (DCCF)",
+                    "Le certificat foncier rural (ou attestation de possession foncière)",
+                    "Transforming Traditional Agriculture (de T.W. Schultz)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ]
+                },
+                {
+                  "id": "manche1-63-q2",
+                  "q": "Quelle agence togolaise est chargée de la gestion des réserves alimentaires et de la stabilisation des prix vivriers ?",
+                  "r": "L'ANSAT (Agence Nationale de Sécurité Alimentaire du Togo)",
+                  "e": "Achats institutionnels, stock régulateur, ventes sociales en période de soudure.",
+                  "ref": "MAEH Togo, statuts de l'ANSAT.  → https://fr.wikipedia.org/w/index.php?search=ANSAT  → https://fr.wikipedia.org/wiki/Fonds_international_de_d%C3%A9veloppement_agricole",
+                  "pts": 1,
+                  "choices": [
+                    "Le PADAT (Projet d'Appui au Développement Agricole au Togo)",
+                    "L'ANSAT (Agence Nationale de Sécurité Alimentaire du Togo)",
+                    "La race zébu (notamment Zébu Goudali, M'Bororo, White Fulani)",
+                    "Le retard de croissance (stunting, taille-pour-âge < −2 ET)"
+                  ],
+                  "correctIndices": [
+                    1
+                  ]
+                },
+                {
+                  "id": "manche1-63-q3",
+                  "q": "Quel programme national togolais 2010-2015 a opérationnalisé le PDDAA-Maputo au niveau du pays ?",
+                  "r": "Le PNIASA (Programme National d'Investissement Agricole et de Sécurité Alimentaire)",
+                  "e": "Cadre d'orientation et de financement ; suivi par le PNIASAN (2017-2026).",
+                  "ref": "MAEH Togo, PNIASA 2010-2015 ; PNIASAN 2017-2026.  → https://fr.wikipedia.org/w/index.php?search=PNIASA  → https://fr.wikipedia.org/wiki/Fonds_international_de_d%C3%A9veloppement_agricole",
+                  "pts": 1,
+                  "choices": [
+                    "Le PNIASA (Programme National d'Investissement Agricole et de Sécurité Alimentaire)",
+                    "Les Directives volontaires sur la gouvernance responsable des régimes fonciers (VGGT)",
+                    "Une ESOP (Entreprise de Services et Organisations de Producteurs) ou une exploitation agricole familiale entrepreneuriale",
+                    "Le PNIASAN (Programme National d'Investissement Agricole et de Sécurité Alimentaire et Nutritionnelle)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ]
+                },
+                {
+                  "id": "manche1-63-q4",
+                  "q": "Quelle société d'État togolaise gère la filière coton, des intrants à l'exportation de la fibre ?",
+                  "r": "La NSCT (Nouvelle Société Cotonnière du Togo)",
+                  "e": "Reprend les activités de SOTOCO ; environ 110 000 tonnes de coton-graine selon les campagnes.",
+                  "ref": "NSCT Togo, rapports d'activité.  → https://fr.wikipedia.org/w/index.php?search=NSCT  → https://fr.wikipedia.org/wiki/Fonds_international_de_d%C3%A9veloppement_agricole",
+                  "pts": 1,
+                  "choices": [
+                    "Le ROPPA (Réseau des Organisations Paysannes et Producteurs Agricoles d'Afrique de l'Ouest)",
+                    "Le Rapport biennal du CAADP (Biennial Review)",
+                    "La NSCT (Nouvelle Société Cotonnière du Togo)",
+                    "La BRVM (Bourse Régionale des Valeurs Mobilières)"
+                  ],
+                  "correctIndices": [
+                    2
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-V5BUDXWX": "accepted",
+        "QPC-96MR4NMA": "accepted"
+      },
+      "results": {
+        "QPC-V5BUDXWX": {
+          "startedAt": "2026-05-30T23:22:24.558Z",
+          "progressScore": 3,
+          "progressQ": 2,
+          "progressUpdatedAt": "2026-05-30T23:22:24.558Z"
+        },
+        "QPC-96MR4NMA": {
+          "startedAt": "2026-05-30T23:22:24.656Z",
+          "progressScore": 1,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-05-30T23:22:24.656Z"
+        }
+      },
+      "winner": null
     }
   ]
 }
