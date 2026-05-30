@@ -3154,6 +3154,466 @@
         }
       },
       "winner": null
+    },
+    {
+      "id": "4f97ffec5c06c7d2",
+      "type": "duel",
+      "createdAt": "2026-05-30T23:46:46.388Z",
+      "createdBy": "QPC-NZXE8MYU",
+      "participants": [
+        "QPC-NZXE8MYU",
+        "QPC-KAJBHJ54"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "domains": [
+          "Suivi-évaluation des projets et politiques"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "liveScoreboard": true,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-76",
+              "type": "manche1",
+              "titre": "Méthodes d'évaluation d'impact",
+              "theme": "Évaluation d'impact",
+              "domain": "Suivi-évaluation des projets et politiques",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-76-q1",
+                  "q": "Quelle est la méthode \"gold standard\" en évaluation d'impact ?",
+                  "r": "RCT (Randomized Controlled Trial)",
+                  "choices": [
+                    "Construire un groupe témoin comparable",
+                    "RCT (Randomized Controlled Trial)",
+                    "Inputs → Activités → Produits → Effets → Impact",
+                    "Suivi = continu, évaluation = ponctuelle"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Assignation aléatoire au traitement → contre-factuel crédible. Banerjee, Duflo, Kremer (Nobel 2019).",
+                  "ref": "J-PAL, World Bank IE Toolkit.  → https://fr.wikipedia.org/w/index.php?search=RCT  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-76-q2",
+                  "q": "La méthode des doubles différences (DID) requiert…",
+                  "r": "Avant/après × traités/témoins",
+                  "choices": [
+                    "Avant/après × traités/témoins",
+                    "Lien causal exclusif vs plusieurs facteurs",
+                    "Activités → Produits → Effets → Impact",
+                    "Mécanismes-Contexte-Résultats (MCR)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Difference-in-Differences : isole l'effet du traitement en supposant tendances parallèles.",
+                  "ref": "Card & Krueger, 1994 ; Angrist & Pischke, Mostly Harmless Econometrics.  → https://fr.wikipedia.org/w/index.php?search=Avant%2Fapr%C3%A8s%20%C3%97%20trait%C3%A9s%2Ft%C3%A9moins  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-76-q3",
+                  "q": "L'appariement par score de propension (PSM) sert à…",
+                  "r": "Construire un groupe témoin comparable",
+                  "choices": [
+                    "Activités → Produits → Effets → Impact",
+                    "Effets directs/indirects, voulus/non voulus",
+                    "Construire un groupe témoin comparable",
+                    "Inputs → Activités → Produits → Effets → Impact"
+                  ],
+                  "correctIndices": [
+                    2
+                  ],
+                  "e": "Rosenbaum & Rubin 1983 : matching sur le score = P(Traité=1|X).",
+                  "ref": "Rosenbaum & Rubin, 1983.  → https://fr.wikipedia.org/w/index.php?search=Construire%20un%20groupe%20t%C3%A9moin%20comparable  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-76-q4",
+                  "q": "La régression sur discontinuité (RDD) exploite…",
+                  "r": "Un seuil d'éligibilité",
+                  "choices": [
+                    "Gestion Axée sur les Résultats",
+                    "Implementation Completion and Results Reports",
+                    "RCT (Randomized Controlled Trial)",
+                    "Un seuil d'éligibilité"
+                  ],
+                  "correctIndices": [
+                    3
+                  ],
+                  "e": "Compare les unités juste au-dessus / juste en-dessous du cutoff ; quasi-RCT local.",
+                  "ref": "Thistlethwaite & Campbell, 1960 ; Hahn et al., 2001.  → https://fr.wikipedia.org/w/index.php?search=seuil%20d'%C3%A9ligibilit%C3%A9  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-35",
+              "type": "manche2",
+              "titre": "Suivi-évaluation — duel",
+              "theme": "Suivi et évaluation",
+              "domain": "Suivi-évaluation des projets et politiques",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-35-q1",
+                  "q": "Quelle est la principale différence entre suivi et évaluation ?",
+                  "r": "Suivi = continu, évaluation = ponctuelle",
+                  "choices": [
+                    "Changements de comportement des partenaires limitrophes",
+                    "Implementation Completion and Results Reports",
+                    "Suivi = continu, évaluation = ponctuelle",
+                    "Inputs → Activités → Produits → Effets → Impact"
+                  ],
+                  "correctIndices": [
+                    2
+                  ],
+                  "e": "Monitoring suit l'avancement (outputs, activités) ; évaluation analyse pertinence, impact, etc.",
+                  "ref": "OECD/DAC Glossary 2002.  → https://fr.wikipedia.org/w/index.php?search=Suivi%20%3D%20continu  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-35-q2",
+                  "q": "La baseline (situation de référence) doit être collectée…",
+                  "r": "Avant le démarrage",
+                  "choices": [
+                    "Avant le démarrage",
+                    "Avant/après × traités/témoins",
+                    "Lien causal exclusif vs plusieurs facteurs",
+                    "Implementation Completion and Results Reports"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Permet la comparaison avant/après et le calcul des progrès.",
+                  "ref": "World Bank IE Handbook ; PNUD HPMEDR.  → https://fr.wikipedia.org/w/index.php?search=Avant%20le%20d%C3%A9marrage  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-35-q3",
+                  "q": "L'attribution diffère de la contribution car elle…",
+                  "r": "Lien causal exclusif vs plusieurs facteurs",
+                  "choices": [
+                    "Spécifique, Mesurable, Atteignable, Réaliste, Temporel",
+                    "Système de Gestion des Résultats et de l'Impact",
+                    "Lien causal exclusif vs plusieurs facteurs",
+                    "Implementation Completion and Results Reports"
+                  ],
+                  "correctIndices": [
+                    2
+                  ],
+                  "e": "Attribution = \"le résultat est dû au projet\" ; contribution = \"le projet est l'un des facteurs\".",
+                  "ref": "Mayne, \"Contribution Analysis\", 2008.  → https://fr.wikipedia.org/w/index.php?search=Lien%20causal%20exclusif%20vs%20plusieurs%20facteurs  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-35-q4",
+                  "q": "La méthode Outcome Mapping du CRDI/IDRC se concentre sur…",
+                  "r": "Changements de comportement des partenaires limitrophes",
+                  "choices": [
+                    "Changements de comportement des partenaires limitrophes",
+                    "Le certificat foncier rural (ou attestation de possession foncière)",
+                    "La BIDC (Banque d'Investissement et de Développement de la CEDEAO)",
+                    "Le pacte de convergence, de stabilité, de croissance et de solidarité de l'UEMOA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Earl, Carden & Smutylo 2001 ; alternative au logframe pour projets complexes.",
+                  "ref": "IDRC, Outcome Mapping, 2001.  → https://fr.wikipedia.org/w/index.php?search=Changements%20de%20comportement%20des%20partenaires%20limitrophes  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-35-q5",
+                  "q": "Le critère \"additionnalité\" en évaluation financière mesure…",
+                  "r": "Effet incrémental vs contre-factuel",
+                  "choices": [
+                    "Implementation Completion and Results Reports",
+                    "Effet incrémental vs contre-factuel",
+                    "Spécifique, Mesurable, Atteignable, Réaliste, Temporel",
+                    "Changements de comportement des partenaires limitrophes"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Concept clé pour les banques de développement (BEI, IFC) ; justifie l'intervention publique.",
+                  "ref": "BEI, Additionality Framework.  → https://fr.wikipedia.org/w/index.php?search=Effet%20incr%C3%A9mental%20vs%20contre-factuel  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-35-q6",
+                  "q": "L'évaluation réaliste (realist evaluation) cherche à expliquer…",
+                  "r": "Mécanismes-Contexte-Résultats (MCR)",
+                  "choices": [
+                    "Système de Gestion des Résultats et de l'Impact",
+                    "Lien causal exclusif vs plusieurs facteurs",
+                    "Effet incrémental vs contre-factuel",
+                    "Mécanismes-Contexte-Résultats (MCR)"
+                  ],
+                  "correctIndices": [
+                    3
+                  ],
+                  "e": "Pawson & Tilley 1997 ; alternative aux RCT pour les programmes complexes.",
+                  "ref": "Pawson & Tilley, Realistic Evaluation, 1997.  → https://fr.wikipedia.org/w/index.php?search=M%C3%A9canismes-Contexte-R%C3%A9sultats  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-NZXE8MYU": "accepted",
+        "QPC-KAJBHJ54": "pending"
+      },
+      "results": {},
+      "winner": null
+    },
+    {
+      "id": "e2b7fa928bddc53b",
+      "type": "duel",
+      "createdAt": "2026-05-30T23:46:46.731Z",
+      "createdBy": "QPC-NZXE8MYU",
+      "participants": [
+        "QPC-NZXE8MYU",
+        "QPC-KAJBHJ54"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "domains": [
+          "Suivi-évaluation des projets et politiques"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "liveScoreboard": true,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-75",
+              "type": "manche1",
+              "titre": "Bailleurs et outils de S&É",
+              "theme": "Acteurs du développement",
+              "domain": "Suivi-évaluation des projets et politiques",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-75-q1",
+                  "q": "Que signifie SYGRI au FIDA ?",
+                  "r": "Système de Gestion des Résultats et de l'Impact",
+                  "choices": [
+                    "Spécifique, Mesurable, Atteignable, Réaliste, Temporel",
+                    "Système de Gestion des Résultats et de l'Impact",
+                    "Changements de comportement des partenaires limitrophes",
+                    "Inputs → Activités → Produits → Effets → Impact"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Outil du FIDA pour mesurer et rapporter les résultats des projets (indicateurs standards par catégorie).",
+                  "ref": "IFAD, RIMS / SYGRI handbook.  → https://fr.wikipedia.org/w/index.php?search=Syst%C3%A8me%20de%20Gestion%20des%20R%C3%A9sultats%20et%20de%20l'Impact  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-75-q2",
+                  "q": "Le PNUD utilise principalement quel manuel pour le S&É ?",
+                  "r": "PNUD Handbook on PMERR",
+                  "choices": [
+                    "Gestion Axée sur les Résultats",
+                    "PNUD Handbook on PMERR",
+                    "Système de Gestion des Résultats et de l'Impact",
+                    "Lien causal exclusif vs plusieurs facteurs"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "« HPMEDR » : référence méthodologique principale du PNUD depuis 2009.",
+                  "ref": "UNDP, 2009.  → https://fr.wikipedia.org/w/index.php?search=PNUD%20Handbook%20on%20PMERR  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-75-q3",
+                  "q": "La Banque mondiale utilise les ICRR pour…",
+                  "r": "Implementation Completion and Results Reports",
+                  "choices": [
+                    "Système de Gestion des Résultats et de l'Impact",
+                    "Implementation Completion and Results Reports",
+                    "Changements de comportement des partenaires limitrophes",
+                    "Spécifique, Mesurable, Atteignable, Réaliste, Temporel"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Document de clôture systématique pour tous les projets WB ; revu par l'IEG.",
+                  "ref": "World Bank, Operations Manual.  → https://fr.wikipedia.org/w/index.php?search=Implementation%20Completion%20and%20Results%20Reports  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-75-q4",
+                  "q": "Quel cadre standard de l'ONU oriente les objectifs des projets de développement depuis 2015 ?",
+                  "r": "Les 17 ODD",
+                  "choices": [
+                    "Effets directs/indirects, voulus/non voulus",
+                    "Les 17 ODD",
+                    "Continuité des bénéfices",
+                    "Ressources vs résultats"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Agenda 2030 : succède aux OMD ; 17 objectifs, 169 cibles, 232 indicateurs.",
+                  "ref": "ONU, Agenda 2030, 2015.  → https://fr.wikipedia.org/w/index.php?search=17%20ODD  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-35",
+              "type": "manche2",
+              "titre": "Suivi-évaluation — duel",
+              "theme": "Suivi et évaluation",
+              "domain": "Suivi-évaluation des projets et politiques",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-35-q1",
+                  "q": "Quelle est la principale différence entre suivi et évaluation ?",
+                  "r": "Suivi = continu, évaluation = ponctuelle",
+                  "choices": [
+                    "Changements de comportement des partenaires limitrophes",
+                    "Implementation Completion and Results Reports",
+                    "Suivi = continu, évaluation = ponctuelle",
+                    "Inputs → Activités → Produits → Effets → Impact"
+                  ],
+                  "correctIndices": [
+                    2
+                  ],
+                  "e": "Monitoring suit l'avancement (outputs, activités) ; évaluation analyse pertinence, impact, etc.",
+                  "ref": "OECD/DAC Glossary 2002.  → https://fr.wikipedia.org/w/index.php?search=Suivi%20%3D%20continu  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-35-q2",
+                  "q": "La baseline (situation de référence) doit être collectée…",
+                  "r": "Avant le démarrage",
+                  "choices": [
+                    "Avant le démarrage",
+                    "Avant/après × traités/témoins",
+                    "Lien causal exclusif vs plusieurs facteurs",
+                    "Implementation Completion and Results Reports"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Permet la comparaison avant/après et le calcul des progrès.",
+                  "ref": "World Bank IE Handbook ; PNUD HPMEDR.  → https://fr.wikipedia.org/w/index.php?search=Avant%20le%20d%C3%A9marrage  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-35-q3",
+                  "q": "L'attribution diffère de la contribution car elle…",
+                  "r": "Lien causal exclusif vs plusieurs facteurs",
+                  "choices": [
+                    "Spécifique, Mesurable, Atteignable, Réaliste, Temporel",
+                    "Système de Gestion des Résultats et de l'Impact",
+                    "Lien causal exclusif vs plusieurs facteurs",
+                    "Implementation Completion and Results Reports"
+                  ],
+                  "correctIndices": [
+                    2
+                  ],
+                  "e": "Attribution = \"le résultat est dû au projet\" ; contribution = \"le projet est l'un des facteurs\".",
+                  "ref": "Mayne, \"Contribution Analysis\", 2008.  → https://fr.wikipedia.org/w/index.php?search=Lien%20causal%20exclusif%20vs%20plusieurs%20facteurs  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-35-q4",
+                  "q": "La méthode Outcome Mapping du CRDI/IDRC se concentre sur…",
+                  "r": "Changements de comportement des partenaires limitrophes",
+                  "choices": [
+                    "Changements de comportement des partenaires limitrophes",
+                    "Le certificat foncier rural (ou attestation de possession foncière)",
+                    "La BIDC (Banque d'Investissement et de Développement de la CEDEAO)",
+                    "Le pacte de convergence, de stabilité, de croissance et de solidarité de l'UEMOA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Earl, Carden & Smutylo 2001 ; alternative au logframe pour projets complexes.",
+                  "ref": "IDRC, Outcome Mapping, 2001.  → https://fr.wikipedia.org/w/index.php?search=Changements%20de%20comportement%20des%20partenaires%20limitrophes  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-35-q5",
+                  "q": "Le critère \"additionnalité\" en évaluation financière mesure…",
+                  "r": "Effet incrémental vs contre-factuel",
+                  "choices": [
+                    "Implementation Completion and Results Reports",
+                    "Effet incrémental vs contre-factuel",
+                    "Spécifique, Mesurable, Atteignable, Réaliste, Temporel",
+                    "Changements de comportement des partenaires limitrophes"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Concept clé pour les banques de développement (BEI, IFC) ; justifie l'intervention publique.",
+                  "ref": "BEI, Additionality Framework.  → https://fr.wikipedia.org/w/index.php?search=Effet%20incr%C3%A9mental%20vs%20contre-factuel  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-35-q6",
+                  "q": "L'évaluation réaliste (realist evaluation) cherche à expliquer…",
+                  "r": "Mécanismes-Contexte-Résultats (MCR)",
+                  "choices": [
+                    "Système de Gestion des Résultats et de l'Impact",
+                    "Lien causal exclusif vs plusieurs facteurs",
+                    "Effet incrémental vs contre-factuel",
+                    "Mécanismes-Contexte-Résultats (MCR)"
+                  ],
+                  "correctIndices": [
+                    3
+                  ],
+                  "e": "Pawson & Tilley 1997 ; alternative aux RCT pour les programmes complexes.",
+                  "ref": "Pawson & Tilley, Realistic Evaluation, 1997.  → https://fr.wikipedia.org/w/index.php?search=M%C3%A9canismes-Contexte-R%C3%A9sultats  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-NZXE8MYU": "accepted",
+        "QPC-KAJBHJ54": "pending"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
