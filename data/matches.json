@@ -3164,7 +3164,7 @@
         "QPC-NZXE8MYU",
         "QPC-KAJBHJ54"
       ],
-      "status": "pending",
+      "status": "cancelled",
       "config": {
         "manches": [
           "manche1",
@@ -3380,7 +3380,7 @@
       },
       "acceptances": {
         "QPC-NZXE8MYU": "accepted",
-        "QPC-KAJBHJ54": "pending"
+        "QPC-KAJBHJ54": "declined"
       },
       "results": {},
       "winner": null
