@@ -3615,15 +3615,164 @@
       "results": {
         "QPC-NZXE8MYU": {
           "startedAt": "2026-05-30T23:48:23.802Z",
-          "progressScore": 4,
-          "progressQ": 9,
-          "progressUpdatedAt": "2026-05-30T23:50:40.006Z"
+          "completedAt": "2026-05-30T23:51:07.157Z",
+          "totalScore": 4,
+          "byManche": {
+            "manche1": 1,
+            "manche2": 3,
+            "manche3": 0
+          },
+          "nbQuestions": 10,
+          "nbCorrect": 3,
+          "nbWrong": 7,
+          "log": [
+            {
+              "manche": "manche1",
+              "packId": "manche1-75",
+              "packTitle": "Bailleurs et outils de S&É",
+              "qid": "manche1-75-q1",
+              "q": "Que signifie SYGRI au FIDA ?",
+              "expected": "Système de Gestion des Résultats et de l'Impact",
+              "given": "Inputs → Activités → Produits → Effets → Impact",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Outil du FIDA pour mesurer et rapporter les résultats des projets (indicateurs standards par catégorie).",
+              "ref": "IFAD, RIMS / SYGRI handbook.  → https://fr.wikipedia.org/w/index.php?search=Syst%C3%A8me%20de%20Gestion%20des%20R%C3%A9sultats%20et%20de%20l'Impact  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-75",
+              "packTitle": "Bailleurs et outils de S&É",
+              "qid": "manche1-75-q2",
+              "q": "Le PNUD utilise principalement quel manuel pour le S&É ?",
+              "expected": "PNUD Handbook on PMERR",
+              "given": "PNUD Handbook on PMERR",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "« HPMEDR » : référence méthodologique principale du PNUD depuis 2009.",
+              "ref": "UNDP, 2009.  → https://fr.wikipedia.org/w/index.php?search=PNUD%20Handbook%20on%20PMERR  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-75",
+              "packTitle": "Bailleurs et outils de S&É",
+              "qid": "manche1-75-q3",
+              "q": "La Banque mondiale utilise les ICRR pour…",
+              "expected": "Implementation Completion and Results Reports",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Document de clôture systématique pour tous les projets WB ; revu par l'IEG.",
+              "ref": "World Bank, Operations Manual.  → https://fr.wikipedia.org/w/index.php?search=Implementation%20Completion%20and%20Results%20Reports  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-75",
+              "packTitle": "Bailleurs et outils de S&É",
+              "qid": "manche1-75-q4",
+              "q": "Quel cadre standard de l'ONU oriente les objectifs des projets de développement depuis 2015 ?",
+              "expected": "Les 17 ODD",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Agenda 2030 : succède aux OMD ; 17 objectifs, 169 cibles, 232 indicateurs.",
+              "ref": "ONU, Agenda 2030, 2015.  → https://fr.wikipedia.org/w/index.php?search=17%20ODD  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-35",
+              "packTitle": "Suivi-évaluation — duel",
+              "qid": "manche2-35-q1",
+              "q": "Quelle est la principale différence entre suivi et évaluation ?",
+              "expected": "Suivi = continu, évaluation = ponctuelle",
+              "given": "Suivi = continu, évaluation = ponctuelle",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Monitoring suit l'avancement (outputs, activités) ; évaluation analyse pertinence, impact, etc.",
+              "ref": "OECD/DAC Glossary 2002.  → https://fr.wikipedia.org/w/index.php?search=Suivi%20%3D%20continu  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-35",
+              "packTitle": "Suivi-évaluation — duel",
+              "qid": "manche2-35-q2",
+              "q": "La baseline (situation de référence) doit être collectée…",
+              "expected": "Avant le démarrage",
+              "given": "Avant le démarrage",
+              "correct": true,
+              "pts": 2,
+              "awarded": 2,
+              "explain": "Permet la comparaison avant/après et le calcul des progrès.",
+              "ref": "World Bank IE Handbook ; PNUD HPMEDR.  → https://fr.wikipedia.org/w/index.php?search=Avant%20le%20d%C3%A9marrage  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-35",
+              "packTitle": "Suivi-évaluation — duel",
+              "qid": "manche2-35-q4",
+              "q": "La méthode Outcome Mapping du CRDI/IDRC se concentre sur…",
+              "expected": "Changements de comportement des partenaires limitrophes",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 4,
+              "awarded": 0,
+              "explain": "Earl, Carden & Smutylo 2001 ; alternative au logframe pour projets complexes.",
+              "ref": "IDRC, Outcome Mapping, 2001.  → https://fr.wikipedia.org/w/index.php?search=Changements%20de%20comportement%20des%20partenaires%20limitrophes  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-35",
+              "packTitle": "Suivi-évaluation — duel",
+              "qid": "manche2-35-q5",
+              "q": "Le critère \"additionnalité\" en évaluation financière mesure…",
+              "expected": "Effet incrémental vs contre-factuel",
+              "given": "Implementation Completion and Results Reports",
+              "correct": false,
+              "pts": 5,
+              "awarded": 0,
+              "explain": "Concept clé pour les banques de développement (BEI, IFC) ; justifie l'intervention publique.",
+              "ref": "BEI, Additionality Framework.  → https://fr.wikipedia.org/w/index.php?search=Effet%20incr%C3%A9mental%20vs%20contre-factuel  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-35",
+              "packTitle": "Suivi-évaluation — duel",
+              "qid": "manche2-35-q6",
+              "q": "L'évaluation réaliste (realist evaluation) cherche à expliquer…",
+              "expected": "Mécanismes-Contexte-Résultats (MCR)",
+              "given": "Lien causal exclusif vs plusieurs facteurs",
+              "correct": false,
+              "pts": 6,
+              "awarded": 0,
+              "explain": "Pawson & Tilley 1997 ; alternative aux RCT pour les programmes complexes.",
+              "ref": "Pawson & Tilley, Realistic Evaluation, 1997.  → https://fr.wikipedia.org/w/index.php?search=M%C3%A9canismes-Contexte-R%C3%A9sultats  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-35",
+              "packTitle": "Suivi-évaluation — duel",
+              "qid": "manche2-35-q3",
+              "q": "L'attribution diffère de la contribution car elle…",
+              "expected": "Lien causal exclusif vs plusieurs facteurs",
+              "given": "Implementation Completion and Results Reports",
+              "correct": false,
+              "pts": 3,
+              "awarded": 0,
+              "explain": "Attribution = \"le résultat est dû au projet\" ; contribution = \"le projet est l'un des facteurs\".",
+              "ref": "Mayne, \"Contribution Analysis\", 2008.  → https://fr.wikipedia.org/w/index.php?search=Lien%20causal%20exclusif%20vs%20plusieurs%20facteurs  → https://fr.wikipedia.org/wiki/%C3%89valuation_d%27impact"
+            }
+          ]
         },
         "QPC-KAJBHJ54": {
           "startedAt": "2026-05-30T23:48:31.872Z",
-          "progressScore": 4,
-          "progressQ": 6,
-          "progressUpdatedAt": "2026-05-30T23:49:19.183Z"
+          "progressScore": 7,
+          "progressQ": 7,
+          "progressUpdatedAt": "2026-05-30T23:51:32.256Z"
         }
       },
       "winner": null
