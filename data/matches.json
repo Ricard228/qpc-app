@@ -3621,9 +3621,9 @@
         },
         "QPC-KAJBHJ54": {
           "startedAt": "2026-05-30T23:48:31.872Z",
-          "progressScore": 1,
-          "progressQ": 1,
-          "progressUpdatedAt": "2026-05-30T23:48:31.872Z"
+          "progressScore": 2,
+          "progressQ": 5,
+          "progressUpdatedAt": "2026-05-30T23:48:53.229Z"
         }
       },
       "winner": null
