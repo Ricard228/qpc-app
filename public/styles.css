@@ -618,6 +618,66 @@ html, body {
 /* Zone dangereuse */
 .card-danger { border-color: #F5C0C0; background: #FFFAFA; }
 
+/* Widget scoreboard live (pendant un duel) */
+.live-board {
+  position: fixed;
+  top: 80px;
+  right: 16px;
+  width: 260px;
+  max-width: calc(100vw - 32px);
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(31, 56, 100, 0.18);
+  z-index: 50;
+  overflow: hidden;
+  font-size: 13px;
+  animation: slideIn .25s ease-out;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.live-board-head {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 10px 14px;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+.live-board-body { padding: 6px 10px 10px; max-height: 60vh; overflow-y: auto; }
+.live-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 6px;
+  border-bottom: 1px solid var(--line);
+}
+.live-row:last-child { border-bottom: none; }
+.live-row.me { background: var(--soft-blue); border-radius: 6px; }
+.live-row.done { opacity: 0.7; }
+.live-rank {
+  font-weight: 700; color: var(--primary);
+  background: var(--soft-grey);
+  padding: 3px 7px; border-radius: 999px;
+  font-size: 11px; min-width: 26px; text-align: center;
+}
+.live-row.me .live-rank { background: var(--primary); color: #FFFFFF; }
+.live-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.live-prog { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.live-score { font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* Sur petits écrans : widget en bas plutôt qu'à droite */
+@media (max-width: 720px) {
+  .live-board {
+    top: auto;
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-height: 38vh;
+  }
+}
+
 /* Duels */
 .badge-pill {
   display: inline-block;

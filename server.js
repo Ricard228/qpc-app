@@ -53,11 +53,12 @@ function loadAuth() {
   const data = readJson(AUTH_PATH, null);
   if (data) {
     // Migration : ajouter settings si absent
-    if (!data.settings) data.settings = { reviewEnabled: true, qcmMode: 'user-choice' };
+    if (!data.settings) data.settings = { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice' };
     if (data.settings.qcmMode == null) data.settings.qcmMode = 'user-choice';
+    if (data.settings.liveScoreboardMode == null) data.settings.liveScoreboardMode = 'user-choice';
     return data;
   }
-  const init = { codes: {}, settings: { reviewEnabled: true, qcmMode: 'user-choice' }, createdAt: new Date().toISOString() };
+  const init = { codes: {}, settings: { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice' }, createdAt: new Date().toISOString() };
   writeJson(AUTH_PATH, init);
   return init;
 }
@@ -349,6 +350,9 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
   if (typeof req.body.qcmMode === 'string' && ['force-text', 'force-qcm', 'user-choice'].includes(req.body.qcmMode)) {
     auth.settings.qcmMode = req.body.qcmMode;
   }
+  if (typeof req.body.liveScoreboardMode === 'string' && ['force-on', 'force-off', 'user-choice'].includes(req.body.liveScoreboardMode)) {
+    auth.settings.liveScoreboardMode = req.body.liveScoreboardMode;
+  }
   saveAuth(auth);
   res.json(auth.settings);
 });
@@ -545,6 +549,7 @@ function publicMatchView(m, viewerCode) {
       counts: m.config.counts,
       domains: m.config.domains,
       packsCount: m.config.packs.length,
+      liveScoreboard: !!m.config.liveScoreboard,
       // packs disponibles uniquement si on a accepté ou si on est admin
       packs: (accepted || isAdmin) ? m.config.packs : null
     },
@@ -558,6 +563,17 @@ function publicMatchView(m, viewerCode) {
       return acc;
     }, {}) : null
   };
+}
+
+// Décide si un match donné doit afficher le scoreboard live.
+// Respecte d'abord le réglage admin (force-on/force-off),
+// sinon respecte le choix du créateur du match (config.liveScoreboard).
+function isLiveScoreboardEnabled(match) {
+  const auth = loadAuth();
+  const mode = (auth.settings && auth.settings.liveScoreboardMode) || 'user-choice';
+  if (mode === 'force-on') return true;
+  if (mode === 'force-off') return false;
+  return !!(match.config && match.config.liveScoreboard);
 }
 
 function checkMatchCompletion(m) {
@@ -607,6 +623,7 @@ app.post('/api/me/duels', requireUser, (req, res) => {
   config.manches = Array.isArray(config.manches) && config.manches.length ? config.manches : ['manche1'];
   config.counts  = config.counts || { manche1: 1, manche2: 1, manche3: 1 };
   config.domains = Array.isArray(config.domains) ? config.domains : [];
+  config.liveScoreboard = !!config.liveScoreboard;
   const packs = buildMatchPacks(config);
   if (packs.length === 0) return res.status(400).json({ error: 'Aucun pack disponible pour cette configuration' });
 
@@ -713,6 +730,63 @@ app.post('/api/me/duels/:id/game', requireUser, (req, res) => {
   res.json(publicMatchView(m, req.user.code));
 });
 
+// Mise à jour du progrès en cours de partie (envoyé après chaque
+// question répondue par le client si liveScoreboard est actif)
+app.post('/api/me/duels/:id/progress', requireUser, (req, res) => {
+  const store = loadMatches();
+  const m = store.matches.find(x => x.id === req.params.id);
+  if (!m) return res.status(404).json({ error: 'Duel introuvable' });
+  if (!m.participants.includes(req.user.code)) return res.status(403).json({ error: 'Vous n\'êtes pas dans ce duel' });
+  if (m.acceptances[req.user.code] !== 'accepted') return res.status(400).json({ error: 'Vous devez accepter le duel avant de jouer' });
+  m.results = m.results || {};
+  if (!m.results[req.user.code]) {
+    m.results[req.user.code] = { startedAt: new Date().toISOString() };
+  }
+  const r = m.results[req.user.code];
+  if (r.completedAt) return res.status(400).json({ error: 'Partie déjà terminée' });
+  const score = Number(req.body.score);
+  const answered = Number(req.body.questionsAnswered);
+  if (!Number.isNaN(score)) r.progressScore = score;
+  if (!Number.isNaN(answered)) r.progressQ = answered;
+  r.progressUpdatedAt = new Date().toISOString();
+  saveMatches(store);
+  res.json({ ok: true });
+});
+
+// Scoreboard live : renvoie les scores en cours de chaque participant.
+// Visible UNIQUEMENT si liveScoreboard activé pour ce match (par l'admin
+// global ou par le créateur du duel).
+app.get('/api/me/duels/:id/scoreboard', requireUser, (req, res) => {
+  const store = loadMatches();
+  const m = store.matches.find(x => x.id === req.params.id);
+  if (!m) return res.status(404).json({ error: 'Duel introuvable' });
+  if (!m.participants.includes(req.user.code)) return res.status(403).json({ error: 'Vous n\'êtes pas dans ce duel' });
+  if (!isLiveScoreboardEnabled(m)) {
+    return res.status(403).json({ error: 'Le scoreboard live n\'est pas activé pour ce duel' });
+  }
+  const totalQuestions = (m.config.packs || []).reduce((s, p) => s + (p.pack.questions || []).length, 0);
+  const board = m.participants.map(c => {
+    const r = (m.results && m.results[c]) || {};
+    return {
+      code: c,
+      name: nameOfCode(c),
+      score: r.completedAt ? (r.totalScore || 0) : (r.progressScore || 0),
+      questionsAnswered: r.completedAt ? (r.nbQuestions || 0) : (r.progressQ || 0),
+      totalQuestions,
+      finished: !!r.completedAt,
+      acceptance: m.acceptances[c] || 'pending'
+    };
+  });
+  // Tri par score décroissant
+  board.sort((a, b) => b.score - a.score);
+  res.json({
+    liveScoreboard: true,
+    matchStatus: m.status,
+    totalQuestions,
+    participants: board
+  });
+});
+
 // ---------- API : duels admin ----------------------------------------
 app.get('/api/admin/duels', requireAdmin, (req, res) => {
   const { matches } = loadMatches();
@@ -733,6 +807,7 @@ app.post('/api/admin/duels', requireAdmin, (req, res) => {
   config.manches = Array.isArray(config.manches) && config.manches.length ? config.manches : ['manche1'];
   config.counts  = config.counts || { manche1: 1, manche2: 1, manche3: 1 };
   config.domains = Array.isArray(config.domains) ? config.domains : [];
+  config.liveScoreboard = !!config.liveScoreboard;
   const packs = buildMatchPacks(config);
   if (packs.length === 0) return res.status(400).json({ error: 'Aucun pack disponible pour cette configuration' });
 

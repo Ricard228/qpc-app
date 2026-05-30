@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.14" />
+  <link rel="stylesheet" href="styles.css?v=2.15" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -343,6 +343,10 @@
             <summary class="muted" style="cursor:pointer;">Filtrer par domaine (optionnel)</summary>
             <div id="duel-domains" class="checks-grid" style="margin-top:10px;"></div>
           </details>
+          <label class="check" id="duel-live-row" style="margin-top:4px;">
+            <input type="checkbox" id="duel-live-scoreboard" />
+            <span>🏆 Afficher le scoreboard en direct pendant le duel</span>
+          </label>
           <button type="submit" class="btn btn-primary">⚔️ Lancer le duel</button>
         </form>
         <div id="new-duel-error" class="login-error" hidden></div>
@@ -434,6 +438,10 @@
           <summary class="muted" style="cursor:pointer;">Filtrer par domaine (optionnel)</summary>
           <div id="adm-conf-domains" class="checks-grid" style="margin-top:10px;"></div>
         </details>
+        <label class="check" id="adm-conf-live-row" style="margin-top:8px;">
+          <input type="checkbox" id="adm-conf-live-scoreboard" />
+          <span>🏆 Afficher le scoreboard en direct pendant la confrontation</span>
+        </label>
         <button id="btn-admin-create-duel" class="btn btn-primary" style="margin-top:12px;">⚔️ Lancer la confrontation</button>
       </div>
 
@@ -464,6 +472,16 @@
             <label class="check"><input type="radio" name="admin-qcm" value="force-qcm" /> <span>Forcer QCM</span></label>
           </div>
         </div>
+
+        <div style="margin-top:18px; padding-top:18px; border-top:1px solid var(--line);">
+          <strong>Scoreboard en direct pendant les duels &amp; confrontations</strong>
+          <div class="muted" style="font-size:13px; margin-top:2px;">Affiche pour chaque joueur les scores en temps réel des autres participants. Forcer ou laisser le choix au créateur du duel.</div>
+          <div class="checks-row" id="admin-live-row" style="margin-top:10px;">
+            <label class="check"><input type="radio" name="admin-live" value="user-choice" /> <span>Laisser le choix au créateur</span></label>
+            <label class="check"><input type="radio" name="admin-live" value="force-on" /> <span>Toujours activé</span></label>
+            <label class="check"><input type="radio" name="admin-live" value="force-off" /> <span>Toujours désactivé</span></label>
+          </div>
+        </div>
       </div>
 
       <div class="card">
@@ -489,6 +507,6 @@
     </section>
   </template>
 
-  <script src="app.js?v=2.13"></script>
+  <script src="app.js?v=2.15"></script>
 </body>
 </html>

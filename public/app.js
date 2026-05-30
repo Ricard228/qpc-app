@@ -79,6 +79,8 @@ const api = {
   acceptDuel:     (id)       => apiFetch(`/api/me/duels/${id}/accept`,     { method: 'POST', body: '{}' }),
   declineDuel:    (id)       => apiFetch(`/api/me/duels/${id}/decline`,    { method: 'POST', body: '{}' }),
   submitDuelGame: (id, body) => apiFetch(`/api/me/duels/${id}/game`,       { method: 'POST', body: JSON.stringify(body) }),
+  duelProgress:   (id, body) => apiFetch(`/api/me/duels/${id}/progress`,   { method: 'POST', body: JSON.stringify(body) }),
+  duelScoreboard: (id)       => apiFetch(`/api/me/duels/${id}/scoreboard`),
   // Duels — admin
   adminDuels:        ()      => apiFetch('/api/admin/duels', {}, true),
   adminCreateDuel:   (body)  => apiFetch('/api/admin/duels', { method: 'POST', body: JSON.stringify(body) }, true),
@@ -617,6 +619,8 @@ function renderPlay() {
   $('#play-pack-title').textContent = step.pack.titre;
   $('#play-pack-sub').textContent = `${step.pack.theme || ''} · Domaine : ${step.pack.domain}`;
   $('#play-score').textContent = g.score.total;
+  // Démarrer le widget scoreboard live si activé
+  if (g.duelId && g.liveScoreboard) startLiveScoreboardPolling();
   if (step.manche === 'manche1') return renderManche1();
   if (step.manche === 'manche2') return renderManche2();
   if (step.manche === 'manche3') return renderManche3();
@@ -661,6 +665,7 @@ function answerM1(userInput) {
     q: q.q, expected: q.r, given: displayGiven(userInput, q), correct, pts: 1, awarded,
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
+  sendDuelProgress();
   showReveal(correct, q, userInput);
   setTimeout(() => {
     g.cursor.qIdx += 1; persistGame();
@@ -759,6 +764,7 @@ function answerM2(userInput) {
     q: q.q, expected: q.r, given: displayGiven(userInput, q), correct, pts, awarded,
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
+  sendDuelProgress();
   showReveal(correct, q, userInput);
   g.cursor.m2RemainingPts = g.cursor.m2RemainingPts.filter(v => v !== pts);
   g.cursor.m2Picked = null;
@@ -809,12 +815,14 @@ function answerM3(userInput) {
     q: q.q, expected: q.r, given: displayGiven(userInput, q), correct, pts: 1, awarded,
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
+  sendDuelProgress();
   showReveal(correct, q, userInput);
   setTimeout(() => { g.cursor.qIdx += 1; persistGame(); renderManche3(); }, 1500);
 }
 
 async function pauseAndExit() {
   clearTimer();
+  destroyLiveBoardWidget();
   persistGame();
   alert("Partie mise en pause. Vous pourrez la reprendre depuis l'accueil.");
   route('home');
@@ -822,6 +830,7 @@ async function pauseAndExit() {
 
 async function finishGame() {
   clearTimer();
+  destroyLiveBoardWidget();
   const g = State.game;
   const summary = {
     finishedAt: new Date().toISOString(),
@@ -1126,18 +1135,31 @@ async function renderDuels() {
 
   $('#btn-duels-home').onclick = () => route('home');
 
+  // Adapter l'affichage de la case "scoreboard live" selon le réglage admin
+  const liveMode = (State.meta && State.meta.settings && State.meta.settings.liveScoreboardMode) || 'user-choice';
+  const liveRow = $('#duel-live-row');
+  const liveCb = $('#duel-live-scoreboard');
+  if (liveMode === 'force-on') {
+    liveCb.checked = true;
+    liveRow.innerHTML = '<span class="muted">🏆 <em>Scoreboard en direct activé par l\'administrateur (forcé)</em></span>';
+  } else if (liveMode === 'force-off') {
+    liveCb.checked = false;
+    liveRow.innerHTML = '<span class="muted">⛔ <em>Scoreboard en direct désactivé par l\'administrateur</em></span>';
+  }
+
   $('#form-new-duel').addEventListener('submit', async (e) => {
     e.preventDefault();
     const err = $('#new-duel-error'); err.hidden = true;
     const opponent = $('#duel-opponent').value.trim().toUpperCase();
     const manches = $$('input[name=duel-manche]:checked').map(c => c.value);
     const domains = $$('#duel-domains input:checked').map(c => c.value);
+    const liveScoreboard = !!$('#duel-live-scoreboard')?.checked;
     if (!opponent) { err.textContent = 'Code adversaire requis'; err.hidden = false; return; }
     if (manches.length === 0) { err.textContent = 'Sélectionnez au moins une manche'; err.hidden = false; return; }
     try {
       await api.createDuel({
         opponentCode: opponent,
-        config: { manches, domains, counts: { manche1: 1, manche2: 1, manche3: 1 } }
+        config: { manches, domains, counts: { manche1: 1, manche2: 1, manche3: 1 }, liveScoreboard }
       });
       $('#duel-opponent').value = '';
       alert('Invitation envoyée à ' + opponent);
@@ -1219,10 +1241,15 @@ async function startDuelGame(duelId) {
   if (qcmMode === 'force-qcm') useQcm = true;
   else if (qcmMode === 'force-text') useQcm = false;
   else {
-    // Demander à l'utilisateur
     useQcm = confirm('Mode QCM (choix multiples) ? Annuler pour saisie libre.');
   }
   State.qcmMode = useQcm;
+  // Détermine si le scoreboard live est actif pour ce duel
+  const liveMode = (State.meta && State.meta.settings && State.meta.settings.liveScoreboardMode) || 'user-choice';
+  let liveOn = false;
+  if (liveMode === 'force-on') liveOn = true;
+  else if (liveMode === 'force-off') liveOn = false;
+  else liveOn = !!d.config.liveScoreboard;
   // Construire le State.game avec les packs fixés
   State.game = {
     duelId: d.id,
@@ -1230,10 +1257,81 @@ async function startDuelGame(duelId) {
     cursor: { planIdx: 0, qIdx: 0 },
     score: { total: 0, byManche: { manche1: 0, manche2: 0, manche3: 0 } },
     log: [],
-    qcmMode: useQcm
+    qcmMode: useQcm,
+    liveScoreboard: liveOn
   };
   // Pas de persistance localStorage pour les duels (on joue d'une traite)
   route('play');
+}
+
+// ---------- Widget scoreboard live (pendant un duel) -----------------
+let _liveBoardTimer = null;
+
+function startLiveScoreboardPolling() {
+  stopLiveScoreboardPolling();
+  if (!State.game || !State.game.duelId || !State.game.liveScoreboard) return;
+  // Créer le widget s'il n'existe pas
+  ensureLiveBoardWidget();
+  // Premier fetch immédiat, puis polling toutes les 4 secondes
+  refreshLiveBoard();
+  _liveBoardTimer = setInterval(refreshLiveBoard, 4000);
+}
+function stopLiveScoreboardPolling() {
+  if (_liveBoardTimer) { clearInterval(_liveBoardTimer); _liveBoardTimer = null; }
+}
+
+function ensureLiveBoardWidget() {
+  if (document.getElementById('live-board')) return;
+  const widget = document.createElement('div');
+  widget.id = 'live-board';
+  widget.className = 'live-board';
+  widget.innerHTML = '<div class="live-board-head">🏆 Scoreboard live</div><div class="live-board-body">Chargement…</div>';
+  document.body.appendChild(widget);
+}
+
+async function refreshLiveBoard() {
+  if (!State.game || !State.game.duelId) return stopLiveScoreboardPolling();
+  try {
+    const data = await api.duelScoreboard(State.game.duelId);
+    const body = document.querySelector('#live-board .live-board-body');
+    if (!body) return;
+    body.innerHTML = '';
+    data.participants.forEach((p, i) => {
+      const isMe = (p.code === Session.code);
+      const row = document.createElement('div');
+      row.className = 'live-row' + (isMe ? ' me' : '') + (p.finished ? ' done' : '');
+      const rank = document.createElement('span'); rank.className = 'live-rank';
+      rank.textContent = '#' + (i + 1);
+      const name = document.createElement('span'); name.className = 'live-name';
+      name.textContent = p.name || p.code;
+      const prog = document.createElement('span'); prog.className = 'live-prog';
+      prog.textContent = `${p.questionsAnswered}/${p.totalQuestions}`;
+      const score = document.createElement('span'); score.className = 'live-score';
+      score.textContent = `${p.score} pts` + (p.finished ? ' ✓' : '');
+      row.appendChild(rank); row.appendChild(name); row.appendChild(prog); row.appendChild(score);
+      body.appendChild(row);
+    });
+  } catch (e) {
+    // 403 si liveScoreboard désactivé : on cache le widget
+    const w = document.getElementById('live-board');
+    if (w) w.remove();
+    stopLiveScoreboardPolling();
+  }
+}
+
+function destroyLiveBoardWidget() {
+  stopLiveScoreboardPolling();
+  const w = document.getElementById('live-board');
+  if (w) w.remove();
+}
+
+// Envoyer le progress courant au serveur (debounced via requestIdle)
+function sendDuelProgress() {
+  if (!State.game || !State.game.duelId || !State.game.liveScoreboard) return;
+  const score = State.game.score && State.game.score.total || 0;
+  const answered = (State.game.log || []).length;
+  api.duelProgress(State.game.duelId, { score, questionsAnswered: answered })
+     .catch(() => {});
 }
 
 // ---------- Vue : panneau admin ---------------------------------------
@@ -1368,6 +1466,40 @@ async function renderAdmin() {
     });
   });
 
+  // Pré-cocher la radio liveScoreboardMode selon le réglage actuel
+  try {
+    const s = await api.adminGetSettings();
+    const lm = s.liveScoreboardMode || 'user-choice';
+    const r = document.querySelector(`#admin-live-row input[name=admin-live][value="${lm}"]`);
+    if (r) r.checked = true;
+  } catch (e) {}
+  $$('#admin-live-row input[name=admin-live]').forEach(r => {
+    r.addEventListener('change', async () => {
+      if (!r.checked) return;
+      try {
+        await api.adminSetSettings({ liveScoreboardMode: r.value });
+        r.parentElement.style.opacity = '0.6';
+        setTimeout(() => { r.parentElement.style.opacity = '1'; }, 300);
+      } catch (e) { alert('Erreur : ' + e.message); }
+    });
+  });
+
+  // Pour la confrontation admin : si admin a forcé l'option, on
+  // adapte l'affichage de la checkbox
+  try {
+    const s = await api.adminGetSettings();
+    const lm = s.liveScoreboardMode || 'user-choice';
+    const row = document.getElementById('adm-conf-live-row');
+    const cb = document.getElementById('adm-conf-live-scoreboard');
+    if (lm === 'force-on' && row && cb) {
+      cb.checked = true;
+      row.innerHTML = '<span class="muted">🏆 <em>Scoreboard en direct toujours activé (réglage admin)</em></span>';
+    } else if (lm === 'force-off' && row && cb) {
+      cb.checked = false;
+      row.innerHTML = '<span class="muted">⛔ <em>Scoreboard en direct désactivé (réglage admin)</em></span>';
+    }
+  } catch (e) {}
+
   // ---- Organiser une confrontation ----
   async function refreshAdminConf() {
     const codes = await api.adminCodes();
@@ -1436,10 +1568,10 @@ async function renderAdmin() {
       manche3: parseInt($('#adm-conf-n3').value, 10) || 0
     };
     const domains = $$('#adm-conf-domains input:checked').map(c => c.value);
+    const liveScoreboard = !!$('#adm-conf-live-scoreboard')?.checked;
     try {
-      const r = await api.adminCreateDuel({ participants, config: { manches, counts, domains } });
+      const r = await api.adminCreateDuel({ participants, config: { manches, counts, domains, liveScoreboard } });
       alert(`Confrontation lancée (id ${r.id}). ${participants.length} participant(s) convoqué(s).`);
-      // décocher
       $$('#admin-conf-participants input').forEach(c => c.checked = false);
       refreshAdminConf();
     } catch (e) { alert('Erreur : ' + e.message); }
