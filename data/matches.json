@@ -3612,7 +3612,14 @@
         "QPC-NZXE8MYU": "accepted",
         "QPC-KAJBHJ54": "accepted"
       },
-      "results": {},
+      "results": {
+        "QPC-NZXE8MYU": {
+          "startedAt": "2026-05-30T23:48:23.802Z",
+          "progressScore": 0,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-05-30T23:48:23.802Z"
+        }
+      },
       "winner": null
     }
   ]
