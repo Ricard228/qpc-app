@@ -431,10 +431,10 @@ html, body {
   gap: 8px;
 }
 
-/* Illustration de page de garde : livre d'économie ouvert + nuage domaines */
+/* Illustration de page de garde : livre + nuage + cycle éco + chaîne agricole */
 .login-illustration {
   width: 100%;
-  max-width: 720px;
+  max-width: 800px;
   margin: 0 auto 8px;
   text-align: center;
   pointer-events: none;
@@ -442,7 +442,7 @@ html, body {
 .login-illustration img {
   width: 100%;
   height: auto;
-  max-height: 260px;
+  max-height: 300px;
   filter: drop-shadow(0 4px 16px rgba(31, 56, 100, 0.15));
 }
 
@@ -455,10 +455,10 @@ html, body {
     gap: 18px;
   }
   .login-illustration {
-    max-width: 760px;
+    max-width: 820px;
   }
   .login-illustration img {
-    max-height: 340px;
+    max-height: 420px;
   }
   .login-card {
     margin-top: 0;

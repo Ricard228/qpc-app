@@ -6,7 +6,7 @@
 //   - questions.json (gros fichier)  : cache-first après le 1er chargement
 // =====================================================================
 
-const VERSION = 'qpc-v2.15-1';
+const VERSION = 'qpc-v2.16-1';
 const STATIC_CACHE = `${VERSION}-static`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
