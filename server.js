@@ -398,6 +398,45 @@ app.get('/api/admin/game/:id', requireAdmin, (req, res) => {
   res.json(g);
 });
 
+// Supprime une partie spécifique de l'historique (et décrémente le
+// compteur gamesPlayed du code concerné). Utile pour effacer une partie
+// erronée de la liste « Parties récentes » côté admin.
+app.delete('/api/admin/game/:id', requireAdmin, (req, res) => {
+  const games = loadGames();
+  const idx = (games.games || []).findIndex(x => x.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Partie introuvable' });
+  const removed = games.games.splice(idx, 1)[0];
+  saveGames(games);
+  // Décrémenter le compteur de parties sur le code (sans descendre sous 0)
+  if (removed && removed.code) {
+    const auth = loadAuth();
+    if (auth.codes[removed.code]) {
+      auth.codes[removed.code].gamesPlayed = Math.max(0, (auth.codes[removed.code].gamesPlayed || 1) - 1);
+      saveAuth(auth);
+    }
+  }
+  res.json({ ok: true, removedId: removed.id, code: removed.code });
+});
+
+// Supprime TOUTES les parties d'un utilisateur (réinitialise son
+// classement) sans toucher au code d'accès lui-même. Le compteur
+// gamesPlayed du code est remis à 0.
+app.delete('/api/admin/codes/:code/games', requireAdmin, (req, res) => {
+  const code = String(req.params.code).toUpperCase();
+  const games = loadGames();
+  const before = (games.games || []).length;
+  games.games = (games.games || []).filter(g => g.code !== code);
+  const removed = before - games.games.length;
+  saveGames(games);
+  // Remettre gamesPlayed à 0 pour ce code
+  const auth = loadAuth();
+  if (auth.codes[code]) {
+    auth.codes[code].gamesPlayed = 0;
+    saveAuth(auth);
+  }
+  res.json({ ok: true, removed, code });
+});
+
 // ---------- Admin : export JSON / Excel ------------------------------
 app.get('/api/admin/export', requireAdmin, (req, res) => {
   const auth = loadAuth();

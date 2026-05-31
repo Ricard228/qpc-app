@@ -84,7 +84,10 @@ const api = {
   // Duels — admin
   adminDuels:        ()      => apiFetch('/api/admin/duels', {}, true),
   adminCreateDuel:   (body)  => apiFetch('/api/admin/duels', { method: 'POST', body: JSON.stringify(body) }, true),
-  adminDeleteDuel:   (id)    => apiFetch(`/api/admin/duels/${id}`, { method: 'DELETE' }, true)
+  adminDeleteDuel:   (id)    => apiFetch(`/api/admin/duels/${id}`, { method: 'DELETE' }, true),
+  // Suppression de partie / réinitialisation classement utilisateur (admin)
+  adminDeleteGame:        (gameId) => apiFetch(`/api/admin/game/${encodeURIComponent(gameId)}`, { method: 'DELETE' }, true),
+  adminResetCodeRanking:  (code)   => apiFetch(`/api/admin/codes/${encodeURIComponent(code)}/games`, { method: 'DELETE' }, true)
 };
 
 // Téléchargement direct (binaire) avec auth admin pour l'Excel
@@ -1388,23 +1391,51 @@ async function renderAdmin() {
     if (dash.byCode.length === 0) lb.appendChild(el('div', { class: 'muted' }, 'Aucune partie enregistrée.'));
     dash.byCode.forEach((b, i) => {
       const acc = b.totalQuestions ? Math.round(100 * b.totalCorrect / b.totalQuestions) : 0;
+      const onReset = async () => {
+        if (b.games === 0) return;
+        if (!confirm(`Effacer toutes les parties de ${b.name || b.code} ?\nLe code reste valide mais son score est remis à zéro.`)) return;
+        try {
+          const r = await api.adminResetCodeRanking(b.code);
+          alert(`${r.removed} partie(s) supprimée(s) pour ${b.code}.`);
+          refresh();
+        } catch (e) { alert('Erreur : ' + e.message); }
+      };
       lb.appendChild(el('div', { class: 'lb-row' },
         el('div', { class: 'lb-rank' }, `#${i + 1}`),
         el('div', { style: 'flex:1; min-width:0;' },
           el('div', {}, el('span', { class: 'code-mono' }, b.code), b.name ? ' — ' + b.name : ''),
           el('div', { class: 'code-meta' }, `${b.games} partie(s) · ${b.totalCorrect}/${b.totalQuestions} bonnes (${acc}%)`)),
-        el('div', { class: 'lb-score' }, `${b.totalScore} pts`)));
+        el('div', { class: 'lb-score' }, `${b.totalScore} pts`),
+        b.games > 0 ? el('button', {
+          class: 'btn-icon btn-icon-danger',
+          title: `Effacer ${b.code} du classement (toutes ses parties)`,
+          onclick: onReset
+        }, '✕') : null
+      ));
     });
 
     // Parties récentes
     const rec = $('#admin-recent'); rec.innerHTML = '';
     if (dash.recent.length === 0) rec.appendChild(el('div', { class: 'muted' }, 'Aucune partie récente.'));
     dash.recent.forEach(r => {
+      const onDeleteGame = async () => {
+        if (!confirm(`Supprimer cette partie (${fmtDate(r.finishedAt)} · ${r.code} · ${r.totalScore} pts) ?`)) return;
+        try {
+          await api.adminDeleteGame(r.id);
+          refresh();
+        } catch (e) { alert('Erreur : ' + e.message); }
+      };
       rec.appendChild(el('div', { class: 'history-row' },
         el('div', { class: 'history-when' },
           el('div', {}, fmtDate(r.finishedAt), ' · ', el('span', { class: 'code-mono' }, r.code), r.name ? ' — ' + r.name : ''),
           el('span', { class: 'small' }, `${r.nbCorrect}/${r.nbQuestions} bonnes réponses`)),
-        el('div', { class: 'history-score' }, `${r.totalScore} pts`)));
+        el('div', { class: 'history-score' }, `${r.totalScore} pts`),
+        el('button', {
+          class: 'btn-icon btn-icon-danger',
+          title: 'Supprimer cette partie de la liste',
+          onclick: onDeleteGame
+        }, '✕')
+      ));
     });
   }
 
