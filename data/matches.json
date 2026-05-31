@@ -4477,7 +4477,7 @@
         "QPC-NZXE8MYU",
         "QPC-WC4E22GK"
       ],
-      "status": "pending",
+      "status": "active",
       "config": {
         "manches": [
           "manche1",
@@ -4860,9 +4860,16 @@
       },
       "acceptances": {
         "QPC-NZXE8MYU": "accepted",
-        "QPC-WC4E22GK": "pending"
+        "QPC-WC4E22GK": "accepted"
       },
-      "results": {},
+      "results": {
+        "QPC-NZXE8MYU": {
+          "startedAt": "2026-05-31T15:21:44.628Z",
+          "progressScore": 1,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-05-31T15:21:44.628Z"
+        }
+      },
       "winner": null
     }
   ]
