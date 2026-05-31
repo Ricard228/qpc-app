@@ -1,3 +1,91 @@
 {
-  "domains": []
+  "domains": [
+    {
+      "name": "Économie agricole du Togo (test)",
+      "description": "Échantillon de test",
+      "createdAt": "2026-05-31T00:32:59.094Z",
+      "updatedAt": "2026-05-31T00:32:59.094Z",
+      "packs": [
+        {
+          "id": "custom--conomie-agricole-du-tog-manche1-1",
+          "type": "manche1",
+          "titre": "Production cacao-café",
+          "theme": "Cultures de rente",
+          "domain": "Économie agricole du Togo (test)",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom--conomie-agricole-du-tog-manche1-1-q1",
+              "q": "Quel est le principal produit d'exportation agricole du Togo ?",
+              "r": "Le cacao",
+              "choices": [
+                "Le cacao",
+                "Le riz",
+                "Le maïs",
+                "Le sorgho"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Cacao + café = principales cultures de rente du Togo.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom--conomie-agricole-du-tog-manche1-1-q2",
+              "q": "Combien d'hectares sont cultivés au Togo environ ?",
+              "r": "2,5 millions d'hectares",
+              "choices": [
+                "Environ 2,5 millions d'hectares",
+                "500 000 hectares",
+                "10 millions d'hectares",
+                "50 000 hectares"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La SAU togolaise est d'environ 2,5 millions d'hectares.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom--conomie-agricole-du-tog-manche1-1-q3",
+              "q": "Quel est le secteur dominant de l'économie togolaise (% PIB) ?",
+              "r": "Les services",
+              "choices": [
+                "Les services (environ 50 %)",
+                "L'industrie lourde",
+                "Les hydrocarbures",
+                "La haute technologie"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Services environ 50 %, agriculture 25-30 %, industrie 20 %.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom--conomie-agricole-du-tog-manche1-1-q4",
+              "q": "Quelle agence supervise les filières agricoles au Togo ?",
+              "r": "Le MIFA",
+              "choices": [
+                "Le MIFA (Mécanisme Incitatif de Financement Agricole)",
+                "L'OTR (Office Togolais des Recettes)",
+                "L'ARMP (Marchés publics)",
+                "La BCEAO (Banque centrale)"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "MIFA créé en 2018 pour financer les filières agricoles togolaises.",
+              "ref": "",
+              "pts": 1
+            }
+          ],
+          "isCustom": true
+        }
+      ]
+    }
+  ]
 }
