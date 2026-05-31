@@ -4160,6 +4160,12 @@
           "progressScore": 0,
           "progressQ": 3,
           "progressUpdatedAt": "2026-05-31T15:16:57.223Z"
+        },
+        "QPC-NZXE8MYU": {
+          "startedAt": "2026-05-31T15:18:07.293Z",
+          "progressScore": 1,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-05-31T15:18:07.293Z"
         }
       },
       "winner": null
