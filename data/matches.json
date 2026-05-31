@@ -3925,6 +3925,237 @@
         }
       },
       "winner": "QPC-KAJBHJ54"
+    },
+    {
+      "id": "ca055d76993dd889",
+      "type": "duel",
+      "createdAt": "2026-05-31T15:15:57.123Z",
+      "createdBy": "QPC-NZXE8MYU",
+      "participants": [
+        "QPC-NZXE8MYU",
+        "QPC-WC4E22GK"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "domains": [
+          "Statistiques et économétrie",
+          "Microéconomie et théorie"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "liveScoreboard": true,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-67",
+              "type": "manche1",
+              "titre": "Données de panel",
+              "theme": "Économétrie panel",
+              "domain": "Statistiques et économétrie",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-67-q1",
+                  "q": "Quel modèle de panel suppose que l'effet individuel αi est corrélé avec les régresseurs X ?",
+                  "r": "Effets fixes",
+                  "choices": [
+                    "La puissance du test (1 − β)",
+                    "Effets fixes",
+                    "Le test de Hausman",
+                    "Le modèle VAR (Vector Autoregression)"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Within estimator : élimine les effets individuels en différenciant ; biais réduit si α_i corrélé à X.",
+                  "ref": "Wooldridge, Econometric Analysis of Cross Section and Panel Data.  → https://fr.wikipedia.org/w/index.php?search=Effets%20fixes  → https://fr.wikipedia.org/wiki/%C3%89conom%C3%A9trie",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-67-q2",
+                  "q": "Quel test arbitre entre effets fixes et effets aléatoires ?",
+                  "r": "Test de Hausman",
+                  "choices": [
+                    "La p-value (valeur-p)",
+                    "L'estimateur Arellano-Bond (GMM en différences)",
+                    "Test de Hausman",
+                    "Instrumenter Y(t-1)"
+                  ],
+                  "correctIndices": [
+                    2
+                  ],
+                  "e": "H0 : RE est cohérent et efficace. Rejet → préférer effets fixes.",
+                  "ref": "Hausman, 1978.  → https://fr.wikipedia.org/w/index.php?search=Test%20de%20Hausman  → https://fr.wikipedia.org/wiki/%C3%89conom%C3%A9trie",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-67-q3",
+                  "q": "Le GMM en panel dynamique (Arellano-Bond) sert à…",
+                  "r": "Instrumenter Y(t-1)",
+                  "choices": [
+                    "Instrumenter Y(t-1)",
+                    "Sélection de variables",
+                    "L'estimateur within (effets fixes)",
+                    "La loi normale (gaussienne)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Arellano-Bond 1991 : différencie, puis instrumente avec les niveaux retardés.",
+                  "ref": "Arellano & Bond, 1991.  → https://fr.wikipedia.org/w/index.php?search=Instrumenter%20Y  → https://fr.wikipedia.org/wiki/%C3%89conom%C3%A9trie",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-67-q4",
+                  "q": "Quel test de Sargan vérifie en GMM ?",
+                  "r": "Validité des instruments",
+                  "choices": [
+                    "L'erreur de première espèce (α)",
+                    "Validité des instruments",
+                    "Le test ADF (Augmented Dickey-Fuller)",
+                    "p AR, d intégrations, q MA"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Test de sur-identification : H0 = instruments tous valides.",
+                  "ref": "Sargan, 1958 ; Hansen J, 1982.  → https://fr.wikipedia.org/w/index.php?search=Validit%C3%A9%20des%20instruments  → https://fr.wikipedia.org/wiki/%C3%89conom%C3%A9trie",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-17",
+              "type": "manche2",
+              "titre": "Duel 17",
+              "theme": "Théorie des jeux",
+              "domain": "Microéconomie et théorie",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-17-q1",
+                  "q": "Quel concept central des jeux non coopératifs décrit une situation où aucun joueur n'a intérêt à dévier unilatéralement ?",
+                  "r": "L'équilibre de Nash",
+                  "e": "Formalisé en 1950 dans la thèse de John Nash ; Prix Nobel 1994.",
+                  "ref": "J. Nash, PNAS, 1950.  → https://fr.wikipedia.org/w/index.php?search=%C3%A9quilibre%20de%20Nash  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 1,
+                  "choices": [
+                    "Le premier théorème de l'économie du bien-être",
+                    "Produits différenciés + libre entrée",
+                    "L'équilibre de Nash",
+                    "Les coûts de transaction (Williamson)"
+                  ],
+                  "correctIndices": [
+                    2
+                  ]
+                },
+                {
+                  "id": "manche2-17-q2",
+                  "q": "Quel jeu canonique illustre l'écart entre la rationalité individuelle et l'optimum collectif ?",
+                  "r": "Le dilemme du prisonnier",
+                  "e": "Conçu à RAND (1950) ; modélise la pollution, les cartels, les courses aux armements.",
+                  "ref": "M. Flood, M. Dresher (1950) ; A. Tucker.  → https://fr.wikipedia.org/w/index.php?search=dilemme%20du%20prisonnier  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 2,
+                  "choices": [
+                    "Variation de production pour 1 unité de facteur en +",
+                    "La compatibilité incitative (incentive compatibility)",
+                    "Le dilemme du prisonnier",
+                    "L'antisélection (sélection adverse)"
+                  ],
+                  "correctIndices": [
+                    2
+                  ]
+                },
+                {
+                  "id": "manche2-17-q3",
+                  "q": "Quel raffinement de l'équilibre de Nash élimine les stratégies fondées sur des menaces non crédibles ?",
+                  "r": "L'équilibre parfait en sous-jeux (subgame-perfect)",
+                  "e": "Introduit par R. Selten en 1965 ; induction à rebours pour les jeux séquentiels.",
+                  "ref": "R. Selten, ZGS, 1965.  → https://fr.wikipedia.org/w/index.php?search=%C3%A9quilibre%20parfait%20en%20sous-jeux  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 3,
+                  "choices": [
+                    "L'équilibre parfait en sous-jeux (subgame-perfect)",
+                    "Quantités simultanées (équilibre de Nash en quantités)",
+                    "L'éviction des motivations intrinsèques (crowding-out)",
+                    "La Richesse des nations (An Inquiry into the Nature and Causes of the Wealth of Nations)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ]
+                },
+                {
+                  "id": "manche2-17-q4",
+                  "q": "Quel modèle duopolistique introduit une asymétrie temporelle entre un leader et un suiveur ?",
+                  "r": "Le duopole de Stackelberg",
+                  "e": "Le leader joue en premier, anticipant la meilleure réponse du suiveur.",
+                  "ref": "H. von Stackelberg, Marktform und Gleichgewicht, 1934.  → https://fr.wikipedia.org/w/index.php?search=duopole%20de%20Stackelberg  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 4,
+                  "choices": [
+                    "Disposition à payer − prix payé",
+                    "L'output gap (écart de production)",
+                    "La Théorie générale de l'emploi, de l'intérêt et de la monnaie",
+                    "Le duopole de Stackelberg"
+                  ],
+                  "correctIndices": [
+                    3
+                  ]
+                },
+                {
+                  "id": "manche2-17-q5",
+                  "q": "Quel concept économique fondamental modélise le rôle d'un diplôme comme indicateur de qualité non observable ?",
+                  "r": "Le signal (job market signaling)",
+                  "e": "Modèle de Michael Spence ; séparation des « types » sur le marché du travail.",
+                  "ref": "M. Spence, QJE, 1973.  → https://fr.wikipedia.org/w/index.php?search=signal  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 5,
+                  "choices": [
+                    "Combinaisons de facteurs à production constante",
+                    "Le signal (job market signaling)",
+                    "La comptabilité mentale (mental accounting)",
+                    "Les coûts de transaction (Williamson)"
+                  ],
+                  "correctIndices": [
+                    1
+                  ]
+                },
+                {
+                  "id": "manche2-17-q6",
+                  "q": "Quelle propriété d'un mécanisme garantit que dire la vérité est dans l'intérêt de chaque participant ?",
+                  "r": "La compatibilité incitative (incentive compatibility)",
+                  "e": "Théorème de révélation de Myerson (1979) : tout mécanisme équivaut à un mécanisme direct.",
+                  "ref": "R. Myerson, Econometrica, 1979.  → https://fr.wikipedia.org/w/index.php?search=compatibilit%C3%A9%20incitative  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 6,
+                  "choices": [
+                    "La compatibilité incitative (incentive compatibility)",
+                    "Quantités simultanées (équilibre de Nash en quantités)",
+                    "La Théorie générale de l'emploi, de l'intérêt et de la monnaie",
+                    "L'éviction des motivations intrinsèques (crowding-out)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-NZXE8MYU": "accepted",
+        "QPC-WC4E22GK": "pending"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
