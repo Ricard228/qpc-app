@@ -86,6 +86,1259 @@
           "isCustom": true
         }
       ]
+    },
+    {
+      "name": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+      "description": "QPC sur l'agronomie, l'agroécologie, les politiques agricoles et le développement durable (engagements de Maputo, Malabo, PDDAA, ODD).",
+      "createdAt": "2026-05-31T21:20:33.850Z",
+      "updatedAt": "2026-05-31T21:20:33.850Z",
+      "packs": [
+        {
+          "id": "custom-agronomie--agro-cologie--manche1-1",
+          "type": "manche1",
+          "titre": "Engagements continentaux et politiques agricoles africaines",
+          "theme": "Maputo, Malabo, PDDAA/CAADP",
+          "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q1",
+              "q": "En quelle année la Déclaration de Maputo sur l'agriculture a-t-elle été adoptée ?",
+              "r": "2003",
+              "choices": [
+                "2003",
+                "2000",
+                "2006",
+                "2014"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La Déclaration de Maputo a été adoptée lors du sommet de l'Union africaine tenu à Maputo (Mozambique) en juillet 2003.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q2",
+              "q": "Quel pourcentage minimum de leur budget national les États se sont-ils engagés à consacrer à l'agriculture selon la Déclaration de Maputo ?",
+              "r": "Au moins 10 %",
+              "choices": [
+                "Au moins 10 %",
+                "Au moins 5 %",
+                "Au moins 15 %",
+                "Au moins 20 %"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les chefs d'État se sont engagés à allouer au moins 10 % des ressources budgétaires nationales à l'agriculture et au développement rural.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q3",
+              "q": "Dans quel pays s'est tenu le sommet de l'UA ayant adopté la Déclaration de Maputo ?",
+              "r": "Le Mozambique",
+              "choices": [
+                "Le Mozambique",
+                "La Guinée équatoriale",
+                "Le Nigéria",
+                "L'Éthiopie"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q4",
+              "q": "En quelle année la Déclaration de Malabo a-t-elle été adoptée ?",
+              "r": "2014",
+              "choices": [
+                "2014",
+                "2010",
+                "2003",
+                "2018"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La Déclaration de Malabo a été adoptée en juin 2014, lors du sommet de l'UA tenu à Malabo, en Guinée équatoriale.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q5",
+              "q": "Quel objectif phare la Déclaration de Malabo fixe-t-elle à l'horizon 2025 ?",
+              "r": "Mettre fin à la faim",
+              "choices": [
+                "Mettre fin à la faim en Afrique d'ici 2025",
+                "Doubler la population rurale",
+                "Interdire les engrais chimiques",
+                "Supprimer toutes les importations alimentaires"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Malabo engage les États à éliminer la faim d'ici 2025, notamment en doublant la productivité agricole.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q6",
+              "q": "Quel taux de croissance annuel du PIB agricole la Déclaration de Malabo recommande-t-elle de maintenir ?",
+              "r": "Au moins 6 %",
+              "choices": [
+                "Au moins 6 % par an",
+                "Au moins 3 % par an",
+                "Au moins 10 % par an",
+                "Au moins 2 % par an"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Malabo réaffirme l'objectif d'une croissance annuelle d'au moins 6 % du PIB agricole.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q7",
+              "q": "Que signifie le sigle PDDAA ?",
+              "r": "Programme Détaillé de Développement de l'Agriculture Africaine",
+              "choices": [
+                "Programme Détaillé de Développement de l'Agriculture Africaine",
+                "Plan Décennal de Développement Agricole de l'Afrique",
+                "Programme de Diversification Durable de l'Agriculture Africaine",
+                "Pacte de Développement Durable de l'Agriculture Africaine"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le PDDAA (en anglais CAADP) est le cadre continental de transformation agricole adopté en 2003.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q8",
+              "q": "Combien de piliers compte le PDDAA / CAADP ?",
+              "r": "Quatre piliers",
+              "choices": [
+                "Quatre piliers",
+                "Trois piliers",
+                "Cinq piliers",
+                "Six piliers"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les quatre piliers portent sur la gestion durable des terres et de l'eau, l'accès aux marchés, la sécurité alimentaire, et la recherche agricole.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q9",
+              "q": "De quel programme de l'Union africaine le PDDAA constitue-t-il le volet agricole ?",
+              "r": "Le NEPAD",
+              "choices": [
+                "Le NEPAD (Nouveau Partenariat pour le Développement de l'Afrique)",
+                "L'OMC",
+                "La FAO",
+                "Le PNUD"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le PDDAA est le programme agricole du NEPAD.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q10",
+              "q": "Que désigne le sigle ECOWAP ?",
+              "r": "La politique agricole régionale de la CEDEAO",
+              "choices": [
+                "La politique agricole régionale de la CEDEAO",
+                "Un fonds monétaire ouest-africain",
+                "Une bourse agricole continentale",
+                "Un traité minier régional"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'ECOWAP est la politique agricole commune de la CEDEAO, adoptée en 2005.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q11",
+              "q": "Quel mécanisme de l'UA évalue tous les deux ans les progrès des engagements de Malabo ?",
+              "r": "La Revue Biennale",
+              "choices": [
+                "La Revue Biennale (Biennial Review)",
+                "Le Conseil de sécurité",
+                "Le recensement décennal",
+                "L'audit quinquennal obligatoire"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La Revue Biennale mesure les progrès des pays et produit un rapport de redevabilité mutuelle.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q12",
+              "q": "Quelle vision continentale de l'UA intègre la transformation agricole sur le long terme ?",
+              "r": "L'Agenda 2063",
+              "choices": [
+                "L'Agenda 2063",
+                "L'Agenda 2030",
+                "Le Plan Marshall africain",
+                "La Charte de Banjul"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'Agenda 2063 est le cadre stratégique de l'UA pour le développement socio-économique du continent.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q13",
+              "q": "La Déclaration de Malabo engage les États à tripler quel type d'échanges d'ici 2025 ?",
+              "r": "Le commerce intra-africain des produits agricoles",
+              "choices": [
+                "Le commerce intra-africain des produits et services agricoles",
+                "Les importations de blé",
+                "Les exportations de pétrole",
+                "L'aide alimentaire internationale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Malabo vise à tripler le commerce intra-africain des biens et services agricoles.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-1-q14",
+              "q": "Quel engagement de Malabo concerne les pertes après récolte ?",
+              "r": "Les réduire de moitié d'ici 2025",
+              "choices": [
+                "Réduire de moitié les pertes post-récolte d'ici 2025",
+                "Les augmenter pour stimuler la production",
+                "Les ignorer dans les statistiques",
+                "Les multiplier par deux"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Malabo fixe l'objectif de réduire de moitié les pertes post-récolte à l'horizon 2025.",
+              "ref": "",
+              "pts": 1
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-agronomie--agro-cologie--manche2-2",
+          "type": "manche2",
+          "titre": "Politiques et institutions agricoles au Togo",
+          "theme": "Institutions, filières et cadres nationaux",
+          "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+          "timing": "25 s / question",
+          "questions": [
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q1",
+              "q": "Que signifie le sigle ITRA au Togo ?",
+              "r": "Institut Togolais de Recherche Agronomique",
+              "choices": [
+                "Institut Togolais de Recherche Agronomique",
+                "Institut Tropical de Recherche Appliquée",
+                "Institut Togolais des Ressources Agricoles",
+                "Initiative Togolaise pour la Recherche Agraire"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'ITRA est l'organisme public chargé de la recherche agronomique au Togo.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q2",
+              "q": "Que signifie le sigle ICAT au Togo ?",
+              "r": "Institut de Conseil et d'Appui Technique",
+              "choices": [
+                "Institut de Conseil et d'Appui Technique",
+                "Institut Central de l'Agriculture Togolaise",
+                "Initiative de Coopération Agricole du Togo",
+                "Institut du Coton et de l'Agriculture Tropicale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'ICAT est la structure publique de vulgarisation et de conseil agricole au Togo.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q3",
+              "q": "Quelle agence togolaise est chargée de la sécurité alimentaire et de la gestion des stocks ?",
+              "r": "L'ANSAT",
+              "choices": [
+                "L'ANSAT (Agence Nationale de Sécurité Alimentaire du Togo)",
+                "L'ICAT",
+                "L'ITRA",
+                "L'INSEED"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'ANSAT gère notamment les stocks de sécurité et contribue à la régulation des marchés de céréales.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q4",
+              "q": "Que désignent les ZAAP au Togo ?",
+              "r": "Zones d'Aménagement Agricole Planifiées",
+              "choices": [
+                "Zones d'Aménagement Agricole Planifiées",
+                "Zones Agricoles d'Appui aux Paysans",
+                "Zones d'Action Agro-Pastorale",
+                "Zones Administratives Agricoles Prioritaires"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les ZAAP regroupent des producteurs sur des espaces aménagés pour mutualiser équipements et services.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q5",
+              "q": "Que signifie le sigle MIFA au Togo ?",
+              "r": "Mécanisme Incitatif de Financement Agricole",
+              "choices": [
+                "Mécanisme Incitatif de Financement Agricole fondé sur le partage de risques",
+                "Ministère des Investissements et des Finances Agricoles",
+                "Mutuelle Internationale de Financement Agricole",
+                "Marché Intérieur des Filières Agricoles"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le MIFA facilite l'accès des acteurs agricoles au financement grâce au partage de risques.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q6",
+              "q": "Environ quelle part de la population active togolaise dépend de l'agriculture ?",
+              "r": "Environ 60 %",
+              "choices": [
+                "Environ 60 %",
+                "Environ 10 %",
+                "Environ 90 %",
+                "Environ 25 %"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'agriculture occupe une large majorité de la population active togolaise, autour de 60 %.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q7",
+              "q": "Quelle culture de rente constitue historiquement le principal produit agricole d'exportation du Togo ?",
+              "r": "Le coton",
+              "choices": [
+                "Le coton",
+                "Le cacao",
+                "Le caoutchouc",
+                "Le thé"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le coton est traditionnellement la première culture agricole d'exportation du Togo.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q8",
+              "q": "Quelle céréale est l'aliment de base le plus cultivé au Togo ?",
+              "r": "Le maïs",
+              "choices": [
+                "Le maïs",
+                "Le blé",
+                "L'orge",
+                "Le seigle"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le maïs est la principale céréale vivrière cultivée et consommée au Togo.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q9",
+              "q": "Que signifie le sigle PNIASAN au Togo ?",
+              "r": "Programme National d'Investissement Agricole et de Sécurité Alimentaire et Nutritionnelle",
+              "choices": [
+                "Programme National d'Investissement Agricole et de Sécurité Alimentaire et Nutritionnelle",
+                "Plan National d'Irrigation et d'Aménagement des Sols Agricoles Nationaux",
+                "Programme National des Industries Agro-alimentaires et de la Santé Nutritionnelle",
+                "Plan National d'Appui aux Semences Améliorées"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le PNIASAN est le cadre d'investissement agricole du Togo, aligné sur le PDDAA.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q10",
+              "q": "Quel institut produit les statistiques officielles au Togo, y compris agricoles ?",
+              "r": "L'INSEED",
+              "choices": [
+                "L'INSEED",
+                "L'ITRA",
+                "L'ANSAT",
+                "La BCEAO"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'INSEED (Institut National de la Statistique et des Études Économiques et Démographiques) produit les statistiques nationales.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q11",
+              "q": "Dans quelles régions le coton est-il principalement cultivé au Togo ?",
+              "r": "Le nord et le centre du pays",
+              "choices": [
+                "Le nord et le centre (Savanes, Kara, Centrale)",
+                "La région Maritime uniquement",
+                "Le seul littoral de Lomé",
+                "Aucune région rurale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le coton est surtout cultivé dans les régions septentrionales et centrales du Togo.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q12",
+              "q": "Quel type d'organisation regroupe les producteurs pour mutualiser leurs moyens ?",
+              "r": "La coopérative agricole",
+              "choices": [
+                "La coopérative agricole",
+                "La société anonyme cotée",
+                "La multinationale",
+                "La régie d'État"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les coopératives permettent de mutualiser intrants, équipements et accès au marché.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q13",
+              "q": "Que signifie le sigle PND, cadre stratégique de développement du Togo ?",
+              "r": "Plan National de Développement",
+              "choices": [
+                "Plan National de Développement",
+                "Programme National de Décentralisation",
+                "Pacte National pour la Démocratie",
+                "Plan Numérique de Développement"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le PND est le cadre stratégique de développement du Togo (un premier couvrant la période 2018-2022).",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche2-2-q14",
+              "q": "Dans quelle région du Togo les filières café et cacao sont-elles surtout développées ?",
+              "r": "La région des Plateaux",
+              "choices": [
+                "La région des Plateaux",
+                "La région Maritime",
+                "La région des Savanes",
+                "La région de Lomé-Commune"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le café et le cacao sont cultivés principalement dans la région des Plateaux, plus humide et au relief marqué.",
+              "ref": "",
+              "pts": 1
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-agronomie--agro-cologie--manche3-3",
+          "type": "manche3",
+          "titre": "Agronomie et systèmes de culture",
+          "theme": "Sol, fertilité et conduite des cultures",
+          "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+          "timing": "Buzz libre — 1 min 30 — 9 points gagnants",
+          "questions": [
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q1",
+              "q": "Que représentent les lettres N, P et K dans un engrais NPK ?",
+              "r": "Azote, phosphore, potassium",
+              "choices": [
+                "Azote (N), phosphore (P), potassium (K)",
+                "Nickel, plomb, krypton",
+                "Nitrate, potasse, kaolin",
+                "Azote, potassium, calcium"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "N, P et K sont les trois macronutriments majeurs apportés par les engrais.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q2",
+              "q": "Quelle famille de plantes fixe l'azote atmosphérique grâce à une symbiose bactérienne ?",
+              "r": "Les légumineuses",
+              "choices": [
+                "Les légumineuses (Fabacées)",
+                "Les graminées",
+                "Les cucurbitacées",
+                "Les solanacées"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les légumineuses fixent l'azote via une symbiose avec les bactéries du genre Rhizobium.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q3",
+              "q": "Comment appelle-t-on l'alternance planifiée de cultures différentes sur une même parcelle au fil des saisons ?",
+              "r": "La rotation des cultures",
+              "choices": [
+                "La rotation des cultures",
+                "La monoculture",
+                "La jachère permanente",
+                "Le surpâturage"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La rotation améliore la fertilité du sol et limite ravageurs et maladies.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q4",
+              "q": "Quelle pratique consiste à cultiver simultanément plusieurs espèces sur une même parcelle ?",
+              "r": "L'association de cultures",
+              "choices": [
+                "L'association de cultures (cultures associées)",
+                "La monoculture",
+                "La jachère",
+                "Le labour profond"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'association de cultures (ex. maïs-niébé) optimise l'usage des ressources et couvre le sol.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q5",
+              "q": "Comment nomme-t-on la couche superficielle du sol, riche en matière organique ?",
+              "r": "L'horizon humifère (couche arable)",
+              "choices": [
+                "L'horizon humifère, ou couche arable",
+                "La roche-mère",
+                "Le sous-sol argileux profond",
+                "La nappe phréatique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'horizon de surface, riche en humus, est essentiel à la fertilité.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q6",
+              "q": "Quel processus dégrade les sols par entraînement des particules sous l'effet de l'eau ou du vent ?",
+              "r": "L'érosion",
+              "choices": [
+                "L'érosion",
+                "La photosynthèse",
+                "La nitrification",
+                "La pollinisation"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'érosion hydrique et éolienne appauvrit les sols, surtout sur pentes nues.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q7",
+              "q": "Quelle technique consiste à couvrir le sol de résidus végétaux pour le protéger ?",
+              "r": "Le paillage (mulching)",
+              "choices": [
+                "Le paillage (mulching)",
+                "Le brûlis",
+                "Le labour répété",
+                "Le désherbage chimique total"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le paillage limite l'évaporation et l'érosion et favorise la vie du sol.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q8",
+              "q": "Quel indicateur mesure l'acidité ou l'alcalinité d'un sol ?",
+              "r": "Le pH",
+              "choices": [
+                "Le pH",
+                "La densité apparente",
+                "La salinité brute",
+                "La porosité totale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le pH influence la disponibilité des nutriments pour les plantes.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q9",
+              "q": "Comment appelle-t-on la mise au repos temporaire d'une parcelle pour restaurer sa fertilité ?",
+              "r": "La jachère",
+              "choices": [
+                "La jachère",
+                "La transhumance",
+                "L'écobuage forcé",
+                "La monoculture intensive"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La jachère permet au sol de reconstituer sa fertilité naturelle.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q10",
+              "q": "Quel ravageur invasif menace fortement le maïs en Afrique de l'Ouest depuis 2016 ?",
+              "r": "La chenille légionnaire d'automne",
+              "choices": [
+                "La chenille légionnaire d'automne (Spodoptera frugiperda)",
+                "Le doryphore de la pomme de terre",
+                "Le criquet migrateur uniquement",
+                "La mouche tsé-tsé"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La chenille légionnaire d'automne, espèce invasive, cause d'importants dégâts sur le maïs.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q11",
+              "q": "Quelle pratique associe arbres et cultures (ou élevage) sur une même parcelle ?",
+              "r": "L'agroforesterie",
+              "choices": [
+                "L'agroforesterie",
+                "La monoculture intensive",
+                "L'hydroponie",
+                "La culture hors-sol"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'agroforesterie associe ligneux et cultures pour des bénéfices écologiques et économiques.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q12",
+              "q": "Quel arbre fertilitaire perd ses feuilles en saison des pluies (phénologie inversée) et enrichit le sol en azote ?",
+              "r": "Le Faidherbia albida",
+              "choices": [
+                "Le Faidherbia albida",
+                "Le baobab",
+                "L'eucalyptus",
+                "Le teck"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le Faidherbia albida n'ombrage pas les cultures en saison des pluies et améliore la fertilité.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q13",
+              "q": "Quel terme désigne la quantité récoltée par unité de surface ?",
+              "r": "Le rendement",
+              "choices": [
+                "Le rendement (en kg/ha ou t/ha)",
+                "La marge brute",
+                "La valeur ajoutée",
+                "Le prix de revient"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le rendement mesure la productivité physique d'une culture par hectare.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche3-3-q14",
+              "q": "Quelle technique apporte l'eau directement au pied des plantes pour économiser la ressource ?",
+              "r": "L'irrigation goutte-à-goutte",
+              "choices": [
+                "L'irrigation goutte-à-goutte",
+                "L'aspersion massive",
+                "L'irrigation par inondation totale",
+                "Le ruissellement libre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le goutte-à-goutte limite les pertes par évaporation et ruissellement.",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-agronomie--agro-cologie--manche1-4",
+          "type": "manche1",
+          "titre": "Agroécologie et agriculture durable",
+          "theme": "Principes agroécologiques et pratiques durables",
+          "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q1",
+              "q": "Combien d'« éléments de l'agroécologie » la FAO a-t-elle définis ?",
+              "r": "10 éléments",
+              "choices": [
+                "10 éléments",
+                "5 éléments",
+                "17 éléments",
+                "3 éléments"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La FAO a défini 10 éléments de l'agroécologie (diversité, synergies, recyclage, résilience, etc.).",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q2",
+              "q": "Quel principe central de l'agroécologie concerne la variété du vivant dans les systèmes agricoles ?",
+              "r": "La diversité (biodiversité)",
+              "choices": [
+                "Maximiser la diversité biologique des systèmes",
+                "Réduire toutes les espèces à une seule",
+                "Éliminer les arbres",
+                "Supprimer la faune du sol"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La diversité (génétique, spécifique, paysagère) renforce résilience et productivité.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q3",
+              "q": "Combien de principes fondamentaux compte l'agriculture de conservation ?",
+              "r": "3 principes",
+              "choices": [
+                "Trois principes",
+                "Deux principes",
+                "Cinq principes",
+                "Sept principes"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Ses trois principes : perturbation minimale du sol, couverture permanente, diversification/rotation.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q4",
+              "q": "Quel est le premier principe de l'agriculture de conservation concernant le travail du sol ?",
+              "r": "La perturbation minimale du sol",
+              "choices": [
+                "Une perturbation minimale du sol (travail réduit ou semis direct)",
+                "Le labour profond systématique",
+                "Le brûlis annuel",
+                "Le retournement complet à chaque saison"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Réduire le travail du sol préserve sa structure, sa matière organique et sa vie biologique.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q5",
+              "q": "Comment appelle-t-on la lutte contre les ravageurs combinant méthodes biologiques, culturales et chimiques raisonnées ?",
+              "r": "La lutte intégrée",
+              "choices": [
+                "La lutte intégrée (gestion intégrée des ravageurs)",
+                "L'épandage systématique de pesticides",
+                "Le brûlis préventif",
+                "La quarantaine totale du champ"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La lutte intégrée privilégie les méthodes alternatives et limite les pesticides au strict nécessaire.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q6",
+              "q": "Que produit-on en décomposant des matières organiques pour fertiliser le sol naturellement ?",
+              "r": "Le compost",
+              "choices": [
+                "Le compost",
+                "Le plastique",
+                "Le ciment",
+                "Le verre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le compostage transforme les déchets organiques en amendement riche pour le sol.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q7",
+              "q": "Quelle plante semée entre deux cultures principales protège et enrichit le sol ?",
+              "r": "La plante de couverture (engrais vert)",
+              "choices": [
+                "La plante de couverture / l'engrais vert",
+                "La mauvaise herbe invasive",
+                "Le palmier à huile",
+                "La seule culture de rente"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les plantes de couverture protègent le sol et, si légumineuses, y fixent de l'azote.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q8",
+              "q": "L'agroécologie cherche à réduire la dépendance des exploitations à quel type d'intrants ?",
+              "r": "Les intrants chimiques de synthèse",
+              "choices": [
+                "Les intrants chimiques de synthèse (engrais et pesticides)",
+                "Les semences locales",
+                "La main-d'œuvre familiale",
+                "Le savoir paysan"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'agroécologie valorise les processus écologiques pour réduire les intrants externes de synthèse.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q9",
+              "q": "Quel terme désigne la capacité d'un système agricole à résister et à se rétablir face aux chocs ?",
+              "r": "La résilience",
+              "choices": [
+                "La résilience",
+                "La monoculture",
+                "La spéculation foncière",
+                "La jachère"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La résilience est renforcée par la diversité et la santé des sols.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q10",
+              "q": "Quelle pratique préserve l'autonomie des producteurs et la diversité génétique locale ?",
+              "r": "La conservation et l'échange de semences paysannes",
+              "choices": [
+                "La conservation et l'échange de semences paysannes",
+                "L'importation exclusive de semences hybrides",
+                "La destruction des variétés locales",
+                "Le brevetage généralisé du vivant"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les semences paysannes maintiennent la diversité génétique et l'autonomie des exploitations.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q11",
+              "q": "Que désigne la « santé du sol » en agroécologie ?",
+              "r": "Sa capacité à fonctionner comme un écosystème vivant",
+              "choices": [
+                "La capacité du sol à fonctionner comme un écosystème vivant et productif",
+                "Son seul taux d'humidité",
+                "Sa couleur de surface",
+                "Sa température au soleil"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Un sol sain est riche en matière organique, en vie biologique et bien structuré.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q12",
+              "q": "Quelle approche valorise les savoirs locaux et la co-construction de connaissances en agroécologie ?",
+              "r": "La co-création et le partage des savoirs",
+              "choices": [
+                "La co-création et le partage des connaissances",
+                "Le secret industriel",
+                "L'exclusion des paysans des décisions",
+                "La standardisation imposée d'en haut"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'agroécologie repose sur le dialogue entre savoirs scientifiques et paysans.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q13",
+              "q": "Quel système associe poissons et plantes dans un cycle de nutriments quasi fermé ?",
+              "r": "L'aquaponie",
+              "choices": [
+                "L'aquaponie",
+                "L'agriculture sur brûlis",
+                "La monoculture irriguée",
+                "Le pâturage extensif"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'aquaponie combine aquaculture et culture hors-sol en recyclant les nutriments.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-4-q14",
+              "q": "Comment qualifie-t-on un système qui recycle au maximum la biomasse et les nutriments ?",
+              "r": "Un système circulaire",
+              "choices": [
+                "Un système circulaire (recyclage des nutriments et de la biomasse)",
+                "Un système linéaire à usage unique",
+                "Un système d'exportation pure",
+                "Un système minier"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le recyclage interne réduit les pertes et la dépendance aux intrants externes.",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-agronomie--agro-cologie--manche1-5",
+          "type": "manche1",
+          "titre": "Développement durable, climat et ressources naturelles",
+          "theme": "ODD, climat, eau et biodiversité",
+          "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q1",
+              "q": "Combien d'Objectifs de Développement Durable (ODD) compte l'Agenda 2030 des Nations Unies ?",
+              "r": "17 ODD",
+              "choices": [
+                "17 objectifs",
+                "8 objectifs",
+                "10 objectifs",
+                "25 objectifs"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'Agenda 2030, adopté en 2015, comprend 17 ODD et 169 cibles.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q2",
+              "q": "Quel Objectif de Développement Durable vise spécifiquement l'élimination de la faim ?",
+              "r": "L'ODD 2 (Faim « zéro »)",
+              "choices": [
+                "L'ODD 2 — « Faim zéro »",
+                "L'ODD 1 — Pas de pauvreté",
+                "L'ODD 13 — Mesures climatiques",
+                "L'ODD 7 — Énergie propre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'ODD 2 vise la sécurité alimentaire, une meilleure nutrition et une agriculture durable.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q3",
+              "q": "Quel accord international de 2015 vise à limiter le réchauffement climatique mondial ?",
+              "r": "L'Accord de Paris",
+              "choices": [
+                "L'Accord de Paris (COP21)",
+                "Le Protocole de Montréal",
+                "La Convention de Ramsar",
+                "L'Accord de Maputo"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'Accord de Paris vise à contenir le réchauffement bien en deçà de 2 °C, idéalement 1,5 °C.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q4",
+              "q": "Quels sont les trois piliers de l'agriculture intelligente face au climat (CSA) ?",
+              "r": "Productivité, adaptation, atténuation",
+              "choices": [
+                "Productivité, adaptation/résilience et atténuation des émissions",
+                "Labour, semis, récolte",
+                "Engrais, pesticides, irrigation",
+                "Marché, crédit, assurance"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La CSA vise à accroître la productivité, renforcer la résilience et réduire/séquestrer les gaz à effet de serre.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q5",
+              "q": "Quel gaz à effet de serre est notamment émis par la riziculture inondée et l'élevage de ruminants ?",
+              "r": "Le méthane",
+              "choices": [
+                "Le méthane (CH4)",
+                "L'oxygène",
+                "L'azote pur",
+                "L'hélium"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La riziculture inondée et la fermentation entérique du bétail émettent du méthane.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q6",
+              "q": "Comment appelle-t-on le stockage de carbone dans les sols et la biomasse végétale ?",
+              "r": "La séquestration du carbone",
+              "choices": [
+                "La séquestration du carbone",
+                "La photosynthèse inversée",
+                "La combustion",
+                "L'évapotranspiration"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Sols et végétation peuvent stocker du carbone, contribuant à atténuer le changement climatique.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q7",
+              "q": "Quel phénomène désigne l'avancée des conditions désertiques sur des terres autrefois productives ?",
+              "r": "La désertification",
+              "choices": [
+                "La désertification",
+                "La reforestation",
+                "L'irrigation",
+                "La pollinisation"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La désertification, liée au climat et aux pressions humaines, menace particulièrement le Sahel.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q8",
+              "q": "Quelle grande initiative panafricaine vise à restaurer les terres dégradées du Sahel ?",
+              "r": "La Grande Muraille Verte",
+              "choices": [
+                "La Grande Muraille Verte",
+                "La Grande Muraille de Chine",
+                "La Ceinture Bleue atlantique",
+                "Le Mur de l'Atlantique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La Grande Muraille Verte est une initiative de restauration des terres sur la bande sahélienne.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q9",
+              "q": "Quelle ressource, de plus en plus sous pression, conditionne l'irrigation et la sécurité alimentaire ?",
+              "r": "L'eau douce",
+              "choices": [
+                "L'eau douce",
+                "Le sable",
+                "Le pétrole",
+                "Le sel"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La gestion durable de l'eau est cruciale face au changement climatique et à la hausse des besoins.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q10",
+              "q": "Quel terme désigne la variété du vivant à toutes ses échelles (gènes, espèces, écosystèmes) ?",
+              "r": "La biodiversité",
+              "choices": [
+                "La biodiversité",
+                "La monoculture",
+                "La salinité",
+                "La jachère"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La biodiversité soutient des services écosystémiques essentiels (pollinisation, régulation, fertilité).",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q11",
+              "q": "Quelle pratique répétée détruit la matière organique du sol et pollue l'air ?",
+              "r": "La culture sur brûlis",
+              "choices": [
+                "La culture sur brûlis (écobuage abusif)",
+                "Le semis direct",
+                "Le paillage",
+                "Le compostage"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le brûlis répété détruit la matière organique et libère du carbone dans l'atmosphère.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q12",
+              "q": "Quelle convention internationale de 1971 protège les zones humides d'importance ?",
+              "r": "La Convention de Ramsar",
+              "choices": [
+                "La Convention de Ramsar",
+                "L'Accord de Maputo",
+                "Le Protocole de Kyoto",
+                "La Charte de l'Atlantique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La Convention de Ramsar vise la conservation et l'usage rationnel des zones humides.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q13",
+              "q": "Comment qualifie-t-on un développement qui répond aux besoins présents sans compromettre ceux des générations futures ?",
+              "r": "Le développement durable",
+              "choices": [
+                "Le développement durable",
+                "Le développement extractif",
+                "La croissance illimitée",
+                "L'autarcie économique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Cette définition est issue du Rapport Brundtland (1987).",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-agronomie--agro-cologie--manche1-5-q14",
+              "q": "Quelles sont les trois dimensions classiques du développement durable ?",
+              "r": "Économique, sociale, environnementale",
+              "choices": [
+                "Économique, sociale et environnementale",
+                "Politique, militaire, religieuse",
+                "Urbaine, rurale, côtière",
+                "Passée, présente, future"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le développement durable articule viabilité économique, équité sociale et protection de l'environnement.",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        }
+      ]
     }
   ]
 }
