@@ -828,6 +828,206 @@ html, body {
 #rev-question { margin-top: 6px; }
 #rev-pack-info { font-size: 13px; }
 
+/* ---------- Bouton Aide + barre supérieure ---------- */
+.topbar-right {
+  display: flex; align-items: center; gap: 14px;
+}
+.btn-help {
+  background: rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+}
+.btn-help:hover { background: rgba(255, 255, 255, 0.28); }
+
+/* ---------- Vue Aide ---------- */
+.help-screen {
+  max-width: 980px;
+  margin: 24px auto;
+  padding: 0 24px 60px;
+}
+.help-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; flex-wrap: wrap;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  position: sticky; top: 60px; z-index: 5;
+}
+.help-toolbar-actions {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.help-content {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 40px 44px;
+  box-shadow: var(--shadow);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.help-cover {
+  text-align: center;
+  padding: 40px 20px 30px;
+  border-bottom: 2px solid var(--primary);
+  margin-bottom: 30px;
+}
+.help-cover-logo {
+  font-size: 64px; font-weight: 800; color: var(--primary);
+  letter-spacing: -2px; line-height: 1;
+}
+.help-cover-title {
+  font-size: 28px; color: var(--primary-dark); margin: 8px 0 4px;
+  font-weight: 600;
+}
+.help-cover-sub { font-style: italic; color: var(--primary-dark); margin: 0 0 24px; }
+.help-cover-tag {
+  font-size: 26px; color: var(--accent); margin: 16px 0 4px;
+  letter-spacing: 1px;
+}
+.help-cover-desc { color: var(--muted); margin: 4px 0 30px; }
+.help-cover-info { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+.help-cover-author { font-weight: 600; color: var(--primary); margin: 14px 0 4px; }
+.help-cover-version { font-style: italic; color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+
+.help-toc {
+  background: var(--soft-blue);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 30px;
+}
+.help-toc h3 { margin: 0 0 10px; color: var(--primary); font-size: 16px; }
+.help-toc ol {
+  margin: 0; padding-left: 22px; line-height: 1.9;
+}
+.help-toc a { color: var(--primary); text-decoration: none; font-weight: 500; }
+.help-toc a:hover { text-decoration: underline; }
+
+.help-section { margin-bottom: 40px; }
+.help-section h2 {
+  font-size: 22px; color: var(--primary);
+  border-bottom: 1px solid var(--line); padding-bottom: 8px;
+  margin: 30px 0 16px; font-weight: 700;
+}
+.help-section h3 {
+  font-size: 17px; color: var(--primary); margin: 22px 0 8px;
+  font-weight: 700;
+}
+.help-section h4 {
+  font-size: 14px; color: var(--primary-dark); margin: 16px 0 6px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.help-section p { margin: 8px 0; }
+.help-section ul, .help-section ol { padding-left: 24px; margin: 8px 0; }
+.help-section li { margin-bottom: 4px; }
+.help-section code {
+  background: var(--soft-blue); color: var(--primary);
+  padding: 2px 6px; border-radius: 4px;
+  font-family: Consolas, "SF Mono", Menlo, monospace;
+  font-size: 13px;
+}
+.help-section a { color: var(--primary); }
+
+.help-table {
+  width: 100%; border-collapse: collapse; margin: 12px 0;
+  font-size: 14px;
+}
+.help-table th, .help-table td {
+  border: 1px solid var(--line); padding: 8px 12px; text-align: left;
+  vertical-align: top;
+}
+.help-table th {
+  background: var(--primary); color: #FFFFFF; font-weight: 600;
+}
+.help-table tr:nth-child(even) { background: #FCFCFD; }
+.help-table-api code {
+  background: #F2F2F2; color: var(--primary-dark);
+  white-space: nowrap; font-size: 12px;
+}
+
+.help-code {
+  background: #F8FAFC; border: 1px solid var(--line);
+  border-radius: 8px; padding: 12px 16px;
+  font-family: Consolas, "SF Mono", Menlo, monospace;
+  font-size: 12.5px; line-height: 1.5;
+  overflow-x: auto; white-space: pre;
+  margin: 12px 0;
+}
+
+.help-info, .help-tip, .help-warn {
+  padding: 12px 16px; border-radius: 8px; margin: 14px 0;
+  border-left: 4px solid;
+}
+.help-info { background: #E8F0FE; border-left-color: var(--primary); color: var(--primary-dark); }
+.help-tip  { background: #E2EFDA; border-left-color: #2E7D32; color: #1A5519; }
+.help-warn { background: #FFF2F2; border-left-color: var(--accent); color: #7A0000; }
+
+.help-section details {
+  background: var(--soft-grey);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 8px 0;
+}
+.help-section details summary {
+  cursor: pointer; font-weight: 600; color: var(--primary);
+}
+.help-section details[open] summary { margin-bottom: 8px; }
+.help-section details p { margin: 6px 0 0; font-size: 14px; }
+
+.help-end {
+  text-align: center; font-style: italic; color: var(--muted);
+  margin-top: 30px;
+}
+
+/* ---------- Mode impression (Ctrl+P / téléchargement PDF) ---------- */
+@media print {
+  /* Cacher éléments d'interface non utiles à l'impression */
+  .topbar, .bottombar, .no-print, .help-toolbar {
+    display: none !important;
+  }
+  body, html {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt;
+  }
+  .help-screen {
+    margin: 0; padding: 0; max-width: 100%;
+  }
+  .help-content {
+    box-shadow: none; border: none;
+    padding: 0; border-radius: 0;
+    background: #FFFFFF;
+  }
+  .help-section h2 {
+    page-break-after: avoid;
+    color: #1F3864 !important;
+  }
+  .help-section h3, .help-section h4 { page-break-after: avoid; }
+  .help-section { page-break-inside: avoid; }
+  .help-cover, .help-toc { page-break-after: always; }
+  .help-table { page-break-inside: avoid; }
+  .help-code, pre {
+    page-break-inside: avoid;
+    background: #F2F2F2 !important;
+  }
+  a { color: #1F3864 !important; text-decoration: none; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt; color: #6B7280;
+  }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 600px) {
   .topbar { padding: 12px 16px; }

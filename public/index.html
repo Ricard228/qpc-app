@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.18" />
+  <link rel="stylesheet" href="styles.css?v=2.19" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -34,7 +34,10 @@
       <span class="brand-mark">QPC</span>
       <span class="brand-text">Économie &amp; Sciences sociales</span>
     </div>
-    <div class="who" id="who"></div>
+    <div class="topbar-right">
+      <button id="btn-help-open" class="btn-help" title="Aide et guide d'utilisation" aria-label="Aide">❓ Aide</button>
+      <div class="who" id="who"></div>
+    </div>
   </header>
 
   <!-- ZONE PRINCIPALE — VIEWS -->
@@ -391,6 +394,579 @@
     </section>
   </template>
 
+  <template id="tpl-help">
+    <section class="screen help-screen">
+      <div class="no-print">
+        <div class="help-toolbar">
+          <button id="btn-help-back" class="btn btn-ghost">← Retour</button>
+          <div class="help-toolbar-actions">
+            <a href="Guide-utilisation-QPC.docx" download="Guide-utilisation-QPC.docx" class="btn btn-primary">📥 Télécharger en Word (.docx)</a>
+            <button id="btn-help-print" class="btn">📄 Télécharger en PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <article class="help-content">
+        <header class="help-cover no-print-break">
+          <div class="help-cover-logo">QPC</div>
+          <h1 class="help-cover-title">Questions pour un Champion</h1>
+          <p class="help-cover-sub">Édition Économie &amp; Sciences sociales</p>
+          <h2 class="help-cover-tag">GUIDE D'UTILISATION</h2>
+          <p class="help-cover-desc">Manuel complet — joueurs, super-administrateurs, exploitation</p>
+          <p class="help-cover-info">770+ questions · 17 domaines · PWA installable Android/iOS</p>
+          <p class="help-cover-author">Conçu par Kossi Nevame AGBENU<br/>NEVAME Data House · ESA Université de Lomé</p>
+          <p class="help-cover-version">Version 2.19 — mai 2026</p>
+        </header>
+
+        <nav class="help-toc">
+          <h3>Table des matières</h3>
+          <ol>
+            <li><a href="#h-intro">1. Présentation générale</a></li>
+            <li><a href="#h-start">2. Premier démarrage</a></li>
+            <li><a href="#h-user">3. Guide utilisateur (joueur)</a></li>
+            <li><a href="#h-admin">4. Guide super-administrateur</a></li>
+            <li><a href="#h-domains">5. Les 17 domaines couverts</a></li>
+            <li><a href="#h-api">6. Annexe technique : API REST</a></li>
+            <li><a href="#h-faq">7. FAQ et dépannage</a></li>
+            <li><a href="#h-credits">8. Crédits et licence</a></li>
+          </ol>
+        </nav>
+
+        <section id="h-intro" class="help-section">
+          <h2>1. Présentation générale</h2>
+          <h3>1.1 Qu'est-ce que QPC ?</h3>
+          <p>QPC (Questions pour un Champion) est une application web pédagogique inspirée de l'émission télévisée du même nom diffusée sur TV5 Monde. Elle transforme un recueil de plus de 770 questions documentées en jeu interactif chronométré, accessible depuis n'importe quel navigateur (ordinateur, tablette, smartphone) ou installable comme application native sur Android et iOS via la technologie PWA.</p>
+          <p>L'application a été conçue dans un contexte académique ouest-africain (UEMOA, Togo) mais couvre l'économie générale, les sciences sociales et de nombreux domaines spécialisés utiles à toute formation supérieure en économie, gestion ou data science.</p>
+
+          <h3>1.2 Caractéristiques principales</h3>
+          <ul>
+            <li>770 questions documentées sur 17 domaines (économie agricole, monnaie/finance, BRVM/UEMOA, ML/DL, suivi-évaluation projets, fiscalité Togo, marchés publics Togo, etc.)</li>
+            <li>3 manches chronométrées inspirées de l'émission TV5 : « Les 4 à la suite » (40 s), « Face-à-face » (25 s/question, 1 à 6 points), « La finale » (15 s/question, 9 points gagnants)</li>
+            <li>Mode QCM ou saisie libre, paramétrable par l'administrateur ou choisi par le joueur</li>
+            <li>Mode Révision libre pour parcourir toutes les questions sans timer ni score</li>
+            <li>Duels utilisateur-à-utilisateur et confrontations multi-joueurs organisées par l'admin</li>
+            <li>Scoreboard live en temps réel pendant les compétitions</li>
+            <li>Authentification par codes d'accès permanents générés par le super-administrateur</li>
+            <li>Dashboard centralisé : classement, parties récentes, statistiques globales</li>
+            <li>Import de domaines personnalisés (.txt ou .json)</li>
+            <li>Export Excel et JSON de toute la base</li>
+            <li>Persistance permanente des données via branche GitHub</li>
+            <li>Installable comme PWA sur Android et iOS (1 clic)</li>
+            <li>Chaque réponse contient au moins une référence cliquable vers une source vérifiée (Wikipedia FR + sites officiels institutionnels)</li>
+          </ul>
+
+          <h3>1.3 Accès à l'application</h3>
+          <p>URL publique permanente : <a href="https://qpc-champion-58rn.onrender.com" target="_blank" rel="noopener noreferrer">https://qpc-champion-58rn.onrender.com</a></p>
+          <p>Code source ouvert : <a href="https://github.com/Ricard228/qpc-app" target="_blank" rel="noopener noreferrer">https://github.com/Ricard228/qpc-app</a></p>
+
+          <h3>1.4 Architecture</h3>
+          <table class="help-table">
+            <thead><tr><th>Couche</th><th>Technologie</th></tr></thead>
+            <tbody>
+              <tr><td>Backend</td><td>Node.js + Express, stockage JSON (auth/games/matches/custom-packs)</td></tr>
+              <tr><td>Frontend</td><td>SPA Vanilla JS, CSS responsive, Service Worker pour PWA</td></tr>
+              <tr><td>Persistance</td><td>Auto-sync vers la branche « data » du repo GitHub</td></tr>
+              <tr><td>Hébergement</td><td>Render.com (Web Service free tier)</td></tr>
+              <tr><td>Authentification</td><td>Tokens HMAC signés, codes utilisateurs aléatoires QPC-XXXXXXXX</td></tr>
+              <tr><td>Export</td><td>XLSX (3 feuilles : Codes, Parties, Détail des réponses) + JSON complet</td></tr>
+              <tr><td>Mobile</td><td>PWA installable (manifest + service worker offline)</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="h-start" class="help-section">
+          <h2>2. Premier démarrage</h2>
+          <h3>2.1 Accès depuis un navigateur</h3>
+          <ol>
+            <li>Ouvrir l'URL <a href="https://qpc-champion-58rn.onrender.com" target="_blank" rel="noopener noreferrer">https://qpc-champion-58rn.onrender.com</a> dans Chrome, Firefox, Edge ou Safari.</li>
+            <li>À la première visite après inactivité (15 minutes), Render réveille le serveur. Compter 30 secondes maximum avant le chargement complet.</li>
+            <li>La page d'accueil affiche le formulaire de connexion et le bouton « Installer l'application QPC ».</li>
+            <li>Saisir le code d'accès personnel (format QPC-XXXXXXXX) fourni par le super-administrateur, puis cliquer <strong>Entrer</strong>.</li>
+          </ol>
+          <div class="help-info">Le code est permanent : tant qu'il n'est pas révoqué par le super-administrateur, il vous permet de vous connecter indéfiniment, même après des mois.</div>
+
+          <h3>2.2 Installation comme application native</h3>
+          <h4>Android (Chrome, Edge, Samsung Internet)</h4>
+          <ol>
+            <li>Ouvrir l'URL dans Chrome.</li>
+            <li>Cliquer le bouton bleu « 📲 Installer l'application QPC » sur la page d'accueil, OU menu ⋮ → Installer l'application.</li>
+            <li>Confirmer dans la fenêtre native.</li>
+            <li>Une icône QPC apparaît sur l'écran d'accueil. L'app se lance désormais en plein écran, sans la barre du navigateur.</li>
+          </ol>
+          <h4>iOS / iPadOS (Safari)</h4>
+          <ol>
+            <li>Ouvrir l'URL dans Safari (Chrome iOS ne permet pas l'installation PWA).</li>
+            <li>Toucher le bouton Partager (carré avec flèche montante) en bas.</li>
+            <li>Faire défiler vers le bas et toucher « Sur l'écran d'accueil ».</li>
+            <li>Confirmer en haut à droite. L'icône QPC apparaît sur le springboard.</li>
+          </ol>
+          <h4>Desktop (Windows, macOS, Linux)</h4>
+          <ol>
+            <li>Dans Chrome ou Edge, cliquer l'icône d'installation à droite de la barre d'adresse, OU menu ⋮ → Installer QPC.</li>
+            <li>L'application s'ouvre dans sa propre fenêtre (mode standalone).</li>
+            <li>Sur Windows, elle apparaît dans le menu Démarrer ; sur macOS, dans le Launchpad.</li>
+          </ol>
+          <div class="help-tip">Avantages de l'installation : démarrage plus rapide, mode plein écran sans bandeau de navigation, fonctionnement partiellement hors-ligne (les fichiers statiques sont mis en cache).</div>
+
+          <h3>2.3 Mises à jour automatiques</h3>
+          <p>L'application étant déployée sur un serveur central, vous bénéficiez automatiquement des dernières évolutions à chaque ouverture, sans installation ni mise à jour manuelle. Le service worker s'assure que la version la plus récente est chargée à chaque visite.</p>
+        </section>
+
+        <section id="h-user" class="help-section">
+          <h2>3. Guide utilisateur (joueur)</h2>
+
+          <h3>3.1 Page de connexion</h3>
+          <p>La page d'accueil présente :</p>
+          <ul>
+            <li>Une illustration thématique (livre d'économie ouvert, nuage des 16 domaines, circuit économique, chaîne de valeur agricole)</li>
+            <li>Un formulaire de connexion (champ « Code d'accès » + bouton Entrer)</li>
+            <li>Un lien discret « Accès super-administrateur → » réservé à l'admin</li>
+            <li>Un bloc « Installer l'application QPC » avec le bouton d'installation PWA</li>
+          </ul>
+
+          <h3>3.2 Tableau de bord personnel</h3>
+          <table class="help-table">
+            <thead><tr><th>Carte</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>▶ Nouvelle partie</td><td>Configurer une partie en solo : choix des manches, des domaines, du mode de réponse, et du volume.</td></tr>
+              <tr><td>⚔️ Mes duels</td><td>Défier un autre joueur, accepter une invitation, ou rejoindre une confrontation organisée par l'admin.</td></tr>
+              <tr><td>📖 Révision libre</td><td>Parcourir librement les 770 questions par domaine et par manche, sans timer ni score. Pour réviser.</td></tr>
+              <tr><td>📊 Mes parties</td><td>Historique de toutes vos parties terminées : score total, taux de bonnes réponses, comparaison entre manches.</td></tr>
+            </tbody>
+          </table>
+          <div class="help-warn">Si l'administrateur a désactivé la Révision libre, ou si vous avez un duel actif en cours, cette carte sera temporairement masquée et remplacée par un bandeau jaune explicatif.</div>
+
+          <h3>3.3 Lancer une nouvelle partie solo</h3>
+          <ol>
+            <li>Cliquer sur la carte « Nouvelle partie ».</li>
+            <li>Cocher les manches souhaitées : Manche 1 (Les 4 à la suite), Manche 2 (Face-à-face), et/ou Manche 3 (La finale).</li>
+            <li>Sélectionner les domaines à inclure dans la sélection aléatoire (tout coché par défaut). Le badge à droite indique le nombre de questions disponibles par domaine.</li>
+            <li>Indiquer le volume : nombre de séries en Manche 1 (1 à 20), de duels en Manche 2 (1 à 10), de finales en Manche 3 (1 à 4).</li>
+            <li>Choisir le mode de réponse : « Saisie libre » (tape la réponse) ou « QCM (choix multiples) ». Selon les paramètres administrateur, cette option peut être imposée.</li>
+            <li>Cliquer <strong>Démarrer la partie</strong>. Le jeu se lance immédiatement.</li>
+          </ol>
+
+          <h3>3.4 Les trois manches en détail</h3>
+          <h4>Manche 1 — Les 4 à la suite</h4>
+          <p>Une série de 4 questions sur un même thème. Le compteur démarre à <strong>40 secondes pour l'ensemble de la série</strong> (et non par question). Chaque bonne réponse vaut 1 point. Vous pouvez répondre rapidement pour gagner du temps sur les suivantes. Si le temps est épuisé, les questions restantes sont automatiquement marquées comme passées.</p>
+
+          <h4>Manche 2 — Face-à-face</h4>
+          <p>Six questions de difficulté croissante valant respectivement <strong>1, 2, 3, 4, 5 et 6 points</strong>. À chaque tour, vous choisissez vous-même la valeur que vous souhaitez tenter (cellules colorées). Une fois la valeur sélectionnée, vous disposez de <strong>25 secondes</strong> pour répondre. En cas d'erreur ou de question passée, aucun point n'est attribué pour cette valeur.</p>
+          <div class="help-tip">Stratégie : commencez par les valeurs basses (1-2 pts) que vous maîtrisez sûrement, gardez les valeurs hautes pour les domaines forts.</div>
+
+          <h4>Manche 3 — La finale</h4>
+          <p>Enchaînement rapide de questions sur un même thème, avec <strong>15 secondes par question</strong>. Chaque bonne réponse vaut 1 point. La manche s'arrête lorsque vous atteignez 9 points (victoire) ou lorsque toutes les questions du pack ont été posées.</p>
+
+          <h3>3.5 Pause et reprise</h3>
+          <p>À tout moment pendant une partie, vous pouvez cliquer sur « Mettre en pause » en bas à gauche de l'écran de jeu. Votre score, votre position dans le plan de partie et toutes vos réponses sont sauvegardés.</p>
+          <p>À votre prochaine connexion, un bandeau orange en haut de l'accueil propose de « Reprendre » la partie ou de l'« Abandonner ».</p>
+          <div class="help-warn">La pause/reprise n'est pas disponible pour les duels (qui se jouent d'une traite) ni pour les confrontations admin.</div>
+
+          <h3>3.6 Mode QCM et comparaison souple des réponses</h3>
+          <h4>Mode saisie libre</h4>
+          <p>Vous tapez votre réponse. Le système compare en ignorant les accents, la casse, la ponctuation, les articles français (« le », « la », « les », « l' », « d' », « un », « du »...) et les variantes entre parenthèses.</p>
+          <p>Exemple : pour la réponse attendue « La BCE (Banque centrale européenne) », les saisies suivantes sont toutes acceptées : <code>bce</code>, <code>Banque Centrale Européenne</code>, <code>banque centrale europeenne</code>, <code>BCE</code>.</p>
+          <h4>Mode QCM</h4>
+          <p>Quatre propositions s'affichent. La position des choix est <strong>randomisée à chaque rendu</strong> : la bonne réponse n'est jamais à la même position d'une partie à l'autre.</p>
+          <ul>
+            <li>Si la question accepte une seule bonne réponse, les choix sont affichés avec des <strong>boutons radio</strong> (sélection unique).</li>
+            <li>Si la question accepte plusieurs bonnes réponses simultanées, les choix sont affichés avec des <strong>cases à cocher</strong>. Pour gagner les points, vous devez cocher TOUTES les bonnes réponses et SEULEMENT celles-là.</li>
+          </ul>
+          <div class="help-info">Les distracteurs sont toujours conçus pour être de longueur supérieure ou égale à la bonne réponse, afin d'éviter qu'on identifie la bonne réponse par la longueur du texte.</div>
+
+          <h3>3.7 Écran de résultats</h3>
+          <p>À la fin de chaque partie :</p>
+          <ul>
+            <li>Le score total en gros</li>
+            <li>Le détail par manche</li>
+            <li>Le nombre de questions répondues, bonnes et mauvaises</li>
+            <li>La liste complète des questions avec : votre réponse, la réponse attendue, l'explication, et les liens cliquables vers les sources documentaires (Wikipedia FR, sites officiels)</li>
+          </ul>
+          <div class="help-tip">Profitez de l'écran de résultats pour cliquer sur les liens des références : vous accédez directement à l'article Wikipedia ou au site institutionnel correspondant pour approfondir.</div>
+
+          <h3>3.8 Mes duels</h3>
+          <h4>Créer un duel</h4>
+          <ol>
+            <li>Cliquer sur la carte « Mes duels ».</li>
+            <li>Dans le formulaire « Défier un joueur », saisir le code d'accès de l'adversaire (format QPC-XXXXXXXX).</li>
+            <li>Cocher les manches à inclure (par défaut Manche 1 et 2).</li>
+            <li>Optionnellement, filtrer les domaines.</li>
+            <li>Cocher « 🏆 Afficher le scoreboard en direct pendant le duel » si vous souhaitez voir le score de votre adversaire en temps réel.</li>
+            <li>Cliquer <strong>« ⚔️ Lancer le duel »</strong>. L'adversaire reçoit une invitation visible dans son propre onglet « Mes duels ».</li>
+          </ol>
+          <h4>Accepter ou refuser une invitation</h4>
+          <ul>
+            <li>✓ Accepter — le duel passe au statut actif, vous pouvez le jouer.</li>
+            <li>✗ Refuser — le duel est annulé.</li>
+          </ul>
+          <h4>Jouer le duel</h4>
+          <p>Une fois accepté, le duel apparaît dans « Duels actifs » avec un bouton « ▶ Jouer maintenant ». <strong>Les questions sont identiques pour les deux joueurs</strong> (mêmes packs, même ordre) afin de garantir une comparaison équitable.</p>
+          <div class="help-warn">Pendant qu'un duel est en cours, l'accès à la Révision libre est temporairement bloqué.</div>
+          <h4>Scoreboard live</h4>
+          <p>Si activé, un widget fixe en haut à droite (ou en bas sur mobile) affiche en permanence :</p>
+          <ul>
+            <li>Le rang de chaque participant (#1, #2, …)</li>
+            <li>Son nom (ou son code à défaut)</li>
+            <li>Sa progression (par exemple « 3/12 questions »)</li>
+            <li>Son score actuel en points</li>
+          </ul>
+          <p>Mise à jour automatique toutes les 4 secondes. Votre propre ligne est surlignée en bleu. Les joueurs ayant terminé sont marqués ✓.</p>
+          <h4>Résultats du duel</h4>
+          <p>Quand tous les participants ont terminé, un écran comparatif s'affiche, indiquant le vainqueur (score le plus élevé) et le détail par participant.</p>
+
+          <h3>3.9 Mes parties (historique)</h3>
+          <ul>
+            <li>Nombre total de parties jouées</li>
+            <li>Score cumulé sur toutes les parties</li>
+            <li>Meilleur score sur une seule partie</li>
+            <li>Nombre total de questions répondues</li>
+            <li>Pourcentage global de bonnes réponses</li>
+          </ul>
+          <p>En dessous, la liste de toutes vos parties terminées dans l'ordre chronologique inverse.</p>
+        </section>
+
+        <section id="h-admin" class="help-section">
+          <h2>4. Guide super-administrateur</h2>
+
+          <h3>4.1 Connexion en mode administrateur</h3>
+          <ol>
+            <li>Sur la page d'accueil, cliquer « Accès super-administrateur → » sous le bouton Entrer.</li>
+            <li>Saisir le mot de passe administrateur (variable d'environnement <code>ADMIN_PASSWORD</code>).</li>
+            <li>Cliquer Entrer admin.</li>
+          </ol>
+          <div class="help-warn">Le mot de passe administrateur doit être conservé strictement confidentiel. Il donne accès à toutes les fonctions sensibles.</div>
+
+          <h3>4.2 Vue d'ensemble du panneau admin</h3>
+          <table class="help-table">
+            <thead><tr><th>Section</th><th>Rôle</th></tr></thead>
+            <tbody>
+              <tr><td>Résumé global</td><td>Codes actifs, parties jouées, taux de bonnes réponses.</td></tr>
+              <tr><td>Codes d'accès</td><td>Génération, copie et révocation des codes utilisateurs.</td></tr>
+              <tr><td>Organiser une confrontation</td><td>Convocation forcée de 2+ joueurs à un tournoi.</td></tr>
+              <tr><td>Confrontations en cours et terminées</td><td>Liste des duels et tournois avec scores et vainqueurs.</td></tr>
+              <tr><td>Classement par utilisateur</td><td>Leaderboard global, avec bouton ✕ pour effacer un utilisateur.</td></tr>
+              <tr><td>Parties récentes</td><td>50 dernières parties, avec bouton ✕ pour supprimer une partie.</td></tr>
+              <tr><td>Paramètres de l'application</td><td>Toggles globaux : Révision libre, mode QCM, scoreboard live.</td></tr>
+              <tr><td>Exporter la base</td><td>Téléchargement Excel ou JSON, importer un export antérieur.</td></tr>
+              <tr><td>Domaines personnalisés</td><td>Import de séries de questions externes en .txt ou .json.</td></tr>
+              <tr><td>Zone dangereuse</td><td>Suppression totale de la base.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>4.3 Gérer les codes d'accès</h3>
+          <h4>Générer un nouveau code</h4>
+          <p>Section « Codes d'accès » : saisir optionnellement un nom puis cliquer « + Générer un nouveau code ». Un code aléatoire <code>QPC-XXXXXXXX</code> est créé immédiatement.</p>
+          <h4>Partager le code</h4>
+          <p>Transmettre le code (email, SMS, WhatsApp) avec l'URL : <a href="https://qpc-champion-58rn.onrender.com" target="_blank">https://qpc-champion-58rn.onrender.com</a>.</p>
+          <h4>Suivre l'activité</h4>
+          <p>Chaque code affiche : nombre de parties, points cumulés, dernière connexion, date de création.</p>
+          <h4>Copier ou révoquer</h4>
+          <ul>
+            <li><strong>📋 Copier</strong> — recopie le code dans le presse-papiers.</li>
+            <li><strong>✕ Révoquer</strong> — supprime définitivement le code (les parties enregistrées sont conservées).</li>
+          </ul>
+
+          <h3>4.4 Organiser une confrontation</h3>
+          <ol>
+            <li>Cocher les participants à convoquer (2 minimum).</li>
+            <li>Sélectionner les manches.</li>
+            <li>Indiquer le nombre de séries par manche.</li>
+            <li>Optionnellement filtrer par domaine.</li>
+            <li>Cocher « 🏆 Afficher le scoreboard en direct » si souhaité.</li>
+            <li>Cliquer <strong>« ⚔️ Lancer la confrontation »</strong>.</li>
+          </ol>
+          <div class="help-info">Contrairement aux duels utilisateur-à-utilisateur, les participants à une confrontation admin sont automatiquement convoqués (statut accepté).</div>
+
+          <h3>4.5 Paramètres globaux</h3>
+          <h4>Toggle « Révision libre »</h4>
+          <p>Active ou désactive en un clic le mode Révision libre pour tous les utilisateurs.</p>
+          <h4>Mode des questions (QCM)</h4>
+          <ul>
+            <li>Laisser le choix au joueur (défaut)</li>
+            <li>Forcer la saisie libre</li>
+            <li>Forcer QCM</li>
+          </ul>
+          <h4>Scoreboard en direct</h4>
+          <ul>
+            <li>Laisser le choix au créateur (défaut)</li>
+            <li>Toujours activé</li>
+            <li>Toujours désactivé</li>
+          </ul>
+
+          <h3>4.6 Classement et parties récentes</h3>
+          <p>Le « Classement par utilisateur » liste tous les utilisateurs ayant joué, triés par score décroissant. Le bouton <strong>✕</strong> efface toutes les parties d'un utilisateur (réinitialisation, le code reste valide).</p>
+          <p>Les « Parties récentes » listent les 50 dernières parties. Le bouton <strong>✕</strong> supprime une partie spécifique.</p>
+
+          <h3>4.7 Exporter la base de données</h3>
+          <h4>Export Excel</h4>
+          <p>3 feuilles : <strong>Codes</strong>, <strong>Parties</strong>, <strong>Détail réponses</strong>. Compatible avec LibreOffice, OnlyOffice, Google Sheets.</p>
+          <h4>Export / Import JSON</h4>
+          <p>Sauvegarde complète de l'état exact. L'import remplace toutes les données existantes.</p>
+
+          <h3>4.8 Domaines personnalisés (import .txt ou .json)</h3>
+          <p>Permet d'ajouter vos propres séries de questions sans toucher au code source.</p>
+          <h4>Format .txt (recommandé)</h4>
+          <pre class="help-code">DOMAINE: Mon nouveau domaine
+DESCRIPTION: Description optionnelle
+
+PACK: Titre du premier pack
+MANCHE: 1
+THEME: Sous-thème optionnel
+
+Q: Quelle est la capitale du Togo ?
+R: Lomé
+* Lomé
+- Sokodé
+- Kara
+- Atakpamé
+E: Lomé est la capitale du Togo.
+S: https://fr.wikipedia.org/wiki/Lom%C3%A9
+
+Q: En quelle année le Togo est-il devenu indépendant ?
+R: 1960
+* Le 27 avril 1960
+- 1958
+- 1962
+- 1956
+E: Indépendance proclamée par Sylvanus Olympio.
+
+# Lignes commençant par # = commentaires ignorés
+
+PACK: Titre du deuxième pack
+MANCHE: 2
+
+Q: Question valant 6 points ?
+R: Réponse difficile
+PTS: 6
+* Réponse difficile
+- Distracteur 1
+- Distracteur 2
+- Distracteur 3</pre>
+
+          <h4>Format .json (technique)</h4>
+          <pre class="help-code">{
+  "domain": "Mon nouveau domaine",
+  "description": "Description optionnelle",
+  "packs": [
+    {
+      "title": "Titre du pack",
+      "manche": "manche1",
+      "theme": "Sous-thème",
+      "questions": [
+        {
+          "q": "Quelle est la capitale du Togo ?",
+          "r": "Lomé",
+          "choices": ["Lomé", "Sokodé", "Kara", "Atakpamé"],
+          "correctIndices": [0],
+          "e": "Lomé est la capitale du Togo.",
+          "ref": "https://fr.wikipedia.org/wiki/Lom%C3%A9"
+        }
+      ]
+    }
+  ]
+}</pre>
+
+          <h4>Règles</h4>
+          <ul>
+            <li><code>DOMAINE:</code> obligatoire, max 80 caractères, unique.</li>
+            <li><code>MANCHE:</code> 1, 2 ou 3 (défaut 1).</li>
+            <li>Chaque <code>Q:</code> doit avoir un <code>R:</code> non vide.</li>
+            <li>QCM : au moins 2 choix, au moins 1 marqué <code>*</code>.</li>
+            <li><code>E:</code>, <code>S:</code>, <code>PTS:</code> facultatifs.</li>
+            <li>Réimporter avec le même nom remplace l'ancien.</li>
+          </ul>
+
+          <h3>4.9 Zone dangereuse</h3>
+          <p>« 🗑️ Supprimer toute la base » purge complètement codes + parties + confrontations. Confirmation « SUPPRIMER » + double confirmation.</p>
+          <div class="help-warn">OPÉRATION IRRÉVERSIBLE. Faire impérativement un export JSON avant.</div>
+        </section>
+
+        <section id="h-domains" class="help-section">
+          <h2>5. Les 17 domaines couverts</h2>
+          <table class="help-table">
+            <thead><tr><th>Domaine</th><th>Q</th><th>Thèmes principaux</th></tr></thead>
+            <tbody>
+              <tr><td>Économie agricole et agribusiness</td><td>160</td><td>PDDAA/CAADP, MIFA, filières café-cacao-coton, sécurité alimentaire, FAO, FIDA.</td></tr>
+              <tr><td>Monnaie, finance et budget</td><td>89</td><td>BCEAO, UMOA-Titres, agrégats monétaires, dette publique, microfinance, EONIA.</td></tr>
+              <tr><td>Statistiques et économétrie</td><td>88</td><td>AIC/BIC, ADF/KPSS, ARIMA/GARCH, GMM, IV, panel, logit/probit, ridge/Lasso, bootstrap.</td></tr>
+              <tr><td>Commerce, développement et Afrique</td><td>65</td><td>ZLECAf, CEDEAO, UEMOA, OMC, IDE, balance des paiements, ODD.</td></tr>
+              <tr><td>Microéconomie et théorie</td><td>64</td><td>Préférences, Slutsky, Cournot, Nash, Pareto, externalités, biens publics.</td></tr>
+              <tr><td>Macroéconomie et politiques</td><td>64</td><td>IS-LM, AS-AD, Solow, Phillips, NAIRU, Mundell-Fleming, règle de Taylor.</td></tr>
+              <tr><td>Marchés financiers UEMOA / BRVM</td><td>35</td><td>BRVM, CREPMF, SGI, DC/BR, indices BRVM 10/30, OPCVM, PER, ROE, DCF.</td></tr>
+              <tr><td>Histoire de la pensée économique</td><td>31</td><td>Smith, Ricardo, Marx, Keynes, Hayek, Friedman, Schumpeter, Sen, Stiglitz.</td></tr>
+              <tr><td>Machine learning et deep learning</td><td>31</td><td>k-NN, SVM, RF, XGBoost, ReLU, dropout, CNN/RNN/Transformer, BERT, GPT.</td></tr>
+              <tr><td>Suivi-évaluation des projets et politiques</td><td>31</td><td>Cadre logique GAR, ToC, 6 critères CAD-OCDE, SYGRI FIDA, RCT, DID, PSM.</td></tr>
+              <tr><td>Histoire, travail, santé et éducation</td><td>22</td><td>Westphalie, OIT, OMS, modèle de Becker, capital humain.</td></tr>
+              <tr><td>Comptabilité générale et analytique</td><td>22</td><td>SYSCOHADA, plan OHADA, partie double Pacioli, ABC, IFRS 15.</td></tr>
+              <tr><td>Sciences sociales et politiques</td><td>18</td><td>Foucault, Bourdieu, Weber, Granovetter, hégémonie, biopouvoir.</td></tr>
+              <tr><td>Fiscalité (Togo)</td><td>18</td><td>OTR, CGI, IS 27 %, IMF 1 %, IRPP, TVA 18 %, TPU, zone franche SAZOF.</td></tr>
+              <tr><td>Marchés publics et passation (Togo)</td><td>18</td><td>Décret 2009-277/PR, ARMP, DNCMP, AOO, AOR, gré à gré, DRP, PPP.</td></tr>
+              <tr><td>Culture générale et environnement</td><td>10</td><td>Allégorie de la caverne, Accord de Paris, COP21, ODD.</td></tr>
+              <tr><td>Domaines personnalisés</td><td>+</td><td>Importés par l'administrateur (.txt ou .json).</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Référencement des réponses :</strong> chaque question dispose d'au moins une référence textuelle (auteur, date, ouvrage) et d'au moins une URL cliquable vers Wikipedia FR + une URL institutionnelle pertinente (BCEAO, BRVM, IFRS, OHADA, FAO, Banque mondiale, OCDE, ONU…). Les liens s'ouvrent dans un nouvel onglet.</p>
+        </section>
+
+        <section id="h-api" class="help-section">
+          <h2>6. Annexe technique : API REST</h2>
+          <p>Toutes les routes hors <code>/api/auth/*</code> exigent un header HTTP <code>Authorization: Bearer &lt;token&gt;</code>. Token utilisateur valable 10 ans, token admin valable 7 jours.</p>
+
+          <h3>6.1 Routes utilisateur</h3>
+          <table class="help-table help-table-api">
+            <thead><tr><th>Méthode</th><th>Chemin</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>POST</td><td><code>/api/auth/login</code></td><td>Login avec un code QPC-XXXXXXXX.</td></tr>
+              <tr><td>GET</td><td><code>/api/meta</code></td><td>Méta-données + settings + hasActiveDuel.</td></tr>
+              <tr><td>GET</td><td><code>/api/packs/:manche</code></td><td>Packs filtrés (manche1/2/3) avec ?domains=A,B,C.</td></tr>
+              <tr><td>POST</td><td><code>/api/me/game</code></td><td>Archive une partie solo terminée.</td></tr>
+              <tr><td>GET</td><td><code>/api/me/games</code></td><td>Historique personnel.</td></tr>
+              <tr><td>GET</td><td><code>/api/me/duels</code></td><td>Liste des duels.</td></tr>
+              <tr><td>POST</td><td><code>/api/me/duels</code></td><td>Créer un duel.</td></tr>
+              <tr><td>POST</td><td><code>/api/me/duels/:id/accept</code></td><td>Accepter une invitation.</td></tr>
+              <tr><td>POST</td><td><code>/api/me/duels/:id/decline</code></td><td>Refuser une invitation.</td></tr>
+              <tr><td>POST</td><td><code>/api/me/duels/:id/game</code></td><td>Soumettre son résultat de duel.</td></tr>
+              <tr><td>POST</td><td><code>/api/me/duels/:id/progress</code></td><td>Envoyer son score en cours.</td></tr>
+              <tr><td>GET</td><td><code>/api/me/duels/:id/scoreboard</code></td><td>Scoreboard live.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>6.2 Routes administrateur</h3>
+          <table class="help-table help-table-api">
+            <thead><tr><th>Méthode</th><th>Chemin</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>POST</td><td><code>/api/auth/admin</code></td><td>Login admin.</td></tr>
+              <tr><td>GET, POST</td><td><code>/api/admin/codes</code></td><td>Liste, génération.</td></tr>
+              <tr><td>DELETE</td><td><code>/api/admin/codes/:code</code></td><td>Révoque un code.</td></tr>
+              <tr><td>DELETE</td><td><code>/api/admin/codes/:code/games</code></td><td>Vide le classement d'un utilisateur.</td></tr>
+              <tr><td>GET, PUT</td><td><code>/api/admin/settings</code></td><td>Réglages (reviewEnabled, qcmMode, liveScoreboardMode).</td></tr>
+              <tr><td>GET</td><td><code>/api/admin/dashboard</code></td><td>Stats globales.</td></tr>
+              <tr><td>GET, DELETE</td><td><code>/api/admin/game/:id</code></td><td>Détail / suppression d'une partie.</td></tr>
+              <tr><td>GET, POST, DELETE</td><td><code>/api/admin/duels</code></td><td>Liste / convocation / suppression de confrontations.</td></tr>
+              <tr><td>GET</td><td><code>/api/admin/export</code></td><td>Export JSON.</td></tr>
+              <tr><td>GET</td><td><code>/api/admin/export-excel</code></td><td>Export Excel (3 feuilles).</td></tr>
+              <tr><td>POST</td><td><code>/api/admin/import</code></td><td>Restaure un export JSON.</td></tr>
+              <tr><td>DELETE</td><td><code>/api/admin/all-data</code></td><td>Purge totale.</td></tr>
+              <tr><td>GET, POST, DELETE</td><td><code>/api/admin/custom-domains</code></td><td>Domaines personnalisés.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>6.3 Persistance et déploiement</h3>
+          <p>L'application est hébergée sur Render.com (free tier). Les fichiers de données (<code>data/auth.json</code>, <code>data/games.json</code>, <code>data/matches.json</code>, <code>data/custom-packs.json</code>) sont automatiquement synchronisés vers la branche <code>data</code> du repo GitHub Ricard228/qpc-app à chaque écriture (debounced 4 secondes).</p>
+          <p>Au démarrage, le serveur récupère ces fichiers depuis GitHub pour restaurer l'état exact, même après un redémarrage Render (puisque le free tier n'a pas de disque persistant).</p>
+          <p>Cette architecture garantit : zéro perte de données, historique complet des modifications consultable sur GitHub, possibilité de restauration à tout point dans le temps.</p>
+        </section>
+
+        <section id="h-faq" class="help-section">
+          <h2>7. FAQ et dépannage</h2>
+
+          <details>
+            <summary>La page met longtemps à se charger lors de la première visite.</summary>
+            <p>Le serveur Render free tier s'endort après 15 minutes d'inactivité. Le premier visiteur déclenche le réveil qui prend 30 à 45 secondes. Les visites suivantes sont instantanées.</p>
+          </details>
+
+          <details>
+            <summary>J'ai oublié mon code d'accès.</summary>
+            <p>Contactez le super-administrateur. Il peut consulter la liste de tous les codes dans son panneau admin, le retrouver par nom, ou vous en générer un nouveau.</p>
+          </details>
+
+          <details>
+            <summary>Je suis sur iPhone et le bouton « Installer l'application QPC » ne fait rien.</summary>
+            <p>Sur iOS, l'installation PWA ne peut être déclenchée qu'au travers du menu Partager de Safari. Vous ne pouvez pas l'installer depuis Chrome ou autres navigateurs sur iOS. Reportez-vous à la section 2.2.</p>
+          </details>
+
+          <details>
+            <summary>Ma partie a planté ou s'est interrompue.</summary>
+            <p>Si vous étiez en partie solo, votre progression a été sauvegardée à chaque réponse. À votre prochaine connexion, un bandeau orange propose de reprendre. Pour un duel, la sauvegarde n'est pas activée — vous devrez recommencer.</p>
+          </details>
+
+          <details>
+            <summary>Le scoreboard live n'affiche rien.</summary>
+            <p>Plusieurs causes : (1) l'option n'a pas été activée pour ce duel ; (2) l'adversaire n'a pas encore commencé ; (3) problème de connexion réseau.</p>
+          </details>
+
+          <details>
+            <summary>J'ai créé un duel mais l'adversaire ne voit pas l'invitation.</summary>
+            <p>Demandez à l'adversaire de vérifier qu'il s'est bien connecté avec le bon code. L'invitation apparaît dans sa carte « Mes duels » > « Invitations reçues ». Il peut rafraîchir la page (F5).</p>
+          </details>
+
+          <details>
+            <summary>Une question semble mal corrigée — ma réponse est marquée fausse.</summary>
+            <p>Vérifiez l'orthographe précise. Le système accepte plusieurs variantes (sans accents, sans articles, etc.) mais reste lié au texte de référence. Si votre formulation est synonyme mais clairement différente du texte attendu, elle peut être refusée. Signalez le cas à votre administrateur.</p>
+          </details>
+
+          <details>
+            <summary>L'admin a importé un domaine personnalisé mais je ne le vois pas.</summary>
+            <p>Rafraîchissez la page (F5). Le menu des domaines est rechargé à chaque ouverture de la configuration de partie ou de la révision libre.</p>
+          </details>
+
+          <details>
+            <summary>Comment exporter mes résultats personnels ?</summary>
+            <p>Les statistiques personnelles sont visibles dans « Mes parties ». Pour un export Excel détaillé, demandez à l'administrateur.</p>
+          </details>
+
+          <details>
+            <summary>Je veux changer de profil sur le même appareil.</summary>
+            <p>Cliquez « Déconnexion » en haut à droite, puis saisissez l'autre code. Plusieurs personnes peuvent partager un même appareil sans interférer.</p>
+          </details>
+
+          <details>
+            <summary>L'application fonctionne-t-elle hors connexion ?</summary>
+            <p>Partiellement. Les fichiers statiques de l'app (HTML, CSS, JS, icônes) sont mis en cache par le service worker, donc l'app peut s'ouvrir hors-ligne. Mais le contenu (questions, codes, scores) nécessite une connexion au serveur Render.</p>
+          </details>
+        </section>
+
+        <section id="h-credits" class="help-section">
+          <h2>8. Crédits et licence</h2>
+          <h3>Conception et développement</h3>
+          <p><strong>Kossi Nevame AGBENU</strong><br/>NEVAME Data House et École Supérieure d'Agronomie, Université de Lomé</p>
+
+          <h3>Contenu pédagogique</h3>
+          <p>Recueil « Questions pour un Champion — Édition Économie &amp; Sciences sociales ». Format inspiré de l'émission éponyme de TV5 Monde.</p>
+
+          <h3>Sources de référence consultées</h3>
+          <ul>
+            <li>Adam Smith, La Richesse des nations (1776)</li>
+            <li>Keynes, Théorie générale de l'emploi, de l'intérêt et de la monnaie (1936)</li>
+            <li>Solow, A Contribution to the Theory of Economic Growth, QJE (1956)</li>
+            <li>Vernimmen, Finance d'entreprise</li>
+            <li>Mankiw, Macroeconomics ; Varian, Intermediate Microeconomics</li>
+            <li>Damodaran, Investment Valuation</li>
+            <li>OECD/DAC Glossary of Key Terms in Evaluation (2002, mise à jour 2019)</li>
+            <li>PNUD Handbook on Planning, Monitoring and Evaluating for Development Results (2009)</li>
+            <li>IFAD/FIDA RIMS / SYGRI</li>
+            <li>Code OHADA et SYSCOHADA révisé 2017 (AUDCIF)</li>
+            <li>Code Général des Impôts (Togo), Loi de finances 2024</li>
+            <li>Décret 2009-277/PR portant Code des Marchés Publics du Togo</li>
+            <li>Documents BCEAO, BRVM, CREPMF, FAO, Banque mondiale, OECD, ONU</li>
+            <li>Wikipédia FR pour les concepts généraux</li>
+          </ul>
+
+          <h3>Technologies utilisées</h3>
+          <table class="help-table">
+            <thead><tr><th>Composant</th><th>Technologie</th></tr></thead>
+            <tbody>
+              <tr><td>Backend HTTP</td><td>Express.js (Node.js 20)</td></tr>
+              <tr><td>Authentification</td><td>HMAC-SHA256 (crypto natif)</td></tr>
+              <tr><td>Export Excel</td><td>SheetJS / xlsx</td></tr>
+              <tr><td>Frontend</td><td>JavaScript Vanilla, aucun framework</td></tr>
+              <tr><td>PWA</td><td>manifest.json + service worker custom</td></tr>
+              <tr><td>Hébergement</td><td>Render.com Web Service free tier</td></tr>
+              <tr><td>Persistance</td><td>GitHub Contents API (branche data)</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Licence</h3>
+          <p>ISC — Code source disponible sur <a href="https://github.com/Ricard228/qpc-app" target="_blank" rel="noopener noreferrer">https://github.com/Ricard228/qpc-app</a></p>
+
+          <p style="margin-top:24px;">Pour toute remarque ou suggestion : <a href="https://github.com/Ricard228/qpc-app/issues" target="_blank" rel="noopener noreferrer">github.com/Ricard228/qpc-app/issues</a></p>
+
+          <p class="help-end">— Fin du guide —</p>
+        </section>
+      </article>
+    </section>
+  </template>
+
   <template id="tpl-admin">
     <section class="screen">
       <h1 class="title-xl">Tableau de bord administrateur</h1>
@@ -592,6 +1168,6 @@ MANCHE: 2
     </section>
   </template>
 
-  <script src="app.js?v=2.18"></script>
+  <script src="app.js?v=2.19"></script>
 </body>
 </html>

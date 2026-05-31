@@ -250,8 +250,30 @@ async function route(view, params = {}) {
     case 'duels':    return renderDuels();
     case 'duel-result': return renderDuelResult(params.duelId);
     case 'admin':    return renderAdmin();
+    case 'help':     return renderHelp();
     default:         return Session.token ? renderHome() : renderLogin();
   }
+}
+
+// ---------- Vue : Aide / Guide d'utilisation -------------------------
+let _helpReturnTo = null;
+function renderHelp() {
+  mount('tpl-help');
+  $('#btn-help-back').onclick = () => {
+    const dest = _helpReturnTo;
+    _helpReturnTo = null;
+    if (dest) return route(dest);
+    if (Session.admin) return route('admin');
+    if (Session.token) return route('home');
+    return route('login');
+  };
+  $('#btn-help-print').onclick = () => {
+    // Utilise la boîte de dialogue d'impression du navigateur ;
+    // permet d'enregistrer en PDF via "Destination > Enregistrer au format PDF"
+    window.print();
+  };
+  // Remonter en haut
+  window.scrollTo(0, 0);
 }
 
 // ---------- Vue : login -----------------------------------------------
@@ -1819,6 +1841,18 @@ $('#brand-home').addEventListener('click', () => {
   else if (Session.token) route('home');
   else route('login');
 });
+
+// Bouton « Aide » dans la barre supérieure (visible partout)
+const _helpBtn = document.getElementById('btn-help-open');
+if (_helpBtn) {
+  _helpBtn.addEventListener('click', () => {
+    // Mémoriser la vue actuelle pour pouvoir y revenir
+    if (Session.admin) _helpReturnTo = 'admin';
+    else if (Session.token) _helpReturnTo = 'home';
+    else _helpReturnTo = 'login';
+    route('help');
+  });
+}
 
 // ---------- Service Worker (PWA) -------------------------------------
 if ('serviceWorker' in navigator) {
