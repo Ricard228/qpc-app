@@ -4158,14 +4158,14 @@
         "QPC-WC4E22GK": {
           "startedAt": "2026-05-31T15:16:34.294Z",
           "progressScore": 1,
-          "progressQ": 4,
-          "progressUpdatedAt": "2026-05-31T15:19:01.093Z"
+          "progressQ": 5,
+          "progressUpdatedAt": "2026-05-31T15:19:20.916Z"
         },
         "QPC-NZXE8MYU": {
           "startedAt": "2026-05-31T15:18:07.293Z",
           "progressScore": 4,
-          "progressQ": 6,
-          "progressUpdatedAt": "2026-05-31T15:18:58.956Z"
+          "progressQ": 7,
+          "progressUpdatedAt": "2026-05-31T15:19:17.119Z"
         }
       },
       "winner": null
