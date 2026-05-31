@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.17" />
+  <link rel="stylesheet" href="styles.css?v=2.18" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -495,6 +495,91 @@
         </div>
       </div>
 
+      <div class="card">
+        <h2 class="card-title">Domaines personnalisés (import)</h2>
+        <p class="muted" style="margin-top:0;">Chargez votre propre série de questions-réponses sous forme de fichier <code>.txt</code> ou <code>.json</code>. Les questions du domaine importé sont automatiquement disponibles dans la configuration de partie pour tous les joueurs. Vous pouvez supprimer le domaine à tout moment.</p>
+
+        <div class="form-row" style="margin-bottom:12px;">
+          <label class="btn btn-primary" for="file-custom-domain" style="cursor:pointer;">📥 Importer un fichier (.txt / .json)</label>
+          <input id="file-custom-domain" type="file" accept=".txt,.json,application/json,text/plain" hidden />
+          <button id="btn-download-template-txt" class="btn">⤓ Modèle .txt</button>
+          <button id="btn-download-template-json" class="btn">⤓ Modèle .json</button>
+          <button id="btn-toggle-custom-help" class="btn btn-ghost">📖 Format attendu</button>
+        </div>
+
+        <details id="custom-domain-help">
+          <summary class="muted" style="cursor:pointer;">Voir le format en détail</summary>
+          <div class="custom-doc">
+            <h4>Format .txt simple</h4>
+            <p>Une ligne par directive. Les directives sont suivies de <code>:</code> puis de la valeur. Les choix QCM commencent par <code>*</code> (bonne réponse) ou <code>-</code> (distracteur). Les lignes vides et celles commençant par <code>#</code> sont ignorées.</p>
+            <pre>DOMAINE: Économie togolaise (test)
+DESCRIPTION: Quelques questions sur l'économie du Togo (optionnel)
+
+PACK: Macroéconomie du Togo (1)
+MANCHE: 1
+THEME: PIB et secteurs
+
+Q: Quelle est la capitale économique du Togo ?
+R: Lomé
+* Lomé
+- Sokodé
+- Kara
+- Atakpamé
+E: Lomé est à la fois la capitale politique et économique.
+S: https://fr.wikipedia.org/wiki/Lom%C3%A9
+
+Q: Quel pourcentage du PIB togolais représente le secteur agricole environ ?
+R: Environ 30 %
+* Environ 30 % du PIB
+- Environ 5 % du PIB
+- Environ 60 % du PIB
+- Environ 85 % du PIB
+E: L'agriculture pèse traditionnellement 25-30 % du PIB togolais.
+
+PACK: Macroéconomie du Togo (2)
+MANCHE: 2
+...
+</pre>
+            <h4>Format .json (technique)</h4>
+            <pre>{
+  "domain": "Économie togolaise (test)",
+  "description": "Quelques questions sur l'économie du Togo",
+  "packs": [
+    {
+      "title": "Macroéconomie du Togo (1)",
+      "manche": "manche1",
+      "theme": "PIB et secteurs",
+      "questions": [
+        {
+          "q": "Quelle est la capitale économique du Togo ?",
+          "r": "Lomé",
+          "choices": ["Lomé", "Sokodé", "Kara", "Atakpamé"],
+          "correctIndices": [0],
+          "e": "Lomé est à la fois capitale politique et économique.",
+          "ref": "https://fr.wikipedia.org/wiki/Lom%C3%A9"
+        }
+      ]
+    }
+  ]
+}
+</pre>
+            <h4>Règles</h4>
+            <ul>
+              <li><code>DOMAINE:</code> obligatoire (nom unique, max 80 caractères)</li>
+              <li><code>MANCHE:</code> doit être <strong>1</strong>, <strong>2</strong> ou <strong>3</strong> (défaut : 1)</li>
+              <li>Chaque <code>Q:</code> doit avoir un <code>R:</code> non vide</li>
+              <li>QCM : au moins 2 choix (1 marqué <code>*</code>), sinon mode saisie libre</li>
+              <li><code>E:</code> = explication facultative, <code>S:</code> = source/URL facultative</li>
+              <li>Manche 2 : <code>PTS:</code> optionnel par question (1 à 6 points)</li>
+              <li>Le nom de domaine ne doit pas exister dans la base intégrée</li>
+              <li>Réimporter avec le même nom <strong>remplace</strong> l'ancien domaine</li>
+            </ul>
+          </div>
+        </details>
+
+        <div id="custom-domains-list" style="margin-top:14px;"></div>
+      </div>
+
       <div class="card card-danger">
         <h2 class="card-title" style="color: var(--accent);">Zone dangereuse</h2>
         <p class="muted" style="margin-top:0;">Suppression définitive de tous les codes d'accès et de toutes les parties enregistrées.</p>
@@ -507,6 +592,6 @@
     </section>
   </template>
 
-  <script src="app.js?v=2.17"></script>
+  <script src="app.js?v=2.18"></script>
 </body>
 </html>

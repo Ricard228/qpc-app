@@ -618,6 +618,51 @@ html, body {
 /* Zone dangereuse */
 .card-danger { border-color: #F5C0C0; background: #FFFAFA; }
 
+/* Domaines personnalisés (import admin) */
+.custom-domain-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #FCFCFD;
+  margin-bottom: 8px;
+}
+.custom-domain-info { flex: 1; min-width: 0; }
+.custom-doc {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--soft-grey);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.custom-doc h4 {
+  font-size: 13px;
+  color: var(--primary);
+  margin: 10px 0 6px;
+}
+.custom-doc h4:first-child { margin-top: 0; }
+.custom-doc pre {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 11px;
+  overflow-x: auto;
+  font-family: Consolas, "SF Mono", Menlo, monospace;
+  white-space: pre;
+  margin: 4px 0 8px;
+}
+.custom-doc ul { padding-left: 18px; margin: 6px 0; }
+.custom-doc li { margin-bottom: 3px; font-size: 12px; }
+.custom-doc code {
+  background: var(--soft-blue);
+  color: var(--primary);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, "SF Mono", monospace;
+  font-size: 11px;
+}
+
 /* Bouton icône de suppression (croix discrète sur lignes de liste) */
 .btn-icon {
   background: transparent;

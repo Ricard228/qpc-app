@@ -87,7 +87,11 @@ const api = {
   adminDeleteDuel:   (id)    => apiFetch(`/api/admin/duels/${id}`, { method: 'DELETE' }, true),
   // Suppression de partie / réinitialisation classement utilisateur (admin)
   adminDeleteGame:        (gameId) => apiFetch(`/api/admin/game/${encodeURIComponent(gameId)}`, { method: 'DELETE' }, true),
-  adminResetCodeRanking:  (code)   => apiFetch(`/api/admin/codes/${encodeURIComponent(code)}/games`, { method: 'DELETE' }, true)
+  adminResetCodeRanking:  (code)   => apiFetch(`/api/admin/codes/${encodeURIComponent(code)}/games`, { method: 'DELETE' }, true),
+  // Domaines personnalisés (admin)
+  adminCustomDomains:        ()        => apiFetch('/api/admin/custom-domains', {}, true),
+  adminCreateCustomDomain:   (body)    => apiFetch('/api/admin/custom-domains', { method: 'POST', body: JSON.stringify(body) }, true),
+  adminDeleteCustomDomain:   (name)    => apiFetch(`/api/admin/custom-domains/${encodeURIComponent(name)}`, { method: 'DELETE' }, true)
 };
 
 // Téléchargement direct (binaire) avec auth admin pour l'Excel
@@ -129,6 +133,16 @@ const mount = (tplId) => {
   app.appendChild(tpl);
 };
 const fmtDate = (iso) => iso ? new Date(iso).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : '—';
+
+// Déclenche le téléchargement d'un contenu texte dans un fichier
+function downloadBlob(content, filename, mime) {
+  const blob = new Blob([content], { type: mime || 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
 
 // Transforme un texte contenant des URLs en éléments DOM avec liens cliquables
 // (target=_blank, rel=noopener noreferrer pour sécurité). Utilisé pour le
@@ -1606,6 +1620,146 @@ async function renderAdmin() {
       $$('#admin-conf-participants input').forEach(c => c.checked = false);
       refreshAdminConf();
     } catch (e) { alert('Erreur : ' + e.message); }
+  };
+
+  // ---- Domaines personnalisés (import .txt / .json) ----
+  async function refreshCustomDomains() {
+    const list = $('#custom-domains-list');
+    list.innerHTML = '';
+    let domains = [];
+    try { domains = await api.adminCustomDomains(); } catch (e) {}
+    if (domains.length === 0) {
+      list.appendChild(el('div', { class: 'muted' }, 'Aucun domaine personnalisé importé pour le moment.'));
+      return;
+    }
+    domains.forEach(d => {
+      const row = el('div', { class: 'custom-domain-row' },
+        el('div', { class: 'custom-domain-info' },
+          el('div', {}, el('strong', {}, d.name)),
+          el('div', { class: 'code-meta' },
+            `${d.packsCount} pack(s) · ${d.questionsCount} questions · `,
+            d.manches.length ? `manche(s) ${d.manches.map(m => m.slice(-1)).join(',')} · ` : '',
+            `importé le ${fmtDate(d.createdAt)}`),
+          d.description ? el('div', { class: 'code-meta', style: 'font-style: italic;' }, d.description) : null
+        ),
+        el('button', {
+          class: 'btn-icon btn-icon-danger',
+          title: `Supprimer le domaine "${d.name}"`,
+          onclick: async () => {
+            if (!confirm(`Supprimer le domaine personnalisé « ${d.name} » ?\nLes ${d.questionsCount} questions ne seront plus jouables.`)) return;
+            try {
+              await api.adminDeleteCustomDomain(d.name);
+              refreshCustomDomains();
+            } catch (e) { alert('Erreur : ' + e.message); }
+          }
+        }, '✕')
+      );
+      list.appendChild(row);
+    });
+  }
+  refreshCustomDomains();
+
+  $('#file-custom-domain').onchange = async (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const text = await f.text();
+    const format = f.name.toLowerCase().endsWith('.json') ? 'json' : 'txt';
+    try {
+      const r = await api.adminCreateCustomDomain({ format, content: text });
+      alert(`✓ Domaine « ${r.domain} » importé : ${r.packsCount} pack(s), ${r.questionsCount} questions.\n` +
+            (r.replaced ? '(L\'ancien domaine du même nom a été remplacé.)' : ''));
+      refreshCustomDomains();
+    } catch (err) {
+      alert('Erreur d\'import : ' + err.message);
+    }
+    e.target.value = '';
+  };
+
+  $('#btn-toggle-custom-help').onclick = () => {
+    const d = $('#custom-domain-help');
+    d.open = !d.open;
+  };
+
+  // Téléchargement des modèles
+  $('#btn-download-template-txt').onclick = () => {
+    const sample = `DOMAINE: Mon nouveau domaine
+DESCRIPTION: Description optionnelle (1 ligne)
+
+PACK: Titre du premier pack
+MANCHE: 1
+THEME: Sous-thème optionnel
+
+Q: Quelle est la capitale du Togo ?
+R: Lomé
+* Lomé
+- Sokodé
+- Kara
+- Atakpamé
+E: Lomé est la capitale du Togo, située sur la côte du golfe de Guinée.
+S: https://fr.wikipedia.org/wiki/Lom%C3%A9
+
+Q: En quelle année le Togo est-il devenu indépendant ?
+R: 1960
+* Le 27 avril 1960
+- 1958
+- 1962
+- 1956
+E: Indépendance proclamée par Sylvanus Olympio.
+
+# Lignes commençant par # = commentaires ignorés
+
+PACK: Titre du deuxième pack
+MANCHE: 2
+
+Q: Question valant 1 point ?
+R: Réponse
+PTS: 1
+* Réponse
+- Mauvais
+- Encore mauvais
+- Distracteur
+
+Q: Question valant 6 points ?
+R: Réponse difficile
+PTS: 6
+* Réponse difficile
+- Distracteur 1
+- Distracteur 2
+- Distracteur 3
+`;
+    downloadBlob(sample, 'modele-domaine-qpc.txt', 'text/plain;charset=utf-8');
+  };
+
+  $('#btn-download-template-json').onclick = () => {
+    const sample = {
+      domain: 'Mon nouveau domaine',
+      description: 'Description optionnelle',
+      packs: [
+        {
+          title: 'Titre du premier pack',
+          manche: 'manche1',
+          theme: 'Sous-thème optionnel',
+          questions: [
+            {
+              q: 'Quelle est la capitale du Togo ?',
+              r: 'Lomé',
+              choices: ['Lomé', 'Sokodé', 'Kara', 'Atakpamé'],
+              correctIndices: [0],
+              e: 'Lomé est la capitale du Togo, sur la côte du golfe de Guinée.',
+              ref: 'https://fr.wikipedia.org/wiki/Lom%C3%A9'
+            },
+            {
+              q: 'En quelle année le Togo est-il devenu indépendant ?',
+              r: '1960',
+              choices: ['Le 27 avril 1960', '1958', '1962', '1956'],
+              correctIndices: [0],
+              e: 'Indépendance proclamée par Sylvanus Olympio.'
+            }
+          ]
+        }
+      ]
+    };
+    downloadBlob(JSON.stringify(sample, null, 2), 'modele-domaine-qpc.json', 'application/json');
   };
 
   // Bouton purge

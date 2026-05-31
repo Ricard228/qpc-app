@@ -12,6 +12,7 @@ node_modules/
 data/auth.json
 data/games.json
 data/matches.json
+data/custom-packs.json
 data/profiles/
 
 # Macros de build / archives

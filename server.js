@@ -16,6 +16,7 @@ const DATA           = path.join(ROOT, 'data');
 const AUTH_PATH      = path.join(DATA, 'auth.json');
 const GAMES_PATH     = path.join(DATA, 'games.json');
 const MATCHES_PATH   = path.join(DATA, 'matches.json');
+const CUSTOM_PATH    = path.join(DATA, 'custom-packs.json');
 const QUESTIONS_PATH = path.join(DATA, 'questions.json');
 
 // Mot de passe super-admin par défaut. À surcharger via ADMIN_PASSWORD.
@@ -77,6 +78,12 @@ function loadMatches() { return readJson(MATCHES_PATH, { matches: [] }); }
 function saveMatches(m) {
   writeJson(MATCHES_PATH, m);
   scheduleGhSync('data/matches.json');
+}
+
+function loadCustomDomains() { return readJson(CUSTOM_PATH, { domains: [] }); }
+function saveCustomDomains(d) {
+  writeJson(CUSTOM_PATH, d);
+  scheduleGhSync('data/custom-packs.json');
 }
 
 // ---------- Synchronisation GitHub ------------------------------------
@@ -143,7 +150,7 @@ async function ghPullInitial() {
     return;
   }
   console.log(`🔁 Téléchargement initial depuis ${GH_REPO}#${GH_BRANCH}...`);
-  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json']) {
+  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json', 'data/custom-packs.json']) {
     try {
       const content = await ghGetFile(remotePath);
       if (content) {
@@ -171,6 +178,198 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(ROOT, 'public')));
 
 const QUESTIONS = JSON.parse(fs.readFileSync(QUESTIONS_PATH, 'utf8'));
+
+// =====================================================================
+// Domaines personnalisés (import admin de .txt ou .json)
+// =====================================================================
+
+// Convertit un pack importé en pack QPC normalisé (id, type, etc.)
+function normalizeImportedPack(rawPack, domainName, indexInDomain) {
+  const manche = ['manche1', 'manche2', 'manche3'].includes(rawPack.manche) ? rawPack.manche
+                 : (rawPack.type && ['manche1','manche2','manche3'].includes(rawPack.type) ? rawPack.type : 'manche1');
+  const packId = `custom-${domainName.replace(/[^a-z0-9]/gi, '-').toLowerCase().slice(0, 24)}-${manche}-${indexInDomain + 1}`;
+  const title = String(rawPack.title || rawPack.titre || `Pack ${indexInDomain + 1}`).slice(0, 120);
+  const theme = rawPack.theme || rawPack.thème || null;
+  const questions = (rawPack.questions || []).map((rq, qi) => {
+    const q = String(rq.q || rq.question || '').trim();
+    const r = String(rq.r || rq.answer || rq.réponse || '').trim();
+    const choices = Array.isArray(rq.choices) ? rq.choices.map(c => String(c).trim()).filter(Boolean) : [];
+    const correctIndices = Array.isArray(rq.correctIndices) && rq.correctIndices.length
+                             ? rq.correctIndices.map(Number).filter(n => Number.isFinite(n))
+                             : (choices.length && r ? choices.reduce((acc, c, i) => {
+                                 if (c.toLowerCase().trim() === r.toLowerCase().trim()) acc.push(i);
+                                 return acc;
+                               }, []) : []);
+    return {
+      id: `${packId}-q${qi + 1}`,
+      q, r,
+      choices: choices.length >= 2 ? choices : undefined,
+      correctIndices: choices.length >= 2 && correctIndices.length ? correctIndices : undefined,
+      e: rq.e || rq.explanation || rq.explication || '',
+      ref: rq.ref || rq.source || rq.s || '',
+      pts: Number(rq.pts) || 1
+    };
+  }).filter(q => q.q && q.r);
+  return {
+    id: packId,
+    type: manche,
+    titre: title,
+    theme,
+    domain: domainName,
+    timing: manche === 'manche2' ? '25 s / question' :
+            manche === 'manche3' ? 'Buzz libre — 1 min 30 — 9 points gagnants' : null,
+    questions,
+    isCustom: true
+  };
+}
+
+// Parser TXT structuré (format documenté côté admin).
+//
+// Grammaire :
+//   DOMAINE: <nom>
+//   DESCRIPTION: <texte> (optionnel)
+//   PACK: <titre>
+//   MANCHE: 1|2|3 (défaut 1)
+//   THEME: <texte> (optionnel)
+//   Q: <question>
+//   R: <réponse>           (texte attendu)
+//   * <choix correct>      (au moins 1 si QCM)
+//   - <choix distracteur>
+//   E: <explication>       (optionnel)
+//   S: <url ou source>     (optionnel)
+//   PTS: <1..6>            (manche 2)
+//   # <commentaire>        (ignoré)
+function parseCustomTxt(text) {
+  const lines = String(text || '').split(/\r?\n/);
+  let domain = null, description = '';
+  const packs = [];
+  let curPack = null, curQ = null, curManche = 'manche1';
+
+  function pushCurrent() {
+    if (curQ && curPack) curPack.questions.push(curQ);
+    curQ = null;
+  }
+  function finishPack() {
+    pushCurrent();
+    if (curPack) packs.push(curPack);
+    curPack = null;
+  }
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line || line.startsWith('#')) continue;
+
+    // Choix QCM : * ou -
+    if ((line.startsWith('*') || line.startsWith('-')) && curQ) {
+      const isCorrect = line.startsWith('*');
+      const choiceText = line.slice(1).trim();
+      if (!choiceText) continue;
+      curQ.choices = curQ.choices || [];
+      curQ.correctIndices = curQ.correctIndices || [];
+      curQ.choices.push(choiceText);
+      if (isCorrect) curQ.correctIndices.push(curQ.choices.length - 1);
+      continue;
+    }
+
+    // Clé: valeur
+    const m = line.match(/^([A-Za-zÉÈÊ]+)\s*:\s*(.*)$/);
+    if (!m) continue;
+    const key = m[1].toUpperCase()
+      .replace('É', 'E').replace('È', 'E').replace('Ê', 'E');
+    const val = m[2].trim();
+
+    switch (key) {
+      case 'DOMAINE': case 'DOMAIN':
+        domain = val; break;
+      case 'DESCRIPTION':
+        description = val; break;
+      case 'PACK':
+        finishPack();
+        curPack = { title: val, manche: curManche, theme: null, questions: [] };
+        break;
+      case 'MANCHE':
+        curManche = 'manche' + (parseInt(val, 10) || 1);
+        if (curPack) curPack.manche = curManche;
+        break;
+      case 'THEME':
+        if (curPack) curPack.theme = val;
+        break;
+      case 'Q':
+        pushCurrent();
+        curQ = { q: val };
+        break;
+      case 'R': case 'A':
+        if (curQ) curQ.r = val;
+        break;
+      case 'E':
+        if (curQ) curQ.e = val;
+        break;
+      case 'S': case 'REF': case 'SOURCE':
+        if (curQ) curQ.ref = val;
+        break;
+      case 'PTS':
+        if (curQ) curQ.pts = parseInt(val, 10) || 1;
+        break;
+    }
+  }
+  finishPack();
+
+  // Validation : si choices présents mais r vide, prendre le 1er choix correct
+  for (const p of packs) {
+    for (const q of p.questions) {
+      if (!q.r && q.choices && q.correctIndices && q.correctIndices.length) {
+        q.r = q.choices[q.correctIndices[0]];
+      }
+    }
+  }
+  return { domain, description, packs };
+}
+
+// Renvoie tous les packs (builtin + custom) pour une manche donnée
+function getPacksForManche(manche) {
+  const builtin = QUESTIONS[manche] || [];
+  const customStore = loadCustomDomains();
+  const customPacks = [];
+  for (const d of customStore.domains) {
+    for (const p of (d.packs || [])) {
+      if (p.type === manche) customPacks.push(p);
+    }
+  }
+  return [...builtin, ...customPacks];
+}
+
+// Renvoie tous les domaines (builtin + custom) avec leurs counts
+function getAllDomainsWithCount() {
+  const domains = QUESTIONS.domains.map(d => ({ ...d }));
+  const customStore = loadCustomDomains();
+  for (const d of customStore.domains) {
+    const count = (d.packs || []).reduce((s, p) => s + (p.questions || []).length, 0);
+    if (count > 0) domains.push({ name: d.name, count, isCustom: true });
+  }
+  return domains.sort((a, b) => b.count - a.count);
+}
+
+// Compute meta dynamiquement (en intégrant les domaines custom)
+function computeMeta() {
+  const customStore = loadCustomDomains();
+  let extraM1 = 0, extraM2 = 0, extraM3 = 0, extraQ = 0;
+  for (const d of customStore.domains) {
+    for (const p of (d.packs || [])) {
+      if (p.type === 'manche1') extraM1++;
+      else if (p.type === 'manche2') extraM2++;
+      else if (p.type === 'manche3') extraM3++;
+      extraQ += (p.questions || []).length;
+    }
+  }
+  return {
+    ...QUESTIONS.meta,
+    manche1Count: QUESTIONS.meta.manche1Count + extraM1,
+    manche2Count: QUESTIONS.meta.manche2Count + extraM2,
+    manche3Count: QUESTIONS.meta.manche3Count + extraM3,
+    questionsTotal: QUESTIONS.meta.questionsTotal + extraQ,
+    domains: getAllDomainsWithCount()
+  };
+}
 
 // ---------- Tokens ---------------------------------------------------
 function signToken(payload) {
@@ -248,9 +447,8 @@ app.post('/api/auth/admin', (req, res) => {
 app.get('/api/meta', requireUser, (req, res) => {
   const auth = loadAuth();
   res.json({
-    ...QUESTIONS.meta,
-    domains: QUESTIONS.domains,
-    settings: auth.settings || { reviewEnabled: true },
+    ...computeMeta(),
+    settings: auth.settings || { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice' },
     hasActiveDuel: userHasActiveDuel(req.user.code)
   });
 });
@@ -259,9 +457,8 @@ app.get('/api/packs/:manche', requireUser, (req, res) => {
   const { manche } = req.params;
   if (!['manche1', 'manche2', 'manche3'].includes(manche))
     return res.status(400).json({ error: 'manche invalide' });
-  // Si la révision libre est désactivée, on peut quand même servir les packs pour le jeu
   const domains = (req.query.domains || '').split(',').filter(Boolean);
-  let packs = QUESTIONS[manche];
+  let packs = getPacksForManche(manche);
   if (domains.length) packs = packs.filter(p => domains.includes(p.domain));
   res.json(packs);
 });
@@ -523,6 +720,107 @@ app.get('/api/admin/export-excel', requireAdmin, (req, res) => {
 });
 
 // =====================================================================
+// DOMAINES PERSONNALISÉS (import .txt ou .json par l'admin)
+// =====================================================================
+
+// Liste des domaines custom avec métadonnées
+app.get('/api/admin/custom-domains', requireAdmin, (req, res) => {
+  const store = loadCustomDomains();
+  const list = (store.domains || []).map(d => ({
+    name: d.name,
+    description: d.description || '',
+    createdAt: d.createdAt,
+    packsCount: (d.packs || []).length,
+    questionsCount: (d.packs || []).reduce((s, p) => s + (p.questions || []).length, 0),
+    manches: [...new Set((d.packs || []).map(p => p.type))]
+  }));
+  res.json(list);
+});
+
+// Import : accepte body { format: 'txt'|'json', content: <string> }
+// Crée un nouveau domaine ou écrase un domaine existant avec le même nom.
+app.post('/api/admin/custom-domains', requireAdmin, (req, res) => {
+  const format = String(req.body.format || 'txt').toLowerCase();
+  const content = String(req.body.content || '');
+  if (!content) return res.status(400).json({ error: 'Contenu vide' });
+
+  let parsed;
+  try {
+    if (format === 'json') {
+      const j = JSON.parse(content);
+      parsed = {
+        domain: j.domain || j.name,
+        description: j.description || '',
+        packs: Array.isArray(j.packs) ? j.packs : []
+      };
+    } else {
+      // TXT par défaut
+      parsed = parseCustomTxt(content);
+    }
+  } catch (e) {
+    return res.status(400).json({ error: `Erreur de parsing : ${e.message}` });
+  }
+
+  if (!parsed.domain) return res.status(400).json({ error: 'Le fichier doit indiquer un nom de domaine (DOMAINE: …)' });
+  const domainName = parsed.domain.trim().slice(0, 80);
+  if (!domainName) return res.status(400).json({ error: 'Nom de domaine invalide' });
+  if (!parsed.packs || parsed.packs.length === 0) {
+    return res.status(400).json({ error: 'Aucun pack trouvé dans le fichier' });
+  }
+
+  // Normaliser les packs
+  const normalizedPacks = parsed.packs
+    .map((p, i) => normalizeImportedPack(p, domainName, i))
+    .filter(p => p.questions && p.questions.length > 0);
+
+  if (normalizedPacks.length === 0) {
+    return res.status(400).json({ error: 'Aucun pack valide après parsing (vérifiez que chaque Q a une R)' });
+  }
+
+  // Empêcher la collision avec un nom de domaine builtin
+  const builtinNames = (QUESTIONS.domains || []).map(d => d.name.toLowerCase());
+  if (builtinNames.includes(domainName.toLowerCase())) {
+    return res.status(400).json({ error: 'Ce nom de domaine existe déjà dans la base intégrée. Utilisez un autre nom.' });
+  }
+
+  const store = loadCustomDomains();
+  store.domains = store.domains || [];
+  // Remplacer s'il existe déjà un domaine custom avec ce nom
+  const existing = store.domains.findIndex(d => d.name.toLowerCase() === domainName.toLowerCase());
+  const entry = {
+    name: domainName,
+    description: parsed.description || '',
+    createdAt: existing >= 0 ? store.domains[existing].createdAt : new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    packs: normalizedPacks
+  };
+  if (existing >= 0) store.domains[existing] = entry;
+  else store.domains.push(entry);
+  saveCustomDomains(store);
+
+  const qCount = normalizedPacks.reduce((s, p) => s + p.questions.length, 0);
+  res.json({
+    ok: true,
+    replaced: existing >= 0,
+    domain: domainName,
+    packsCount: normalizedPacks.length,
+    questionsCount: qCount,
+    manches: [...new Set(normalizedPacks.map(p => p.type))]
+  });
+});
+
+// Suppression d'un domaine personnalisé
+app.delete('/api/admin/custom-domains/:name', requireAdmin, (req, res) => {
+  const name = decodeURIComponent(req.params.name);
+  const store = loadCustomDomains();
+  const before = (store.domains || []).length;
+  store.domains = (store.domains || []).filter(d => d.name.toLowerCase() !== name.toLowerCase());
+  if (store.domains.length === before) return res.status(404).json({ error: 'Domaine introuvable' });
+  saveCustomDomains(store);
+  res.json({ ok: true, name });
+});
+
+// =====================================================================
 // DUELS / CONFRONTATIONS
 // =====================================================================
 // Modèle d'un match :
@@ -548,7 +846,7 @@ function buildMatchPacks(config) {
   // Choisit les packs une fois pour tous les participants. Identiques pour tous.
   const plan = [];
   for (const m of (config.manches || [])) {
-    let packs = QUESTIONS[m] || [];
+    let packs = getPacksForManche(m);
     if (config.domains && config.domains.length) {
       packs = packs.filter(p => config.domains.includes(p.domain));
     }
@@ -899,6 +1197,7 @@ app.delete('/api/admin/all-data', requireAdmin, (req, res) => {
   loadAuth();
   if (!fs.existsSync(GAMES_PATH)) saveGames({ games: [] });
   if (!fs.existsSync(MATCHES_PATH)) saveMatches({ matches: [] });
+  if (!fs.existsSync(CUSTOM_PATH)) saveCustomDomains({ domains: [] });
 
   app.listen(PORT, () => {
     console.log(`\n🎯  QPC Économie & Sciences sociales — v2.1`);
