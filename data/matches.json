@@ -4154,7 +4154,14 @@
         "QPC-NZXE8MYU": "accepted",
         "QPC-WC4E22GK": "accepted"
       },
-      "results": {},
+      "results": {
+        "QPC-WC4E22GK": {
+          "startedAt": "2026-05-31T15:16:34.294Z",
+          "progressScore": 0,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-05-31T15:16:34.294Z"
+        }
+      },
       "winner": null
     }
   ]
