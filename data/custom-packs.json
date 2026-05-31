@@ -1,3 +1,91 @@
 {
-  "domains": []
+  "domains": [
+    {
+      "name": "Test �conomie togolaise",
+      "description": "Quelques questions test sur le Togo",
+      "createdAt": "2026-05-31T00:31:43.824Z",
+      "updatedAt": "2026-05-31T00:31:43.824Z",
+      "packs": [
+        {
+          "id": "custom-test--conomie-togolaise-manche1-1",
+          "type": "manche1",
+          "titre": "Capitales et g�ographie",
+          "theme": "G�ographie",
+          "domain": "Test �conomie togolaise",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-test--conomie-togolaise-manche1-1-q1",
+              "q": "Quelle est la capitale du Togo ?",
+              "r": "Lom�",
+              "choices": [
+                "Lom�",
+                "Sokod�",
+                "Kara",
+                "Atakpam�"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Lom� est la capitale du Togo, sur la c�te du golfe de Guin�e.",
+              "ref": "https://fr.wikipedia.org/wiki/Lom%C3%A9",
+              "pts": 1
+            },
+            {
+              "id": "custom-test--conomie-togolaise-manche1-1-q2",
+              "q": "Combien de r�gions administratives le Togo compte-t-il ?",
+              "r": "5 r�gions",
+              "choices": [
+                "5 r�gions",
+                "3 r�gions",
+                "7 r�gions",
+                "10 r�gions"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Maritime, Plateaux, Centrale, Kara, Savanes.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-test--conomie-togolaise-manche1-1-q3",
+              "q": "Quelle est la langue officielle du Togo ?",
+              "r": "Le fran�ais",
+              "choices": [
+                "Le fran�ais",
+                "L'anglais",
+                "L'allemand",
+                "Le portugais"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le Togo a �t� sous protectorat fran�ais de 1916 � 1960.",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-test--conomie-togolaise-manche1-1-q4",
+              "q": "Quelle ville est la deuxi�me agglom�ration du Togo ?",
+              "r": "Sokod�",
+              "choices": [
+                "Sokod�",
+                "Kara",
+                "Atakpam�",
+                "An�ho"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            }
+          ],
+          "isCustom": true
+        }
+      ]
+    }
+  ]
 }
