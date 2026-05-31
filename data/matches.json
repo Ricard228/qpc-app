@@ -4865,15 +4865,15 @@
       "results": {
         "QPC-NZXE8MYU": {
           "startedAt": "2026-05-31T15:21:44.628Z",
-          "progressScore": 10,
-          "progressQ": 7,
-          "progressUpdatedAt": "2026-05-31T15:22:49.989Z"
+          "progressScore": 14,
+          "progressQ": 8,
+          "progressUpdatedAt": "2026-05-31T15:23:06.575Z"
         },
         "QPC-WC4E22GK": {
           "startedAt": "2026-05-31T15:21:52.873Z",
           "progressScore": 7,
-          "progressQ": 7,
-          "progressUpdatedAt": "2026-05-31T15:22:56.914Z"
+          "progressQ": 8,
+          "progressUpdatedAt": "2026-05-31T15:23:10.125Z"
         }
       },
       "winner": null
