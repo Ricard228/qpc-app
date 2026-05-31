@@ -2075,6 +2075,1791 @@
           "isCustom": true
         }
       ]
+    },
+    {
+      "name": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+      "description": "QPC sur la mobilisation de l'eau, l'irrigation à énergie solaire (SPIS), les systèmes d'irrigation et leur exploitation optimale.",
+      "createdAt": "2026-05-31T21:48:39.237Z",
+      "updatedAt": "2026-05-31T21:48:39.237Z",
+      "packs": [
+        {
+          "id": "custom-irrigation----nergie-sol-manche1-1",
+          "type": "manche1",
+          "titre": "Mobilisation de l'eau d'irrigation — les eaux de surface",
+          "theme": "Bassins versants, retenues collinaires, fleuves et rivières",
+          "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q1",
+              "q": "Qu'est-ce qu'un bassin versant ?",
+              "r": "La surface drainée par un cours d'eau vers un exutoire commun",
+              "choices": [
+                "La surface drainée par un cours d'eau et ses affluents vers un même exutoire",
+                "Une parcelle irriguée par aspersion",
+                "Un réservoir d'eau souterraine captive",
+                "Un canal d'amenée bétonné"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le bassin versant est l'unité de collecte des eaux de pluie qui convergent vers un exutoire.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q2",
+              "q": "Qu'est-ce qui délimite deux bassins versants voisins ?",
+              "r": "Les lignes de partage des eaux (lignes de crête)",
+              "choices": [
+                "Les lignes de partage des eaux, ou lignes de crête",
+                "Les routes goudronnées",
+                "Les limites administratives",
+                "Le niveau de la nappe phréatique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les lignes de crête séparent les eaux qui s'écoulent vers deux exutoires différents.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q3",
+              "q": "Qu'est-ce qu'une retenue collinaire ?",
+              "r": "Un petit ouvrage de stockage captant le ruissellement",
+              "choices": [
+                "Un petit ouvrage de stockage captant le ruissellement dans un vallon",
+                "Un forage profond équipé d'une pompe immergée",
+                "Une station de traitement des eaux usées",
+                "Un canal d'irrigation principal"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La retenue collinaire stocke les eaux de pluie et de ruissellement pour l'irrigation et l'abreuvement.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q4",
+              "q": "Quelle ressource alimente principalement une retenue collinaire ?",
+              "r": "Les eaux de ruissellement du bassin versant",
+              "choices": [
+                "Les eaux de pluie et de ruissellement du bassin versant amont",
+                "L'eau de mer dessalée",
+                "L'eau du réseau d'adduction urbain",
+                "Une nappe captive profonde"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La retenue capte le ruissellement, d'où l'importance de l'état du bassin versant en amont.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q5",
+              "q": "Quel terme désigne le point de sortie des eaux d'un bassin versant ?",
+              "r": "L'exutoire",
+              "choices": [
+                "L'exutoire",
+                "La ligne de crête",
+                "L'aquifère",
+                "La margelle"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q6",
+              "q": "Comment appelle-t-on la ligne qui relie les points les plus bas d'une vallée, où s'écoulent les eaux ?",
+              "r": "Le talweg",
+              "choices": [
+                "Le talweg",
+                "La ligne de crête",
+                "La nappe phréatique",
+                "La digue"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q7",
+              "q": "Quel inconvénient majeur des eaux de surface impose une filtration avant l'irrigation localisée ?",
+              "r": "Leur turbidité (matières en suspension)",
+              "choices": [
+                "Leur turbidité et leur charge en sédiments",
+                "Leur absence totale de minéraux",
+                "Leur température parfaitement constante",
+                "Leur disponibilité illimitée toute l'année"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les particules en suspension colmatent les goutteurs : une filtration est indispensable.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q8",
+              "q": "Quel phénomène entraîne d'importantes pertes d'eau dans les retenues en saison sèche ?",
+              "r": "L'évaporation",
+              "choices": [
+                "L'évaporation",
+                "La photosynthèse",
+                "La nitrification",
+                "La capillarité ascendante"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q9",
+              "q": "Quelle caractéristique des cours d'eau sahéliens complique leur usage pour l'irrigation ?",
+              "r": "Leur régime saisonnier et irrégulier",
+              "choices": [
+                "Leur régime saisonnier et l'irrégularité de leurs débits",
+                "Un débit parfaitement constant toute l'année",
+                "Une salinité marine élevée",
+                "Un gel hivernal prolongé"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q10",
+              "q": "Comment appelle-t-on l'ouvrage qui capte l'eau d'une rivière pour l'amener vers les parcelles ?",
+              "r": "La prise d'eau",
+              "choices": [
+                "La prise d'eau (ouvrage de captage)",
+                "Le déversoir de crue",
+                "La crépine du forage",
+                "Le piézomètre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q11",
+              "q": "Quel ouvrage barre un cours d'eau pour relever le plan d'eau et faciliter son captage ?",
+              "r": "Un seuil ou un petit barrage",
+              "choices": [
+                "Un seuil ou un petit barrage",
+                "Un piézomètre",
+                "Une crépine",
+                "Un onduleur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q12",
+              "q": "Pourquoi protéger le couvert végétal du bassin versant en amont d'une retenue ?",
+              "r": "Pour limiter l'érosion et l'envasement",
+              "choices": [
+                "Pour réduire l'érosion des sols et l'envasement de la retenue",
+                "Pour augmenter l'évaporation de la retenue",
+                "Pour saliniser l'eau stockée",
+                "Pour réduire les pluies locales"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q13",
+              "q": "Comment nomme-t-on le comblement progressif d'une retenue par les sédiments ?",
+              "r": "L'envasement",
+              "choices": [
+                "L'envasement (sédimentation)",
+                "L'eutrophisation",
+                "La salinisation",
+                "L'infiltration profonde"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-1-q14",
+              "q": "Quel avantage les eaux de surface présentent-elles souvent par rapport aux eaux profondes ?",
+              "r": "Une mobilisation moins coûteuse (pas de forage)",
+              "choices": [
+                "Elles sont souvent plus accessibles et moins coûteuses à mobiliser",
+                "Elles sont toujours plus propres et potables",
+                "Elles ne s'évaporent jamais",
+                "Elles sont disponibles partout en grande profondeur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Elles évitent le coût d'un forage, mais exigent traitement (filtration) et stockage.",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-irrigation----nergie-sol-manche2-2",
+          "type": "manche2",
+          "titre": "Mobilisation de l'eau d'irrigation — les eaux souterraines et les forages",
+          "theme": "Nappes, forages, caractéristiques et équipements",
+          "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+          "timing": "25 s / question",
+          "questions": [
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q1",
+              "q": "Comment appelle-t-on une réserve d'eau souterraine contenue dans une roche perméable ?",
+              "r": "Un aquifère (nappe)",
+              "choices": [
+                "Un aquifère, ou nappe souterraine",
+                "Un bassin versant",
+                "Un talweg",
+                "Une retenue collinaire"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q2",
+              "q": "Quelle est la principale différence entre un forage et un puits traditionnel ?",
+              "r": "Le forage est foré (étroit, profond) ; le puits est creusé (large, peu profond)",
+              "choices": [
+                "Le forage est foré, étroit et profond ; le puits est creusé, large et moins profond",
+                "Le forage est toujours à ciel ouvert",
+                "Le puits atteint toujours une nappe captive",
+                "Il n'existe aucune différence technique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q3",
+              "q": "Comment appelle-t-on le niveau de l'eau dans un forage à l'arrêt, sans pompage ?",
+              "r": "Le niveau statique",
+              "choices": [
+                "Le niveau statique",
+                "Le niveau dynamique",
+                "Le rabattement",
+                "La hauteur de refoulement"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q4",
+              "q": "Comment appelle-t-on le niveau de l'eau dans un forage pendant le pompage ?",
+              "r": "Le niveau dynamique",
+              "choices": [
+                "Le niveau dynamique",
+                "Le niveau statique",
+                "L'exutoire",
+                "La cote de repos"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q5",
+              "q": "Qu'est-ce que le rabattement d'un forage ?",
+              "r": "La baisse du niveau d'eau due au pompage",
+              "choices": [
+                "La différence entre le niveau statique et le niveau dynamique",
+                "La hauteur des panneaux solaires",
+                "Le diamètre du tubage",
+                "Le débit nominal de la pompe"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Rabattement = niveau statique − niveau dynamique ; un rabattement excessif signale une surexploitation.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q6",
+              "q": "Quel essai permet de déterminer le débit d'exploitation durable d'un forage ?",
+              "r": "L'essai de pompage",
+              "choices": [
+                "L'essai de pompage",
+                "L'essai de germination",
+                "Le test de turbidité",
+                "Le test d'acceptation des panneaux"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q7",
+              "q": "Comment appelle-t-on la partie perforée du tubage qui laisse entrer l'eau dans le forage ?",
+              "r": "La crépine",
+              "choices": [
+                "La crépine",
+                "Le massif filtrant",
+                "La margelle",
+                "L'onduleur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q8",
+              "q": "Quel élément placé autour de la crépine filtre les fines et stabilise les parois du forage ?",
+              "r": "Le massif filtrant (gravier)",
+              "choices": [
+                "Le massif filtrant de gravier",
+                "La cimentation de surface",
+                "La pompe immergée",
+                "Le piézomètre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q9",
+              "q": "À quoi sert la cimentation annulaire en tête de forage ?",
+              "r": "À protéger la nappe des infiltrations de surface",
+              "choices": [
+                "À isoler le forage et protéger la nappe des contaminations de surface",
+                "À augmenter le débit de la pompe",
+                "À refroidir le moteur",
+                "À produire de l'électricité"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q10",
+              "q": "Quel type de pompe équipe généralement un forage profond ?",
+              "r": "La pompe immergée (submersible)",
+              "choices": [
+                "La pompe immergée (submersible)",
+                "La pompe de surface uniquement",
+                "La pompe à main exclusivement",
+                "La pompe à chaleur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q11",
+              "q": "Que désigne la HMT d'une installation de pompage ?",
+              "r": "La Hauteur Manométrique Totale",
+              "choices": [
+                "La Hauteur Manométrique Totale, hauteur totale que la pompe doit vaincre",
+                "La Haute Maintenance Technique",
+                "L'Humidité Maximale Tolérée",
+                "La Hauteur Moyenne du Tubage"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La HMT cumule la hauteur d'élévation, le rabattement, les pertes de charge et la pression de service.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q12",
+              "q": "Quels éléments composent principalement la HMT ?",
+              "r": "Hauteur d'élévation + pertes de charge + pression de service",
+              "choices": [
+                "La hauteur d'élévation, les pertes de charge et la pression requise en sortie",
+                "La seule profondeur totale du forage",
+                "La surface des panneaux solaires",
+                "Le diamètre des goutteurs"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q13",
+              "q": "Que traduit une baisse continue du niveau statique d'une nappe ?",
+              "r": "Une surexploitation de la nappe",
+              "choices": [
+                "Une surexploitation : des prélèvements supérieurs à la recharge",
+                "Une recharge excessive",
+                "Un excès de précipitations",
+                "Un envasement de la retenue"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Un pompage supérieur à la recharge fait baisser durablement la nappe : un enjeu clé du module « Préserver l'eau ».",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche2-2-q14",
+              "q": "Quel instrument permet de mesurer le niveau de l'eau dans un forage ou un piézomètre ?",
+              "r": "Une sonde de niveau (sonde piézométrique)",
+              "choices": [
+                "Une sonde de niveau (sonde piézométrique)",
+                "Un pyranomètre",
+                "Un anémomètre",
+                "Un pH-mètre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-irrigation----nergie-sol-manche3-3",
+          "type": "manche3",
+          "titre": "Irrigation à énergie solaire — composants et caractéristiques",
+          "theme": "Panneaux, variateur, pompe, installation",
+          "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+          "timing": "Buzz libre — 1 min 30 — 9 points gagnants",
+          "questions": [
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q1",
+              "q": "Que signifie le sigle SPIS ?",
+              "r": "Système d'irrigation à énergie solaire (Solar Powered Irrigation System)",
+              "choices": [
+                "Système d'irrigation à énergie solaire (Solar Powered Irrigation System)",
+                "Système de Protection Intégrée des Sols",
+                "Service Public d'Irrigation Subventionnée",
+                "Système de Pompage Industriel Standard"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 1
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q2",
+              "q": "Quel effet physique permet à une cellule photovoltaïque de produire de l'électricité ?",
+              "r": "L'effet photovoltaïque",
+              "choices": [
+                "L'effet photovoltaïque",
+                "L'effet de serre",
+                "L'effet Joule",
+                "La photosynthèse"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q3",
+              "q": "Quel type de courant produit directement un panneau photovoltaïque ?",
+              "r": "Du courant continu (DC)",
+              "choices": [
+                "Du courant continu (DC)",
+                "Du courant alternatif triphasé directement",
+                "Le courant de la foudre",
+                "Aucun courant, de jour comme de nuit"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q4",
+              "q": "Dans quelle unité exprime-t-on la puissance d'un panneau photovoltaïque ?",
+              "r": "En Watt-crête (Wc)",
+              "choices": [
+                "En Watt-crête (Wc)",
+                "En litres par seconde",
+                "En degrés Celsius",
+                "En mètres de HMT"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le Watt-crête correspond à la puissance dans des conditions standard (1000 W/m², 25 °C).",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q5",
+              "q": "Quel composant convertit le courant des panneaux et pilote la pompe d'un SPIS ?",
+              "r": "Le variateur de fréquence (onduleur/contrôleur)",
+              "choices": [
+                "Le variateur de fréquence (onduleur / contrôleur)",
+                "La crépine",
+                "Le massif filtrant",
+                "Le pyranomètre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le variateur adapte tension et fréquence à l'ensoleillement pour entraîner le moteur de la pompe.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q6",
+              "q": "Pourquoi de nombreux SPIS fonctionnent-ils sans batteries ?",
+              "r": "On stocke l'eau plutôt que l'énergie",
+              "choices": [
+                "Parce qu'on stocke l'eau dans un réservoir au lieu de stocker l'électricité",
+                "Parce que les batteries sont interdites",
+                "Parce que les pompes ne fonctionnent que la nuit",
+                "Parce que les panneaux fabriquent de l'eau"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Stocker l'eau dans un réservoir est généralement moins cher et plus simple que stocker l'énergie.",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q7",
+              "q": "Quand un SPIS sans batterie produit-il le plus d'eau ?",
+              "r": "Aux heures de fort ensoleillement",
+              "choices": [
+                "Aux heures de fort ensoleillement, au milieu de la journée",
+                "La nuit",
+                "À l'aube uniquement",
+                "Par temps couvert"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q8",
+              "q": "Quel type de cellule photovoltaïque offre généralement le meilleur rendement ?",
+              "r": "Le silicium monocristallin",
+              "choices": [
+                "Le silicium monocristallin",
+                "Le polycristallin bas de gamme",
+                "Les cellules en carton",
+                "Les cellules organiques périmées"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le monocristallin a un rendement supérieur ; le polycristallin un coût souvent plus bas.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q9",
+              "q": "Comment évolue le rendement d'un panneau lorsque sa température augmente fortement ?",
+              "r": "Il diminue",
+              "choices": [
+                "Il diminue",
+                "Il augmente proportionnellement",
+                "Il reste strictement constant",
+                "Il double"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q10",
+              "q": "Vers quelle direction oriente-t-on des panneaux fixes au Togo (hémisphère nord) ?",
+              "r": "Vers le sud",
+              "choices": [
+                "Vers le sud (vers l'équateur)",
+                "Vers le nord",
+                "Vers l'ouest uniquement",
+                "Vers le sol"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Dans l'hémisphère nord, l'orientation plein sud maximise l'irradiation captée sur l'année.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q11",
+              "q": "Pourquoi conserver une inclinaison minimale des panneaux, même près de l'équateur ?",
+              "r": "Pour permettre l'auto-nettoyage par la pluie",
+              "choices": [
+                "Pour favoriser l'écoulement de l'eau de pluie et l'auto-nettoyage",
+                "Pour produire la nuit",
+                "Pour augmenter leur température",
+                "Pour capter le vent"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q12",
+              "q": "Quels facteurs réduisent la production d'un panneau en limitant la lumière reçue ?",
+              "r": "La poussière (encrassement) et l'ombrage",
+              "choices": [
+                "L'encrassement par la poussière et l'ombrage",
+                "Un nettoyage régulier",
+                "Une orientation correcte",
+                "Une température basse"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q13",
+              "q": "Quelle grandeur mesure l'énergie solaire reçue par unité de surface et par jour ?",
+              "r": "L'irradiation solaire (kWh/m²/jour)",
+              "choices": [
+                "L'irradiation (ou insolation), en kWh/m²/jour",
+                "Le débit en m³/h",
+                "La HMT en mètres",
+                "La turbidité en NTU"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche3-3-q14",
+              "q": "Quel test vérifie, à la réception, la conformité et la puissance des panneaux installés ?",
+              "r": "Le test d'acceptation des panneaux photovoltaïques",
+              "choices": [
+                "Le test d'acceptation (réception) des panneaux photovoltaïques",
+                "L'essai de pompage",
+                "Le test de germination",
+                "L'analyse de turbidité"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-irrigation----nergie-sol-manche1-4",
+          "type": "manche1",
+          "titre": "Systèmes d'irrigation et exploitation optimale",
+          "theme": "Gravitaire, aspersion, goutte-à-goutte, pilotage",
+          "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q1",
+              "q": "Quel système fait circuler l'eau par gravité dans des raies ou des planches ?",
+              "r": "L'irrigation gravitaire (de surface)",
+              "choices": [
+                "L'irrigation gravitaire (de surface)",
+                "L'irrigation goutte-à-goutte",
+                "L'aspersion sous pression",
+                "L'irrigation par pivot central"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q2",
+              "q": "Quel système asperge l'eau sous pression, à la manière d'une pluie artificielle ?",
+              "r": "L'irrigation par aspersion",
+              "choices": [
+                "L'irrigation par aspersion",
+                "L'irrigation gravitaire",
+                "L'irrigation par bassins",
+                "La submersion permanente"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q3",
+              "q": "Quel système apporte l'eau goutte à goutte directement au pied des plantes ?",
+              "r": "L'irrigation localisée (goutte-à-goutte)",
+              "choices": [
+                "L'irrigation localisée (goutte-à-goutte)",
+                "L'aspersion",
+                "La submersion totale",
+                "L'irrigation à la raie"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q4",
+              "q": "Quel système atteint généralement la meilleure efficience d'application de l'eau ?",
+              "r": "Le goutte-à-goutte",
+              "choices": [
+                "Le goutte-à-goutte (souvent 85-95 %)",
+                "L'irrigation gravitaire (souvent 40-60 %)",
+                "La submersion permanente",
+                "L'arrosage manuel au seau"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le goutte-à-goutte limite l'évaporation et le ruissellement, d'où une efficience élevée.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q5",
+              "q": "Quel système présente souvent la plus faible efficience d'application ?",
+              "r": "L'irrigation gravitaire de surface",
+              "choices": [
+                "L'irrigation gravitaire de surface",
+                "Le goutte-à-goutte",
+                "Le goutte-à-goutte enterré",
+                "La micro-aspersion bien réglée"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q6",
+              "q": "Pourquoi le goutte-à-goutte est-il bien adapté au pompage solaire ?",
+              "r": "Il fonctionne à basse pression et économise eau et énergie",
+              "choices": [
+                "Il fonctionne à faible pression et économise l'eau (et l'énergie de pompage)",
+                "Il exige une très haute pression",
+                "Il ne fonctionne que la nuit",
+                "Il n'a besoin d'aucune eau"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Une faible pression réduit l'énergie de pompage, ce qui s'accorde avec une ressource solaire variable.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q7",
+              "q": "Que désigne l'évapotranspiration de référence, notée ET0 ?",
+              "r": "La demande climatique en eau d'une surface de référence",
+              "choices": [
+                "La demande en eau d'un couvert de référence selon les conditions climatiques",
+                "Le débit du forage",
+                "La puissance des panneaux",
+                "La profondeur de la nappe"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q8",
+              "q": "Comment calcule-t-on le besoin en eau d'une culture (ETc) ?",
+              "r": "ETc = ET0 × Kc",
+              "choices": [
+                "ETc = ET0 × Kc (coefficient cultural)",
+                "ETc = HMT × débit",
+                "ETc = puissance crête / surface",
+                "ETc = niveau statique − niveau dynamique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le coefficient cultural Kc dépend de la culture et de son stade de développement.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q9",
+              "q": "Que représente le coefficient cultural Kc ?",
+              "r": "Un coefficient propre à la culture reliant ses besoins à l'ET0",
+              "choices": [
+                "Un coefficient propre à la culture et à son stade, reliant ses besoins à l'ET0",
+                "La puissance crête des panneaux",
+                "Le diamètre des goutteurs",
+                "La salinité de l'eau d'irrigation"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q10",
+              "q": "Comment appelle-t-on l'eau retenue par le sol après ressuyage et disponible pour les plantes ?",
+              "r": "La réserve utile (entre capacité au champ et point de flétrissement)",
+              "choices": [
+                "La réserve utile, comprise entre la capacité au champ et le point de flétrissement",
+                "La turbidité",
+                "Le rabattement",
+                "L'irradiation"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q11",
+              "q": "Quel outil de la boîte à outils SPIS aide à établir un calendrier d'irrigation selon le sol et la culture ?",
+              "r": "L'outil de sol du module « Irriguer »",
+              "choices": [
+                "L'outil de sol du module « Irriguer »",
+                "L'outil de calcul de remboursement",
+                "Le test d'acceptation des panneaux",
+                "L'outil d'analyse du marché"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q12",
+              "q": "Que vérifie un contrôle de l'« uniformité d'application » en goutte-à-goutte ?",
+              "r": "La régularité du débit entre les goutteurs",
+              "choices": [
+                "L'homogénéité du débit délivré par les goutteurs sur toute la parcelle",
+                "La couleur des panneaux",
+                "Le seul pH du sol",
+                "La vitesse du vent"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q13",
+              "q": "Pourquoi filtrer l'eau avant un système goutte-à-goutte ?",
+              "r": "Pour éviter le colmatage des goutteurs",
+              "choices": [
+                "Pour empêcher le bouchage (colmatage) des goutteurs",
+                "Pour augmenter la turbidité",
+                "Pour chauffer l'eau",
+                "Pour produire de l'électricité"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-4-q14",
+              "q": "Quel est l'intérêt principal d'un réservoir de stockage dans un SPIS ?",
+              "r": "Disposer d'eau en dehors des heures ensoleillées",
+              "choices": [
+                "Stocker l'eau pompée le jour pour irriguer quand le solaire ne produit pas",
+                "Stocker l'électricité",
+                "Refroidir les panneaux",
+                "Augmenter la turbidité de l'eau"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-irrigation----nergie-sol-manche1-5",
+          "type": "manche1",
+          "titre": "Comparaisons, durabilité et exploitation optimale",
+          "theme": "Solaire / diesel / réseau, coûts, durabilité",
+          "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q1",
+              "q": "Comparé au pompage diesel, quel est l'atout du pompage solaire à l'exploitation ?",
+              "r": "Des coûts de fonctionnement très faibles (pas de carburant)",
+              "choices": [
+                "Des coûts d'exploitation très bas : pas de carburant et peu d'entretien",
+                "Un coût de carburant plus élevé",
+                "Davantage de bruit et de fumée",
+                "Une dépendance au prix du gasoil"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le solaire demande un investissement initial élevé mais des charges courantes très réduites.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q2",
+              "q": "Quel est le principal inconvénient initial d'un système de pompage solaire ?",
+              "r": "Son coût d'investissement élevé",
+              "choices": [
+                "Le coût d'investissement initial (CAPEX) relativement élevé",
+                "Sa consommation de carburant",
+                "Ses fortes émissions de CO2",
+                "Son entretien quotidien très lourd"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q3",
+              "q": "En matière d'émissions de gaz à effet de serre, comment se situe le pompage solaire ?",
+              "r": "Très faibles émissions à l'usage",
+              "choices": [
+                "Des émissions quasi nulles en fonctionnement",
+                "Des émissions supérieures au diesel",
+                "D'importantes émissions de méthane",
+                "Des émissions identiques au groupe électrogène"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q4",
+              "q": "Quel risque environnemental le très faible coût du pompage solaire peut-il induire ?",
+              "r": "La surexploitation des nappes",
+              "choices": [
+                "La surexploitation des eaux souterraines (pompage supérieur à la recharge)",
+                "Une recharge excessive de la nappe",
+                "Une baisse de l'évaporation",
+                "Une hausse du prix du carburant"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Comme l'énergie est quasi gratuite, le risque est de pomper plus que la ressource ne le permet : d'où le module « Préserver l'eau ».",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q5",
+              "q": "Comment appelle-t-on la durée nécessaire pour que les économies compensent l'investissement initial ?",
+              "r": "Le délai de récupération (temps de retour)",
+              "choices": [
+                "Le délai de récupération, ou temps de retour sur investissement",
+                "Le rabattement",
+                "La HMT",
+                "Le coefficient cultural"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q6",
+              "q": "Par rapport au réseau électrique, quel avantage le solaire offre-t-il en zone rurale ?",
+              "r": "L'autonomie là où le réseau est absent ou peu fiable",
+              "choices": [
+                "Une autonomie dans les zones non desservies ou mal alimentées par le réseau",
+                "Une dépendance accrue au réseau",
+                "Une facture d'électricité plus élevée",
+                "Des coupures plus fréquentes"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q7",
+              "q": "Quelle est la durée de vie typique de panneaux photovoltaïques de qualité ?",
+              "r": "Environ 20 à 25 ans",
+              "choices": [
+                "De l'ordre de 20 à 25 ans",
+                "Environ 1 an",
+                "Environ 100 ans",
+                "Quelques semaines"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q8",
+              "q": "Passer de l'irrigation gravitaire au goutte-à-goutte permet surtout de…",
+              "r": "Économiser l'eau (meilleure efficience)",
+              "choices": [
+                "Réduire la consommation d'eau grâce à une meilleure efficience",
+                "Augmenter le ruissellement",
+                "Augmenter l'évaporation",
+                "Supprimer tout besoin en eau"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q9",
+              "q": "Pour un même volume d'eau disponible, quel système couvre généralement une plus grande surface utile ?",
+              "r": "Le goutte-à-goutte",
+              "choices": [
+                "Le goutte-à-goutte (efficience élevée)",
+                "Le gravitaire par submersion",
+                "L'arrosage manuel",
+                "L'irrigation à la raie sur sol nu"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q10",
+              "q": "Quels facteurs de site sont déterminants pour choisir et dimensionner un SPIS ?",
+              "r": "L'ensoleillement et la ressource en eau (débit, HMT)",
+              "choices": [
+                "L'irradiation solaire disponible et la ressource en eau (débit, profondeur, HMT)",
+                "La seule couleur du sol",
+                "Le seul prix du diesel",
+                "La marque des goutteurs"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le dimensionnement croise besoins en eau, HMT, débit du point d'eau et irradiation locale.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q11",
+              "q": "Quel module de la boîte à outils SPIS aide à dimensionner la pompe et à vérifier la viabilité du site ?",
+              "r": "Le module « Concevoir »",
+              "choices": [
+                "Le module « Concevoir » (collecte de données, checklist de viabilité, dimensionnement de la pompe)",
+                "Le module « Commercialiser »",
+                "Le module « Financer »",
+                "Le module « Promouvoir & Initier »"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q12",
+              "q": "Pourquoi un SPIS mal adapté au site risque-t-il d'échouer ?",
+              "r": "Il néglige les besoins réels et les conditions du site",
+              "choices": [
+                "Parce qu'il ne tient pas compte des conditions agronomiques, techniques et environnementales du site",
+                "Parce que le soleil est trop puissant",
+                "Parce que l'eau est gratuite",
+                "Parce que les panneaux durent trop longtemps"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q13",
+              "q": "Quel entretien courant maintient la performance d'un champ de panneaux ?",
+              "r": "Le nettoyage régulier (dépoussiérage)",
+              "choices": [
+                "Le nettoyage régulier des panneaux (poussière, dépôts)",
+                "L'ajout quotidien de carburant",
+                "Le remplacement annuel des cellules",
+                "La vidange de la nappe"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-5-q14",
+              "q": "Quel principe associe efficience d'irrigation et gestion durable de l'eau dans un SPIS ?",
+              "r": "Adapter les volumes pompés aux besoins des cultures et à la recharge",
+              "choices": [
+                "Piloter l'irrigation selon les besoins des cultures, sans dépasser la ressource disponible",
+                "Pomper au maximum en permanence",
+                "Irriguer uniquement la nuit",
+                "Supprimer tout suivi de la nappe"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'optimisation combine efficience à la parcelle (ETc, programmation) et préservation de la ressource.",
+              "ref": "",
+              "pts": 4
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-irrigation----nergie-sol-manche1-6",
+          "type": "manche1",
+          "titre": "Types de pompes solaires et courbes caractéristiques",
+          "theme": "Centrifuge vs volumétrique, immergée vs surface, point de fonctionnement",
+          "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q1",
+              "q": "Quel type de pompe utilise une roue à aubes (turbine) pour mettre l'eau en mouvement ?",
+              "r": "La pompe centrifuge",
+              "choices": [
+                "La pompe centrifuge",
+                "La pompe volumétrique",
+                "La pompe à main",
+                "La pompe à chaleur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q2",
+              "q": "Quel type de pompe déplace un volume fixe d'eau à chaque cycle (piston, membrane, rotor hélicoïdal) ?",
+              "r": "La pompe volumétrique (à déplacement positif)",
+              "choices": [
+                "La pompe volumétrique (à déplacement positif)",
+                "La pompe centrifuge",
+                "La pompe d'aspersion",
+                "La pompe à vide"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q3",
+              "q": "Pour de forts débits sous des HMT modérées, quel type de pompe est généralement privilégié ?",
+              "r": "La pompe centrifuge",
+              "choices": [
+                "La pompe centrifuge",
+                "La pompe volumétrique à piston",
+                "La noria manuelle",
+                "Aucune pompe"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q4",
+              "q": "Pour de faibles débits sous de fortes HMT (forages profonds, faible recharge), quel type convient souvent mieux ?",
+              "r": "La pompe volumétrique",
+              "choices": [
+                "La pompe volumétrique (rotor hélicoïdal, piston)",
+                "La pompe centrifuge basse pression",
+                "Le seau et la corde",
+                "La pompe d'aspersion"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q5",
+              "q": "Comment varie le débit d'une pompe centrifuge lorsque la HMT augmente ?",
+              "r": "Il diminue fortement",
+              "choices": [
+                "Il diminue fortement",
+                "Il augmente",
+                "Il reste rigoureusement constant",
+                "Il devient négatif"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La pompe centrifuge est très sensible à la hauteur : son débit chute quand la HMT croît.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q6",
+              "q": "Comment réagit le débit d'une pompe volumétrique à une hausse de HMT, dans sa plage de fonctionnement ?",
+              "r": "Il reste relativement stable",
+              "choices": [
+                "Il reste relativement stable (peu sensible à la HMT)",
+                "Il s'effondre aussitôt",
+                "Il double",
+                "Il s'inverse"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q7",
+              "q": "Quel type de pompe fonctionne mieux à faible ensoleillement (basse vitesse), utile tôt le matin ou par temps voilé ?",
+              "r": "La pompe volumétrique",
+              "choices": [
+                "La pompe volumétrique",
+                "La pompe centrifuge à haut régime uniquement",
+                "La pompe thermique",
+                "Aucune pompe"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q8",
+              "q": "Où se situe une pompe immergée dans un forage ?",
+              "r": "Sous le niveau de l'eau, au fond du forage",
+              "choices": [
+                "Immergée sous le niveau de l'eau, dans le forage",
+                "Posée au sol en surface",
+                "Sur le toit du bâtiment",
+                "Sur les panneaux solaires"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q9",
+              "q": "Quel est l'usage typique d'une pompe de surface ?",
+              "r": "Aspirer l'eau d'une ressource peu profonde (rivière, retenue, puits)",
+              "choices": [
+                "Aspirer l'eau d'une ressource peu profonde (rivière, retenue, puits peu profond)",
+                "Pomper à 200 m de profondeur",
+                "Produire de l'électricité",
+                "Filtrer l'air ambiant"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q10",
+              "q": "Quelle est la hauteur d'aspiration pratique maximale d'une pompe de surface ?",
+              "r": "Environ 7 mètres",
+              "choices": [
+                "Environ 7 m (limite liée à la pression atmosphérique)",
+                "Environ 100 m",
+                "Illimitée",
+                "0 m"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Au-delà d'environ 7 m d'aspiration, la cavitation et les pertes empêchent un bon fonctionnement.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q11",
+              "q": "Que représente la courbe caractéristique débit-HMT d'une pompe ?",
+              "r": "La relation entre le débit (Q) et la hauteur (HMT)",
+              "choices": [
+                "La relation entre le débit fourni et la HMT de la pompe",
+                "Le prix de la pompe selon l'année",
+                "La température du moteur",
+                "La couleur des panneaux"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q12",
+              "q": "Comment appelle-t-on le point où la courbe de la pompe croise la courbe du réseau (système) ?",
+              "r": "Le point de fonctionnement",
+              "choices": [
+                "Le point de fonctionnement",
+                "Le point de rosée",
+                "Le point mort haut",
+                "Le point d'éclair"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le point de fonctionnement détermine le débit réel délivré dans l'installation.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q13",
+              "q": "Pour capter l'eau d'une retenue ou d'une rivière sans subir la limite d'aspiration, quelle solution adopter ?",
+              "r": "Une pompe flottante (ou immergée) près de l'eau",
+              "choices": [
+                "Une pompe flottante, ou immergée, placée près du plan d'eau",
+                "Une pompe posée loin et en hauteur",
+                "Aucune pompe",
+                "Un panneau supplémentaire"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q14",
+              "q": "Quel composant adapte la vitesse du moteur de la pompe à l'ensoleillement variable ?",
+              "r": "Le variateur de fréquence (contrôleur)",
+              "choices": [
+                "Le variateur de fréquence (contrôleur)",
+                "La crépine",
+                "Le flotteur",
+                "Le pyranomètre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-6-q15",
+              "q": "Pourquoi adapter le type de pompe au couple débit/HMT du site ?",
+              "r": "Pour fonctionner près du rendement maximal",
+              "choices": [
+                "Pour que la pompe travaille près de son meilleur rendement",
+                "Pour augmenter les pertes de charge",
+                "Pour vider la nappe plus vite",
+                "Pour chauffer l'eau pompée"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-irrigation----nergie-sol-manche1-7",
+          "type": "manche1",
+          "titre": "Calculs et dimensionnement d'un SPIS",
+          "theme": "HMT, débit, volumes, énergie et puissance crête",
+          "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q1",
+              "q": "Un forage a un niveau dynamique de 25 m, des pertes de charge de 5 m et une pression de service nulle (refoulement libre). Quelle est la HMT ?",
+              "r": "30 m",
+              "choices": [
+                "30 m",
+                "20 m",
+                "50 m",
+                "5 m"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "HMT = hauteur d'élévation + pertes de charge + pression de service = 25 + 5 + 0 = 30 m.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q2",
+              "q": "Le niveau statique est à 8 m et le niveau dynamique à 14 m. Quel est le rabattement ?",
+              "r": "6 m",
+              "choices": [
+                "6 m",
+                "22 m",
+                "2 m",
+                "14 m"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Rabattement = niveau dynamique − niveau statique = 14 − 8 = 6 m.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q3",
+              "q": "Combien de litres représente une lame d'eau de 1 mm appliquée sur 1 m² ?",
+              "r": "1 litre",
+              "choices": [
+                "1 litre",
+                "10 litres",
+                "100 litres",
+                "0,1 litre"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "1 mm sur 1 m² = 1 L/m² ; c'est la base des conversions lame d'eau / volume.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q4",
+              "q": "Pour un besoin de 5 mm/jour sur 0,5 ha (5 000 m²), quel volume d'eau faut-il par jour ?",
+              "r": "25 m³",
+              "choices": [
+                "25 m³",
+                "2,5 m³",
+                "250 m³",
+                "5 m³"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "5 mm = 5 L/m² ; 5 × 5 000 = 25 000 L = 25 m³ par jour.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q5",
+              "q": "Pour fournir 25 m³ pendant 5 heures de pompage solaire, quel débit moyen faut-il ?",
+              "r": "5 m³/h",
+              "choices": [
+                "5 m³/h",
+                "25 m³/h",
+                "1 m³/h",
+                "125 m³/h"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Débit = volume / durée = 25 / 5 = 5 m³/h.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q6",
+              "q": "À combien de m³/h correspond un débit de 5 L/s ?",
+              "r": "18 m³/h",
+              "choices": [
+                "18 m³/h",
+                "5 m³/h",
+                "50 m³/h",
+                "1,4 m³/h"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "1 L/s = 3,6 m³/h, donc 5 × 3,6 = 18 m³/h.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q7",
+              "q": "Une irradiation de 5 kWh/m²/jour correspond à environ combien d'heures équivalentes de plein soleil (1 kW/m²) ?",
+              "r": "Environ 5 heures",
+              "choices": [
+                "Environ 5 heures",
+                "1 heure",
+                "24 heures",
+                "0,5 heure"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "1 « plein soleil » = 1 kW/m² ; 5 kWh/m²/jour équivaut à ~5 heures de production de référence.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q8",
+              "q": "Quelle énergie hydraulique faut-il pour élever 25 m³ d'eau sur une HMT de 20 m, avec E(Wh) ≈ 2,725 × V × HMT ?",
+              "r": "Environ 1,36 kWh",
+              "choices": [
+                "Environ 1,36 kWh (≈ 1 363 Wh)",
+                "Environ 13,6 kWh",
+                "Environ 0,14 kWh",
+                "Environ 136 kWh"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "E ≈ 2,725 × 25 × 20 ≈ 1 363 Wh, soit environ 1,36 kWh d'énergie hydraulique.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q9",
+              "q": "Si l'énergie hydraulique requise est de 1,36 kWh et le rendement pompe+moteur de 40 %, quelle énergie électrique faut-il ?",
+              "r": "Environ 3,4 kWh",
+              "choices": [
+                "Environ 3,4 kWh",
+                "Environ 0,54 kWh",
+                "Environ 1,36 kWh",
+                "Environ 34 kWh"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "E_électrique = E_hydraulique / rendement = 1,36 / 0,40 ≈ 3,4 kWh.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q10",
+              "q": "Avec 3,4 kWh à fournir et 5 heures équivalentes de plein soleil, quelle puissance crête installer (sans pertes) ?",
+              "r": "Environ 0,68 kWc (≈ 680 Wc)",
+              "choices": [
+                "Environ 0,68 kWc (~680 Wc)",
+                "Environ 17 kWc",
+                "Environ 0,068 kWc",
+                "Environ 6,8 kWc"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Puissance ≈ énergie / heures de soleil = 3,4 / 5 ≈ 0,68 kWc, à majorer par un facteur de pertes.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q11",
+              "q": "Combien de panneaux de 340 Wc faut-il (environ) pour atteindre ~680 Wc ?",
+              "r": "2 panneaux",
+              "choices": [
+                "2 panneaux",
+                "1 panneau",
+                "10 panneaux",
+                "20 panneaux"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "680 / 340 = 2 panneaux.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q12",
+              "q": "Quelle est la puissance hydraulique pour Q = 18 m³/h et HMT = 20 m, avec P(kW) = Q × HMT / 367 ?",
+              "r": "Environ 1 kW",
+              "choices": [
+                "Environ 1 kW (0,98 kW)",
+                "Environ 10 kW",
+                "Environ 0,1 kW",
+                "Environ 3,6 kW"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "P ≈ (18 × 20) / 367 ≈ 0,98 kW de puissance hydraulique.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q13",
+              "q": "À combien de m³ correspond une lame d'eau de 1 mm sur 1 hectare ?",
+              "r": "10 m³",
+              "choices": [
+                "10 m³",
+                "1 m³",
+                "100 m³",
+                "1 000 m³"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "1 ha = 10 000 m² ; 1 mm = 1 L/m² ; 10 000 L = 10 m³.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q14",
+              "q": "Pour sécuriser une journée d'irrigation de 25 m³, quelle capacité minimale de réservoir tampon prévoir ?",
+              "r": "Au moins ~25 m³ (un jour de besoin)",
+              "choices": [
+                "Au moins ~25 m³, l'équivalent d'une journée de besoin",
+                "2,5 m³",
+                "0 m³",
+                "250 m³ obligatoirement"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le réservoir stocke l'eau pompée le jour ; on le dimensionne souvent pour couvrir au moins une journée.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-irrigation----nergie-sol-manche1-7-q15",
+              "q": "Si la pompe débite 5 m³/h, combien d'heures faut-il pour remplir un réservoir de 25 m³ ?",
+              "r": "5 heures",
+              "choices": [
+                "5 heures",
+                "1 heure",
+                "25 heures",
+                "0,2 heure"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Durée = volume / débit = 25 / 5 = 5 heures.",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        }
+      ]
     }
   ]
 }
