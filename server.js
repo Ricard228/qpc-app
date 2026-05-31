@@ -54,12 +54,13 @@ function loadAuth() {
   const data = readJson(AUTH_PATH, null);
   if (data) {
     // Migration : ajouter settings si absent
-    if (!data.settings) data.settings = { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice' };
+    if (!data.settings) data.settings = { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice', helpEnabledForUsers: true };
     if (data.settings.qcmMode == null) data.settings.qcmMode = 'user-choice';
     if (data.settings.liveScoreboardMode == null) data.settings.liveScoreboardMode = 'user-choice';
+    if (data.settings.helpEnabledForUsers == null) data.settings.helpEnabledForUsers = true;
     return data;
   }
-  const init = { codes: {}, settings: { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice' }, createdAt: new Date().toISOString() };
+  const init = { codes: {}, settings: { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice', helpEnabledForUsers: true }, createdAt: new Date().toISOString() };
   writeJson(AUTH_PATH, init);
   return init;
 }
@@ -550,6 +551,7 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
   if (typeof req.body.liveScoreboardMode === 'string' && ['force-on', 'force-off', 'user-choice'].includes(req.body.liveScoreboardMode)) {
     auth.settings.liveScoreboardMode = req.body.liveScoreboardMode;
   }
+  if (typeof req.body.helpEnabledForUsers === 'boolean') auth.settings.helpEnabledForUsers = req.body.helpEnabledForUsers;
   saveAuth(auth);
   res.json(auth.settings);
 });

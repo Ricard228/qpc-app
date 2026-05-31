@@ -257,7 +257,30 @@ async function route(view, params = {}) {
 
 // ---------- Vue : Aide / Guide d'utilisation -------------------------
 let _helpReturnTo = null;
+
+// Met à jour la visibilité du bouton "Aide" du header selon le contexte.
+// Règles : toujours visible avant connexion, toujours visible en mode admin,
+// masqué pour les joueurs si l'admin a désactivé helpEnabledForUsers.
+function refreshHelpButtonVisibility() {
+  const btn = document.getElementById('btn-help-open');
+  if (!btn) return;
+  let visible = true;
+  if (Session.token && !Session.admin) {
+    const enabled = !State.meta || !State.meta.settings ||
+                    State.meta.settings.helpEnabledForUsers !== false;
+    visible = enabled;
+  }
+  btn.style.display = visible ? '' : 'none';
+}
+
 function renderHelp() {
+  // Blocage si désactivé pour les joueurs (sauf admin)
+  if (Session.token && !Session.admin &&
+      State.meta && State.meta.settings &&
+      State.meta.settings.helpEnabledForUsers === false) {
+    alert('Le guide d\'utilisation est actuellement désactivé par l\'administrateur.');
+    return route('home');
+  }
   mount('tpl-help');
   $('#btn-help-back').onclick = () => {
     const dest = _helpReturnTo;
@@ -1503,23 +1526,35 @@ async function renderAdmin() {
     catch (e) { alert('Erreur Excel : ' + e.message); }
   };
 
-  // Toggle révision libre + mode QCM
+  // Toggles : Révision libre + Aide pour joueurs + mode QCM
   const toggle = $('#toggle-review');
+  const toggleHelp = $('#toggle-help');
   try {
     const s = await api.adminGetSettings();
     toggle.checked = (s.reviewEnabled !== false);
+    if (toggleHelp) toggleHelp.checked = (s.helpEnabledForUsers !== false);
     const qm = s.qcmMode || 'user-choice';
     const radio = document.querySelector(`#admin-qcm-row input[name=admin-qcm][value="${qm}"]`);
     if (radio) radio.checked = true;
   } catch (e) {}
   toggle.addEventListener('change', async () => {
     try {
-      const s = await api.adminSetSettings({ reviewEnabled: toggle.checked });
+      await api.adminSetSettings({ reviewEnabled: toggle.checked });
       toggle.parentElement.style.opacity = '0.6';
       setTimeout(() => { toggle.parentElement.style.opacity = '1'; }, 300);
     } catch (e) {
       alert('Erreur : ' + e.message);
       toggle.checked = !toggle.checked;
+    }
+  });
+  if (toggleHelp) toggleHelp.addEventListener('change', async () => {
+    try {
+      await api.adminSetSettings({ helpEnabledForUsers: toggleHelp.checked });
+      toggleHelp.parentElement.style.opacity = '0.6';
+      setTimeout(() => { toggleHelp.parentElement.style.opacity = '1'; }, 300);
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+      toggleHelp.checked = !toggleHelp.checked;
     }
   });
   $$('#admin-qcm-row input[name=admin-qcm]').forEach(r => {
@@ -1818,6 +1853,9 @@ PTS: 6
 
 // ---------- En-tête : qui est connecté --------------------------------
 function refreshWho() {
+  // À chaque rafraîchissement de l'en-tête, ajuster aussi la visibilité du
+  // bouton Aide selon le contexte (admin, user, login).
+  refreshHelpButtonVisibility();
   const w = $('#who');
   w.innerHTML = '';
   // Si on est en mode admin (token admin présent), on affiche cela en priorité
