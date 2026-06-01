@@ -5984,9 +5984,9 @@
       "results": {
         "QPC-NZXE8MYU": {
           "startedAt": "2026-06-01T11:06:41.692Z",
-          "progressScore": 1,
-          "progressQ": 1,
-          "progressUpdatedAt": "2026-06-01T11:06:41.692Z"
+          "progressScore": 2,
+          "progressQ": 2,
+          "progressUpdatedAt": "2026-06-01T11:06:55.601Z"
         }
       },
       "winner": null
