@@ -5981,7 +5981,14 @@
         "QPC-NZXE8MYU": "accepted",
         "QPC-2XKS8TM2": "pending"
       },
-      "results": {},
+      "results": {
+        "QPC-NZXE8MYU": {
+          "startedAt": "2026-06-01T11:06:41.692Z",
+          "progressScore": 1,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-06-01T11:06:41.692Z"
+        }
+      },
       "winner": null
     }
   ]
