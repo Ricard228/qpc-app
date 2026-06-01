@@ -5427,6 +5427,562 @@
         }
       },
       "winner": "QPC-NZXE8MYU"
+    },
+    {
+      "id": "4a93e76f031ae600",
+      "type": "duel",
+      "createdAt": "2026-06-01T11:04:36.695Z",
+      "createdBy": "QPC-NZXE8MYU",
+      "participants": [
+        "QPC-NZXE8MYU",
+        "QPC-2XKS8TM2"
+      ],
+      "status": "pending",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "domains": [
+          "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+          "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 1
+        },
+        "liveScoreboard": true,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "custom-irrigation----nergie-sol-manche1-7",
+              "type": "manche1",
+              "titre": "Calculs et dimensionnement d'un SPIS",
+              "theme": "HMT, débit, volumes, énergie et puissance crête",
+              "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q1",
+                  "q": "Un forage a un niveau dynamique de 25 m, des pertes de charge de 5 m et une pression de service nulle (refoulement libre). Quelle est la HMT ?",
+                  "r": "30 m",
+                  "choices": [
+                    "30 m",
+                    "20 m",
+                    "50 m",
+                    "5 m"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "HMT = hauteur d'élévation + pertes de charge + pression de service = 25 + 5 + 0 = 30 m.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q2",
+                  "q": "Le niveau statique est à 8 m et le niveau dynamique à 14 m. Quel est le rabattement ?",
+                  "r": "6 m",
+                  "choices": [
+                    "6 m",
+                    "22 m",
+                    "2 m",
+                    "14 m"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Rabattement = niveau dynamique − niveau statique = 14 − 8 = 6 m.",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q3",
+                  "q": "Combien de litres représente une lame d'eau de 1 mm appliquée sur 1 m² ?",
+                  "r": "1 litre",
+                  "choices": [
+                    "1 litre",
+                    "10 litres",
+                    "100 litres",
+                    "0,1 litre"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "1 mm sur 1 m² = 1 L/m² ; c'est la base des conversions lame d'eau / volume.",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q4",
+                  "q": "Pour un besoin de 5 mm/jour sur 0,5 ha (5 000 m²), quel volume d'eau faut-il par jour ?",
+                  "r": "25 m³",
+                  "choices": [
+                    "25 m³",
+                    "2,5 m³",
+                    "250 m³",
+                    "5 m³"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "5 mm = 5 L/m² ; 5 × 5 000 = 25 000 L = 25 m³ par jour.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q5",
+                  "q": "Pour fournir 25 m³ pendant 5 heures de pompage solaire, quel débit moyen faut-il ?",
+                  "r": "5 m³/h",
+                  "choices": [
+                    "5 m³/h",
+                    "25 m³/h",
+                    "1 m³/h",
+                    "125 m³/h"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Débit = volume / durée = 25 / 5 = 5 m³/h.",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q6",
+                  "q": "À combien de m³/h correspond un débit de 5 L/s ?",
+                  "r": "18 m³/h",
+                  "choices": [
+                    "18 m³/h",
+                    "5 m³/h",
+                    "50 m³/h",
+                    "1,4 m³/h"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "1 L/s = 3,6 m³/h, donc 5 × 3,6 = 18 m³/h.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q7",
+                  "q": "Une irradiation de 5 kWh/m²/jour correspond à environ combien d'heures équivalentes de plein soleil (1 kW/m²) ?",
+                  "r": "Environ 5 heures",
+                  "choices": [
+                    "Environ 5 heures",
+                    "1 heure",
+                    "24 heures",
+                    "0,5 heure"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "1 « plein soleil » = 1 kW/m² ; 5 kWh/m²/jour équivaut à ~5 heures de production de référence.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q8",
+                  "q": "Quelle énergie hydraulique faut-il pour élever 25 m³ d'eau sur une HMT de 20 m, avec E(Wh) ≈ 2,725 × V × HMT ?",
+                  "r": "Environ 1,36 kWh",
+                  "choices": [
+                    "Environ 1,36 kWh (≈ 1 363 Wh)",
+                    "Environ 13,6 kWh",
+                    "Environ 0,14 kWh",
+                    "Environ 136 kWh"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "E ≈ 2,725 × 25 × 20 ≈ 1 363 Wh, soit environ 1,36 kWh d'énergie hydraulique.",
+                  "ref": "",
+                  "pts": 4
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q9",
+                  "q": "Si l'énergie hydraulique requise est de 1,36 kWh et le rendement pompe+moteur de 40 %, quelle énergie électrique faut-il ?",
+                  "r": "Environ 3,4 kWh",
+                  "choices": [
+                    "Environ 3,4 kWh",
+                    "Environ 0,54 kWh",
+                    "Environ 1,36 kWh",
+                    "Environ 34 kWh"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "E_électrique = E_hydraulique / rendement = 1,36 / 0,40 ≈ 3,4 kWh.",
+                  "ref": "",
+                  "pts": 4
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q10",
+                  "q": "Avec 3,4 kWh à fournir et 5 heures équivalentes de plein soleil, quelle puissance crête installer (sans pertes) ?",
+                  "r": "Environ 0,68 kWc (≈ 680 Wc)",
+                  "choices": [
+                    "Environ 0,68 kWc (~680 Wc)",
+                    "Environ 17 kWc",
+                    "Environ 0,068 kWc",
+                    "Environ 6,8 kWc"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Puissance ≈ énergie / heures de soleil = 3,4 / 5 ≈ 0,68 kWc, à majorer par un facteur de pertes.",
+                  "ref": "",
+                  "pts": 4
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q11",
+                  "q": "Combien de panneaux de 340 Wc faut-il (environ) pour atteindre ~680 Wc ?",
+                  "r": "2 panneaux",
+                  "choices": [
+                    "2 panneaux",
+                    "1 panneau",
+                    "10 panneaux",
+                    "20 panneaux"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "680 / 340 = 2 panneaux.",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q12",
+                  "q": "Quelle est la puissance hydraulique pour Q = 18 m³/h et HMT = 20 m, avec P(kW) = Q × HMT / 367 ?",
+                  "r": "Environ 1 kW",
+                  "choices": [
+                    "Environ 1 kW (0,98 kW)",
+                    "Environ 10 kW",
+                    "Environ 0,1 kW",
+                    "Environ 3,6 kW"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "P ≈ (18 × 20) / 367 ≈ 0,98 kW de puissance hydraulique.",
+                  "ref": "",
+                  "pts": 4
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q13",
+                  "q": "À combien de m³ correspond une lame d'eau de 1 mm sur 1 hectare ?",
+                  "r": "10 m³",
+                  "choices": [
+                    "10 m³",
+                    "1 m³",
+                    "100 m³",
+                    "1 000 m³"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "1 ha = 10 000 m² ; 1 mm = 1 L/m² ; 10 000 L = 10 m³.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q14",
+                  "q": "Pour sécuriser une journée d'irrigation de 25 m³, quelle capacité minimale de réservoir tampon prévoir ?",
+                  "r": "Au moins ~25 m³ (un jour de besoin)",
+                  "choices": [
+                    "Au moins ~25 m³, l'équivalent d'une journée de besoin",
+                    "2,5 m³",
+                    "0 m³",
+                    "250 m³ obligatoirement"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le réservoir stocke l'eau pompée le jour ; on le dimensionne souvent pour couvrir au moins une journée.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche1-7-q15",
+                  "q": "Si la pompe débite 5 m³/h, combien d'heures faut-il pour remplir un réservoir de 25 m³ ?",
+                  "r": "5 heures",
+                  "choices": [
+                    "5 heures",
+                    "1 heure",
+                    "25 heures",
+                    "0,2 heure"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Durée = volume / débit = 25 / 5 = 5 heures.",
+                  "ref": "",
+                  "pts": 2
+                }
+              ],
+              "isCustom": true
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "custom-irrigation----nergie-sol-manche2-2",
+              "type": "manche2",
+              "titre": "Mobilisation de l'eau d'irrigation — les eaux souterraines et les forages",
+              "theme": "Nappes, forages, caractéristiques et équipements",
+              "domain": "Irrigation à énergie solaire et mobilisation de l'eau (SPIS)",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q1",
+                  "q": "Comment appelle-t-on une réserve d'eau souterraine contenue dans une roche perméable ?",
+                  "r": "Un aquifère (nappe)",
+                  "choices": [
+                    "Un aquifère, ou nappe souterraine",
+                    "Un bassin versant",
+                    "Un talweg",
+                    "Une retenue collinaire"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 1
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q2",
+                  "q": "Quelle est la principale différence entre un forage et un puits traditionnel ?",
+                  "r": "Le forage est foré (étroit, profond) ; le puits est creusé (large, peu profond)",
+                  "choices": [
+                    "Le forage est foré, étroit et profond ; le puits est creusé, large et moins profond",
+                    "Le forage est toujours à ciel ouvert",
+                    "Le puits atteint toujours une nappe captive",
+                    "Il n'existe aucune différence technique"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q3",
+                  "q": "Comment appelle-t-on le niveau de l'eau dans un forage à l'arrêt, sans pompage ?",
+                  "r": "Le niveau statique",
+                  "choices": [
+                    "Le niveau statique",
+                    "Le niveau dynamique",
+                    "Le rabattement",
+                    "La hauteur de refoulement"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q4",
+                  "q": "Comment appelle-t-on le niveau de l'eau dans un forage pendant le pompage ?",
+                  "r": "Le niveau dynamique",
+                  "choices": [
+                    "Le niveau dynamique",
+                    "Le niveau statique",
+                    "L'exutoire",
+                    "La cote de repos"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q5",
+                  "q": "Qu'est-ce que le rabattement d'un forage ?",
+                  "r": "La baisse du niveau d'eau due au pompage",
+                  "choices": [
+                    "La différence entre le niveau statique et le niveau dynamique",
+                    "La hauteur des panneaux solaires",
+                    "Le diamètre du tubage",
+                    "Le débit nominal de la pompe"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Rabattement = niveau statique − niveau dynamique ; un rabattement excessif signale une surexploitation.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q6",
+                  "q": "Quel essai permet de déterminer le débit d'exploitation durable d'un forage ?",
+                  "r": "L'essai de pompage",
+                  "choices": [
+                    "L'essai de pompage",
+                    "L'essai de germination",
+                    "Le test de turbidité",
+                    "Le test d'acceptation des panneaux"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q7",
+                  "q": "Comment appelle-t-on la partie perforée du tubage qui laisse entrer l'eau dans le forage ?",
+                  "r": "La crépine",
+                  "choices": [
+                    "La crépine",
+                    "Le massif filtrant",
+                    "La margelle",
+                    "L'onduleur"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q8",
+                  "q": "Quel élément placé autour de la crépine filtre les fines et stabilise les parois du forage ?",
+                  "r": "Le massif filtrant (gravier)",
+                  "choices": [
+                    "Le massif filtrant de gravier",
+                    "La cimentation de surface",
+                    "La pompe immergée",
+                    "Le piézomètre"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q9",
+                  "q": "À quoi sert la cimentation annulaire en tête de forage ?",
+                  "r": "À protéger la nappe des infiltrations de surface",
+                  "choices": [
+                    "À isoler le forage et protéger la nappe des contaminations de surface",
+                    "À augmenter le débit de la pompe",
+                    "À refroidir le moteur",
+                    "À produire de l'électricité"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q10",
+                  "q": "Quel type de pompe équipe généralement un forage profond ?",
+                  "r": "La pompe immergée (submersible)",
+                  "choices": [
+                    "La pompe immergée (submersible)",
+                    "La pompe de surface uniquement",
+                    "La pompe à main exclusivement",
+                    "La pompe à chaleur"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q11",
+                  "q": "Que désigne la HMT d'une installation de pompage ?",
+                  "r": "La Hauteur Manométrique Totale",
+                  "choices": [
+                    "La Hauteur Manométrique Totale, hauteur totale que la pompe doit vaincre",
+                    "La Haute Maintenance Technique",
+                    "L'Humidité Maximale Tolérée",
+                    "La Hauteur Moyenne du Tubage"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La HMT cumule la hauteur d'élévation, le rabattement, les pertes de charge et la pression de service.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q12",
+                  "q": "Quels éléments composent principalement la HMT ?",
+                  "r": "Hauteur d'élévation + pertes de charge + pression de service",
+                  "choices": [
+                    "La hauteur d'élévation, les pertes de charge et la pression requise en sortie",
+                    "La seule profondeur totale du forage",
+                    "La surface des panneaux solaires",
+                    "Le diamètre des goutteurs"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 4
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q13",
+                  "q": "Que traduit une baisse continue du niveau statique d'une nappe ?",
+                  "r": "Une surexploitation de la nappe",
+                  "choices": [
+                    "Une surexploitation : des prélèvements supérieurs à la recharge",
+                    "Une recharge excessive",
+                    "Un excès de précipitations",
+                    "Un envasement de la retenue"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Un pompage supérieur à la recharge fait baisser durablement la nappe : un enjeu clé du module « Préserver l'eau ».",
+                  "ref": "https://energypedia.info/wiki/Toolbox_on_SPIS/fr",
+                  "pts": 4
+                },
+                {
+                  "id": "custom-irrigation----nergie-sol-manche2-2-q14",
+                  "q": "Quel instrument permet de mesurer le niveau de l'eau dans un forage ou un piézomètre ?",
+                  "r": "Une sonde de niveau (sonde piézométrique)",
+                  "choices": [
+                    "Une sonde de niveau (sonde piézométrique)",
+                    "Un pyranomètre",
+                    "Un anémomètre",
+                    "Un pH-mètre"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                }
+              ],
+              "isCustom": true
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-NZXE8MYU": "accepted",
+        "QPC-2XKS8TM2": "pending"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
