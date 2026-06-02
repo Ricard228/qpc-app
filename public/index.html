@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.24" />
+  <link rel="stylesheet" href="styles.css?v=2.25" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -1290,10 +1290,24 @@ MANCHE: 2
       <div class="card">
         <h2 class="card-title">✨ Charger un domaine en langage naturel</h2>
         <p class="muted" style="margin-top:0;">
-          Collez simplement votre série de questions-réponses, donnez quelques précisions, et l'application
-          se charge de <strong>structurer les QCM</strong> et de <strong>générer des distracteurs réalistes</strong>.
-          Idéal pour importer rapidement un sujet d'évaluation rédigé en Word/PDF/manuscrit.
+          Importez votre sujet d'évaluation depuis un fichier <strong>Word, PDF, TXT, RTF, HTML</strong>
+          (ou collez-le directement), donnez quelques précisions, et l'application se charge de
+          <strong>structurer les QCM</strong> et de <strong>générer des distracteurs réalistes</strong>.
         </p>
+
+        <!-- Zone d'upload de fichier (v2.25) -->
+        <div class="nl-upload" id="nl-upload-zone">
+          <input type="file" id="nl-file" accept=".docx,.pdf,.txt,.rtf,.html,.htm,.md,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,text/plain,application/rtf,text/rtf,text/html,text/markdown" hidden />
+          <div class="nl-upload-inner">
+            <div class="nl-upload-icon">📤</div>
+            <div class="nl-upload-text">
+              <strong>Glissez un fichier ici</strong> ou
+              <button type="button" id="btn-nl-pickfile" class="btn-link">parcourez votre ordinateur</button>
+            </div>
+            <div class="nl-upload-hint muted">.docx · .pdf · .txt · .rtf · .html · .md — jusqu'à 10 Mo</div>
+            <div id="nl-upload-status" class="nl-upload-status" hidden></div>
+          </div>
+        </div>
 
         <div class="nl-grid">
           <div class="nl-field">
@@ -1389,6 +1403,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.24"></script>
+  <script src="app.js?v=2.25"></script>
 </body>
 </html>

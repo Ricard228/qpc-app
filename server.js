@@ -9,6 +9,90 @@ const fs      = require('fs');
 const path    = require('path');
 const crypto  = require('crypto');
 const XLSX    = require('xlsx');
+const multer  = require('multer');
+const mammoth = require('mammoth');
+const { PDFParse } = require('pdf-parse');
+
+// Upload en mémoire (jamais persisté sur disque), limité à 10 Mo
+const uploadMem = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }   // 10 Mo
+});
+
+// =====================================================================
+// EXTRACTION DE TEXTE DEPUIS UN FICHIER (v2.25)
+// =====================================================================
+// Supporte les formats les plus courants pour des sujets d'évaluation :
+//   .docx (Word moderne)            → mammoth
+//   .pdf  (Adobe / scans avec texte) → pdf-parse v2
+//   .txt  (texte brut)              → utf-8
+//   .rtf  (Rich Text Format)        → strip balises
+//   .html / .htm                    → strip balises
+//   .md   (Markdown)                → utf-8 (Markdown lisible tel quel)
+//
+// Renvoie une string utf-8. Lève une exception en cas d'échec.
+async function extractTextFromBuffer(buffer, filename, mimeType) {
+  const ext = String(filename || '').toLowerCase().split('.').pop();
+  const mime = String(mimeType || '').toLowerCase();
+
+  // .docx (Word moderne)
+  if (ext === 'docx' || mime.includes('officedocument.wordprocessingml')) {
+    const result = await mammoth.extractRawText({ buffer });
+    return String(result.value || '').trim();
+  }
+
+  // .pdf
+  if (ext === 'pdf' || mime === 'application/pdf') {
+    const parser = new PDFParse({ data: buffer });
+    try {
+      const result = await parser.getText();
+      return String(result.text || '').trim();
+    } finally {
+      try { await parser.destroy(); } catch {}
+    }
+  }
+
+  // .rtf — extraction simple (suppression des codes RTF)
+  if (ext === 'rtf' || mime === 'application/rtf' || mime === 'text/rtf') {
+    let txt = buffer.toString('utf8');
+    // Supprime les commandes RTF \word et les groupes {\fonttbl ...}
+    txt = txt.replace(/\{\\fonttbl[^}]*\}/g, '')
+             .replace(/\{\\colortbl[^}]*\}/g, '')
+             .replace(/\{\\\*[^}]*\}/g, '')
+             .replace(/\\[a-z]+-?\d*\s?/g, ' ')
+             .replace(/[{}]/g, '')
+             .replace(/\\'(\w{2})/g, (_, h) => {
+               try { return Buffer.from(h, 'hex').toString('latin1'); }
+               catch { return ''; }
+             });
+    return txt.trim();
+  }
+
+  // .html / .htm
+  if (ext === 'html' || ext === 'htm' || mime === 'text/html') {
+    let txt = buffer.toString('utf8');
+    txt = txt.replace(/<style[\s\S]*?<\/style>/gi, '')
+             .replace(/<script[\s\S]*?<\/script>/gi, '')
+             .replace(/<br\s*\/?>/gi, '\n')
+             .replace(/<\/(p|div|h\d|li|tr)>/gi, '\n')
+             .replace(/<[^>]+>/g, '')
+             .replace(/&nbsp;/g, ' ')
+             .replace(/&amp;/g, '&')
+             .replace(/&lt;/g, '<')
+             .replace(/&gt;/g, '>')
+             .replace(/&quot;/g, '"')
+             .replace(/&#39;/g, "'");
+    return txt.trim();
+  }
+
+  // .doc (ancien Word binaire) — non supporté
+  if (ext === 'doc' || mime === 'application/msword') {
+    throw new Error('Le format .doc (Word 97-2003) n\'est pas supporté. Enregistrez en .docx ou .pdf et réessayez.');
+  }
+
+  // .txt, .md, et tout le reste → lecture utf-8
+  return buffer.toString('utf8').trim();
+}
 
 const PORT           = process.env.PORT || 3000;
 const ROOT           = __dirname;
@@ -1439,6 +1523,42 @@ app.post('/api/admin/custom-domains/from-natural', requireAdmin, (req, res) => {
     }))
   });
 });
+
+// Extraction depuis un fichier uploadé (v2.25).
+// Accepte multipart/form-data avec un champ `file`. Renvoie le texte
+// extrait dans `text` + indications de longueur et de paires détectées.
+// L'admin peut ensuite éditer le texte avant de cliquer sur "importer".
+app.post('/api/admin/custom-domains/extract-from-file',
+  requireAdmin,
+  uploadMem.single('file'),
+  async (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'Aucun fichier reçu (champ "file" attendu)' });
+    const { buffer, originalname, mimetype, size } = req.file;
+    try {
+      const text = await extractTextFromBuffer(buffer, originalname, mimetype);
+      if (!text || text.length < 5) {
+        return res.status(400).json({
+          error: `Le fichier ${originalname} semble vide ou non-texte. Si c'est un PDF scanné, il faut d'abord l'OCR.`
+        });
+      }
+      // Comptage indicatif des paires Q/R potentielles
+      const parsed = parseNaturalQA(text);
+      res.json({
+        filename: originalname,
+        mimeType: mimetype,
+        sizeBytes: size,
+        textLength: text.length,
+        title: parsed.title || '',
+        pairsDetected: parsed.pairs.length,
+        text  // texte brut renvoyé au client pour édition
+      });
+    } catch (e) {
+      console.error('Extraction error:', e.message);
+      return res.status(400).json({
+        error: `Impossible d'extraire le texte de ${originalname} : ${e.message}`
+      });
+    }
+  });
 
 // Aperçu : parse + génère distracteurs SANS enregistrer (preview pour
 // l'UI avant l'import définitif).

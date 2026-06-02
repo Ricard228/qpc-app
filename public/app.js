@@ -130,7 +130,23 @@ const api = {
   adminDeleteCustomDomain:   (name)    => apiFetch(`/api/admin/custom-domains/${encodeURIComponent(name)}`, { method: 'DELETE' }, true),
   // Langage naturel (v2.24)
   adminPreviewNL:            (body)    => apiFetch('/api/admin/custom-domains/preview-natural', { method: 'POST', body: JSON.stringify(body) }, true),
-  adminImportNL:             (body)    => apiFetch('/api/admin/custom-domains/from-natural', { method: 'POST', body: JSON.stringify(body) }, true)
+  adminImportNL:             (body)    => apiFetch('/api/admin/custom-domains/from-natural', { method: 'POST', body: JSON.stringify(body) }, true),
+  // Upload de fichier pour extraction (v2.25)
+  adminExtractFile:          async (file) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch('/api/admin/custom-domains/extract-from-file', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${Session.admin}` },
+      body: fd
+    });
+    if (!res.ok) {
+      let msg = `HTTP ${res.status}`;
+      try { const j = await res.json(); if (j.error) msg = j.error; } catch {}
+      throw new Error(msg);
+    }
+    return res.json();
+  }
 };
 
 // Téléchargement direct (binaire) avec auth admin pour l'Excel
@@ -2126,6 +2142,80 @@ async function renderAdmin() {
     const d = $('#custom-domain-help');
     d.open = !d.open;
   };
+
+  // ---------- Upload de fichier pour extraction (v2.25) --------------
+  async function handleNlFile(file) {
+    if (!file) return;
+    const status = $('#nl-upload-status');
+    if (status) {
+      status.hidden = false;
+      status.className = 'nl-upload-status nl-upload-loading';
+      status.innerHTML = `⏳ Extraction de <strong>${escapeHTML(file.name)}</strong>… (${Math.round(file.size / 1024)} Ko)`;
+    }
+    try {
+      const r = await api.adminExtractFile(file);
+      // Pré-remplit la textarea avec le texte extrait
+      const txt = $('#nl-text');
+      if (txt) txt.value = r.text;
+      // Pré-remplit le titre si vide et que l'extraction a trouvé un titre
+      if (r.title) {
+        const ttl = $('#nl-title');
+        if (ttl && !ttl.value.trim()) ttl.value = r.title;
+      }
+      if (status) {
+        status.className = 'nl-upload-status nl-upload-success';
+        status.innerHTML = `✓ <strong>${escapeHTML(r.filename)}</strong> — ${r.textLength.toLocaleString('fr-FR')} caractères extraits, ` +
+          `<strong>${r.pairsDetected} paire(s) Q/R détectée(s)</strong>.<br>` +
+          `Vous pouvez relire/éditer le texte ci-dessous avant de cliquer « 👁 Prévisualiser » ou « ✨ Analyser et importer ».`;
+      }
+      // Fait défiler vers la textarea
+      const txtEl = $('#nl-text');
+      if (txtEl) txtEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (e) {
+      if (status) {
+        status.className = 'nl-upload-status nl-upload-error';
+        status.innerHTML = `❌ ${escapeHTML(e.message || 'Échec extraction')}`;
+      }
+    }
+  }
+  function escapeHTML(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // Bouton "parcourir"
+  const nlPickBtn = $('#btn-nl-pickfile');
+  if (nlPickBtn) nlPickBtn.onclick = () => $('#nl-file').click();
+
+  // Input file change
+  const nlFileInput = $('#nl-file');
+  if (nlFileInput) nlFileInput.onchange = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) handleNlFile(f);
+    e.target.value = ''; // permet de re-sélectionner le même fichier
+  };
+
+  // Drag & drop sur la zone d'upload
+  const nlDropZone = $('#nl-upload-zone');
+  if (nlDropZone) {
+    ['dragenter', 'dragover'].forEach(ev =>
+      nlDropZone.addEventListener(ev, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        nlDropZone.classList.add('nl-upload-drag');
+      })
+    );
+    ['dragleave', 'drop'].forEach(ev =>
+      nlDropZone.addEventListener(ev, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        nlDropZone.classList.remove('nl-upload-drag');
+      })
+    );
+    nlDropZone.addEventListener('drop', (e) => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) handleNlFile(f);
+    });
+  }
 
   // ---------- Import langage naturel (v2.24) -------------------------
   function nlBody() {
