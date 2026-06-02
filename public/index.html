@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.22" />
+  <link rel="stylesheet" href="styles.css?v=2.23" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -141,6 +141,34 @@
             <strong>iOS (Safari)</strong> : touchez le bouton Partager <span class="icon-share">⎙</span> en bas, puis « Sur l'écran d'accueil ». L'icône QPC apparaît sur votre écran principal.
           </div>
         </div>
+      </div>
+    </section>
+  </template>
+
+  <!-- Choix après login d'un admin nommé : espace joueur OU panneau admin -->
+  <template id="tpl-admin-choice">
+    <section class="screen screen-admin-choice">
+      <div class="card admin-choice-card">
+        <div class="admin-choice-header">
+          <span class="brand-mark">QPC</span>
+          <h1 class="title-xl">Bienvenue <span id="admin-choice-name">…</span></h1>
+        </div>
+        <p class="lead">Vous êtes <strong>administrateur nommé</strong>. Choisissez où vous voulez aller — vous pourrez basculer à tout moment depuis l'en-tête.</p>
+        <div class="admin-choice-grid">
+          <button id="btn-choice-player" class="admin-choice-tile">
+            <div class="admin-choice-icon">🎮</div>
+            <div class="admin-choice-title">Espace joueur</div>
+            <div class="admin-choice-desc">Jouer une partie, réviser, défier d'autres joueurs, consulter votre historique.</div>
+          </button>
+          <button id="btn-choice-admin" class="admin-choice-tile">
+            <div class="admin-choice-icon">🛡️</div>
+            <div class="admin-choice-title">Panneau administrateur</div>
+            <div class="admin-choice-desc">Gérer les codes d'accès, les comptes, les durées, les domaines personnalisés, consulter le tableau de bord.</div>
+          </button>
+        </div>
+        <p class="muted" style="text-align:center;font-size:13px;margin-top:18px;">
+          💡 Astuce : un lien <strong>↺ Espace joueur</strong> / <strong>🛡️ Panneau admin</strong> apparaît dans l'en-tête pour basculer rapidement entre les deux espaces.
+        </p>
       </div>
     </section>
   </template>
@@ -1270,6 +1298,6 @@ MANCHE: 2
     </section>
   </template>
 
-  <script src="app.js?v=2.22"></script>
+  <script src="app.js?v=2.23"></script>
 </body>
 </html>

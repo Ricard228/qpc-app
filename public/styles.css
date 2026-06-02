@@ -50,6 +50,40 @@ html, body {
 .who { font-size: 14px; opacity: .9; }
 .who strong { font-weight: 600; }
 .who .switch-link { color: #fff; opacity: .85; margin-left: 12px; cursor: pointer; text-decoration: underline; }
+.who .switch-link:hover { opacity: 1; }
+
+/* ---------- Vue : choix admin nommé (espace joueur / panneau admin) -- */
+.screen-admin-choice { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.admin-choice-card { padding: 32px; }
+.admin-choice-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 12px;
+}
+.admin-choice-grid {
+  display: grid; gap: 16px; margin-top: 22px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .admin-choice-grid { grid-template-columns: 1fr 1fr; }
+}
+.admin-choice-tile {
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 24px 18px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform .12s, border-color .12s, box-shadow .12s;
+  font: inherit;
+}
+.admin-choice-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+.admin-choice-icon { font-size: 44px; line-height: 1; margin-bottom: 12px; }
+.admin-choice-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+.admin-choice-desc { font-size: 13px; color: var(--muted); line-height: 1.45; }
 
 /* ---------- Bottom bar ---------- */
 .bottombar {

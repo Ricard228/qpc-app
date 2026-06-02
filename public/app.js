@@ -3,23 +3,37 @@
 // =====================================================================
 
 // ---------- Session ---------------------------------------------------
-// Le token utilisateur est conservé dans localStorage pour persister
-// entre rechargements. L'admin a son propre token séparé.
-const LS_TOK   = 'qpc.token';
-const LS_NAME  = 'qpc.name';
-const LS_CODE  = 'qpc.code';
-const LS_ADMIN = 'qpc.admin_token';
-const LS_GAME  = 'qpc.savedGame';   // partie sauvegardée localement (par code)
+// Politique de persistance (v2.23) :
+//   - Code d'accès (nominatif) : session 10 ans, l'utilisateur reste connecté
+//     entre fermetures-réouvertures de l'app.
+//   - Compte (email/pseudo + password) : session NON persistante. À chaque
+//     ouverture, on force la ré-saisie du mot de passe (le pseudo reste
+//     pré-rempli dans le champ).
+//   - Visiteur : session 24h (token court côté serveur). À l'ouverture,
+//     si le token a expiré, le pseudo de session est redemandé.
+//   - Inputs du formulaire de login : dernier code + dernier identifiant
+//     compte mémorisés et pré-remplis. Mot de passe jamais mémorisé.
+const LS_TOK       = 'qpc.token';
+const LS_NAME      = 'qpc.name';
+const LS_CODE      = 'qpc.code';
+const LS_ADMIN     = 'qpc.admin_token';
+const LS_AUTHTYPE  = 'qpc.authType';       // 'code' | 'visitor' | 'account'
+const LS_LASTCODE  = 'qpc.lastCode';        // pré-remplissage champ code
+const LS_LASTACCID = 'qpc.lastAccountId';   // pré-remplissage champ identifiant
+const LS_GAME      = 'qpc.savedGame';       // partie sauvegardée localement (par code)
 
 const Session = {
-  token:  localStorage.getItem(LS_TOK)   || null,
-  name:   localStorage.getItem(LS_NAME)  || null,
-  code:   localStorage.getItem(LS_CODE)  || null,
-  admin:  localStorage.getItem(LS_ADMIN) || null,
-  set(t, c, n) {
+  token:    localStorage.getItem(LS_TOK)      || null,
+  name:     localStorage.getItem(LS_NAME)     || null,
+  code:     localStorage.getItem(LS_CODE)     || null,
+  admin:    localStorage.getItem(LS_ADMIN)    || null,
+  authType: localStorage.getItem(LS_AUTHTYPE) || null,
+  set(t, c, n, authType) {
     this.token = t; this.code = c; this.name = n;
-    localStorage.setItem(LS_TOK,  t);
-    localStorage.setItem(LS_CODE, c);
+    this.authType = authType || 'code';
+    localStorage.setItem(LS_TOK,      t);
+    localStorage.setItem(LS_CODE,     c);
+    localStorage.setItem(LS_AUTHTYPE, this.authType);
     if (n) localStorage.setItem(LS_NAME, n); else localStorage.removeItem(LS_NAME);
   },
   setAdmin(t) {
@@ -27,13 +41,26 @@ const Session = {
     if (t) localStorage.setItem(LS_ADMIN, t); else localStorage.removeItem(LS_ADMIN);
   },
   clearUser() {
-    this.token = this.name = this.code = null;
+    this.token = this.name = this.code = this.authType = null;
     localStorage.removeItem(LS_TOK);
     localStorage.removeItem(LS_NAME);
     localStorage.removeItem(LS_CODE);
+    localStorage.removeItem(LS_AUTHTYPE);
   },
-  clearAdmin() { this.setAdmin(null); }
+  clearAdmin() { this.setAdmin(null); },
+  // Appelée au démarrage : si le dernier login était par compte, on force
+  // la ré-saisie du mot de passe (cf. politique ci-dessus). Le pseudo
+  // est conservé dans qpc.lastAccountId et pré-rempli au login.
+  enforceReauthOnOpen() {
+    if (this.authType === 'account') {
+      this.clearUser();
+      // L'adminToken d'un admin nommé dépend du compte → l'invalider aussi
+      this.clearAdmin();
+    }
+  }
 };
+// Exécuté immédiatement au chargement du script
+Session.enforceReauthOnOpen();
 
 // ---------- Helpers API ------------------------------------------------
 async function apiFetch(url, opts = {}, useAdmin = false) {
@@ -200,7 +227,8 @@ function linkify(text) {
 const State = {
   meta: null,
   game: null,   // partie en cours
-  qcmMode: false  // mode QCM actif pour la partie en cours
+  qcmMode: false,  // mode QCM actif pour la partie en cours
+  currentRoot: null  // 'home' | 'admin' — pour le switcher header
 };
 
 // ---------- Save game local par code ----------------------------------
@@ -266,6 +294,7 @@ async function route(view, params = {}) {
     case 'duels':    return renderDuels();
     case 'duel-result': return renderDuelResult(params.duelId);
     case 'admin':    return renderAdmin();
+    case 'admin-choice': return renderAdminChoice();
     case 'help':     return renderHelp();
     default:         return Session.token ? renderHome() : renderLogin();
   }
@@ -334,6 +363,13 @@ function renderLogin() {
     });
   });
 
+  // Pré-remplissage des champs depuis localStorage (le code et le pseudo
+  // persistent entre fermetures de l'app ; le mot de passe ne l'est jamais).
+  const lastCode = localStorage.getItem(LS_LASTCODE) || '';
+  if (lastCode && $('#login-code')) $('#login-code').value = lastCode;
+  const lastAccId = localStorage.getItem(LS_LASTACCID) || '';
+  if (lastAccId && $('#acc-login-id')) $('#acc-login-id').value = lastAccId;
+
   // Form login par code
   $('#form-user-login').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -342,6 +378,8 @@ function renderLogin() {
     err.hidden = true;
     try {
       const r = await api.loginUser(code);
+      // Mémoriser le code saisi pour pré-remplissage à la prochaine ouverture
+      localStorage.setItem(LS_LASTCODE, code);
       // Cas spécial : code visiteur partagé → on demande un pseudo de session
       if (r && r.visitor) {
         const step = $('#visitor-pseudo-step');
@@ -355,7 +393,7 @@ function renderLogin() {
         }
         return;
       }
-      Session.set(r.token, r.code, r.name);
+      Session.set(r.token, r.code, r.name, 'code');
       State.meta = await api.meta();
       updateFooterMeta();
       route('home');
@@ -384,7 +422,7 @@ function renderLogin() {
         const r = await api.loginVisitor(code, pseudo);
         // L'identifiant interne du joueur dans Session est le code visiteur,
         // mais le nom affiché est le pseudo de session.
-        Session.set(r.token, r.code, r.visitorName);
+        Session.set(r.token, r.code, r.visitorName, 'visitor');
         State.meta = await api.meta();
         updateFooterMeta();
         route('home');
@@ -415,14 +453,21 @@ function renderLogin() {
     err.hidden = true;
     try {
       const r = await api.loginAccount({ identifier, password });
-      Session.set(r.token, r.accountId ? ('ACC-' + r.accountId.slice(0, 8)) : null, r.pseudo);
+      // Mémoriser l'identifiant (pas le mot de passe) pour pré-remplissage
+      localStorage.setItem(LS_LASTACCID, identifier);
+      Session.set(r.token, r.accountId ? ('ACC-' + r.accountId.slice(0, 8)) : null, r.pseudo, 'account');
       if (r.isAdmin && r.adminToken) {
         // Compte avec privilèges admin : on stocke aussi le token admin
         Session.setAdmin(r.adminToken);
+        State.meta = await api.meta();
+        updateFooterMeta();
+        // Choix : espace joueur OU panneau administrateur
+        route('admin-choice');
+        return;
       }
       State.meta = await api.meta();
       updateFooterMeta();
-      route(r.isAdmin ? 'admin' : 'home');
+      route('home');
     } catch (e) {
       err.textContent = e.message || 'Identifiants invalides';
       err.hidden = false;
@@ -439,10 +484,12 @@ function renderLogin() {
     err.hidden = true;
     try {
       const r = await api.registerAccount({ email, pseudo, password });
-      Session.set(r.token, 'ACC-' + r.accountId.slice(0, 8), r.pseudo);
+      // Mémoriser le pseudo (la prochaine fois, login direct avec ce pseudo)
+      localStorage.setItem(LS_LASTACCID, pseudo);
+      Session.set(r.token, 'ACC-' + r.accountId.slice(0, 8), r.pseudo, 'account');
       State.meta = await api.meta();
       updateFooterMeta();
-      alert('Compte créé avec succès ! Bienvenue ' + r.pseudo + '.');
+      alert('Compte créé avec succès ! Bienvenue ' + r.pseudo + '.\n\nNote : à chaque ouverture de l\'application, vous devrez ressaisir votre mot de passe (votre pseudo restera pré-rempli).');
       route('home');
     } catch (e) {
       err.textContent = e.message || 'Inscription impossible';
@@ -560,6 +607,7 @@ function setupInstallButtons() {
 // ---------- Vue : accueil ---------------------------------------------
 async function renderHome() {
   if (!Session.token) return route('login');
+  State.currentRoot = 'home';
   refreshWho();
   mount('tpl-home');
 
@@ -1549,9 +1597,22 @@ function sendDuelProgress() {
      .catch(() => {});
 }
 
+// ---------- Vue : choix admin nommé (joueur OU admin) -----------------
+function renderAdminChoice() {
+  if (!Session.token || !Session.admin) return route('login');
+  State.currentRoot = 'home';
+  refreshWho();
+  mount('tpl-admin-choice');
+  const nameEl = $('#admin-choice-name');
+  if (nameEl) nameEl.textContent = Session.name || Session.code || '';
+  $('#btn-choice-player').onclick = () => route('home');
+  $('#btn-choice-admin').onclick  = () => route('admin');
+}
+
 // ---------- Vue : panneau admin ---------------------------------------
 async function renderAdmin() {
   if (!Session.admin) return route('login');
+  State.currentRoot = 'admin';
   // En mode admin on n'affiche pas le contexte utilisateur dans le header
   refreshWho();
   mount('tpl-admin');
@@ -2130,7 +2191,33 @@ function refreshWho() {
   refreshHelpButtonVisibility();
   const w = $('#who');
   w.innerHTML = '';
-  // Si on est en mode admin (token admin présent), on affiche cela en priorité
+  // Cas spécial : admin nommé (compte avec privilèges admin) — il a à la
+  // fois Session.token (joueur) ET Session.admin. On affiche un bouton de
+  // bascule entre les deux espaces.
+  const isNamedAdmin = !!(Session.admin && Session.token && Session.authType === 'account');
+  if (isNamedAdmin) {
+    const inAdminView = State.currentRoot === 'admin';
+    w.appendChild(el('span', {}, inAdminView ? '🛡️ Mode admin · ' : '👤 Mode joueur · '));
+    w.appendChild(el('strong', {}, Session.name || Session.code));
+    if (inAdminView) {
+      w.appendChild(el('span', {
+        class: 'switch-link',
+        title: 'Revenir à l\'espace joueur sans perdre votre session admin',
+        onclick: () => route('home')
+      }, '↺ Espace joueur'));
+    } else {
+      w.appendChild(el('span', {
+        class: 'switch-link',
+        title: 'Ouvrir le panneau d\'administration',
+        onclick: () => route('admin')
+      }, '🛡️ Panneau admin'));
+    }
+    w.appendChild(el('span', { class: 'switch-link', onclick: () => {
+      Session.clearAdmin(); Session.clearUser(); route('login');
+    }}, 'Déconnexion'));
+    return;
+  }
+  // Super-administrateur uniquement (token admin sans token utilisateur)
   if (Session.admin) {
     w.appendChild(el('span', {}, '🛡️ Super-administrateur'));
     w.appendChild(el('span', { class: 'switch-link', onclick: () => {
