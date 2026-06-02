@@ -434,10 +434,26 @@ function requireUser(req, res, next) {
   const tok = verifyToken(extractToken(req));
   if (!tok || tok.role !== 'user') return res.status(401).json({ error: 'Authentification requise' });
   const auth = loadAuth();
-  // Méthode A : code généré par l'admin
+  // Méthode C : session sur un code visiteur partagé (code + pseudo + sessionId)
+  if (tok.code && tok.visitorName) {
+    const entry = auth.codes[tok.code];
+    if (!entry) return res.status(401).json({ error: 'Code révoqué' });
+    if (!entry.visitor) return res.status(401).json({ error: 'Ce code n\'est plus en mode visiteur' });
+    req.user = {
+      code: tok.code,
+      name: tok.visitorName,
+      visitorName: tok.visitorName,
+      sessionId: tok.sessionId || null,
+      authType: 'visitor'
+    };
+    return next();
+  }
+  // Méthode A : code nominatif généré par l'admin
   if (tok.code) {
-    if (!auth.codes[tok.code]) return res.status(401).json({ error: 'Code révoqué' });
-    req.user = { code: tok.code, name: auth.codes[tok.code].name || null, authType: 'code' };
+    const entry = auth.codes[tok.code];
+    if (!entry) return res.status(401).json({ error: 'Code révoqué' });
+    if (entry.visitor) return res.status(401).json({ error: 'Ce code est devenu un code visiteur — reconnectez-vous avec un pseudo' });
+    req.user = { code: tok.code, name: entry.name || null, authType: 'code' };
     return next();
   }
   // Méthode B : compte auto-inscrit (email/pseudo + password)
@@ -448,6 +464,16 @@ function requireUser(req, res, next) {
     return next();
   }
   return res.status(401).json({ error: 'Token invalide' });
+}
+
+// Garde-fou : les sessions visiteur ne peuvent ni créer ni accepter
+// un duel (identité partagée → ambigu). À placer après requireUser sur
+// les routes /api/me/duels.
+function blockVisitors(req, res, next) {
+  if (req.user && req.user.authType === 'visitor') {
+    return res.status(403).json({ error: 'Les sessions visiteur ne peuvent pas participer aux duels. Demandez un code nominatif à l\'administrateur.' });
+  }
+  next();
 }
 function requireAdmin(req, res, next) {
   const tok = verifyToken(extractToken(req));
@@ -492,11 +518,53 @@ app.post('/api/auth/login', (req, res) => {
   const auth = loadAuth();
   const entry = auth.codes[code];
   if (!entry) return res.status(401).json({ error: 'Code invalide ou révoqué' });
+  // Code visiteur (partagé) : on ne délivre PAS de token directement.
+  // Le client doit fournir un pseudo de session via /api/auth/login-visitor.
+  if (entry.visitor) {
+    return res.json({
+      visitor: true,
+      code,
+      label: entry.name || null
+    });
+  }
   entry.lastUsed = new Date().toISOString();
   saveAuth(auth);
   // Token utilisateur : effectivement permanent (10 ans)
   const token = signToken({ role: 'user', code, exp: Date.now() + 10 * 365 * 24 * 3600 * 1000 });
   res.json({ token, name: entry.name || null, code });
+});
+
+// Login d'une SESSION sur un code visiteur partagé. Chaque appel crée
+// une session distincte (sessionId aléatoire). Les parties enregistrées
+// sont liées au code visiteur + au pseudo de session.
+app.post('/api/auth/login-visitor', (req, res) => {
+  const code = String(req.body.code || '').trim().toUpperCase();
+  const visitorName = String(req.body.visitorName || req.body.pseudo || '').trim().slice(0, 60);
+  if (!code) return res.status(400).json({ error: 'Code requis' });
+  if (visitorName.length < 2) return res.status(400).json({ error: 'Pseudo trop court (minimum 2 caractères)' });
+  const auth = loadAuth();
+  const entry = auth.codes[code];
+  if (!entry) return res.status(401).json({ error: 'Code invalide ou révoqué' });
+  if (!entry.visitor) return res.status(400).json({ error: 'Ce code n\'est pas un code visiteur. Utilisez /api/auth/login.' });
+  entry.lastUsed = new Date().toISOString();
+  // Optionnel : suivre les noms uniques utilisés sur ce code visiteur
+  entry.visitorSeen = Array.isArray(entry.visitorSeen) ? entry.visitorSeen : [];
+  if (!entry.visitorSeen.includes(visitorName)) {
+    entry.visitorSeen.push(visitorName);
+    // Cap doux pour éviter une croissance illimitée
+    if (entry.visitorSeen.length > 500) entry.visitorSeen = entry.visitorSeen.slice(-500);
+  }
+  saveAuth(auth);
+  const sessionId = crypto.randomBytes(6).toString('hex');
+  // Session courte : 24h, renouvelable
+  const token = signToken({
+    role: 'user',
+    code,
+    visitorName,
+    sessionId,
+    exp: Date.now() + 24 * 3600 * 1000
+  });
+  res.json({ token, code, visitorName, sessionId, name: visitorName });
 });
 
 app.post('/api/auth/admin', (req, res) => {
@@ -589,7 +657,10 @@ app.get('/api/meta', requireUser, (req, res) => {
   res.json({
     ...computeMeta(),
     settings: auth.settings || { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice' },
-    hasActiveDuel: userHasActiveDuel(req.user.code)
+    authType: req.user.authType,                                  // 'code' | 'visitor' | 'account'
+    visitorName: req.user.visitorName || null,
+    // Les sessions visiteur n'ont pas accès aux duels — pas de check
+    hasActiveDuel: req.user.authType === 'visitor' ? false : userHasActiveDuel(req.user.code)
   });
 });
 
@@ -612,6 +683,8 @@ app.post('/api/me/game', requireUser, (req, res) => {
     id: crypto.randomBytes(6).toString('hex'),
     code: req.user.code,            // pour comptes : "ACC-<8 chars>"
     accountId: req.user.accountId || null,
+    visitorName: req.user.visitorName || null,   // null si non-visiteur
+    sessionId:   req.user.sessionId   || null,
     name: req.user.name,
     finishedAt: new Date().toISOString(),
     totalScore: summary.totalScore || 0,
@@ -627,6 +700,11 @@ app.post('/api/me/game', requireUser, (req, res) => {
     auth.codes[req.user.code].gamesPlayed = (auth.codes[req.user.code].gamesPlayed || 0) + 1;
     auth.codes[req.user.code].lastUsed = new Date().toISOString();
     saveAuth(auth);
+  } else if (req.user.authType === 'visitor' && auth.codes[req.user.code]) {
+    // Compteur global du code visiteur (toutes sessions confondues)
+    auth.codes[req.user.code].gamesPlayed = (auth.codes[req.user.code].gamesPlayed || 0) + 1;
+    auth.codes[req.user.code].lastUsed = new Date().toISOString();
+    saveAuth(auth);
   } else if (req.user.authType === 'account' && auth.accounts && auth.accounts[req.user.accountId]) {
     auth.accounts[req.user.accountId].gamesPlayed = (auth.accounts[req.user.accountId].gamesPlayed || 0) + 1;
     auth.accounts[req.user.accountId].lastUsed = new Date().toISOString();
@@ -638,7 +716,12 @@ app.post('/api/me/game', requireUser, (req, res) => {
 
 app.get('/api/me/games', requireUser, (req, res) => {
   const games = loadGames();
-  const mine = (games.games || []).filter(g => g.code === req.user.code);
+  let mine = (games.games || []).filter(g => g.code === req.user.code);
+  // Pour une session visiteur, on isole l'historique au pseudo de session
+  // (sinon tout le monde verrait tout l'historique du code partagé).
+  if (req.user.authType === 'visitor') {
+    mine = mine.filter(g => g.visitorName === req.user.visitorName);
+  }
   res.json(mine);
 });
 
@@ -649,12 +732,17 @@ app.get('/api/admin/codes', requireAdmin, (req, res) => {
   const list = Object.entries(auth.codes).map(([code, entry]) => {
     const gamesOf = (games.games || []).filter(g => g.code === code);
     const totalScore = gamesOf.reduce((s, g) => s + (g.totalScore || 0), 0);
+    const distinctVisitors = entry.visitor
+      ? new Set(gamesOf.map(g => g.visitorName).filter(Boolean)).size
+      : 0;
     return {
       code, name: entry.name || null,
       createdAt: entry.createdAt,
       lastUsed:  entry.lastUsed || null,
       gamesPlayed: gamesOf.length,
-      totalScore
+      totalScore,
+      visitor: !!entry.visitor,
+      distinctVisitors
     };
   }).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
   res.json(list);
@@ -662,12 +750,23 @@ app.get('/api/admin/codes', requireAdmin, (req, res) => {
 
 app.post('/api/admin/codes', requireAdmin, (req, res) => {
   const name = String(req.body.name || '').trim().slice(0, 60) || null;
+  const visitor = !!req.body.visitor;
   const auth = loadAuth();
   let code;
   do { code = genCode(); } while (auth.codes[code]);
-  auth.codes[code] = { name, createdAt: new Date().toISOString(), lastUsed: null, gamesPlayed: 0 };
+  const entry = {
+    name,
+    createdAt: new Date().toISOString(),
+    lastUsed: null,
+    gamesPlayed: 0
+  };
+  if (visitor) {
+    entry.visitor = true;
+    entry.visitorSeen = [];
+  }
+  auth.codes[code] = entry;
   saveAuth(auth);
-  res.json({ code, name });
+  res.json({ code, name, visitor });
 });
 
 app.delete('/api/admin/codes/:code', requireAdmin, (req, res) => {
@@ -677,6 +776,31 @@ app.delete('/api/admin/codes/:code', requireAdmin, (req, res) => {
   delete auth.codes[code];
   saveAuth(auth);
   res.json({ ok: true });
+});
+
+// Détail d'un code visiteur : liste des sessions par pseudo (parties +
+// score cumulé pour chaque pseudo distinct).
+app.get('/api/admin/codes/:code/visitors', requireAdmin, (req, res) => {
+  const code = String(req.params.code).toUpperCase();
+  const auth = loadAuth();
+  const entry = auth.codes[code];
+  if (!entry) return res.status(404).json({ error: 'Code introuvable' });
+  if (!entry.visitor) return res.status(400).json({ error: 'Ce code n\'est pas un code visiteur' });
+  const games = loadGames();
+  const gamesOf = (games.games || []).filter(g => g.code === code);
+  const byPseudo = {};
+  for (const g of gamesOf) {
+    const k = g.visitorName || '(anonyme)';
+    if (!byPseudo[k]) byPseudo[k] = { pseudo: k, games: 0, totalScore: 0, nbCorrect: 0, nbQuestions: 0, lastFinishedAt: null };
+    const b = byPseudo[k];
+    b.games += 1;
+    b.totalScore += g.totalScore || 0;
+    b.nbCorrect += g.nbCorrect || 0;
+    b.nbQuestions += g.nbQuestions || 0;
+    if (!b.lastFinishedAt || g.finishedAt > b.lastFinishedAt) b.lastFinishedAt = g.finishedAt;
+  }
+  const list = Object.values(byPseudo).sort((a, b) => b.totalScore - a.totalScore);
+  res.json({ code, label: entry.name || null, totalGames: gamesOf.length, totalDistinct: list.length, byPseudo: list });
 });
 
 // ---------- Admin : settings (toggle révision libre) -----------------
@@ -1145,7 +1269,7 @@ function userHasActiveDuel(code) {
 }
 
 // ---------- API : duels utilisateur ----------------------------------
-app.get('/api/me/duels', requireUser, (req, res) => {
+app.get('/api/me/duels', requireUser, blockVisitors, (req, res) => {
   const { matches } = loadMatches();
   const mine = matches.filter(m => m.participants.includes(req.user.code))
     .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''))
@@ -1153,12 +1277,13 @@ app.get('/api/me/duels', requireUser, (req, res) => {
   res.json(mine);
 });
 
-app.post('/api/me/duels', requireUser, (req, res) => {
+app.post('/api/me/duels', requireUser, blockVisitors, (req, res) => {
   const opponentCodeRaw = String(req.body.opponentCode || '').trim().toUpperCase();
   if (!opponentCodeRaw) return res.status(400).json({ error: 'Code de l\'adversaire requis' });
   if (opponentCodeRaw === req.user.code) return res.status(400).json({ error: 'Vous ne pouvez pas vous défier vous-même' });
   const auth = loadAuth();
   if (!auth.codes[opponentCodeRaw]) return res.status(404).json({ error: 'Code adversaire introuvable ou révoqué' });
+  if (auth.codes[opponentCodeRaw].visitor) return res.status(400).json({ error: 'Vous ne pouvez pas défier un code visiteur partagé. Utilisez un code nominatif.' });
 
   const config = req.body.config || {};
   config.manches = Array.isArray(config.manches) && config.manches.length ? config.manches : ['manche1'];
@@ -1184,7 +1309,7 @@ app.post('/api/me/duels', requireUser, (req, res) => {
   res.json(publicMatchView(match, req.user.code));
 });
 
-app.post('/api/me/duels/:id/accept', requireUser, (req, res) => {
+app.post('/api/me/duels/:id/accept', requireUser, blockVisitors, (req, res) => {
   const store = loadMatches();
   const m = store.matches.find(x => x.id === req.params.id);
   if (!m) return res.status(404).json({ error: 'Duel introuvable' });
@@ -1199,7 +1324,7 @@ app.post('/api/me/duels/:id/accept', requireUser, (req, res) => {
   res.json(publicMatchView(m, req.user.code));
 });
 
-app.post('/api/me/duels/:id/decline', requireUser, (req, res) => {
+app.post('/api/me/duels/:id/decline', requireUser, blockVisitors, (req, res) => {
   const store = loadMatches();
   const m = store.matches.find(x => x.id === req.params.id);
   if (!m) return res.status(404).json({ error: 'Duel introuvable' });
@@ -1211,7 +1336,7 @@ app.post('/api/me/duels/:id/decline', requireUser, (req, res) => {
   res.json({ ok: true });
 });
 
-app.get('/api/me/duels/:id', requireUser, (req, res) => {
+app.get('/api/me/duels/:id', requireUser, blockVisitors, (req, res) => {
   const store = loadMatches();
   const m = store.matches.find(x => x.id === req.params.id);
   if (!m) return res.status(404).json({ error: 'Duel introuvable' });
@@ -1219,7 +1344,7 @@ app.get('/api/me/duels/:id', requireUser, (req, res) => {
   res.json(publicMatchView(m, req.user.code));
 });
 
-app.post('/api/me/duels/:id/game', requireUser, (req, res) => {
+app.post('/api/me/duels/:id/game', requireUser, blockVisitors, (req, res) => {
   const store = loadMatches();
   const m = store.matches.find(x => x.id === req.params.id);
   if (!m) return res.status(404).json({ error: 'Duel introuvable' });
@@ -1273,7 +1398,7 @@ app.post('/api/me/duels/:id/game', requireUser, (req, res) => {
 
 // Mise à jour du progrès en cours de partie (envoyé après chaque
 // question répondue par le client si liveScoreboard est actif)
-app.post('/api/me/duels/:id/progress', requireUser, (req, res) => {
+app.post('/api/me/duels/:id/progress', requireUser, blockVisitors, (req, res) => {
   const store = loadMatches();
   const m = store.matches.find(x => x.id === req.params.id);
   if (!m) return res.status(404).json({ error: 'Duel introuvable' });
@@ -1297,7 +1422,7 @@ app.post('/api/me/duels/:id/progress', requireUser, (req, res) => {
 // Scoreboard live : renvoie les scores en cours de chaque participant.
 // Visible UNIQUEMENT si liveScoreboard activé pour ce match (par l'admin
 // global ou par le créateur du duel).
-app.get('/api/me/duels/:id/scoreboard', requireUser, (req, res) => {
+app.get('/api/me/duels/:id/scoreboard', requireUser, blockVisitors, (req, res) => {
   const store = loadMatches();
   const m = store.matches.find(x => x.id === req.params.id);
   if (!m) return res.status(404).json({ error: 'Duel introuvable' });
@@ -1341,6 +1466,7 @@ app.post('/api/admin/duels', requireAdmin, (req, res) => {
   const auth = loadAuth();
   for (const c of participants) {
     if (!auth.codes[c]) return res.status(400).json({ error: `Code ${c} introuvable ou révoqué` });
+    if (auth.codes[c].visitor) return res.status(400).json({ error: `Code ${c} : un code visiteur partagé ne peut pas être convoqué dans une confrontation. Utilisez un code nominatif.` });
   }
   // Dédoublonner
   const unique = [...new Set(participants)];

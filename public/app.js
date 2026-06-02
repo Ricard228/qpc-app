@@ -70,8 +70,10 @@ const api = {
   myGames:    ()         => apiFetch('/api/me/games'),
   archiveGame:(summary)  => apiFetch('/api/me/game',     { method: 'POST', body: JSON.stringify(summary) }),
   adminCodes: ()         => apiFetch('/api/admin/codes', {}, true),
-  adminCreateCode: (name) => apiFetch('/api/admin/codes', { method: 'POST', body: JSON.stringify({ name }) }, true),
+  adminCreateCode: (name, visitor) => apiFetch('/api/admin/codes', { method: 'POST', body: JSON.stringify({ name, visitor: !!visitor }) }, true),
   adminDeleteCode: (code) => apiFetch(`/api/admin/codes/${encodeURIComponent(code)}`, { method: 'DELETE' }, true),
+  adminCodeVisitors: (code) => apiFetch(`/api/admin/codes/${encodeURIComponent(code)}/visitors`, {}, true),
+  loginVisitor: (code, visitorName) => apiFetch('/api/auth/login-visitor', { method: 'POST', body: JSON.stringify({ code, visitorName }) }),
   adminDashboard:  ()     => apiFetch('/api/admin/dashboard', {}, true),
   adminGame:       (id)   => apiFetch(`/api/admin/game/${encodeURIComponent(id)}`, {}, true),
   adminExport:     ()     => apiFetch('/api/admin/export', {}, true),
@@ -340,6 +342,19 @@ function renderLogin() {
     err.hidden = true;
     try {
       const r = await api.loginUser(code);
+      // Cas spécial : code visiteur partagé → on demande un pseudo de session
+      if (r && r.visitor) {
+        const step = $('#visitor-pseudo-step');
+        const lbl  = $('#visitor-pseudo-label');
+        if (lbl) lbl.textContent = r.label ? ` — ${r.label}` : '';
+        if (step) {
+          step.hidden = false;
+          step.dataset.code = code;
+          const inp = $('#visitor-pseudo');
+          if (inp) inp.focus();
+        }
+        return;
+      }
       Session.set(r.token, r.code, r.name);
       State.meta = await api.meta();
       updateFooterMeta();
@@ -349,6 +364,47 @@ function renderLogin() {
       err.hidden = false;
     }
   });
+
+  // Étape 2 : pseudo de session pour code visiteur
+  const visitorForm = $('#form-visitor-pseudo');
+  if (visitorForm) {
+    visitorForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const step = $('#visitor-pseudo-step');
+      const code = step && step.dataset.code;
+      const pseudo = $('#visitor-pseudo').value.trim();
+      const err = $('#login-error');
+      err.hidden = true;
+      if (!code) {
+        err.textContent = 'Code visiteur introuvable — recommencez la connexion.';
+        err.hidden = false;
+        return;
+      }
+      try {
+        const r = await api.loginVisitor(code, pseudo);
+        // L'identifiant interne du joueur dans Session est le code visiteur,
+        // mais le nom affiché est le pseudo de session.
+        Session.set(r.token, r.code, r.visitorName);
+        State.meta = await api.meta();
+        updateFooterMeta();
+        route('home');
+      } catch (e) {
+        err.textContent = e.message || 'Pseudo refusé';
+        err.hidden = false;
+      }
+    });
+  }
+  const visitorCancel = $('#visitor-pseudo-cancel');
+  if (visitorCancel) {
+    visitorCancel.addEventListener('click', () => {
+      const step = $('#visitor-pseudo-step');
+      if (step) { step.hidden = true; step.dataset.code = ''; }
+      const inp = $('#visitor-pseudo');
+      if (inp) inp.value = '';
+      const lc = $('#login-code');
+      if (lc) lc.focus();
+    });
+  }
 
   // Form login par compte (email/pseudo + password)
   $('#form-account-login').addEventListener('submit', async (e) => {
@@ -530,6 +586,13 @@ async function renderHome() {
   $('#card-review').onclick   = () => route('review');
   $('#card-duels').onclick    = () => route('duels');
   $('#card-history').onclick  = () => route('history');
+
+  // Les sessions visiteur ne participent pas aux duels (identité partagée
+  // → conflit) : on masque la carte « Mes duels » et on ignore le badge.
+  const isVisitorSession = !!(State.meta && State.meta.authType === 'visitor');
+  if (isVisitorSession) {
+    const cd = $('#card-duels'); if (cd) cd.hidden = true;
+  }
 
   // Mettre à jour le nombre de questions affiché sur la carte Révision
   const reviewCount = $('#card-review-count');
@@ -1515,21 +1578,46 @@ async function renderAdmin() {
     const list = $('#admin-codes-list'); list.innerHTML = '';
     if (codes.length === 0) list.appendChild(el('div', { class: 'muted' }, 'Aucun code généré pour le moment.'));
     for (const c of codes) {
-      list.appendChild(el('div', { class: 'code-row' },
+      const metaBits = [
+        `${c.gamesPlayed} partie(s)`,
+        `${c.totalScore} pts cumulés`
+      ];
+      if (c.visitor && c.distinctVisitors > 0) metaBits.push(`${c.distinctVisitors} pseudo(s) distinct(s)`);
+      metaBits.push(c.lastUsed ? `dernière connexion ${fmtDate(c.lastUsed)}` : 'jamais utilisé');
+      metaBits.push(`créé le ${fmtDate(c.createdAt)}`);
+      list.appendChild(el('div', { class: 'code-row' + (c.visitor ? ' code-row-visitor' : '') },
         el('div', { class: 'code-info' },
           el('div', {},
             el('span', { class: 'code-mono', onclick: () => { navigator.clipboard.writeText(c.code); flash(this); } }, c.code),
+            c.visitor ? el('span', { class: 'badge-visitor' }, 'VISITEUR') : null,
             c.name ? el('span', { class: 'code-name' }, ' — ' + c.name) : null),
-          el('div', { class: 'code-meta' },
-            `${c.gamesPlayed} partie(s) · ${c.totalScore} pts cumulés · `,
-            c.lastUsed ? `dernière connexion ${fmtDate(c.lastUsed)}` : 'jamais utilisé',
-            ` · créé le ${fmtDate(c.createdAt)}`)),
+          el('div', { class: 'code-meta' }, metaBits.join(' · '))),
         el('div', { class: 'code-actions' },
           el('button', { class: 'btn btn-ghost', onclick: () => {
             navigator.clipboard.writeText(c.code).then(() => alert('Code copié : ' + c.code));
           }}, '📋 Copier'),
+          c.visitor ? el('button', {
+            class: 'btn btn-ghost',
+            title: 'Voir les sessions (pseudos) liées à ce code visiteur',
+            onclick: async () => {
+              try {
+                const r = await api.adminCodeVisitors(c.code);
+                const lines = r.byPseudo.length
+                  ? r.byPseudo.map(p =>
+                      `• ${p.pseudo} — ${p.games} partie(s), ${p.totalScore} pts, ${p.nbCorrect}/${p.nbQuestions} bonnes` +
+                      (p.lastFinishedAt ? ` (dernière : ${fmtDate(p.lastFinishedAt)})` : '')
+                    ).join('\n')
+                  : 'Aucune session pour le moment.';
+                alert(`Sessions du code visiteur ${c.code}\n${r.label ? '(' + r.label + ')\n' : ''}` +
+                      `${r.totalDistinct} pseudo(s) distinct(s) · ${r.totalGames} partie(s)\n\n${lines}`);
+              } catch (e) { alert('Erreur : ' + e.message); }
+            }
+          }, '👥 Sessions') : null,
           el('button', { class: 'btn btn-danger', onclick: async () => {
-            if (!confirm(`Révoquer le code ${c.code} ? Les parties déjà enregistrées seront conservées.`)) return;
+            const msg = c.visitor
+              ? `Révoquer le code visiteur ${c.code} ? Toutes les sessions en cours seront coupées. Les parties déjà enregistrées seront conservées.`
+              : `Révoquer le code ${c.code} ? Les parties déjà enregistrées seront conservées.`;
+            if (!confirm(msg)) return;
             await api.adminDeleteCode(c.code);
             refresh();
           }}, '✕ Révoquer'))));
@@ -1591,11 +1679,17 @@ async function renderAdmin() {
   $('#form-new-code').addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = $('#new-code-name').value.trim();
+    const visitorCb = $('#new-code-visitor');
+    const visitor = !!(visitorCb && visitorCb.checked);
     try {
-      const r = await api.adminCreateCode(name);
+      const r = await api.adminCreateCode(name, visitor);
       $('#new-code-name').value = '';
+      if (visitorCb) visitorCb.checked = false;
       navigator.clipboard.writeText(r.code).catch(() => {});
-      alert(`Nouveau code : ${r.code}\n(copié dans le presse-papiers)`);
+      const msg = visitor
+        ? `Nouveau code VISITEUR partagé : ${r.code}\n(copié dans le presse-papiers)\n\nPartagez-le librement : chaque personne qui se connecte saisira son pseudo de session.`
+        : `Nouveau code : ${r.code}\n(copié dans le presse-papiers)`;
+      alert(msg);
       refresh();
     } catch (e) { alert('Erreur : ' + e.message); }
   });

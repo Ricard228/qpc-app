@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.21" />
+  <link rel="stylesheet" href="styles.css?v=2.22" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -72,12 +72,26 @@
         </div>
 
         <div class="login-pane" data-pane="code">
-          <p class="lead">Entrez votre <strong>code d'accès</strong> personnel pour jouer. Le super-administrateur peut générer un code pour vous.</p>
+          <p class="lead">Entrez votre <strong>code d'accès</strong> personnel ou un <strong>code visiteur partagé</strong> fourni par l'organisateur.</p>
           <form id="form-user-login" class="form-row" style="margin-top:14px;">
             <input type="text" id="login-code" placeholder="Code d'accès (ex. QPC-A3B7XK91)"
               autocomplete="off" autocapitalize="characters" required style="text-transform:uppercase;letter-spacing:1px;font-weight:600;" />
             <button class="btn btn-primary" type="submit">Entrer</button>
           </form>
+
+          <!-- Étape 2 : code visiteur reconnu → demande du pseudo de session -->
+          <div id="visitor-pseudo-step" class="visitor-pseudo-step" hidden>
+            <div class="visitor-pseudo-info">
+              <strong>✓ Code visiteur reconnu</strong>
+              <span id="visitor-pseudo-label" class="muted"></span>
+            </div>
+            <p class="lead" style="margin:8px 0;">Choisissez un <strong>pseudo</strong> pour cette session (visible dans le classement). Plusieurs personnes peuvent jouer en même temps avec ce même code.</p>
+            <form id="form-visitor-pseudo" class="form-row" style="margin-top:8px;">
+              <input type="text" id="visitor-pseudo" placeholder="Votre pseudo (2 à 60 caractères)" minlength="2" maxlength="60" autocomplete="nickname" required />
+              <button class="btn btn-primary" type="submit">Jouer</button>
+              <button class="btn btn-ghost" type="button" id="visitor-pseudo-cancel">Annuler</button>
+            </form>
+          </div>
         </div>
 
         <div class="login-pane" data-pane="account" hidden>
@@ -1010,10 +1024,14 @@ PTS: 6
 
       <div class="card">
         <h2 class="card-title">Codes d'accès</h2>
-        <form id="form-new-code" class="form-row" style="margin-bottom:14px;">
-          <input type="text" id="new-code-name" placeholder="Nom optionnel (ex. Marie Dupont)" maxlength="60" />
+        <form id="form-new-code" class="form-row" style="margin-bottom:8px;">
+          <input type="text" id="new-code-name" placeholder="Nom optionnel (ex. Marie Dupont, Séance du 12 juin)" maxlength="60" />
           <button type="submit" class="btn btn-primary">+ Générer un nouveau code</button>
         </form>
+        <label class="check" style="margin-bottom:14px;">
+          <input type="checkbox" id="new-code-visitor" />
+          <span><strong>Code visiteur partagé</strong> — utilisable simultanément par plusieurs personnes (chacune saisit son pseudo de session). Idéal pour une démo publique, une session en classe ou un événement.</span>
+        </label>
         <div id="admin-codes-list" class="admin-codes-list"></div>
       </div>
 
@@ -1252,6 +1270,6 @@ MANCHE: 2
     </section>
   </template>
 
-  <script src="app.js?v=2.21"></script>
+  <script src="app.js?v=2.22"></script>
 </body>
 </html>

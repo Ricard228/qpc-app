@@ -562,6 +562,41 @@ html, body {
   letter-spacing: 0.5px;
 }
 
+/* Code visiteur partagé : badge + indicateur dans la liste */
+.badge-visitor {
+  display: inline-block;
+  margin-left: 8px;
+  background: #F59E0B;
+  color: #1A1A1A;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+.code-row.code-row-visitor {
+  border-left: 4px solid #F59E0B;
+  background: rgba(245, 158, 11, 0.04);
+}
+
+/* Étape 2 du login : pseudo de session sur un code visiteur */
+.visitor-pseudo-step {
+  margin-top: 14px;
+  padding: 14px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  border-radius: 10px;
+}
+.visitor-pseudo-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #B45309;
+}
+.visitor-pseudo-info strong { color: #92400E; }
+
 /* Champs durées */
 .timings-grid {
   display: grid;
