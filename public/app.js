@@ -56,8 +56,15 @@ async function apiFetch(url, opts = {}, useAdmin = false) {
 }
 
 const api = {
-  loginUser:  (code)     => apiFetch('/api/auth/login', { method: 'POST', body: JSON.stringify({ code }) }),
-  loginAdmin: (password) => apiFetch('/api/auth/admin', { method: 'POST', body: JSON.stringify({ password }) }),
+  loginUser:    (code)     => apiFetch('/api/auth/login',         { method: 'POST', body: JSON.stringify({ code }) }),
+  loginAccount: (body)     => apiFetch('/api/auth/login-account', { method: 'POST', body: JSON.stringify(body) }),
+  registerAccount: (body)  => apiFetch('/api/auth/register',      { method: 'POST', body: JSON.stringify(body) }),
+  loginAdmin:   (password) => apiFetch('/api/auth/admin',          { method: 'POST', body: JSON.stringify({ password }) }),
+  // Admin : gestion des comptes auto-inscrits
+  adminAccounts:           ()   => apiFetch('/api/admin/accounts', {}, true),
+  adminDeleteAccount:      (id) => apiFetch(`/api/admin/accounts/${id}`, { method: 'DELETE' }, true),
+  adminPromoteAccount:     (id) => apiFetch(`/api/admin/accounts/${id}/promote`, { method: 'POST', body: '{}' }, true),
+  adminDemoteAccount:      (id) => apiFetch(`/api/admin/accounts/${id}/demote`,  { method: 'POST', body: '{}' }, true),
   meta:       ()         => apiFetch('/api/meta'),
   packs:      (m, doms)  => apiFetch(`/api/packs/${m}?domains=${encodeURIComponent((doms||[]).join(','))}`),
   myGames:    ()         => apiFetch('/api/me/games'),
@@ -133,6 +140,13 @@ const mount = (tplId) => {
   app.appendChild(tpl);
 };
 const fmtDate = (iso) => iso ? new Date(iso).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : '—';
+
+// Met à jour le footer (« 770 questions · 17 domaines ») depuis State.meta
+function updateFooterMeta() {
+  if (!State.meta) return;
+  $('#footer-meta').textContent =
+    `${State.meta.questionsTotal} questions · ${State.meta.manche1Count} séries · ${State.meta.manche2Count} duels · ${State.meta.manche3Count} finales · ${State.meta.domains.length} domaines`;
+}
 
 // Déclenche le téléchargement d'un contenu texte dans un fichier
 function downloadBlob(content, filename, mime) {
@@ -305,7 +319,20 @@ function renderLogin() {
   refreshWho();
   mount('tpl-login');
 
-  // Form user
+  // Onglets : code / compte / inscription
+  const tabs = $$('.login-tab');
+  const panes = $$('.login-pane');
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const which = t.dataset.tab;
+      panes.forEach(p => { p.hidden = (p.dataset.pane !== which); });
+      $('#login-error').hidden = true;
+    });
+  });
+
+  // Form login par code
   $('#form-user-login').addEventListener('submit', async (e) => {
     e.preventDefault();
     const code = $('#login-code').value.trim().toUpperCase();
@@ -314,16 +341,71 @@ function renderLogin() {
     try {
       const r = await api.loginUser(code);
       Session.set(r.token, r.code, r.name);
-      // Charger meta puis aller à l'accueil
       State.meta = await api.meta();
-      $('#footer-meta').textContent =
-        `${State.meta.questionsTotal} questions · ${State.meta.manche1Count} séries · ${State.meta.manche2Count} duels · ${State.meta.manche3Count} finales · ${State.meta.domains.length} domaines`;
+      updateFooterMeta();
       route('home');
     } catch (e) {
       err.textContent = e.message || 'Code invalide';
       err.hidden = false;
     }
   });
+
+  // Form login par compte (email/pseudo + password)
+  $('#form-account-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const identifier = $('#acc-login-id').value.trim();
+    const password = $('#acc-login-pwd').value;
+    const err = $('#login-error');
+    err.hidden = true;
+    try {
+      const r = await api.loginAccount({ identifier, password });
+      Session.set(r.token, r.accountId ? ('ACC-' + r.accountId.slice(0, 8)) : null, r.pseudo);
+      if (r.isAdmin && r.adminToken) {
+        // Compte avec privilèges admin : on stocke aussi le token admin
+        Session.setAdmin(r.adminToken);
+      }
+      State.meta = await api.meta();
+      updateFooterMeta();
+      route(r.isAdmin ? 'admin' : 'home');
+    } catch (e) {
+      err.textContent = e.message || 'Identifiants invalides';
+      err.hidden = false;
+    }
+  });
+
+  // Form inscription
+  $('#form-account-register').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = $('#reg-email').value.trim();
+    const pseudo = $('#reg-pseudo').value.trim();
+    const password = $('#reg-pwd').value;
+    const err = $('#login-error');
+    err.hidden = true;
+    try {
+      const r = await api.registerAccount({ email, pseudo, password });
+      Session.set(r.token, 'ACC-' + r.accountId.slice(0, 8), r.pseudo);
+      State.meta = await api.meta();
+      updateFooterMeta();
+      alert('Compte créé avec succès ! Bienvenue ' + r.pseudo + '.');
+      route('home');
+    } catch (e) {
+      err.textContent = e.message || 'Inscription impossible';
+      err.hidden = false;
+    }
+  });
+
+  // Vérifier si l'inscription est ouverte (endpoint public)
+  fetch('/api/public/info').then(r => r.json()).then(info => {
+    if (info && info.selfRegistrationEnabled === false) {
+      // Cacher l'onglet inscription et bouton + afficher la note
+      const tab = document.querySelector('.login-tab[data-tab="register"]');
+      if (tab) tab.style.display = 'none';
+      const note = $('#reg-disabled-note');
+      if (note) note.hidden = false;
+      const form = $('#form-account-register');
+      if (form) form.style.display = 'none';
+    }
+  }).catch(() => {});
 
   $('#show-admin-login').addEventListener('click', (e) => {
     e.preventDefault();
@@ -493,6 +575,14 @@ function labelManche(m) {
   return { manche1: 'Manche 1 — Les 4 à la suite',
            manche2: 'Manche 2 — Face-à-face',
            manche3: 'Manche 3 — Finale 9 points' }[m] || m;
+}
+
+// Durée d'une manche en secondes (configurable par l'admin via /api/admin/settings)
+function getManchaTiming(manche) {
+  const defaults = { manche1: 40, manche2: 25, manche3: 15 };
+  const tm = State.meta && State.meta.settings && State.meta.settings.timings;
+  const v = tm && tm[manche];
+  return (Number.isFinite(v) && v >= 5 && v <= 600) ? v : defaults[manche];
 }
 
 // ---------- Vue : configuration de la partie --------------------------
@@ -691,7 +781,7 @@ function renderPlay() {
 function renderManche1() {
   const g = State.game, step = g.plan[g.cursor.planIdx], pack = step.pack;
   const qIdx = g.cursor.qIdx, q = pack.questions[qIdx];
-  if (g.cursor.m1Remaining == null) g.cursor.m1Remaining = 40;
+  if (g.cursor.m1Remaining == null) g.cursor.m1Remaining = getManchaTiming('manche1');
   if (qIdx >= pack.questions.length) return;
 
   const card = $('#play-card'); card.innerHTML = '';
@@ -806,7 +896,7 @@ function renderM2Question(pack, pts) {
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   actions.appendChild(el('button', { class: 'btn btn-ghost', onclick: () => answerM2('') }, 'Passer'));
-  startTimer(25,
+  startTimer(getManchaTiming('manche2'),
     (r) => {
       const t = $('#play-timer'); t.textContent = `${r}s`; t.classList.remove('warn', 'danger');
       if (r <= 5) t.classList.add('danger');
@@ -857,7 +947,7 @@ function renderManche3() {
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   actions.appendChild(el('button', { class: 'btn btn-ghost', onclick: () => answerM3('') }, 'Passer'));
-  startTimer(15,
+  startTimer(getManchaTiming('manche3'),
     (r) => {
       const t = $('#play-timer'); t.textContent = `${r}s`; t.classList.remove('warn', 'danger');
       if (r <= 4) t.classList.add('danger');
@@ -1526,16 +1616,23 @@ async function renderAdmin() {
     catch (e) { alert('Erreur Excel : ' + e.message); }
   };
 
-  // Toggles : Révision libre + Aide pour joueurs + mode QCM
+  // Toggles : Révision libre + Aide + Inscription libre + Mode QCM + Timings
   const toggle = $('#toggle-review');
   const toggleHelp = $('#toggle-help');
+  const toggleSelfReg = $('#toggle-self-register');
+  const t1 = $('#timing-m1'), t2 = $('#timing-m2'), t3 = $('#timing-m3');
   try {
     const s = await api.adminGetSettings();
     toggle.checked = (s.reviewEnabled !== false);
     if (toggleHelp) toggleHelp.checked = (s.helpEnabledForUsers !== false);
+    if (toggleSelfReg) toggleSelfReg.checked = (s.selfRegistrationEnabled !== false);
     const qm = s.qcmMode || 'user-choice';
     const radio = document.querySelector(`#admin-qcm-row input[name=admin-qcm][value="${qm}"]`);
     if (radio) radio.checked = true;
+    const tm = s.timings || { manche1: 40, manche2: 25, manche3: 15 };
+    if (t1) t1.value = tm.manche1;
+    if (t2) t2.value = tm.manche2;
+    if (t3) t3.value = tm.manche3;
   } catch (e) {}
   toggle.addEventListener('change', async () => {
     try {
@@ -1557,6 +1654,87 @@ async function renderAdmin() {
       toggleHelp.checked = !toggleHelp.checked;
     }
   });
+  if (toggleSelfReg) toggleSelfReg.addEventListener('change', async () => {
+    try {
+      await api.adminSetSettings({ selfRegistrationEnabled: toggleSelfReg.checked });
+      toggleSelfReg.parentElement.style.opacity = '0.6';
+      setTimeout(() => { toggleSelfReg.parentElement.style.opacity = '1'; }, 300);
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+      toggleSelfReg.checked = !toggleSelfReg.checked;
+    }
+  });
+
+  // Boutons Enregistrer / Restaurer les durées
+  const saveTimingsBtn = $('#btn-save-timings');
+  const resetTimingsBtn = $('#btn-reset-timings');
+  const timingsNote = $('#timings-saved-note');
+  if (saveTimingsBtn) saveTimingsBtn.onclick = async () => {
+    const v1 = parseInt(t1.value, 10), v2 = parseInt(t2.value, 10), v3 = parseInt(t3.value, 10);
+    if (![v1, v2, v3].every(v => Number.isFinite(v) && v >= 5 && v <= 600)) {
+      alert('Les durées doivent être des entiers entre 5 et 600 secondes.');
+      return;
+    }
+    try {
+      await api.adminSetSettings({ timings: { manche1: v1, manche2: v2, manche3: v3 } });
+      if (timingsNote) { timingsNote.hidden = false; setTimeout(() => { timingsNote.hidden = true; }, 2200); }
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
+  if (resetTimingsBtn) resetTimingsBtn.onclick = async () => {
+    t1.value = 40; t2.value = 25; t3.value = 15;
+    saveTimingsBtn.click();
+  };
+
+  // Liste des comptes auto-inscrits
+  async function refreshAccountsList() {
+    const list = $('#admin-accounts-list');
+    if (!list) return;
+    list.innerHTML = '';
+    let accounts = [];
+    try { accounts = await api.adminAccounts(); } catch (e) {}
+    if (accounts.length === 0) {
+      list.appendChild(el('div', { class: 'muted' }, 'Aucun compte créé par auto-inscription pour le moment.'));
+      return;
+    }
+    accounts.forEach(a => {
+      const row = el('div', { class: 'account-row' },
+        el('div', { class: 'account-info' },
+          el('div', {},
+            el('strong', {}, a.pseudo || a.email),
+            a.isAdmin ? el('span', { class: 'badge-admin' }, '🛡 ADMIN') : null
+          ),
+          el('div', { class: 'code-meta' },
+            a.email, ' · ',
+            `${a.gamesPlayed} partie(s) · ${a.totalScore} pts cumulés · `,
+            a.lastUsed ? `dernière connexion ${fmtDate(a.lastUsed)}` : 'jamais connecté',
+            ` · créé le ${fmtDate(a.createdAt)}`
+          )
+        ),
+        el('div', { class: 'account-actions' },
+          a.isAdmin
+            ? el('button', { class: 'btn btn-ghost', onclick: async () => {
+                if (!confirm(`Retirer les droits d'administrateur à ${a.pseudo} ?`)) return;
+                try { await api.adminDemoteAccount(a.id); refreshAccountsList(); }
+                catch (e) { alert('Erreur : ' + e.message); }
+              }}, '↓ Rétrograder')
+            : el('button', { class: 'btn', onclick: async () => {
+                if (!confirm(`Promouvoir ${a.pseudo} comme administrateur ?`)) return;
+                try { await api.adminPromoteAccount(a.id); refreshAccountsList(); }
+                catch (e) { alert('Erreur : ' + e.message); }
+              }}, '↑ Promouvoir admin'),
+          el('button', { class: 'btn-icon btn-icon-danger',
+            title: `Supprimer le compte de ${a.pseudo}`,
+            onclick: async () => {
+              if (!confirm(`Supprimer définitivement le compte de ${a.pseudo} (${a.email}) ?`)) return;
+              try { await api.adminDeleteAccount(a.id); refreshAccountsList(); }
+              catch (e) { alert('Erreur : ' + e.message); }
+            }}, '✕')
+        )
+      );
+      list.appendChild(row);
+    });
+  }
+  refreshAccountsList();
   $$('#admin-qcm-row input[name=admin-qcm]').forEach(r => {
     r.addEventListener('change', async () => {
       if (!r.checked) return;

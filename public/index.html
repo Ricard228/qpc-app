@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.19" />
+  <link rel="stylesheet" href="styles.css?v=2.21" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -64,13 +64,44 @@
           <span>Questions pour un Champion</span>
         </div>
         <h1 class="title-xl" style="margin-top:14px;">Connexion</h1>
-        <p class="lead">Entrez votre <strong>code d'accès</strong> personnel pour jouer. Le super-administrateur peut générer un code pour vous.</p>
 
-        <form id="form-user-login" class="form-row" style="margin-top:14px;">
-          <input type="text" id="login-code" placeholder="Code d'accès (ex. QPC-A3B7XK91)"
-            autocomplete="off" autocapitalize="characters" required style="text-transform:uppercase;letter-spacing:1px;font-weight:600;" />
-          <button class="btn btn-primary" type="submit">Entrer</button>
-        </form>
+        <div class="login-tabs" role="tablist">
+          <button class="login-tab active" data-tab="code" type="button">🔑 Code d'accès</button>
+          <button class="login-tab" data-tab="account" type="button">👤 Compte</button>
+          <button class="login-tab" data-tab="register" type="button">➕ Créer un compte</button>
+        </div>
+
+        <div class="login-pane" data-pane="code">
+          <p class="lead">Entrez votre <strong>code d'accès</strong> personnel pour jouer. Le super-administrateur peut générer un code pour vous.</p>
+          <form id="form-user-login" class="form-row" style="margin-top:14px;">
+            <input type="text" id="login-code" placeholder="Code d'accès (ex. QPC-A3B7XK91)"
+              autocomplete="off" autocapitalize="characters" required style="text-transform:uppercase;letter-spacing:1px;font-weight:600;" />
+            <button class="btn btn-primary" type="submit">Entrer</button>
+          </form>
+        </div>
+
+        <div class="login-pane" data-pane="account" hidden>
+          <p class="lead">Connectez-vous avec votre <strong>compte</strong> (email/pseudo + mot de passe).</p>
+          <form id="form-account-login" style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+            <input type="text" id="acc-login-id" placeholder="E-mail ou pseudo" autocomplete="username" required />
+            <input type="password" id="acc-login-pwd" placeholder="Mot de passe" autocomplete="current-password" required />
+            <button class="btn btn-primary" type="submit">Entrer</button>
+          </form>
+        </div>
+
+        <div class="login-pane" data-pane="register" hidden>
+          <p class="lead">Créez un compte pour jouer immédiatement, sans demander de code à l'admin.</p>
+          <form id="form-account-register" style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+            <input type="email" id="reg-email" placeholder="Adresse e-mail" autocomplete="email" required />
+            <input type="text" id="reg-pseudo" placeholder="Pseudo (2 à 60 caractères)" autocomplete="nickname" required minlength="2" maxlength="60" />
+            <input type="password" id="reg-pwd" placeholder="Mot de passe (6 caractères min.)" autocomplete="new-password" required minlength="6" />
+            <button class="btn btn-primary" type="submit">Créer mon compte</button>
+          </form>
+          <p id="reg-disabled-note" class="muted" style="font-size:13px;margin-top:8px;" hidden>
+            ⛔ L'inscription est actuellement désactivée par l'administrateur. Utilisez un code d'accès ou un compte existant.
+          </p>
+        </div>
+
         <div id="login-error" class="login-error" hidden></div>
 
         <div class="login-admin-link">
@@ -1050,6 +1081,48 @@ PTS: 6
           </label>
         </div>
 
+        <div class="settings-row" style="margin-top:14px;">
+          <div>
+            <strong>Inscription libre des utilisateurs</strong>
+            <div class="muted" style="font-size:13px; margin-top:2px;">Lorsque c'est activé, les visiteurs peuvent créer un compte (email + pseudo + mot de passe) sans avoir besoin d'un code. Désactivez pour n'autoriser que les codes générés par l'admin.</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-self-register" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div style="margin-top:18px; padding-top:18px; border-top:1px solid var(--line);">
+          <strong>Durées des questions (en secondes)</strong>
+          <div class="muted" style="font-size:13px; margin-top:2px;">Paramétrables entre 5 et 600 secondes. Ces durées s'appliquent à toutes les nouvelles parties.</div>
+          <div class="timings-grid" style="margin-top:10px;">
+            <label class="field">
+              <span>Manche 1 — Les 4 à la suite (série complète)</span>
+              <input type="number" id="timing-m1" min="5" max="600" step="5" />
+            </label>
+            <label class="field">
+              <span>Manche 2 — Face-à-face (par question)</span>
+              <input type="number" id="timing-m2" min="5" max="600" step="1" />
+            </label>
+            <label class="field">
+              <span>Manche 3 — Finale (par question)</span>
+              <input type="number" id="timing-m3" min="5" max="600" step="1" />
+            </label>
+          </div>
+          <div class="form-row" style="margin-top:8px;">
+            <button id="btn-save-timings" class="btn btn-primary">💾 Enregistrer les durées</button>
+            <button id="btn-reset-timings" class="btn btn-ghost">Restaurer 40/25/15</button>
+            <span id="timings-saved-note" class="muted" style="font-size:13px;" hidden>✓ Enregistré</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Comptes utilisateurs (auto-inscrits)</h2>
+        <p class="muted" style="margin-top:0;">Liste des comptes créés directement par les visiteurs (email + pseudo). Vous pouvez les révoquer, les promouvoir au statut d'administrateur, ou rétrograder un administrateur nommé.</p>
+        <div id="admin-accounts-list"></div>
+      </div>
+
         <div style="margin-top:18px; padding-top:18px; border-top:1px solid var(--line);">
           <strong>Mode des questions</strong>
           <div class="muted" style="font-size:13px; margin-top:2px;">Force le mode de réponse pour tous les joueurs, ou laisse-leur le choix au début de la partie.</div>
@@ -1179,6 +1252,6 @@ MANCHE: 2
     </section>
   </template>
 
-  <script src="app.js?v=2.19"></script>
+  <script src="app.js?v=2.21"></script>
 </body>
 </html>

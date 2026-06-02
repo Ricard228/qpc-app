@@ -50,20 +50,55 @@ function writeJson(p, data) {
   fs.writeFileSync(p, JSON.stringify(data, null, 2), 'utf8');
 }
 
+const DEFAULT_TIMINGS = { manche1: 40, manche2: 25, manche3: 15 };
+
 function loadAuth() {
   const data = readJson(AUTH_PATH, null);
   if (data) {
     // Migration : ajouter settings si absent
-    if (!data.settings) data.settings = { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice', helpEnabledForUsers: true };
+    if (!data.settings) data.settings = {};
+    if (data.settings.reviewEnabled == null) data.settings.reviewEnabled = true;
     if (data.settings.qcmMode == null) data.settings.qcmMode = 'user-choice';
     if (data.settings.liveScoreboardMode == null) data.settings.liveScoreboardMode = 'user-choice';
     if (data.settings.helpEnabledForUsers == null) data.settings.helpEnabledForUsers = true;
+    if (data.settings.selfRegistrationEnabled == null) data.settings.selfRegistrationEnabled = true;
+    if (!data.settings.timings) data.settings.timings = { ...DEFAULT_TIMINGS };
+    if (!data.accounts) data.accounts = {};
+    if (!data.codes) data.codes = {};
     return data;
   }
-  const init = { codes: {}, settings: { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice', helpEnabledForUsers: true }, createdAt: new Date().toISOString() };
+  const init = {
+    codes: {}, accounts: {},
+    settings: {
+      reviewEnabled: true, qcmMode: 'user-choice',
+      liveScoreboardMode: 'user-choice', helpEnabledForUsers: true,
+      selfRegistrationEnabled: true,
+      timings: { ...DEFAULT_TIMINGS }
+    },
+    createdAt: new Date().toISOString()
+  };
   writeJson(AUTH_PATH, init);
   return init;
 }
+
+// ---------- Hash de mot de passe (scrypt) ---------------------------
+function hashPassword(plain) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.scryptSync(plain, salt, 64).toString('hex');
+  return `${salt}:${hash}`;
+}
+function verifyPassword(plain, stored) {
+  if (!stored || !stored.includes(':')) return false;
+  const [salt, hash] = stored.split(':');
+  try {
+    const test = crypto.scryptSync(plain, salt, 64).toString('hex');
+    return crypto.timingSafeEqual(Buffer.from(hash, 'hex'), Buffer.from(test, 'hex'));
+  } catch { return false; }
+}
+
+// Normalisation email + validation simple
+function normEmail(e) { return String(e || '').trim().toLowerCase(); }
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
 function saveAuth(auth) {
   writeJson(AUTH_PATH, auth);
   scheduleGhSync('data/auth.json');
@@ -399,14 +434,44 @@ function requireUser(req, res, next) {
   const tok = verifyToken(extractToken(req));
   if (!tok || tok.role !== 'user') return res.status(401).json({ error: 'Authentification requise' });
   const auth = loadAuth();
-  if (!auth.codes[tok.code]) return res.status(401).json({ error: 'Code révoqué' });
-  req.user = { code: tok.code, name: auth.codes[tok.code].name || null };
-  next();
+  // Méthode A : code généré par l'admin
+  if (tok.code) {
+    if (!auth.codes[tok.code]) return res.status(401).json({ error: 'Code révoqué' });
+    req.user = { code: tok.code, name: auth.codes[tok.code].name || null, authType: 'code' };
+    return next();
+  }
+  // Méthode B : compte auto-inscrit (email/pseudo + password)
+  if (tok.accountId) {
+    const acc = auth.accounts && auth.accounts[tok.accountId];
+    if (!acc) return res.status(401).json({ error: 'Compte révoqué' });
+    req.user = { accountId: tok.accountId, name: acc.pseudo || acc.email, email: acc.email, code: 'ACC-' + tok.accountId.slice(0, 8), authType: 'account', isAdmin: !!acc.isAdmin };
+    return next();
+  }
+  return res.status(401).json({ error: 'Token invalide' });
 }
 function requireAdmin(req, res, next) {
   const tok = verifyToken(extractToken(req));
   if (!tok || tok.role !== 'admin') return res.status(401).json({ error: 'Authentification admin requise' });
-  req.admin = true;
+  // Super-admin (mot de passe ADMIN_PASSWORD) ou admin nommé (compte promu)
+  if (tok.superAdmin) {
+    req.admin = { superAdmin: true };
+    return next();
+  }
+  if (tok.accountId) {
+    const auth = loadAuth();
+    const acc = auth.accounts && auth.accounts[tok.accountId];
+    if (!acc || !acc.isAdmin) return res.status(401).json({ error: 'Privilèges admin révoqués' });
+    req.admin = { superAdmin: false, accountId: tok.accountId, name: acc.pseudo || acc.email };
+    return next();
+  }
+  return res.status(401).json({ error: 'Token admin invalide' });
+}
+function requireSuperAdmin(req, res, next) {
+  const tok = verifyToken(extractToken(req));
+  if (!tok || tok.role !== 'admin' || !tok.superAdmin) {
+    return res.status(403).json({ error: 'Réservé au super-administrateur' });
+  }
+  req.admin = { superAdmin: true };
   next();
 }
 
@@ -439,9 +504,83 @@ app.post('/api/auth/admin', (req, res) => {
   if (password !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Mot de passe admin invalide' });
   }
-  // Token admin : 7 jours (sensibilité plus haute, ré-auth fréquente)
-  const token = signToken({ role: 'admin', exp: Date.now() + 7 * 24 * 3600 * 1000 });
-  res.json({ token });
+  // Super-admin (mot de passe global) : 7 jours
+  const token = signToken({ role: 'admin', superAdmin: true, exp: Date.now() + 7 * 24 * 3600 * 1000 });
+  res.json({ token, superAdmin: true });
+});
+
+// Endpoint public minimal : indique si l'inscription est ouverte
+// (utilisé par la page de garde pour afficher/cacher l'onglet "Créer un compte").
+app.get('/api/public/info', (req, res) => {
+  const auth = loadAuth();
+  res.json({
+    selfRegistrationEnabled: auth.settings ? auth.settings.selfRegistrationEnabled !== false : true
+  });
+});
+
+// ---------- Auth : inscription et login par compte ------------------
+app.post('/api/auth/register', (req, res) => {
+  const auth = loadAuth();
+  if (!auth.settings || auth.settings.selfRegistrationEnabled === false) {
+    return res.status(403).json({ error: 'L\'inscription est désactivée par l\'administrateur. Demandez un code d\'accès.' });
+  }
+  const email  = normEmail(req.body.email);
+  const pseudo = String(req.body.pseudo || '').trim().slice(0, 60);
+  const password = String(req.body.password || '');
+  if (!isValidEmail(email)) return res.status(400).json({ error: 'Adresse e-mail invalide' });
+  if (pseudo.length < 2) return res.status(400).json({ error: 'Pseudo trop court (minimum 2 caractères)' });
+  if (password.length < 6) return res.status(400).json({ error: 'Mot de passe trop court (minimum 6 caractères)' });
+  // Vérifier l'unicité de l'email
+  const accounts = auth.accounts || {};
+  for (const id of Object.keys(accounts)) {
+    if (accounts[id].email === email) {
+      return res.status(409).json({ error: 'Un compte existe déjà avec cet e-mail' });
+    }
+  }
+  const id = crypto.randomBytes(8).toString('hex');
+  accounts[id] = {
+    id, email, pseudo,
+    passwordHash: hashPassword(password),
+    createdAt: new Date().toISOString(),
+    lastUsed: null,
+    isAdmin: false,
+    gamesPlayed: 0
+  };
+  auth.accounts = accounts;
+  saveAuth(auth);
+  const token = signToken({ role: 'user', accountId: id, exp: Date.now() + 10 * 365 * 24 * 3600 * 1000 });
+  res.json({ token, accountId: id, pseudo, email, isAdmin: false });
+});
+
+app.post('/api/auth/login-account', (req, res) => {
+  const identifier = String(req.body.identifier || req.body.email || req.body.pseudo || '').trim();
+  const password = String(req.body.password || '');
+  if (!identifier || !password) return res.status(400).json({ error: 'E-mail/pseudo et mot de passe requis' });
+  const auth = loadAuth();
+  const accounts = auth.accounts || {};
+  const idLower = identifier.toLowerCase();
+  // Chercher par email d'abord, puis par pseudo (insensible casse)
+  let found = null;
+  for (const id of Object.keys(accounts)) {
+    const a = accounts[id];
+    if (a.email === idLower || (a.pseudo && a.pseudo.toLowerCase() === idLower)) {
+      found = a; break;
+    }
+  }
+  if (!found) return res.status(401).json({ error: 'Identifiants invalides' });
+  if (!verifyPassword(password, found.passwordHash)) {
+    return res.status(401).json({ error: 'Identifiants invalides' });
+  }
+  found.lastUsed = new Date().toISOString();
+  saveAuth(auth);
+  // Si le compte est admin, on délivre AUSSI un token admin pour qu'il
+  // puisse accéder au panneau ; sinon token user uniquement.
+  const userToken = signToken({ role: 'user', accountId: found.id, exp: Date.now() + 10 * 365 * 24 * 3600 * 1000 });
+  const out = { token: userToken, accountId: found.id, pseudo: found.pseudo, email: found.email, isAdmin: !!found.isAdmin };
+  if (found.isAdmin) {
+    out.adminToken = signToken({ role: 'admin', accountId: found.id, exp: Date.now() + 7 * 24 * 3600 * 1000 });
+  }
+  res.json(out);
 });
 
 // ---------- Questions ------------------------------------------------
@@ -471,7 +610,8 @@ app.post('/api/me/game', requireUser, (req, res) => {
   games.games = games.games || [];
   games.games.push({
     id: crypto.randomBytes(6).toString('hex'),
-    code: req.user.code,
+    code: req.user.code,            // pour comptes : "ACC-<8 chars>"
+    accountId: req.user.accountId || null,
     name: req.user.name,
     finishedAt: new Date().toISOString(),
     totalScore: summary.totalScore || 0,
@@ -483,9 +623,13 @@ app.post('/api/me/game', requireUser, (req, res) => {
     log:         Array.isArray(summary.log) ? summary.log : []
   });
   const auth = loadAuth();
-  if (auth.codes[req.user.code]) {
+  if (req.user.authType === 'code' && auth.codes[req.user.code]) {
     auth.codes[req.user.code].gamesPlayed = (auth.codes[req.user.code].gamesPlayed || 0) + 1;
     auth.codes[req.user.code].lastUsed = new Date().toISOString();
+    saveAuth(auth);
+  } else if (req.user.authType === 'account' && auth.accounts && auth.accounts[req.user.accountId]) {
+    auth.accounts[req.user.accountId].gamesPlayed = (auth.accounts[req.user.accountId].gamesPlayed || 0) + 1;
+    auth.accounts[req.user.accountId].lastUsed = new Date().toISOString();
     saveAuth(auth);
   }
   saveGames(games);
@@ -552,6 +696,14 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
     auth.settings.liveScoreboardMode = req.body.liveScoreboardMode;
   }
   if (typeof req.body.helpEnabledForUsers === 'boolean') auth.settings.helpEnabledForUsers = req.body.helpEnabledForUsers;
+  if (typeof req.body.selfRegistrationEnabled === 'boolean') auth.settings.selfRegistrationEnabled = req.body.selfRegistrationEnabled;
+  if (req.body.timings && typeof req.body.timings === 'object') {
+    auth.settings.timings = auth.settings.timings || { ...DEFAULT_TIMINGS };
+    for (const k of ['manche1', 'manche2', 'manche3']) {
+      const v = parseInt(req.body.timings[k], 10);
+      if (Number.isFinite(v) && v >= 5 && v <= 600) auth.settings.timings[k] = v;
+    }
+  }
   saveAuth(auth);
   res.json(auth.settings);
 });
@@ -595,6 +747,56 @@ app.get('/api/admin/game/:id', requireAdmin, (req, res) => {
   const g = (games.games || []).find(x => x.id === req.params.id);
   if (!g) return res.status(404).json({ error: 'Partie introuvable' });
   res.json(g);
+});
+
+// ---------- Admin : gestion des comptes auto-inscrits ---------------
+app.get('/api/admin/accounts', requireAdmin, (req, res) => {
+  const auth = loadAuth();
+  const games = loadGames();
+  const list = Object.values(auth.accounts || {}).map(a => {
+    const gOf = (games.games || []).filter(g => g.accountId === a.id);
+    return {
+      id: a.id, email: a.email, pseudo: a.pseudo,
+      createdAt: a.createdAt, lastUsed: a.lastUsed || null,
+      isAdmin: !!a.isAdmin,
+      gamesPlayed: gOf.length,
+      totalScore: gOf.reduce((s, g) => s + (g.totalScore || 0), 0)
+    };
+  }).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+  res.json(list);
+});
+
+// Supprimer un compte — réservé super-admin
+app.delete('/api/admin/accounts/:id', requireSuperAdmin, (req, res) => {
+  const auth = loadAuth();
+  if (!auth.accounts || !auth.accounts[req.params.id]) {
+    return res.status(404).json({ error: 'Compte introuvable' });
+  }
+  delete auth.accounts[req.params.id];
+  saveAuth(auth);
+  res.json({ ok: true });
+});
+
+// Promouvoir un compte au statut d'admin nommé — réservé super-admin
+app.post('/api/admin/accounts/:id/promote', requireSuperAdmin, (req, res) => {
+  const auth = loadAuth();
+  if (!auth.accounts || !auth.accounts[req.params.id]) {
+    return res.status(404).json({ error: 'Compte introuvable' });
+  }
+  auth.accounts[req.params.id].isAdmin = true;
+  saveAuth(auth);
+  res.json({ ok: true, id: req.params.id, isAdmin: true });
+});
+
+// Révoquer le statut d'admin d'un compte — réservé super-admin
+app.post('/api/admin/accounts/:id/demote', requireSuperAdmin, (req, res) => {
+  const auth = loadAuth();
+  if (!auth.accounts || !auth.accounts[req.params.id]) {
+    return res.status(404).json({ error: 'Compte introuvable' });
+  }
+  auth.accounts[req.params.id].isAdmin = false;
+  saveAuth(auth);
+  res.json({ ok: true, id: req.params.id, isAdmin: false });
 });
 
 // Supprime une partie spécifique de l'historique (et décrémente le
