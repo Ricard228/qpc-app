@@ -3860,59 +3860,6 @@
           "isCustom": true
         }
       ]
-    },
-    {
-      "name": "Évaluation 25 avril 2026",
-      "description": "Importé en langage naturel le 02/06/2026 (2 questions)",
-      "createdAt": "2026-06-02T15:41:34.234Z",
-      "updatedAt": "2026-06-02T15:41:34.234Z",
-      "packs": [
-        {
-          "id": "custom--valuation-25-avril-2026-manche1-1",
-          "type": "manche1",
-          "titre": "Évaluation église",
-          "theme": null,
-          "domain": "Évaluation 25 avril 2026",
-          "timing": null,
-          "questions": [
-            {
-              "id": "custom--valuation-25-avril-2026-manche1-1-q1",
-              "q": "Nom du pasteur ?",
-              "r": "AGBO",
-              "choices": [
-                "AGBO",
-                "L'effet inverse de \"AGBO…\"",
-                "Une stricte conséquence de l'inflation sous-jacente",
-                "Un mécanisme d'ajustement de la balance des paiements"
-              ],
-              "correctIndices": [
-                0
-              ],
-              "e": "",
-              "ref": "",
-              "pts": 1
-            },
-            {
-              "id": "custom--valuation-25-avril-2026-manche1-1-q2",
-              "q": "Année de création",
-              "r": "1907",
-              "choices": [
-                "1907",
-                "1895",
-                "1900",
-                "1904"
-              ],
-              "correctIndices": [
-                0
-              ],
-              "e": "",
-              "ref": "",
-              "pts": 1
-            }
-          ],
-          "isCustom": true
-        }
-      ]
     }
   ]
 }
