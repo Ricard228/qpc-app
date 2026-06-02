@@ -361,6 +361,212 @@ function parseCustomTxt(text) {
   return { domain, description, packs };
 }
 
+// =====================================================================
+// PARSER LANGAGE NATUREL (v2.24)
+// =====================================================================
+// Format ultra-simple pour les admins non-techniques. Exemple :
+//
+//   Titre de l'évaluation
+//   Q1 : Quelle est la capitale du Togo ?
+//      R1 : Lomé
+//   Q2 : En quelle année la BCEAO a-t-elle été créée ?
+//      R2 : 1962
+//
+// Variantes acceptées : "Q1.", "Q1)", "1.", "1)", "Question 1:", "Q :",
+// "R1.", "R:", "A:", "Réponse 1:", "Réponse :"…
+// Indentation libre, lignes vides tolérées.
+function parseNaturalQA(text) {
+  const lines = String(text || '').split(/\r?\n/);
+  const out = { title: '', pairs: [] };
+  // Regex robustes : capture le marqueur Q/R éventuellement suivi d'un n°
+  const qRe = /^\s*(?:q(?:uestion)?\s*\d*\s*[:\-.)]|\d+\s*[:\-.)])\s*(.*)$/i;
+  const rRe = /^\s*(?:r(?:[ée]ponse)?\s*\d*\s*[:\-.)]|a\s*\d*\s*[:\-.)])\s*(.*)$/i;
+  let curQ = null;
+  let curR = null;
+  let titleFound = false;
+
+  function flush() {
+    if (curQ && curR) {
+      out.pairs.push({ q: curQ.trim(), r: curR.trim() });
+    }
+    curQ = curR = null;
+  }
+
+  for (let raw of lines) {
+    const line = raw.replace(/\t/g, '  ');
+    if (!line.trim()) continue;
+    const mQ = line.match(qRe);
+    const mR = line.match(rRe);
+    if (mQ) {
+      flush();
+      curQ = mQ[1] || '';
+      continue;
+    }
+    if (mR) {
+      curR = mR[1] || '';
+      continue;
+    }
+    // Première ligne sans marqueur → titre
+    if (!titleFound && !curQ && !curR) {
+      out.title = line.trim();
+      titleFound = true;
+      continue;
+    }
+    // Continuation : on l'ajoute à la dernière partie ouverte (Q ou R)
+    if (curR != null) curR = (curR + ' ' + line.trim()).trim();
+    else if (curQ != null) curQ = (curQ + ' ' + line.trim()).trim();
+  }
+  flush();
+  return out;
+}
+
+// =====================================================================
+// GÉNÉRATEUR DE DISTRACTEURS (v2.24)
+// =====================================================================
+// Produit des distracteurs réalistes pour une bonne réponse donnée.
+// Stratégie par catégorie :
+//   - Pourcentage (12%, 12 %)        → ± 2, ± 5, ± 10 points
+//   - Année (1962, 2010…)            → ± 1, ± 3, ± 8 ans
+//   - Nombre simple (42, 1500)       → variations ± 10% / ± 50% / *2
+//   - Montant FCFA / €               → variations multiplicatives
+//   - Date complète                  → décalage mois/année
+//   - Mot unique (économie)          → dictionnaire de concepts proches
+//   - Phrase                         → paraphrases avec négations / quantifieurs
+// Toujours au moins `count` distracteurs uniques, chacun ≥ longueur de la
+// bonne réponse (conformément à la politique v2.8). Si on n'en a pas assez,
+// on rallonge avec des préfixes neutres ("environ ", "approximativement ",
+// "soit environ ", etc.).
+const ECON_FILLER = [
+  'la déflation', 'la stagflation', 'la désinflation', 'l\'hyperinflation',
+  'le déficit commercial', 'l\'excédent budgétaire', 'le PIB nominal', 'le PIB réel',
+  'la politique monétaire restrictive', 'la politique budgétaire expansionniste',
+  'la balance courante', 'la balance des paiements', 'la dette extérieure',
+  'le solde primaire', 'le multiplicateur keynésien', 'l\'effet d\'éviction',
+  'l\'effet de richesse', 'la courbe de Phillips', 'la trappe à liquidité',
+  'l\'équilibre walrasien', 'l\'optimum de Pareto', 'le surplus du consommateur',
+  'le coefficient de Gini', 'l\'indice de développement humain', 'la productivité globale des facteurs',
+  'la BCEAO', 'la BOAD', 'l\'UEMOA', 'la CEDEAO', 'le FMI', 'la Banque mondiale',
+  'la BRVM', 'le CREPMF', 'l\'éco', 'le pacte de convergence',
+  'l\'asymétrie d\'information', 'l\'aléa moral', 'le risque systémique',
+  'la prime de risque', 'le ratio cours/bénéfice', 'le taux directeur'
+];
+
+function detectAnswerType(answer) {
+  const a = String(answer).trim();
+  if (/^[+-]?\d{4}$/.test(a) && Number(a) >= 1500 && Number(a) <= 2200) return 'year';
+  if (/^[+-]?\d+([.,]\d+)?\s*%$/.test(a)) return 'percent';
+  if (/^[+-]?\d+([.,]\d+)?\s*(fcfa|cfa|€|eur|\$|usd|dollars?|euros?)$/i.test(a)) return 'money';
+  if (/^[+-]?\d{1,3}(?:[\s.,]\d{3})*([.,]\d+)?\s*(fcfa|cfa|€|eur|\$|usd|millions?|milliards?)?/i.test(a) && /\d{4,}/.test(a)) return 'money';
+  if (/^[+-]?\d+([.,]\d+)?$/.test(a)) return 'number';
+  if (/^\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}$/.test(a)) return 'date';
+  if (/^[A-ZÀ-Ý][a-zà-ÿ' -]+$/.test(a) && a.split(' ').length <= 3) return 'short';
+  return 'phrase';
+}
+
+function pickNumber(str) {
+  const m = String(str).match(/[+-]?\d+([.,]\d+)?/);
+  return m ? parseFloat(m[0].replace(',', '.')) : null;
+}
+
+function ensureMinLength(text, minLen) {
+  if (String(text).length >= minLen) return String(text);
+  const fillers = ['environ ', 'approximativement ', 'autour de ', 'à peu près ', 'soit environ ', 'plutôt '];
+  for (const f of fillers) {
+    const candidate = f + text;
+    if (candidate.length >= minLen) return candidate;
+  }
+  // Rallonge brutale si vraiment trop court
+  return text + ' (estimation)';
+}
+
+function generateDistractors(question, answer, count = 3) {
+  const ans = String(answer).trim();
+  const minLen = ans.length;
+  const type = detectAnswerType(ans);
+  const out = new Set();
+
+  function tryAdd(d) {
+    if (!d) return;
+    const s = ensureMinLength(String(d).trim(), minLen);
+    if (s && s.toLowerCase() !== ans.toLowerCase()) out.add(s);
+  }
+
+  if (type === 'year') {
+    const y = parseInt(ans, 10);
+    [-12, -7, -3, -1, +1, +3, +5, +8].forEach(d => tryAdd(String(y + d)));
+  } else if (type === 'percent') {
+    const v = pickNumber(ans);
+    const unit = ans.includes(' %') ? ' %' : '%';
+    if (v != null) {
+      [-15, -10, -5, -2, +2, +5, +10, +15].forEach(d => {
+        const val = Math.max(0, +(v + d).toFixed(2));
+        tryAdd(`${val}${unit}`);
+      });
+    }
+  } else if (type === 'money' || type === 'number') {
+    const v = pickNumber(ans);
+    const suffix = ans.replace(/^[+-]?\d+([.,]\d+)?\s*/, '').trim();
+    if (v != null && v !== 0) {
+      const variants = [v * 0.5, v * 0.8, v * 1.2, v * 1.5, v * 2, v + 10, Math.max(0, v - 10)];
+      variants.forEach(x => {
+        const rounded = Math.abs(x) >= 100 ? Math.round(x) : +x.toFixed(2);
+        tryAdd(`${rounded}${suffix ? ' ' + suffix : ''}`);
+      });
+    } else if (v === 0) {
+      [1, 5, 10, 25, 100].forEach(x => tryAdd(`${x}${suffix ? ' ' + suffix : ''}`));
+    }
+  } else if (type === 'date') {
+    const parts = ans.match(/(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})/);
+    if (parts) {
+      const [_, d, m, y] = parts;
+      const yy = parseInt(y, 10);
+      const mm = parseInt(m, 10);
+      const dd = parseInt(d, 10);
+      const fmt = (D, M, Y) => `${String(D).padStart(2, '0')}/${String(M).padStart(2, '0')}/${Y}`;
+      tryAdd(fmt(dd, ((mm % 12) + 1), yy));
+      tryAdd(fmt(dd, ((mm + 5) % 12) + 1, yy));
+      tryAdd(fmt(dd, mm, yy - 1));
+      tryAdd(fmt(dd, mm, yy + 1));
+      tryAdd(fmt(((dd % 28) + 1), mm, yy));
+    }
+  } else if (type === 'short') {
+    // Mot unique ou très courte expression → on pioche dans le dico éco
+    const shuf = ECON_FILLER.slice().sort(() => Math.random() - 0.5);
+    for (const w of shuf) tryAdd(w);
+  } else {
+    // Phrase complète → on construit des variantes plausibles
+    const ans2 = ans;
+    // Inversions logiques
+    if (/\baugmente\b/i.test(ans2)) tryAdd(ans2.replace(/\baugmente\b/gi, 'diminue'));
+    if (/\bdiminue\b/i.test(ans2)) tryAdd(ans2.replace(/\bdiminue\b/gi, 'augmente'));
+    if (/\bcroît\b/i.test(ans2))   tryAdd(ans2.replace(/\bcroît\b/gi, 'décroît'));
+    if (/\bpositif\b/i.test(ans2)) tryAdd(ans2.replace(/\bpositif\b/gi, 'négatif'));
+    if (/\bnégatif\b/i.test(ans2)) tryAdd(ans2.replace(/\bnégatif\b/gi, 'positif'));
+    // Quantifieurs
+    if (/\bla majorité\b/i.test(ans2)) tryAdd(ans2.replace(/\bla majorité\b/gi, 'une minorité'));
+    if (/\btoujours\b/i.test(ans2))    tryAdd(ans2.replace(/\btoujours\b/gi, 'jamais'));
+    if (/\baucun\b/i.test(ans2))       tryAdd(ans2.replace(/\baucun\b/gi, 'plusieurs'));
+    // Dérivations économiques
+    tryAdd(`L'effet inverse de "${ans2.slice(0, 40)}…"`);
+    tryAdd(`Une stricte conséquence de l'inflation sous-jacente`);
+    tryAdd(`Un mécanisme d'ajustement de la balance des paiements`);
+    tryAdd(`Une politique monétaire conjoncturelle de la BCEAO`);
+    tryAdd(`Le résultat attendu d'une politique budgétaire restrictive`);
+  }
+
+  // Si toujours pas assez : compléter par le dictionnaire générique
+  if (out.size < count) {
+    const shuf = ECON_FILLER.slice().sort(() => Math.random() - 0.5);
+    for (const w of shuf) {
+      if (out.size >= count + 1) break;
+      tryAdd(w);
+    }
+  }
+
+  // Retourner les `count` premiers (mélangés)
+  return Array.from(out).slice(0, count);
+}
+
 // Renvoie tous les packs (builtin + custom) pour une manche donnée
 function getPacksForManche(manche) {
   const builtin = QUESTIONS[manche] || [];
@@ -1134,6 +1340,125 @@ app.post('/api/admin/custom-domains', requireAdmin, (req, res) => {
     packsCount: normalizedPacks.length,
     questionsCount: qCount,
     manches: [...new Set(normalizedPacks.map(p => p.type))]
+  });
+});
+
+// Import langage naturel (v2.24)
+// Body : {
+//   domain:       string  // ex. "Économie générale L2"
+//   title:        string  // ex. "Évaluation du 12 juin"
+//   manche:       'manche1' | 'manche2' | 'manche3'
+//   theme:        string? // optionnel
+//   numChoices:   number  // 3..6 (défaut 4)
+//   naturalText:  string  // contenu brut Q1:.../R1:...
+// }
+// → Parse les paires Q/R en langage naturel, génère automatiquement
+//   des distracteurs réalistes pour chaque question, et enregistre le
+//   domaine dans le store (utilise normalizeImportedPack).
+app.post('/api/admin/custom-domains/from-natural', requireAdmin, (req, res) => {
+  const domainName = String(req.body.domain || '').trim().slice(0, 80);
+  const title      = String(req.body.title  || '').trim().slice(0, 120);
+  const manche     = ['manche1', 'manche2', 'manche3'].includes(req.body.manche) ? req.body.manche : 'manche1';
+  const theme      = req.body.theme ? String(req.body.theme).trim().slice(0, 120) : null;
+  const numChoices = Math.max(3, Math.min(6, parseInt(req.body.numChoices, 10) || 4));
+  const naturalText = String(req.body.naturalText || '');
+
+  if (!domainName) return res.status(400).json({ error: 'Nom de domaine obligatoire' });
+  if (!naturalText.trim()) return res.status(400).json({ error: 'Le texte des questions est vide' });
+
+  const parsed = parseNaturalQA(naturalText);
+  if (!parsed.pairs || parsed.pairs.length === 0) {
+    return res.status(400).json({
+      error: 'Aucune paire question/réponse détectée. Format attendu : "Q1 : ..." sur une ligne puis "R1 : ..." sur la suivante.'
+    });
+  }
+
+  const effectiveTitle = title || parsed.title || `Pack ${domainName}`;
+
+  // Build raw pack avec distracteurs générés
+  const rawPack = {
+    titre: effectiveTitle,
+    manche,
+    theme,
+    questions: parsed.pairs.map(p => {
+      const distractors = generateDistractors(p.q, p.r, numChoices - 1);
+      const choices = [p.r, ...distractors];
+      return {
+        q: p.q,
+        r: p.r,
+        choices,
+        // correctIndices sera recalculé par normalizeImportedPack via le match
+        e: '',
+        ref: '',
+        pts: manche === 'manche2' ? 2 : 1
+      };
+    })
+  };
+
+  // Empêcher la collision avec un nom builtin
+  const builtinNames = (QUESTIONS.domains || []).map(d => d.name.toLowerCase());
+  if (builtinNames.includes(domainName.toLowerCase())) {
+    return res.status(400).json({ error: 'Ce nom de domaine existe déjà dans la base intégrée. Utilisez un autre nom.' });
+  }
+
+  const normalized = normalizeImportedPack(rawPack, domainName, 0);
+  if (!normalized.questions || normalized.questions.length === 0) {
+    return res.status(400).json({ error: 'Aucune question valide après normalisation' });
+  }
+
+  const store = loadCustomDomains();
+  store.domains = store.domains || [];
+  const existing = store.domains.findIndex(d => d.name.toLowerCase() === domainName.toLowerCase());
+  const description = `Importé en langage naturel le ${new Date().toLocaleDateString('fr-FR')} (${normalized.questions.length} questions)`;
+
+  if (existing >= 0) {
+    // Domaine déjà créé → on AJOUTE ce pack (sans écraser)
+    store.domains[existing].packs = store.domains[existing].packs || [];
+    store.domains[existing].packs.push(normalized);
+    store.domains[existing].updatedAt = new Date().toISOString();
+  } else {
+    store.domains.push({
+      name: domainName,
+      description,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      packs: [normalized]
+    });
+  }
+  saveCustomDomains(store);
+
+  res.json({
+    ok: true,
+    domain: domainName,
+    appended: existing >= 0,
+    title: effectiveTitle,
+    manche,
+    questionsCount: normalized.questions.length,
+    sample: normalized.questions.slice(0, 2).map(q => ({
+      q: q.q, r: q.r, choices: q.choices
+    }))
+  });
+});
+
+// Aperçu : parse + génère distracteurs SANS enregistrer (preview pour
+// l'UI avant l'import définitif).
+app.post('/api/admin/custom-domains/preview-natural', requireAdmin, (req, res) => {
+  const naturalText = String(req.body.naturalText || '');
+  const numChoices  = Math.max(3, Math.min(6, parseInt(req.body.numChoices, 10) || 4));
+  if (!naturalText.trim()) return res.status(400).json({ error: 'Texte vide' });
+  const parsed = parseNaturalQA(naturalText);
+  if (!parsed.pairs.length) {
+    return res.status(400).json({ error: 'Aucune paire Q/R détectée. Utilisez "Q1 : ..." puis "R1 : ..." sur la ligne suivante.' });
+  }
+  const items = parsed.pairs.map(p => ({
+    q: p.q,
+    r: p.r,
+    distractors: generateDistractors(p.q, p.r, numChoices - 1)
+  }));
+  res.json({
+    title: parsed.title || '',
+    count: items.length,
+    items
   });
 });
 

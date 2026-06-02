@@ -631,6 +631,49 @@ html, body {
 }
 .visitor-pseudo-info strong { color: #92400E; }
 
+/* Import langage naturel (v2.24) */
+.nl-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+@media (min-width: 720px) {
+  .nl-grid { grid-template-columns: 1fr 1fr; }
+}
+.nl-field { display: flex; flex-direction: column; gap: 4px; }
+.nl-field label { font-size: 13px; font-weight: 600; color: var(--ink); }
+.nl-field input, .nl-field select {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+}
+.nl-field .req { color: var(--accent); }
+.nl-preview {
+  margin-top: 14px;
+  padding: 14px;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 10px;
+  max-height: 540px;
+  overflow-y: auto;
+}
+.nl-preview-header { margin-bottom: 10px; color: #166534; }
+.nl-preview-item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.nl-preview-q { font-weight: 600; margin-bottom: 4px; }
+.nl-preview-r { color: #166534; margin-bottom: 4px; font-size: 14px; }
+.nl-preview-d { color: var(--muted); font-size: 13px; }
+.nl-preview-distractors { margin: 4px 0 0 18px; padding: 0; }
+.nl-preview-distractors li { margin: 2px 0; }
+
 /* Champs durées */
 .timings-grid {
   display: grid;

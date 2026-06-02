@@ -127,7 +127,10 @@ const api = {
   // Domaines personnalisés (admin)
   adminCustomDomains:        ()        => apiFetch('/api/admin/custom-domains', {}, true),
   adminCreateCustomDomain:   (body)    => apiFetch('/api/admin/custom-domains', { method: 'POST', body: JSON.stringify(body) }, true),
-  adminDeleteCustomDomain:   (name)    => apiFetch(`/api/admin/custom-domains/${encodeURIComponent(name)}`, { method: 'DELETE' }, true)
+  adminDeleteCustomDomain:   (name)    => apiFetch(`/api/admin/custom-domains/${encodeURIComponent(name)}`, { method: 'DELETE' }, true),
+  // Langage naturel (v2.24)
+  adminPreviewNL:            (body)    => apiFetch('/api/admin/custom-domains/preview-natural', { method: 'POST', body: JSON.stringify(body) }, true),
+  adminImportNL:             (body)    => apiFetch('/api/admin/custom-domains/from-natural', { method: 'POST', body: JSON.stringify(body) }, true)
 };
 
 // Téléchargement direct (binaire) avec auth admin pour l'Excel
@@ -445,12 +448,38 @@ function renderLogin() {
   }
 
   // Form login par compte (email/pseudo + password)
+  // Le bouton "Entrer" reste désactivé tant que les deux champs ne sont
+  // pas remplis (pseudo + mot de passe non vides).
+  const accBtn = $('#form-account-login') && $('#form-account-login').querySelector('button[type="submit"]');
+  function refreshAccBtnState() {
+    if (!accBtn) return;
+    const idVal  = ($('#acc-login-id')  || {}).value || '';
+    const pwdVal = ($('#acc-login-pwd') || {}).value || '';
+    accBtn.disabled = (idVal.trim().length === 0 || pwdVal.length === 0);
+  }
+  if ($('#acc-login-id'))  $('#acc-login-id').addEventListener('input',  refreshAccBtnState);
+  if ($('#acc-login-pwd')) $('#acc-login-pwd').addEventListener('input', refreshAccBtnState);
+  refreshAccBtnState();
+
   $('#form-account-login').addEventListener('submit', async (e) => {
     e.preventDefault();
     const identifier = $('#acc-login-id').value.trim();
     const password = $('#acc-login-pwd').value;
     const err = $('#login-error');
     err.hidden = true;
+    // Garde-fou redondant : aucune connexion possible sans mot de passe
+    if (!password) {
+      err.textContent = 'Le mot de passe est obligatoire.';
+      err.hidden = false;
+      const pwdInput = $('#acc-login-pwd');
+      if (pwdInput) pwdInput.focus();
+      return;
+    }
+    if (!identifier) {
+      err.textContent = 'L\'e-mail ou le pseudo est obligatoire.';
+      err.hidden = false;
+      return;
+    }
     try {
       const r = await api.loginAccount({ identifier, password });
       // Mémoriser l'identifiant (pas le mot de passe) pour pré-remplissage
@@ -474,7 +503,22 @@ function renderLogin() {
     }
   });
 
-  // Form inscription
+  // Form inscription — bouton désactivé tant que les 3 champs ne sont
+  // pas remplis et le mot de passe pas ≥ 6 caractères
+  const regBtn = $('#form-account-register') && $('#form-account-register').querySelector('button[type="submit"]');
+  function refreshRegBtnState() {
+    if (!regBtn) return;
+    const e = ($('#reg-email')  || {}).value || '';
+    const p = ($('#reg-pseudo') || {}).value || '';
+    const w = ($('#reg-pwd')    || {}).value || '';
+    regBtn.disabled = (!e.trim() || p.trim().length < 2 || w.length < 6);
+  }
+  ['#reg-email', '#reg-pseudo', '#reg-pwd'].forEach(sel => {
+    const inp = $(sel);
+    if (inp) inp.addEventListener('input', refreshRegBtnState);
+  });
+  refreshRegBtnState();
+
   $('#form-account-register').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = $('#reg-email').value.trim();
@@ -482,6 +526,19 @@ function renderLogin() {
     const password = $('#reg-pwd').value;
     const err = $('#login-error');
     err.hidden = true;
+    // Garde-fous : aucun compte créé sans mot de passe ≥ 6 caractères
+    if (!password || password.length < 6) {
+      err.textContent = 'Le mot de passe est obligatoire (6 caractères minimum).';
+      err.hidden = false;
+      const pwdInput = $('#reg-pwd');
+      if (pwdInput) pwdInput.focus();
+      return;
+    }
+    if (!email || !pseudo) {
+      err.textContent = 'L\'e-mail et le pseudo sont obligatoires.';
+      err.hidden = false;
+      return;
+    }
     try {
       const r = await api.registerAccount({ email, pseudo, password });
       // Mémoriser le pseudo (la prochaine fois, login direct avec ce pseudo)
@@ -2068,6 +2125,86 @@ async function renderAdmin() {
   $('#btn-toggle-custom-help').onclick = () => {
     const d = $('#custom-domain-help');
     d.open = !d.open;
+  };
+
+  // ---------- Import langage naturel (v2.24) -------------------------
+  function nlBody() {
+    return {
+      domain:     ($('#nl-domain')  || {}).value || '',
+      title:      ($('#nl-title')   || {}).value || '',
+      manche:     ($('#nl-manche')  || {}).value || 'manche1',
+      theme:      ($('#nl-theme')   || {}).value || '',
+      numChoices: parseInt(($('#nl-choices') || {}).value || '4', 10),
+      naturalText:($('#nl-text')    || {}).value || ''
+    };
+  }
+  function renderNLPreview(items, title) {
+    const box = $('#nl-preview');
+    if (!box) return;
+    box.innerHTML = '';
+    box.hidden = false;
+    const header = el('div', { class: 'nl-preview-header' },
+      el('strong', {}, `✓ ${items.length} question(s) détectée(s)`),
+      title ? el('span', { class: 'muted' }, ` — titre : « ${title} »`) : null
+    );
+    box.appendChild(header);
+    items.forEach((it, i) => {
+      const row = el('div', { class: 'nl-preview-item' },
+        el('div', { class: 'nl-preview-q' }, `Q${i + 1}. ${it.q}`),
+        el('div', { class: 'nl-preview-r' }, el('strong', {}, '✓ Bonne réponse : '), it.r),
+        el('div', { class: 'nl-preview-d' }, el('strong', {}, 'Distracteurs auto-générés : '),
+          (it.distractors && it.distractors.length)
+            ? el('ul', { class: 'nl-preview-distractors' },
+                ...it.distractors.map(d => el('li', {}, d)))
+            : el('span', { class: 'muted' }, '(aucun généré)'))
+      );
+      box.appendChild(row);
+    });
+  }
+
+  const nlPreviewBtn = $('#btn-nl-preview');
+  if (nlPreviewBtn) nlPreviewBtn.onclick = async () => {
+    const body = nlBody();
+    if (!body.naturalText.trim()) {
+      alert('Veuillez coller du texte avec au moins une paire Q/R.');
+      return;
+    }
+    try {
+      const r = await api.adminPreviewNL({ naturalText: body.naturalText, numChoices: body.numChoices });
+      renderNLPreview(r.items, r.title);
+    } catch (e) {
+      alert('Erreur de prévisualisation : ' + e.message);
+    }
+  };
+
+  const nlImportBtn = $('#btn-nl-import');
+  if (nlImportBtn) nlImportBtn.onclick = async () => {
+    const body = nlBody();
+    if (!body.domain.trim()) {
+      alert('Veuillez indiquer un nom de domaine.');
+      const inp = $('#nl-domain'); if (inp) inp.focus();
+      return;
+    }
+    if (!body.naturalText.trim()) {
+      alert('Veuillez coller du texte avec au moins une paire Q/R.');
+      return;
+    }
+    try {
+      const r = await api.adminImportNL(body);
+      const msg = `✓ Domaine « ${r.domain} » ${r.appended ? 'enrichi' : 'créé'} avec ${r.questionsCount} question(s).\n` +
+                  `Pack : « ${r.title} » (${r.manche})\n\n` +
+                  `Disponible immédiatement dans Setup → Choisir un domaine.`;
+      alert(msg);
+      // Vider la zone de texte et refresh la liste
+      const txt = $('#nl-text'); if (txt) txt.value = '';
+      const ttl = $('#nl-title'); if (ttl) ttl.value = '';
+      const prev = $('#nl-preview'); if (prev) { prev.hidden = true; prev.innerHTML = ''; }
+      // Rafraîchir la liste des domaines personnalisés et le meta global
+      refreshCustomDomains();
+      try { State.meta = await api.meta(); updateFooterMeta(); } catch {}
+    } catch (e) {
+      alert('Erreur d\'import : ' + e.message);
+    }
   };
 
   // Téléchargement des modèles

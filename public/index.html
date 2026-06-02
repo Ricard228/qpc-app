@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.23" />
+  <link rel="stylesheet" href="styles.css?v=2.24" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -1286,6 +1286,97 @@ MANCHE: 2
         <div id="custom-domains-list" style="margin-top:14px;"></div>
       </div>
 
+      <!-- ✨ Nouveau v2.24 : import langage naturel ultra-simple -->
+      <div class="card">
+        <h2 class="card-title">✨ Charger un domaine en langage naturel</h2>
+        <p class="muted" style="margin-top:0;">
+          Collez simplement votre série de questions-réponses, donnez quelques précisions, et l'application
+          se charge de <strong>structurer les QCM</strong> et de <strong>générer des distracteurs réalistes</strong>.
+          Idéal pour importer rapidement un sujet d'évaluation rédigé en Word/PDF/manuscrit.
+        </p>
+
+        <div class="nl-grid">
+          <div class="nl-field">
+            <label for="nl-domain">Nom du domaine <span class="req">*</span></label>
+            <input type="text" id="nl-domain" placeholder="ex. Évaluation Macro L3 — Juin 2026" maxlength="80" />
+          </div>
+          <div class="nl-field">
+            <label for="nl-title">Titre du pack (optionnel)</label>
+            <input type="text" id="nl-title" placeholder="ex. Contrôle continu" maxlength="120" />
+          </div>
+          <div class="nl-field">
+            <label for="nl-manche">Manche</label>
+            <select id="nl-manche">
+              <option value="manche1" selected>Manche 1 (4 questions, 40 s)</option>
+              <option value="manche2">Manche 2 (par question, 25 s, à points)</option>
+              <option value="manche3">Manche 3 (buzz 1 min 30, 9 pts gagnants)</option>
+            </select>
+          </div>
+          <div class="nl-field">
+            <label for="nl-choices">Nombre de choix QCM</label>
+            <select id="nl-choices">
+              <option value="3">3 (1 bonne + 2 distracteurs)</option>
+              <option value="4" selected>4 (1 bonne + 3 distracteurs)</option>
+              <option value="5">5 (1 bonne + 4 distracteurs)</option>
+              <option value="6">6 (1 bonne + 5 distracteurs)</option>
+            </select>
+          </div>
+          <div class="nl-field">
+            <label for="nl-theme">Thème (optionnel)</label>
+            <input type="text" id="nl-theme" placeholder="ex. Politique monétaire" maxlength="120" />
+          </div>
+        </div>
+
+        <label for="nl-text" style="display:block; margin-top:14px; font-weight:600;">Texte des questions-réponses <span class="req">*</span></label>
+        <textarea id="nl-text" rows="14" placeholder="Titre de l'évaluation (optionnel)
+Q1 : Quelle est la capitale économique du Togo ?
+   R1 : Lomé
+Q2 : En quelle année la BCEAO a-t-elle été créée ?
+   R2 : 1962
+Q3 : Quel est le taux de TVA standard au Togo ?
+   R3 : 18 %
+..." style="width:100%; font-family: 'Courier New', monospace; font-size: 13px; padding: 10px; border: 1px solid var(--line); border-radius: 8px;"></textarea>
+
+        <div class="form-row" style="margin-top:12px;">
+          <button id="btn-nl-preview" class="btn">👁 Prévisualiser les QCM générés</button>
+          <button id="btn-nl-import" class="btn btn-primary">✨ Analyser et importer</button>
+        </div>
+
+        <div id="nl-preview" class="nl-preview" hidden></div>
+
+        <details style="margin-top:14px;">
+          <summary class="muted" style="cursor:pointer;">📖 Format attendu (cliquez pour voir des exemples)</summary>
+          <div class="custom-doc">
+            <h4>Format ultra-simple</h4>
+            <p>Une ligne par question commençant par <code>Q1:</code>, <code>Q1.</code>, <code>1.</code>, <code>Question 1:</code>, etc. Puis sur la ligne suivante la réponse commençant par <code>R1:</code>, <code>R:</code>, <code>A:</code>, <code>Réponse:</code>, etc. L'indentation et les lignes vides sont libres.</p>
+            <pre>Évaluation économie Togo
+Q1 : Quelle est la monnaie utilisée par le Togo ?
+   R1 : Le franc CFA
+Q2 : En quelle année le Togo a-t-il accédé à l'indépendance ?
+   R2 : 1960
+Q3 : Quel est le principal port du Togo ?
+   R3 : Le Port autonome de Lomé
+Q4 : Quel est le taux directeur actuel de la BCEAO ?
+   R4 : 3,5 %</pre>
+            <h4>Ce que fait l'application automatiquement</h4>
+            <ul>
+              <li>Détecte le type de chaque réponse (année, %, montant, mot unique, phrase…)</li>
+              <li>Génère <strong>N - 1 distracteurs réalistes</strong> : ± années, ± points pour les %, mots économiques proches, inversions logiques pour les phrases</li>
+              <li>Chaque distracteur fait <strong>au moins la longueur</strong> de la bonne réponse (politique QPC)</li>
+              <li>Le pack est ajouté au domaine indiqué (créé si absent, ou enrichi sinon)</li>
+              <li>Disponible immédiatement dans la configuration de partie</li>
+            </ul>
+            <h4>Astuces</h4>
+            <ul>
+              <li>Si vos questions sont déjà numérotées (1., 2., …), ça marche aussi</li>
+              <li>Pour une question longue sur plusieurs lignes, continuez sans marqueur — la suite sera rattachée à la dernière Q ou R ouverte</li>
+              <li>Vous pouvez relancer plusieurs imports sur le même nom de domaine : les packs s'ajoutent</li>
+              <li>Cliquez « 👁 Prévisualiser » avant d'importer pour vérifier les distracteurs proposés</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
       <div class="card card-danger">
         <h2 class="card-title" style="color: var(--accent);">Zone dangereuse</h2>
         <p class="muted" style="margin-top:0;">Suppression définitive de tous les codes d'accès et de toutes les parties enregistrées.</p>
@@ -1298,6 +1389,6 @@ MANCHE: 2
     </section>
   </template>
 
-  <script src="app.js?v=2.23"></script>
+  <script src="app.js?v=2.24"></script>
 </body>
 </html>
