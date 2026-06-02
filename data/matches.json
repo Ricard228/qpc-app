@@ -6275,7 +6275,7 @@
         "ACC-0e50203e",
         "QPC-T6CJQP9Q"
       ],
-      "status": "pending",
+      "status": "active",
       "config": {
         "manches": [
           "manche1",
@@ -6816,7 +6816,7 @@
       },
       "acceptances": {
         "ACC-0e50203e": "accepted",
-        "QPC-T6CJQP9Q": "pending"
+        "QPC-T6CJQP9Q": "accepted"
       },
       "results": {},
       "winner": null
