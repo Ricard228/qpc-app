@@ -125,6 +125,15 @@ const api = {
   adminDeleteGame:        (gameId) => apiFetch(`/api/admin/game/${encodeURIComponent(gameId)}`, { method: 'DELETE' }, true),
   adminResetCodeRanking:  (code)   => apiFetch(`/api/admin/codes/${encodeURIComponent(code)}/games`, { method: 'DELETE' }, true),
   // Domaines personnalisés (admin)
+  // Éditeur de contenus (v2.26)
+  adminEditorDomains:        ()        => apiFetch('/api/admin/editor/domains', {}, true),
+  adminEditorDomain:         (name)    => apiFetch(`/api/admin/editor/domain/${encodeURIComponent(name)}`, {}, true),
+  adminEditorSaveQuestion:   (id, patch) => apiFetch(`/api/admin/editor/question/${encodeURIComponent(id)}`, {
+    method: 'PUT', body: JSON.stringify(patch)
+  }, true),
+  adminEditorResetOverride:  (id)       => apiFetch(`/api/admin/editor/question/${encodeURIComponent(id)}/override`, {
+    method: 'DELETE'
+  }, true),
   adminCustomDomains:        ()        => apiFetch('/api/admin/custom-domains', {}, true),
   adminCreateCustomDomain:   (body)    => apiFetch('/api/admin/custom-domains', { method: 'POST', body: JSON.stringify(body) }, true),
   adminDeleteCustomDomain:   (name)    => apiFetch(`/api/admin/custom-domains/${encodeURIComponent(name)}`, { method: 'DELETE' }, true),
@@ -2378,6 +2387,215 @@ PTS: 6
     };
     downloadBlob(JSON.stringify(sample, null, 2), 'modele-domaine-qpc.json', 'application/json');
   };
+
+  // ---------- Éditeur de contenus (v2.26) ----------------------------
+  // Permissions :
+  //   - super-admin : tous les domaines (builtin + custom)
+  //   - admin nommé : seulement les domaines personnalisés
+  async function refreshEditorDomains() {
+    let domains = [];
+    try { domains = await api.adminEditorDomains(); }
+    catch (e) { return; }
+
+    const sel = $('#editor-domain');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">— Choisir un domaine —</option>';
+
+    // Regroupe : custom d'abord, puis builtin (le backend les renvoie triés)
+    let lastGroup = null;
+    for (const d of domains) {
+      const groupLabel = d.isCustom ? '✨ Domaines personnalisés' : '🏛 Domaines intégrés';
+      if (groupLabel !== lastGroup) {
+        const og = document.createElement('optgroup');
+        og.label = groupLabel;
+        sel.appendChild(og);
+        lastGroup = groupLabel;
+      }
+      const opt = document.createElement('option');
+      opt.value = d.name;
+      opt.textContent = `${d.name} — ${d.questionsCount} question(s)`;
+      opt.dataset.isCustom = d.isCustom ? '1' : '0';
+      sel.lastChild.appendChild(opt);
+    }
+
+    // Petit hint selon le rôle (détecté par la présence de domaines builtin)
+    const hint = $('#editor-perm-hint');
+    if (hint) {
+      const hasBuiltin = domains.some(d => !d.isCustom);
+      if (hasBuiltin) {
+        hint.innerHTML = '🛡️ <strong>Super-administrateur</strong> — vous pouvez modifier les questions, réponses et sources de <strong>tous les domaines</strong> (intégrés et personnalisés). Les modifications sur les domaines intégrés sont stockées en surcouche et survivent aux redéploiements.';
+      } else {
+        hint.innerHTML = '👤 <strong>Administrateur nommé</strong> — vous pouvez modifier les questions, réponses et sources des <strong>domaines personnalisés</strong>. Les domaines intégrés sont réservés au super-administrateur.';
+      }
+    }
+  }
+
+  function renderEditorContent(payload) {
+    const content = $('#editor-content');
+    const info = $('#editor-domain-info');
+    const empty = $('#editor-empty');
+    if (!content || !info || !empty) return;
+    content.innerHTML = '';
+    content.hidden = false;
+    info.hidden = false;
+    empty.hidden = true;
+
+    const totalQ = (payload.packs || []).reduce((s, p) => s + (p.questions || []).length, 0);
+    const badge = payload.isCustom
+      ? el('span', { class: 'badge-visitor', style: 'background:#22c55e; color:#fff;' }, 'PERSONNALISÉ')
+      : el('span', { class: 'badge-visitor', style: 'background:#3b82f6; color:#fff;' }, 'INTÉGRÉ');
+    info.innerHTML = '';
+    info.appendChild(el('div', {},
+      el('strong', {}, payload.name), ' ', badge,
+      ` — ${(payload.packs || []).length} pack(s), ${totalQ} question(s) éditable(s).`
+    ));
+
+    if (totalQ === 0) {
+      empty.hidden = false;
+      content.hidden = true;
+      return;
+    }
+
+    (payload.packs || []).forEach((pack, packIdx) => {
+      const packBox = el('div', { class: 'editor-pack' },
+        el('div', { class: 'editor-pack-head' },
+          el('strong', {}, pack.title || `Pack ${packIdx + 1}`),
+          el('span', { class: 'small muted' },
+            ` · ${pack.type}${pack.theme ? ' · ' + pack.theme : ''} · ${(pack.questions || []).length} questions`)
+        )
+      );
+
+      (pack.questions || []).forEach((q, qi) => {
+        const qBox = el('div', { class: 'editor-q', 'data-qid': q.id },
+          el('div', { class: 'editor-q-head' },
+            el('span', { class: 'editor-q-num' }, `Q${qi + 1}`),
+            el('span', { class: 'small muted' }, `id : ${q.id}`)
+          ),
+          el('label', {}, 'Question'),
+          el('textarea', { class: 'editor-input editor-q-text', rows: 2 }, q.q || ''),
+          el('label', {}, 'Réponse'),
+          el('input', { class: 'editor-input editor-q-r', type: 'text', value: q.r || '' }),
+          el('label', {}, 'Source / référence (URL ou texte libre)'),
+          el('input', { class: 'editor-input editor-q-ref', type: 'text', value: q.ref || '' })
+        );
+
+        // Affichage des choix QCM en lecture seule (pour info)
+        if (q.choices && q.choices.length) {
+          const choicesText = q.choices.map((c, i) =>
+            (q.correctIndices && q.correctIndices.includes(i) ? '✓ ' : '  ') + c
+          ).join('\n');
+          qBox.appendChild(el('details', { class: 'editor-q-choices' },
+            el('summary', { class: 'muted small' }, `🔢 ${q.choices.length} choix QCM (lecture seule)`),
+            el('pre', {}, choicesText)
+          ));
+        }
+
+        const status = el('div', { class: 'editor-q-status' });
+        const actions = el('div', { class: 'editor-q-actions' },
+          el('button', {
+            class: 'btn btn-primary btn-small',
+            onclick: async () => {
+              const qTextEl = qBox.querySelector('.editor-q-text');
+              const rEl     = qBox.querySelector('.editor-q-r');
+              const refEl   = qBox.querySelector('.editor-q-ref');
+              const patch = {
+                q:   (qTextEl.value || '').trim(),
+                r:   (rEl.value     || '').trim(),
+                ref: (refEl.value   || '').trim()
+              };
+              if (!patch.q || !patch.r) {
+                status.className = 'editor-q-status err';
+                status.textContent = '❌ Question et réponse ne peuvent pas être vides.';
+                return;
+              }
+              status.className = 'editor-q-status loading';
+              status.textContent = '⏳ Enregistrement…';
+              try {
+                const r = await api.adminEditorSaveQuestion(q.id, patch);
+                status.className = 'editor-q-status ok';
+                status.textContent = '✓ Modifications enregistrées';
+                // Mise à jour locale du choix correct si renvoyé
+                if (r.question && r.question.choices) {
+                  // Re-render la zone des choix QCM
+                  const det = qBox.querySelector('.editor-q-choices');
+                  if (det) {
+                    const ci = r.question.correctIndices || [];
+                    const txt = r.question.choices.map((c, i) =>
+                      (ci.includes(i) ? '✓ ' : '  ') + c).join('\n');
+                    const pre = det.querySelector('pre');
+                    if (pre) pre.textContent = txt;
+                  }
+                }
+              } catch (e) {
+                status.className = 'editor-q-status err';
+                status.textContent = '❌ ' + (e.message || 'Erreur d\'enregistrement');
+              }
+            }
+          }, '💾 Enregistrer')
+        );
+
+        // Bouton "réinitialiser" pour les questions builtin (super-admin uniquement)
+        if (!payload.isCustom) {
+          actions.appendChild(el('button', {
+            class: 'btn btn-ghost btn-small',
+            title: 'Annuler les modifications faites sur cette question et restaurer la version d\'origine',
+            onclick: async () => {
+              if (!confirm('Annuler les modifications faites sur cette question et restaurer la version d\'origine ?')) return;
+              status.className = 'editor-q-status loading';
+              status.textContent = '⏳ Restauration…';
+              try {
+                await api.adminEditorResetOverride(q.id);
+                status.className = 'editor-q-status ok';
+                status.textContent = '✓ Version d\'origine restaurée';
+                // Recharger le contenu
+                await loadEditorDomain($('#editor-domain').value);
+              } catch (e) {
+                status.className = 'editor-q-status err';
+                status.textContent = '❌ ' + e.message;
+              }
+            }
+          }, '↺ Restaurer'));
+        }
+
+        qBox.appendChild(actions);
+        qBox.appendChild(status);
+        packBox.appendChild(qBox);
+      });
+
+      content.appendChild(packBox);
+    });
+  }
+
+  async function loadEditorDomain(name) {
+    const content = $('#editor-content');
+    const empty = $('#editor-empty');
+    const info = $('#editor-domain-info');
+    if (!name) {
+      if (content) { content.hidden = true; content.innerHTML = ''; }
+      if (info) info.hidden = true;
+      if (empty) empty.hidden = true;
+      return;
+    }
+    if (content) content.innerHTML = '<div class="muted">Chargement…</div>';
+    if (content) content.hidden = false;
+    try {
+      const payload = await api.adminEditorDomain(name);
+      renderEditorContent(payload);
+    } catch (e) {
+      content.innerHTML = `<div class="err">Erreur : ${escapeHTML(e.message)}</div>`;
+    }
+  }
+
+  const editorLoadBtn = $('#btn-editor-load');
+  if (editorLoadBtn) editorLoadBtn.onclick = () => {
+    const name = $('#editor-domain').value;
+    if (!name) {
+      alert('Veuillez choisir un domaine.');
+      return;
+    }
+    loadEditorDomain(name);
+  };
+  refreshEditorDomains();
 
   // Bouton purge
   $('#btn-admin-purge').onclick = async () => {

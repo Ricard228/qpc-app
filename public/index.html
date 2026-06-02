@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.25" />
+  <link rel="stylesheet" href="styles.css?v=2.26" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -1391,6 +1391,26 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
         </details>
       </div>
 
+      <!-- ✏️ v2.26 : Éditeur de questions / réponses / sources -->
+      <div class="card">
+        <h2 class="card-title">📝 Modifier les contenus (questions, réponses, sources)</h2>
+        <p class="muted" id="editor-perm-hint" style="margin-top:0;">
+          <span class="muted">Chargement…</span>
+        </p>
+
+        <div class="form-row" style="margin-bottom: 10px;">
+          <label for="editor-domain" style="margin-right:8px;">Domaine :</label>
+          <select id="editor-domain" style="flex:1; padding:8px; border:1px solid var(--line); border-radius:8px;">
+            <option value="">— Choisir un domaine —</option>
+          </select>
+          <button id="btn-editor-load" class="btn btn-primary">📂 Ouvrir</button>
+        </div>
+
+        <div id="editor-domain-info" class="editor-domain-info muted" hidden></div>
+        <div id="editor-content" class="editor-content" hidden></div>
+        <div id="editor-empty" class="muted" hidden>Aucune question dans ce domaine.</div>
+      </div>
+
       <div class="card card-danger">
         <h2 class="card-title" style="color: var(--accent);">Zone dangereuse</h2>
         <p class="muted" style="margin-top:0;">Suppression définitive de tous les codes d'accès et de toutes les parties enregistrées.</p>
@@ -1403,6 +1423,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.25"></script>
+  <script src="app.js?v=2.26"></script>
 </body>
 </html>

@@ -102,6 +102,7 @@ const GAMES_PATH     = path.join(DATA, 'games.json');
 const MATCHES_PATH   = path.join(DATA, 'matches.json');
 const CUSTOM_PATH    = path.join(DATA, 'custom-packs.json');
 const QUESTIONS_PATH = path.join(DATA, 'questions.json');
+const EDITS_PATH     = path.join(DATA, 'question-edits.json');   // v2.26 : overrides
 
 // Mot de passe super-admin par défaut. À surcharger via ADMIN_PASSWORD.
 const DEFAULT_ADMIN_PASSWORD = 'qpc-admin-2026';
@@ -206,6 +207,16 @@ function saveCustomDomains(d) {
   scheduleGhSync('data/custom-packs.json');
 }
 
+// v2.26 : overrides du super-admin sur les questions builtin.
+// Schéma : { edits: { "<questionId>": { q?, r?, ref?, updatedAt, updatedBy } } }
+// Les édits sont appliqués en mémoire sur QUESTIONS au démarrage et
+// après chaque modification. Le fichier est synchronisé sur GitHub.
+function loadEdits() { return readJson(EDITS_PATH, { edits: {} }); }
+function saveEdits(e) {
+  writeJson(EDITS_PATH, e);
+  scheduleGhSync('data/question-edits.json');
+}
+
 // ---------- Synchronisation GitHub ------------------------------------
 const ghShas = {};
 const ghPending = {};
@@ -270,7 +281,7 @@ async function ghPullInitial() {
     return;
   }
   console.log(`🔁 Téléchargement initial depuis ${GH_REPO}#${GH_BRANCH}...`);
-  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json', 'data/custom-packs.json']) {
+  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json', 'data/custom-packs.json', 'data/question-edits.json']) {
     try {
       const content = await ghGetFile(remotePath);
       if (content) {
@@ -298,6 +309,51 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(ROOT, 'public')));
 
 const QUESTIONS = JSON.parse(fs.readFileSync(QUESTIONS_PATH, 'utf8'));
+
+// v2.26 : index global des questions builtin par id pour lookup O(1)
+function indexBuiltinQuestions() {
+  const idx = {};
+  for (const m of ['manche1', 'manche2', 'manche3']) {
+    for (const pack of (QUESTIONS[m] || [])) {
+      for (const q of (pack.questions || [])) {
+        if (q && q.id) idx[q.id] = { q, pack, manche: m };
+      }
+    }
+  }
+  return idx;
+}
+let BUILTIN_INDEX = indexBuiltinQuestions();
+
+// Applique un edit individuel sur un objet question (mutation in-place)
+function applyEditToQuestion(q, edit) {
+  if (!q || !edit) return;
+  if (edit.q != null)   q.q = edit.q;
+  if (edit.ref != null) q.ref = edit.ref;
+  if (edit.r != null) {
+    // Si QCM avec une bonne réponse unique, remplacer aussi le choix correct
+    if (Array.isArray(q.choices) && Array.isArray(q.correctIndices)
+        && q.correctIndices.length === 1
+        && q.choices[q.correctIndices[0]] === q.r) {
+      q.choices[q.correctIndices[0]] = edit.r;
+    }
+    q.r = edit.r;
+  }
+}
+
+// Au démarrage : applique tous les edits stockés sur le store builtin
+function applyAllEdits() {
+  const ed = loadEdits().edits || {};
+  let applied = 0;
+  for (const qid of Object.keys(ed)) {
+    const entry = BUILTIN_INDEX[qid];
+    if (entry) {
+      applyEditToQuestion(entry.q, ed[qid]);
+      applied += 1;
+    }
+  }
+  if (applied) console.log(`✓ ${applied} override(s) appliqué(s) sur les questions builtin`);
+}
+applyAllEdits();
 
 // =====================================================================
 // Domaines personnalisés (import admin de .txt ou .json)
@@ -1591,6 +1647,239 @@ app.delete('/api/admin/custom-domains/:name', requireAdmin, (req, res) => {
   if (store.domains.length === before) return res.status(404).json({ error: 'Domaine introuvable' });
   saveCustomDomains(store);
   res.json({ ok: true, name });
+});
+
+// =====================================================================
+// ÉDITEUR DE CONTENUS (v2.26)
+// =====================================================================
+// Permissions :
+//   - Super-administrateur (env ADMIN_PASSWORD) : édite TOUS les domaines
+//     (intégrés + personnalisés). Les édits sur le builtin sont stockés
+//     dans data/question-edits.json (overrides).
+//   - Administrateur nommé (compte promu) : édite UNIQUEMENT les domaines
+//     personnalisés. Les modifications sont écrites in-place dans
+//     data/custom-packs.json.
+// Champs éditables : q (question), r (réponse), ref (source / lien).
+
+// Liste tous les domaines avec leurs métadonnées + flag isCustom.
+// Filtre selon le rôle : super-admin voit tout, admin nommé ne voit
+// que les domaines personnalisés (et reçoit isCustom: true pour chaque).
+app.get('/api/admin/editor/domains', requireAdmin, (req, res) => {
+  const isSuper = !!req.admin.superAdmin;
+  const customStore = loadCustomDomains();
+  const result = [];
+
+  // Domaines builtin (super-admin uniquement)
+  if (isSuper) {
+    const builtinMap = {};
+    for (const m of ['manche1', 'manche2', 'manche3']) {
+      for (const pack of (QUESTIONS[m] || [])) {
+        const dn = pack.domain || '(sans domaine)';
+        if (!builtinMap[dn]) builtinMap[dn] = { name: dn, isCustom: false, manches: new Set(), packs: 0, questions: 0 };
+        builtinMap[dn].manches.add(m);
+        builtinMap[dn].packs += 1;
+        builtinMap[dn].questions += (pack.questions || []).length;
+      }
+    }
+    for (const dn of Object.keys(builtinMap)) {
+      const d = builtinMap[dn];
+      result.push({
+        name: d.name, isCustom: false,
+        manches: [...d.manches],
+        packsCount: d.packs, questionsCount: d.questions
+      });
+    }
+  }
+
+  // Domaines personnalisés (toujours visibles, super-admin ET admin nommé)
+  for (const d of (customStore.domains || [])) {
+    result.push({
+      name: d.name,
+      isCustom: true,
+      description: d.description || '',
+      createdAt: d.createdAt,
+      updatedAt: d.updatedAt || d.createdAt,
+      manches: [...new Set((d.packs || []).map(p => p.type))],
+      packsCount: (d.packs || []).length,
+      questionsCount: (d.packs || []).reduce((s, p) => s + (p.questions || []).length, 0)
+    });
+  }
+
+  // Tri : custom d'abord (l'admin nommé ne voit que ça), puis builtin
+  result.sort((a, b) => {
+    if (a.isCustom !== b.isCustom) return a.isCustom ? -1 : 1;
+    return String(a.name).localeCompare(b.name, 'fr');
+  });
+
+  res.json(result);
+});
+
+// Renvoie les packs et questions d'un domaine donné, pour édition.
+// Auth :
+//   - Super-admin : tout
+//   - Admin nommé : 403 si domaine builtin
+app.get('/api/admin/editor/domain/:name', requireAdmin, (req, res) => {
+  const name = decodeURIComponent(req.params.name);
+  const isSuper = !!req.admin.superAdmin;
+
+  // Cherche d'abord dans custom
+  const customStore = loadCustomDomains();
+  const customDomain = (customStore.domains || []).find(d => d.name.toLowerCase() === name.toLowerCase());
+  if (customDomain) {
+    return res.json({
+      name: customDomain.name,
+      isCustom: true,
+      description: customDomain.description || '',
+      packs: (customDomain.packs || []).map(p => ({
+        id: p.id, title: p.titre || p.title, type: p.type, theme: p.theme,
+        questions: (p.questions || []).map(q => ({
+          id: q.id, q: q.q, r: q.r, ref: q.ref || '',
+          choices: q.choices || null,
+          correctIndices: q.correctIndices || null,
+          e: q.e || '',
+          pts: q.pts || 1
+        }))
+      }))
+    });
+  }
+
+  // Sinon : domaine builtin → super-admin uniquement
+  if (!isSuper) {
+    return res.status(403).json({
+      error: 'Réservé au super-administrateur. Les administrateurs nommés ne peuvent éditer que les domaines personnalisés.'
+    });
+  }
+
+  const packsByManche = { manche1: [], manche2: [], manche3: [] };
+  let found = false;
+  for (const m of ['manche1', 'manche2', 'manche3']) {
+    for (const p of (QUESTIONS[m] || [])) {
+      if ((p.domain || '').toLowerCase() === name.toLowerCase()) {
+        found = true;
+        packsByManche[m].push({
+          id: p.id, title: p.titre || p.title, type: m, theme: p.theme || null,
+          questions: (p.questions || []).map(q => ({
+            id: q.id, q: q.q, r: q.r, ref: q.ref || '',
+            choices: q.choices || null,
+            correctIndices: q.correctIndices || null,
+            e: q.e || '',
+            pts: q.pts || 1
+          }))
+        });
+      }
+    }
+  }
+  if (!found) return res.status(404).json({ error: 'Domaine introuvable' });
+  // À plat
+  res.json({
+    name,
+    isCustom: false,
+    packs: [...packsByManche.manche1, ...packsByManche.manche2, ...packsByManche.manche3]
+  });
+});
+
+// Met à jour les champs q, r, ref d'une question.
+// Auth :
+//   - Question custom (id commence par "custom-") : super-admin OU admin nommé
+//   - Question builtin : super-admin uniquement
+app.put('/api/admin/editor/question/:id', requireAdmin, (req, res) => {
+  const qid = String(req.params.id || '').trim();
+  if (!qid) return res.status(400).json({ error: 'id manquant' });
+  const isSuper = !!req.admin.superAdmin;
+  const isCustom = qid.startsWith('custom-');
+
+  if (!isCustom && !isSuper) {
+    return res.status(403).json({
+      error: 'Réservé au super-administrateur. Les administrateurs nommés ne peuvent éditer que les questions des domaines personnalisés.'
+    });
+  }
+
+  // Body
+  const body = req.body || {};
+  const update = {};
+  if (typeof body.q   === 'string') update.q   = body.q.trim().slice(0, 1000);
+  if (typeof body.r   === 'string') update.r   = body.r.trim().slice(0, 600);
+  if (typeof body.ref === 'string') update.ref = body.ref.trim().slice(0, 800);
+  if (Object.keys(update).length === 0) {
+    return res.status(400).json({ error: 'Aucun champ à modifier (attendu : q, r, ref)' });
+  }
+  if (update.q !== undefined && !update.q) return res.status(400).json({ error: 'La question ne peut pas être vide' });
+  if (update.r !== undefined && !update.r) return res.status(400).json({ error: 'La réponse ne peut pas être vide' });
+
+  if (isCustom) {
+    // Modif in-place dans custom-packs.json
+    const store = loadCustomDomains();
+    let target = null;
+    for (const d of (store.domains || [])) {
+      for (const p of (d.packs || [])) {
+        for (const q of (p.questions || [])) {
+          if (q.id === qid) { target = q; break; }
+        }
+        if (target) break;
+      }
+      if (target) break;
+    }
+    if (!target) return res.status(404).json({ error: 'Question introuvable' });
+    applyEditToQuestion(target, update);
+    saveCustomDomains(store);
+    return res.json({
+      ok: true, id: qid, isCustom: true,
+      question: { id: target.id, q: target.q, r: target.r, ref: target.ref || '',
+                  choices: target.choices || null, correctIndices: target.correctIndices || null }
+    });
+  }
+
+  // Builtin : applique en mémoire + persiste l'override
+  const entry = BUILTIN_INDEX[qid];
+  if (!entry) return res.status(404).json({ error: 'Question builtin introuvable' });
+  applyEditToQuestion(entry.q, update);
+  const editsStore = loadEdits();
+  editsStore.edits = editsStore.edits || {};
+  const prev = editsStore.edits[qid] || {};
+  editsStore.edits[qid] = {
+    ...prev,
+    ...update,
+    updatedAt: new Date().toISOString(),
+    updatedBy: 'super-admin'
+  };
+  saveEdits(editsStore);
+
+  res.json({
+    ok: true, id: qid, isCustom: false,
+    question: { id: entry.q.id, q: entry.q.q, r: entry.q.r, ref: entry.q.ref || '',
+                choices: entry.q.choices || null, correctIndices: entry.q.correctIndices || null }
+  });
+});
+
+// Réinitialise une question builtin en supprimant son override.
+// Super-admin uniquement. Recharge la question depuis questions.json.
+app.delete('/api/admin/editor/question/:id/override', requireSuperAdmin, (req, res) => {
+  const qid = String(req.params.id || '').trim();
+  const editsStore = loadEdits();
+  if (!editsStore.edits || !editsStore.edits[qid]) {
+    return res.status(404).json({ error: 'Aucun override pour cette question' });
+  }
+  delete editsStore.edits[qid];
+  saveEdits(editsStore);
+  // Recharger la question originale depuis questions.json
+  const fresh = JSON.parse(fs.readFileSync(QUESTIONS_PATH, 'utf8'));
+  let original = null;
+  for (const m of ['manche1', 'manche2', 'manche3']) {
+    for (const p of (fresh[m] || [])) {
+      for (const q of (p.questions || [])) {
+        if (q.id === qid) { original = q; break; }
+      }
+      if (original) break;
+    }
+    if (original) break;
+  }
+  if (original && BUILTIN_INDEX[qid]) {
+    BUILTIN_INDEX[qid].q.q = original.q;
+    BUILTIN_INDEX[qid].q.r = original.r;
+    BUILTIN_INDEX[qid].q.ref = original.ref || '';
+    if (original.choices) BUILTIN_INDEX[qid].q.choices = [...original.choices];
+  }
+  res.json({ ok: true, id: qid, restored: !!original });
 });
 
 // =====================================================================

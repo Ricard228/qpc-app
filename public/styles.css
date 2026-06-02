@@ -631,6 +631,83 @@ html, body {
 }
 .visitor-pseudo-info strong { color: #92400E; }
 
+/* Éditeur de questions / réponses / sources (v2.26) */
+.editor-domain-info {
+  padding: 8px 12px;
+  background: rgba(96, 165, 250, 0.08);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.editor-content { max-height: 1000px; overflow-y: auto; padding-right: 4px; }
+.editor-pack {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  background: #fcfcfc;
+}
+.editor-pack-head { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.editor-q {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.editor-q-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.editor-q-num {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-weight: 700;
+  font-size: 12px;
+}
+.editor-q label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+.editor-input {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+textarea.editor-input { font-family: inherit; resize: vertical; }
+.editor-q-choices { margin-top: 8px; }
+.editor-q-choices pre {
+  background: #f5f5f7;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin: 6px 0 0;
+  white-space: pre-wrap;
+}
+.editor-q-actions { margin-top: 10px; display: flex; gap: 8px; }
+.btn-small { padding: 6px 12px; font-size: 13px; }
+.editor-q-status {
+  margin-top: 6px;
+  font-size: 13px;
+  min-height: 18px;
+  padding-left: 4px;
+}
+.editor-q-status.ok      { color: #166534; }
+.editor-q-status.err     { color: #991b1b; }
+.editor-q-status.loading { color: #1e40af; }
+
 /* Upload de fichier pour extraction (v2.25) */
 .nl-upload {
   margin-top: 8px;
