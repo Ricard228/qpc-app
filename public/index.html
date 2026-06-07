@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.26" />
+  <link rel="stylesheet" href="styles.css?v=2.27" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -1319,12 +1319,22 @@ MANCHE: 2
             <input type="text" id="nl-title" placeholder="ex. Contrôle continu" maxlength="120" />
           </div>
           <div class="nl-field">
-            <label for="nl-manche">Manche</label>
-            <select id="nl-manche">
-              <option value="manche1" selected>Manche 1 (4 questions, 40 s)</option>
-              <option value="manche2">Manche 2 (par question, 25 s, à points)</option>
-              <option value="manche3">Manche 3 (buzz 1 min 30, 9 pts gagnants)</option>
-            </select>
+            <label>Manches à utiliser <span class="req">*</span></label>
+            <div class="nl-manches-row">
+              <label class="check check-compact">
+                <input type="checkbox" class="nl-manche-cb" value="manche1" checked />
+                <span>Manche 1 (4 à la suite)</span>
+              </label>
+              <label class="check check-compact">
+                <input type="checkbox" class="nl-manche-cb" value="manche2" />
+                <span>Manche 2 (à points)</span>
+              </label>
+              <label class="check check-compact">
+                <input type="checkbox" class="nl-manche-cb" value="manche3" />
+                <span>Manche 3 (buzz)</span>
+              </label>
+            </div>
+            <span class="small muted">Cochez plusieurs cases pour rendre le pack jouable dans plusieurs manches.</span>
           </div>
           <div class="nl-field">
             <label for="nl-choices">Nombre de choix QCM</label>
@@ -1423,6 +1433,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.26"></script>
+  <script src="app.js?v=2.27"></script>
 </body>
 </html>

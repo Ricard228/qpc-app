@@ -721,12 +721,31 @@ function getPacksForManche(manche) {
 }
 
 // Renvoie tous les domaines (builtin + custom) avec leurs counts
+// v2.27 : ajoute `manches: ['manche1', ...]` pour chaque domaine afin que
+// l'UI client puisse savoir quelles manches sont jouables avec un domaine.
 function getAllDomainsWithCount() {
-  const domains = QUESTIONS.domains.map(d => ({ ...d }));
+  // Builtin : calculer les manches couvertes par chaque domaine
+  const builtinManches = {};
+  for (const m of ['manche1', 'manche2', 'manche3']) {
+    for (const p of (QUESTIONS[m] || [])) {
+      const dn = p.domain;
+      if (!dn) continue;
+      if (!builtinManches[dn]) builtinManches[dn] = new Set();
+      builtinManches[dn].add(m);
+    }
+  }
+  const domains = QUESTIONS.domains.map(d => ({
+    ...d,
+    manches: builtinManches[d.name] ? [...builtinManches[d.name]] : []
+  }));
+
   const customStore = loadCustomDomains();
   for (const d of customStore.domains) {
     const count = (d.packs || []).reduce((s, p) => s + (p.questions || []).length, 0);
-    if (count > 0) domains.push({ name: d.name, count, isCustom: true });
+    if (count > 0) {
+      const manches = [...new Set((d.packs || []).map(p => p.type))];
+      domains.push({ name: d.name, count, isCustom: true, manches });
+    }
   }
   return domains.sort((a, b) => b.count - a.count);
 }
@@ -1498,7 +1517,15 @@ app.post('/api/admin/custom-domains', requireAdmin, (req, res) => {
 app.post('/api/admin/custom-domains/from-natural', requireAdmin, (req, res) => {
   const domainName = String(req.body.domain || '').trim().slice(0, 80);
   const title      = String(req.body.title  || '').trim().slice(0, 120);
-  const manche     = ['manche1', 'manche2', 'manche3'].includes(req.body.manche) ? req.body.manche : 'manche1';
+  // v2.27 : on accepte soit `manches: [...]` (array, nouveau), soit
+  // `manche: '...'` (string, legacy). Si rien : manche1 par défaut.
+  let manchesInput = [];
+  if (Array.isArray(req.body.manches)) manchesInput = req.body.manches;
+  else if (req.body.manche) manchesInput = [req.body.manche];
+  const validManches = ['manche1', 'manche2', 'manche3'];
+  const manches = [...new Set(manchesInput.filter(m => validManches.includes(m)))];
+  if (manches.length === 0) manches.push('manche1');
+
   const theme      = req.body.theme ? String(req.body.theme).trim().slice(0, 120) : null;
   const numChoices = Math.max(3, Math.min(6, parseInt(req.body.numChoices, 10) || 4));
   const naturalText = String(req.body.naturalText || '');
@@ -1515,46 +1542,55 @@ app.post('/api/admin/custom-domains/from-natural', requireAdmin, (req, res) => {
 
   const effectiveTitle = title || parsed.title || `Pack ${domainName}`;
 
-  // Build raw pack avec distracteurs générés
-  const rawPack = {
-    titre: effectiveTitle,
-    manche,
-    theme,
-    questions: parsed.pairs.map(p => {
-      const distractors = generateDistractors(p.q, p.r, numChoices - 1);
-      const choices = [p.r, ...distractors];
-      return {
-        q: p.q,
-        r: p.r,
-        choices,
-        // correctIndices sera recalculé par normalizeImportedPack via le match
-        e: '',
-        ref: '',
-        pts: manche === 'manche2' ? 2 : 1
-      };
-    })
-  };
-
   // Empêcher la collision avec un nom builtin
   const builtinNames = (QUESTIONS.domains || []).map(d => d.name.toLowerCase());
   if (builtinNames.includes(domainName.toLowerCase())) {
     return res.status(400).json({ error: 'Ce nom de domaine existe déjà dans la base intégrée. Utilisez un autre nom.' });
   }
 
-  const normalized = normalizeImportedPack(rawPack, domainName, 0);
-  if (!normalized.questions || normalized.questions.length === 0) {
-    return res.status(400).json({ error: 'Aucune question valide après normalisation' });
-  }
-
+  // v2.27 : on crée UN pack par manche choisi (les questions sont les mêmes,
+  // seuls le `type` et le `pts` changent). Cela permet au joueur d'utiliser
+  // ce domaine dans n'importe quelle manche cochée.
   const store = loadCustomDomains();
   store.domains = store.domains || [];
   const existing = store.domains.findIndex(d => d.name.toLowerCase() === domainName.toLowerCase());
-  const description = `Importé en langage naturel le ${new Date().toLocaleDateString('fr-FR')} (${normalized.questions.length} questions)`;
+  const description = `Importé en langage naturel le ${new Date().toLocaleDateString('fr-FR')} (${parsed.pairs.length} questions × ${manches.length} manche${manches.length > 1 ? 's' : ''})`;
+
+  const createdPacks = [];
+  for (const m of manches) {
+    const rawPack = {
+      titre: manches.length > 1 ? `${effectiveTitle} (${labelManche(m)})` : effectiveTitle,
+      manche: m,
+      theme,
+      questions: parsed.pairs.map(p => {
+        const distractors = generateDistractors(p.q, p.r, numChoices - 1);
+        return {
+          q: p.q,
+          r: p.r,
+          choices: [p.r, ...distractors],
+          e: '',
+          ref: '',
+          pts: m === 'manche2' ? 2 : 1
+        };
+      })
+    };
+
+    // Index unique : continuer la numérotation si le domaine existe déjà
+    const indexInDomain = existing >= 0
+      ? (store.domains[existing].packs || []).length + createdPacks.length
+      : createdPacks.length;
+    const normalized = normalizeImportedPack(rawPack, domainName, indexInDomain);
+    if (!normalized.questions || normalized.questions.length === 0) continue;
+    createdPacks.push(normalized);
+  }
+
+  if (createdPacks.length === 0) {
+    return res.status(400).json({ error: 'Aucune question valide après normalisation' });
+  }
 
   if (existing >= 0) {
-    // Domaine déjà créé → on AJOUTE ce pack (sans écraser)
     store.domains[existing].packs = store.domains[existing].packs || [];
-    store.domains[existing].packs.push(normalized);
+    store.domains[existing].packs.push(...createdPacks);
     store.domains[existing].updatedAt = new Date().toISOString();
   } else {
     store.domains.push({
@@ -1562,7 +1598,7 @@ app.post('/api/admin/custom-domains/from-natural', requireAdmin, (req, res) => {
       description,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      packs: [normalized]
+      packs: createdPacks
     });
   }
   saveCustomDomains(store);
@@ -1572,13 +1608,22 @@ app.post('/api/admin/custom-domains/from-natural', requireAdmin, (req, res) => {
     domain: domainName,
     appended: existing >= 0,
     title: effectiveTitle,
-    manche,
-    questionsCount: normalized.questions.length,
-    sample: normalized.questions.slice(0, 2).map(q => ({
+    manches,
+    packsCreated: createdPacks.length,
+    questionsCount: createdPacks.reduce((s, p) => s + (p.questions || []).length, 0),
+    sample: (createdPacks[0] && createdPacks[0].questions || []).slice(0, 2).map(q => ({
       q: q.q, r: q.r, choices: q.choices
     }))
   });
 });
+
+// Helper : libellé court d'une manche pour les titres de pack
+function labelManche(m) {
+  if (m === 'manche1') return 'M1 — Les 4 à la suite';
+  if (m === 'manche2') return 'M2 — À points';
+  if (m === 'manche3') return 'M3 — Buzz final';
+  return m;
+}
 
 // Extraction depuis un fichier uploadé (v2.25).
 // Accepte multipart/form-data avec un champ `file`. Renvoie le texte

@@ -785,15 +785,57 @@ async function renderSetup() {
 
   const grid = $('#domains-grid');
   for (const d of State.meta.domains) {
+    // v2.27 : afficher les manches disponibles par domaine (badges M1/M2/M3)
+    const manches = Array.isArray(d.manches) ? d.manches : ['manche1', 'manche2', 'manche3'];
+    const mBadges = el('span', { class: 'domain-manches' });
+    ['manche1', 'manche2', 'manche3'].forEach((m, i) => {
+      const has = manches.includes(m);
+      mBadges.appendChild(el('span', {
+        class: 'mbadge ' + (has ? 'mbadge-on' : 'mbadge-off'),
+        title: has ? `${d.name} couvre la ${labelManche(m).toLowerCase()}`
+                   : `${d.name} ne couvre pas la ${labelManche(m).toLowerCase()}`
+      }, `M${i + 1}`));
+    });
     grid.appendChild(el('label', { class: 'check' },
-      el('input', { type: 'checkbox', value: d.name, checked: 'checked' }),
+      el('input', {
+        type: 'checkbox', value: d.name, checked: 'checked',
+        'data-manches': manches.join(','),
+        onchange: () => refreshManchesAvailability()
+      }),
       el('span', {}, d.name),
-      el('span', { class: 'badge' }, `${d.count}`)
+      el('span', { class: 'badge' }, `${d.count}`),
+      mBadges
     ));
   }
-  $('#btn-domains-all').onclick  = (e) => { e.preventDefault(); $$('#domains-grid input').forEach(c => c.checked = true); };
-  $('#btn-domains-none').onclick = (e) => { e.preventDefault(); $$('#domains-grid input').forEach(c => c.checked = false); };
+  $('#btn-domains-all').onclick  = (e) => { e.preventDefault(); $$('#domains-grid input').forEach(c => c.checked = true); refreshManchesAvailability(); };
+  $('#btn-domains-none').onclick = (e) => { e.preventDefault(); $$('#domains-grid input').forEach(c => c.checked = false); refreshManchesAvailability(); };
   $('#btn-back-home').onclick    = () => route('home');
+
+  // v2.27 : désactive dynamiquement les checkboxes de manches qui ne
+  // sont couvertes par AUCUN domaine sélectionné.
+  function refreshManchesAvailability() {
+    const checkedDomains = $$('#domains-grid input:checked');
+    const supported = new Set();
+    checkedDomains.forEach(cb => {
+      (cb.dataset.manches || '').split(',').forEach(m => m && supported.add(m));
+    });
+    ['manche1', 'manche2', 'manche3'].forEach(m => {
+      const box = $$(`#manches-row input[value="${m}"]`)[0];
+      if (!box) return;
+      const lbl = box.closest('label');
+      const noDomain = checkedDomains.length === 0;
+      const ok = noDomain || supported.has(m);
+      box.disabled = !ok;
+      if (lbl) {
+        lbl.classList.toggle('check-disabled', !ok);
+        lbl.title = ok ? '' : 'Aucun domaine sélectionné ne contient de pack pour cette manche';
+      }
+      // Si on désactive et qu'elle était cochée → décocher
+      if (!ok && box.checked) box.checked = false;
+    });
+  }
+  // Appliquer une fois au montage
+  refreshManchesAvailability();
 
   // Gestion du mode QCM selon les settings admin
   const qcmMode = (State.meta && State.meta.settings && State.meta.settings.qcmMode) || 'user-choice';
@@ -826,7 +868,21 @@ async function renderSetup() {
     const plan = [];
     for (const m of manches) {
       let packs = await api.packs(m, domains);
-      if (packs.length === 0) { alert(`Aucun pack disponible pour ${labelManche(m)} avec ces domaines.`); return; }
+      if (packs.length === 0) {
+        // Calculer les manches couvertes par les domaines sélectionnés pour
+        // proposer une suggestion utile (v2.27).
+        const selectedDomainMeta = (State.meta.domains || []).filter(d => domains.includes(d.name));
+        const allManches = new Set();
+        selectedDomainMeta.forEach(d => (d.manches || []).forEach(mm => allManches.add(mm)));
+        const availableLabels = ['manche1', 'manche2', 'manche3']
+          .filter(mm => allManches.has(mm))
+          .map(mm => labelManche(mm));
+        const detail = availableLabels.length
+          ? `\n\nManches disponibles avec ces domaines : ${availableLabels.join(', ')}.`
+          : `\n\nAucun pack n'existe pour ces domaines. Vérifiez les domaines sélectionnés.`;
+        alert(`Aucun pack disponible pour ${labelManche(m)} avec les domaines choisis.${detail}\n\nAstuce : décochez cette manche dans la configuration, ou choisissez un domaine qui la couvre (icônes M1/M2/M3 à côté de chaque domaine).`);
+        return;
+      }
       packs = shuffle(packs).slice(0, Math.min(counts[m], packs.length));
       packs.forEach(p => plan.push({ manche: m, pack: p }));
     }
@@ -2226,12 +2282,14 @@ async function renderAdmin() {
     });
   }
 
-  // ---------- Import langage naturel (v2.24) -------------------------
+  // ---------- Import langage naturel (v2.24, étendu v2.27) -----------
   function nlBody() {
+    // v2.27 : lecture des cases à cocher manches (1 à 3 valeurs)
+    const manchesArr = $$('.nl-manche-cb:checked').map(cb => cb.value);
     return {
       domain:     ($('#nl-domain')  || {}).value || '',
       title:      ($('#nl-title')   || {}).value || '',
-      manche:     ($('#nl-manche')  || {}).value || 'manche1',
+      manches:    manchesArr.length ? manchesArr : ['manche1'],
       theme:      ($('#nl-theme')   || {}).value || '',
       numChoices: parseInt(($('#nl-choices') || {}).value || '4', 10),
       naturalText:($('#nl-text')    || {}).value || ''
@@ -2290,8 +2348,10 @@ async function renderAdmin() {
     }
     try {
       const r = await api.adminImportNL(body);
+      const mLabels = (r.manches || [r.manche]).map(m => labelManche(m)).join(', ');
       const msg = `✓ Domaine « ${r.domain} » ${r.appended ? 'enrichi' : 'créé'} avec ${r.questionsCount} question(s).\n` +
-                  `Pack : « ${r.title} » (${r.manche})\n\n` +
+                  `Pack : « ${r.title} »\n` +
+                  `Jouable dans : ${mLabels}\n\n` +
                   `Disponible immédiatement dans Setup → Choisir un domaine.`;
       alert(msg);
       // Vider la zone de texte et refresh la liste

@@ -631,6 +631,28 @@ html, body {
 }
 .visitor-pseudo-info strong { color: #92400E; }
 
+/* v2.27 : badges manches par domaine dans Setup */
+.domain-manches {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 6px;
+}
+.mbadge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+.mbadge-on  { background: #22c55e; color: #fff; }
+.mbadge-off { background: #e5e7eb; color: #9ca3af; text-decoration: line-through; }
+.check.check-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.check.check-disabled input { cursor: not-allowed; }
+
 /* Éditeur de questions / réponses / sources (v2.26) */
 .editor-domain-info {
   padding: 8px 12px;
@@ -776,6 +798,20 @@ textarea.editor-input { font-family: inherit; resize: vertical; }
   background: #fff;
 }
 .nl-field .req { color: var(--accent); }
+.nl-manches-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+.check-compact {
+  padding: 4px 8px;
+  background: #f5f5f7;
+  border-radius: 6px;
+  margin: 0;
+}
+.check-compact:hover { background: #ececf0; }
+.check-compact input[type="checkbox"]:checked + span { font-weight: 600; }
 .nl-preview {
   margin-top: 14px;
   padding: 14px;
