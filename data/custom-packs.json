@@ -3860,6 +3860,1858 @@
           "isCustom": true
         }
       ]
+    },
+    {
+      "name": "Topographie, génie civil, architecture et droit foncier au Togo",
+      "description": "QPC sur la topographie, l'architecture, le génie civil, le béton, les logiciels du BTP et le droit foncier et domanial, avec un focus sur le Togo.",
+      "createdAt": "2026-06-07T09:29:33.806Z",
+      "updatedAt": "2026-06-07T09:29:33.806Z",
+      "packs": [
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-1",
+          "type": "manche1",
+          "titre": "Topographie et levés",
+          "theme": "Instruments, mesures et représentation du terrain",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q1",
+              "q": "Que mesure principalement un théodolite ?",
+              "r": "Des angles horizontaux et verticaux",
+              "choices": [
+                "Des angles horizontaux et verticaux",
+                "Des volumes de béton coulé",
+                "La résistance portante des sols",
+                "La teneur en eau du ciment"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le théodolite mesure des angles ; associé à un distancemètre, il forme une station totale.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q2",
+              "q": "Quel instrument combine la mesure des angles et des distances ?",
+              "r": "La station totale électronique",
+              "choices": [
+                "La station totale électronique",
+                "Le niveau de chantier optique",
+                "Le décamètre à ruban gradué",
+                "Le simple fil à plomb"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q3",
+              "q": "À quoi sert principalement un niveau de chantier ?",
+              "r": "À mesurer des dénivelées et altitudes",
+              "choices": [
+                "À mesurer des dénivelées et altitudes",
+                "À mesurer des angles horizontaux",
+                "À calculer des surfaces de toiture",
+                "À doser les composants du béton"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le nivellement détermine les altitudes des points par visées sur une mire.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q4",
+              "q": "Que relient les courbes de niveau sur une carte ?",
+              "r": "Les points de même altitude",
+              "choices": [
+                "Les points de même altitude",
+                "Les limites des propriétés privées",
+                "Les réseaux électriques enterrés",
+                "Les fissures visibles du sol"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q5",
+              "q": "Quel système satellitaire permet le géoréférencement des levés ?",
+              "r": "Le système satellitaire GNSS",
+              "choices": [
+                "Le système satellitaire GNSS",
+                "Le sonar à ondes sonores",
+                "Le radar météorologique régional",
+                "Le théodolite purement optique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le GNSS (GPS, GLONASS, Galileo) fournit des coordonnées géoréférencées, souvent en RTK.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q6",
+              "q": "Que donnent respectivement la planimétrie et l'altimétrie ?",
+              "r": "La planimétrie X-Y, l'altimétrie Z",
+              "choices": [
+                "La planimétrie donne X-Y, l'altimétrie donne Z",
+                "La planimétrie donne Z, l'altimétrie la surface",
+                "Les deux désignent exactement la même chose",
+                "La planimétrie concerne le dosage du béton"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q7",
+              "q": "À l'échelle 1/200, à quoi correspond 1 cm sur le plan ?",
+              "r": "Deux mètres sur le terrain",
+              "choices": [
+                "Deux mètres sur le terrain",
+                "Vingt mètres sur le terrain",
+                "Deux cents mètres sur le terrain",
+                "Vingt centimètres sur le terrain"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "1 cm × 200 = 200 cm = 2 m.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q8",
+              "q": "Comment appelle-t-on un canevas de points reliés par angles et distances ?",
+              "r": "Une polygonale de cheminement",
+              "choices": [
+                "Une polygonale de cheminement",
+                "Une courbe de niveau fermée",
+                "Une semelle filante de fondation",
+                "Une poutre maîtresse porteuse"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q9",
+              "q": "Quel modèle numérique représente le relief du terrain ?",
+              "r": "Le Modèle Numérique de Terrain",
+              "choices": [
+                "Le Modèle Numérique de Terrain",
+                "Le Béton Armé aux États Limites",
+                "Le Document Technique Unifié national",
+                "Le tube en PVC d'évacuation"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q10",
+              "q": "Comment appelle-t-on la mesure du terrain pour le représenter ?",
+              "r": "Le levé topographique du terrain",
+              "choices": [
+                "Le levé topographique du terrain",
+                "Le coulage du béton frais",
+                "Le ferraillage des poutres béton",
+                "Le décoffrage après la prise"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-1-q11",
+              "q": "Quel système géodésique mondial sert de référence aux levés GNSS ?",
+              "r": "Le système géodésique WGS84",
+              "choices": [
+                "Le système géodésique WGS84",
+                "Le format de papier A4",
+                "Le réseau de téléphonie 4G",
+                "Le règlement de calcul BAEL"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche2-2",
+          "type": "manche2",
+          "titre": "Droit foncier et domanial au Togo",
+          "theme": "Code foncier 2018, immatriculation et titre foncier",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": "25 s / question",
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q1",
+              "q": "Quel texte régit le foncier au Togo depuis 2018 ?",
+              "r": "La loi n° 2018-005 (Code foncier)",
+              "choices": [
+                "La loi de 2018 portant Code foncier",
+                "Le décret colonial de juillet 1906",
+                "Le Code minier actuellement en vigueur",
+                "La loi régissant les télécommunications"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La loi n° 2018-005 du 14 juin 2018 a remplacé le décret de 1906 et l'ordonnance de 1974.",
+              "ref": "https://leap.unep.org/en/countries/tg/national-legislation/loi-ndeg2018-005-du-14-juin-2018-portant-code-foncier-et-domanial",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q2",
+              "q": "Sur quel régime repose le foncier en vigueur au Togo ?",
+              "r": "Le régime de l'immatriculation des immeubles",
+              "choices": [
+                "Le régime de l'immatriculation des immeubles",
+                "Le régime de la possession verbale",
+                "Le régime traditionnel du troc foncier",
+                "L'absence totale de régime foncier"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://leap.unep.org/en/countries/tg/national-legislation/loi-ndeg2018-005-du-14-juin-2018-portant-code-foncier-et-domanial",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q3",
+              "q": "Comment se prouve principalement un droit foncier au Togo ?",
+              "r": "Par le titre foncier délivré",
+              "choices": [
+                "Par le titre foncier délivré",
+                "Par une simple promesse orale",
+                "Par une photo du terrain",
+                "Par un reçu de marché"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le titre foncier est délivré par la Conservation foncière.",
+              "ref": "https://www.lqdd.org/titre-foncier-au-togo-procedure-couts-documents/",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q4",
+              "q": "Quel service délivre et garantit les titres fonciers au Togo ?",
+              "r": "La Conservation foncière de l'État",
+              "choices": [
+                "La Conservation foncière de l'État",
+                "La mairie du quartier seule",
+                "L'opérateur de téléphonie mobile",
+                "La chambre de commerce locale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://www.dadc.gouv.tg",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q5",
+              "q": "En quelles catégories se subdivise le domaine de l'État ?",
+              "r": "Le domaine public et privé",
+              "choices": [
+                "Le domaine public et privé",
+                "Le domaine agricole et minier",
+                "Le domaine urbain et rural",
+                "Le domaine sacré et profane"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le domaine public est affecté à l'usage de tous ; le domaine privé peut être géré et cédé.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q6",
+              "q": "Comment l'État acquiert-il un terrain d'intérêt général, avec indemnité ?",
+              "r": "L'expropriation pour utilité publique",
+              "choices": [
+                "L'expropriation pour cause d'utilité publique",
+                "La confiscation pure et sans indemnité",
+                "Le tirage au sort entre candidats",
+                "L'occupation illégale du terrain visé"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'expropriation suppose une juste et préalable indemnisation.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q7",
+              "q": "Depuis 2024, quel plan est exigé pour une nouvelle immatriculation ?",
+              "r": "Un plan géoréférencé par géomètre agréé",
+              "choices": [
+                "Un plan géoréférencé par géomètre agréé",
+                "Un simple croquis à main levée",
+                "Une photo aérienne sans coordonnées précises",
+                "Aucun plan n'est désormais requis"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les anciens plans « à trois tampons » ne sont plus acceptés.",
+              "ref": "https://www.lqdd.org/titre-foncier-au-togo-procedure-couts-documents/",
+              "pts": 4
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q8",
+              "q": "Quels deux ordres juridiques le foncier togolais combine-t-il ?",
+              "r": "Le droit moderne et le coutumier",
+              "choices": [
+                "Le droit moderne et le droit coutumier",
+                "Le droit maritime et le droit aérien",
+                "Le droit pénal et le droit fiscal",
+                "Le seul droit canonique religieux"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q9",
+              "q": "Comment appelle-t-on la division d'une parcelle titrée en lots ?",
+              "r": "Le morcellement de la parcelle",
+              "choices": [
+                "Le morcellement de la parcelle",
+                "La fusion de plusieurs titres",
+                "L'expropriation pour utilité publique",
+                "Le nivellement général du terrain"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q10",
+              "q": "Comment appelle-t-on la matérialisation des limites d'une propriété ?",
+              "r": "Le bornage des limites parcellaires",
+              "choices": [
+                "Le bornage des limites parcellaires",
+                "Le coffrage des éléments béton",
+                "Le décapage de la terre végétale",
+                "Le tassement naturel du remblai"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche2-2-q11",
+              "q": "Combien d'articles compte le Code foncier togolais de 2018 ?",
+              "r": "Sept cent vingt-quatre articles",
+              "choices": [
+                "Sept cent vingt-quatre articles",
+                "Une centaine d'articles environ",
+                "À peine douze articles seulement",
+                "Environ mille articles répartis"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La loi n° 2018-005 comporte 724 articles répartis en 11 titres.",
+              "ref": "https://leap.unep.org/en/countries/tg/national-legislation/loi-ndeg2018-005-du-14-juin-2018-portant-code-foncier-et-domanial",
+              "pts": 4
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche3-3",
+          "type": "manche3",
+          "titre": "Architecture et conception du projet",
+          "theme": "Plans, intervenants et phases d'étude",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": "Buzz libre — 1 min 30 — 9 points gagnants",
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q1",
+              "q": "Quel plan situe le bâtiment sur sa parcelle ?",
+              "r": "Le plan de masse général",
+              "choices": [
+                "Le plan de masse général",
+                "Le plan de coffrage détaillé",
+                "Le plan de ferraillage armé",
+                "La coupe transversale verticale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q2",
+              "q": "Quel document montre l'aspect extérieur vertical d'un bâtiment ?",
+              "r": "Le plan de façade (élévation)",
+              "choices": [
+                "Le plan de façade en élévation",
+                "Le plan de fondation profonde",
+                "Le plan de récolement final",
+                "Le devis quantitatif estimatif"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q3",
+              "q": "Que représente une « coupe » dans un dossier architectural ?",
+              "r": "Une section verticale du bâtiment",
+              "choices": [
+                "Une section verticale du bâtiment",
+                "La liste complète des matériaux",
+                "Le planning détaillé des travaux",
+                "Le budget global de l'opération"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q4",
+              "q": "Qui est le maître d'ouvrage dans un projet ?",
+              "r": "Le client qui commande l'ouvrage",
+              "choices": [
+                "Le client qui commande l'ouvrage",
+                "L'ouvrier qui coule le béton",
+                "Le fournisseur de sacs de ciment",
+                "Le voisin proche de la parcelle"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le maître d'ouvrage commande ; le maître d'œuvre conçoit et dirige l'exécution.",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q5",
+              "q": "Qui conçoit et dirige l'exécution pour le maître d'ouvrage ?",
+              "r": "Le maître d'œuvre concepteur",
+              "choices": [
+                "Le maître d'œuvre concepteur",
+                "Le maître d'ouvrage commanditaire",
+                "Le notaire chargé des actes",
+                "Le géomètre du bornage seul"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q6",
+              "q": "Quelle autorisation est requise avant de construire ?",
+              "r": "Le permis de construire obligatoire",
+              "choices": [
+                "Le permis de construire obligatoire",
+                "Le permis de conduire routier",
+                "Le titre foncier provisoire temporaire",
+                "La carte grise du véhicule"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q7",
+              "q": "Que signifie l'abréviation APS dans les phases d'étude ?",
+              "r": "Avant-Projet Sommaire",
+              "choices": [
+                "L'Avant-Projet Sommaire initial",
+                "L'Analyse Préalable du Sol",
+                "L'Acte Provisoire de Servitude",
+                "L'Appel Public de Soumission"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'APS précède l'APD (Avant-Projet Détaillé), puis le DCE.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q8",
+              "q": "À quoi sert l'orientation bioclimatique d'un bâtiment ?",
+              "r": "Optimiser confort thermique et ventilation",
+              "choices": [
+                "Optimiser le confort thermique et la ventilation",
+                "Augmenter fortement la consommation d'énergie",
+                "Supprimer toutes les fenêtres extérieures",
+                "Orienter uniquement les fondations profondes"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q9",
+              "q": "Quel logiciel de maquette numérique (BIM) est courant ?",
+              "r": "Le logiciel Revit (BIM)",
+              "choices": [
+                "Le logiciel de conception Revit",
+                "Le tableur de calcul Excel",
+                "L'archiveur de fichiers WinRAR",
+                "Le logiciel photo Photoshop"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche3-3-q10",
+              "q": "Comment appelle-t-on la première intention graphique du projet ?",
+              "r": "L'esquisse initiale du projet",
+              "choices": [
+                "L'esquisse initiale du projet",
+                "Le récolement des ouvrages finis",
+                "Le métré quantitatif des ouvrages",
+                "Le procès-verbal de réception"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-4",
+          "type": "manche1",
+          "titre": "Résistance des matériaux (RDM)",
+          "theme": "Contraintes, déformations et sollicitations",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q1",
+              "q": "Comment définit-on une contrainte mécanique ?",
+              "r": "Une force par unité de surface",
+              "choices": [
+                "Une force par unité de surface",
+                "Une masse par unité de volume",
+                "Une vitesse par unité de temps",
+                "Une énergie par unité de longueur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "σ = F / S, en pascals (Pa) ou mégapascals (MPa).",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q2",
+              "q": "Que relie la loi de Hooke dans le domaine élastique ?",
+              "r": "La contrainte et la déformation",
+              "choices": [
+                "La contrainte proportionnelle à la déformation",
+                "Le poids proportionnel au volume",
+                "La vitesse proportionnelle à l'accélération",
+                "Le débit proportionnel à la pression"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "σ = E × ε, où E est le module de Young.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q3",
+              "q": "Que caractérise le module de Young d'un matériau ?",
+              "r": "Sa rigidité élastique propre",
+              "choices": [
+                "Sa rigidité élastique propre",
+                "Sa couleur de surface",
+                "Sa masse totale mesurée",
+                "Son prix au kilogramme"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Acier ≈ 200 GPa, béton ≈ 30 GPa.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q4",
+              "q": "Quelle sollicitation tend à allonger une pièce ?",
+              "r": "La traction longitudinale",
+              "choices": [
+                "La traction longitudinale",
+                "La compression axiale",
+                "Le cisaillement transversal",
+                "La torsion hélicoïdale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q5",
+              "q": "Quelle sollicitation fait fléchir une poutre chargée ?",
+              "r": "La flexion sous charge transversale",
+              "choices": [
+                "La flexion sous charge transversale",
+                "La torsion pure de l'axe",
+                "La traction simple longitudinale",
+                "Le fluage lent du matériau"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q6",
+              "q": "Quel phénomène menace un poteau élancé très comprimé ?",
+              "r": "Le flambement du poteau élancé",
+              "choices": [
+                "Le flambement du poteau élancé",
+                "Le tassement différentiel des appuis",
+                "La carbonatation lente du béton",
+                "Le retrait plastique au séchage"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q7",
+              "q": "Que représente la limite élastique d'un matériau ?",
+              "r": "Le seuil de déformation permanente",
+              "choices": [
+                "Le seuil de déformation permanente",
+                "Le poids maximal du matériau",
+                "La température de fusion atteinte",
+                "La longueur initiale mesurée"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q8",
+              "q": "Dans une poutre fléchie, que calcule-t-on couramment ?",
+              "r": "L'effort tranchant et le moment fléchissant",
+              "choices": [
+                "L'effort tranchant et le moment fléchissant",
+                "La masse volumique et la couleur",
+                "Le débit et la pression interne",
+                "La vitesse et l'altitude relative"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q9",
+              "q": "Quelle sollicitation résulte de forces tangentielles opposées ?",
+              "r": "Le cisaillement par forces tangentielles",
+              "choices": [
+                "Le cisaillement par forces tangentielles",
+                "La compression purement axiale",
+                "La dilatation thermique linéaire",
+                "La flottaison dans l'eau"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-4-q10",
+              "q": "Quel est l'ordre de grandeur du module de Young de l'acier ?",
+              "r": "Environ deux cents gigapascals",
+              "choices": [
+                "Environ deux cents gigapascals",
+                "Environ deux gigapascals seulement",
+                "Environ trente gigapascals mesurés",
+                "Environ deux mille gigapascals"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'acier ≈ 200 GPa ; le béton ≈ 30 GPa.",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-5",
+          "type": "manche1",
+          "titre": "Béton et matériaux de construction",
+          "theme": "Composition, dosage et béton armé",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q1",
+              "q": "Quels sont les constituants de base d'un béton ?",
+              "r": "Ciment, sable, gravier et eau",
+              "choices": [
+                "Ciment, sable, gravier et eau",
+                "Argile, paille et bouse séchée",
+                "Plâtre et chaux uniquement mélangés",
+                "Bitume chaud et sable fin"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q2",
+              "q": "Comment se répartissent les rôles dans le béton armé ?",
+              "r": "Béton en compression, acier en traction",
+              "choices": [
+                "Béton en compression, acier en traction",
+                "Acier en compression, béton en traction",
+                "Les deux composants restent inutiles",
+                "Le béton seul, l'acier décoratif"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le béton résiste mal à la traction : les armatures en acier compensent.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q3",
+              "q": "Que désigne la résistance caractéristique fc28 d'un béton ?",
+              "r": "Sa résistance en compression à 28 jours",
+              "choices": [
+                "Sa résistance en compression à 28 jours",
+                "Son poids total mesuré à 28 jours",
+                "Sa couleur observée après le séchage",
+                "Son coût d'achat au mètre cube"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q4",
+              "q": "Quel paramètre, plus il est faible, renforce le béton ?",
+              "r": "Le rapport eau sur ciment",
+              "choices": [
+                "Le rapport eau sur ciment",
+                "La couleur du sable utilisé",
+                "Le nombre d'ouvriers présents",
+                "La superficie totale du chantier"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Un rapport E/C trop élevé augmente la porosité et réduit la résistance.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q5",
+              "q": "Quel essai mesure la consistance du béton frais ?",
+              "r": "L'essai d'affaissement au cône",
+              "choices": [
+                "L'essai d'affaissement au cône",
+                "L'essai de traction sur acier",
+                "L'essai de nivellement topographique",
+                "L'essai de germination des graines"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q6",
+              "q": "Pourquoi assure-t-on la cure du béton après coulage ?",
+              "r": "Maintenir l'humidité pour bien durcir",
+              "choices": [
+                "Maintenir l'humidité pour bien durcir",
+                "Rendre le béton beaucoup plus léger",
+                "Colorer la surface du béton coulé",
+                "Décoffrer immédiatement après le coulage"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q7",
+              "q": "Quel acier d'armature accroche le mieux au béton ?",
+              "r": "L'acier à haute adhérence",
+              "choices": [
+                "L'acier à haute adhérence",
+                "L'acier parfaitement lisse seul",
+                "L'aluminium léger et souple",
+                "Le cuivre rouge conducteur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Les nervures des barres HA améliorent l'adhérence béton-acier.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q8",
+              "q": "Comment appelle-t-on le moule provisoire du béton ?",
+              "r": "Le coffrage de mise en forme",
+              "choices": [
+                "Le coffrage de mise en forme",
+                "Le ferraillage des armatures internes",
+                "Le terrassement du sol support",
+                "Le bornage des limites parcellaires"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q9",
+              "q": "Pourquoi vibre-t-on le béton lors du coulage ?",
+              "r": "Éliminer l'air et le compacter",
+              "choices": [
+                "Éliminer l'air occlus et le compacter",
+                "Faire mousser le mélange frais",
+                "Refroidir rapidement le béton coulé",
+                "Colorer uniformément la surface visible"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-5-q10",
+              "q": "Que désigne le ciment de type CEM I ?",
+              "r": "Un ciment Portland riche en clinker",
+              "choices": [
+                "Un ciment Portland riche en clinker",
+                "Un ciment totalement dépourvu de clinker",
+                "Un mélange de plâtre et de chaux",
+                "Du sable finement broyé seul"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-6",
+          "type": "manche1",
+          "titre": "Génie civil — exécution et travaux",
+          "theme": "Fondations, chantier et normes",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q1",
+              "q": "Comment appelle-t-on les fondations posées à faible profondeur ?",
+              "r": "Les fondations superficielles",
+              "choices": [
+                "Les fondations superficielles",
+                "Les fondations profondes",
+                "Les fondations aériennes",
+                "Les fondations flottantes"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q2",
+              "q": "Quel type de fondation profonde descend aux couches résistantes ?",
+              "r": "Les pieux enfoncés en profondeur",
+              "choices": [
+                "Les pieux enfoncés en profondeur",
+                "Le carrelage des sols intérieurs",
+                "L'enduit de façade extérieure",
+                "La peinture de finition murale"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q3",
+              "q": "Quelle fondation en dalle unique répartit toutes les charges ?",
+              "r": "Le radier général en dalle",
+              "choices": [
+                "Le radier général en dalle",
+                "La semelle isolée ponctuelle",
+                "Le linteau au-dessus des ouvertures",
+                "La panne de la charpente"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q4",
+              "q": "Comment appelle-t-on le report du plan sur le terrain ?",
+              "r": "L'implantation des axes au sol",
+              "choices": [
+                "L'implantation des axes au sol",
+                "Le décoffrage des éléments béton",
+                "Le récolement des ouvrages finis",
+                "Le métré des quantités finales"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "L'implantation matérialise au sol l'emprise et les axes de l'ouvrage.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q5",
+              "q": "Quels grands ensembles distingue-t-on dans un bâtiment ?",
+              "r": "Le gros œuvre et le second œuvre",
+              "choices": [
+                "Le gros œuvre et le second œuvre",
+                "Le bois et le verre seulement",
+                "Le devis et la facture finale",
+                "L'amont et l'aval du projet"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q6",
+              "q": "Que désigne le sigle BTP ?",
+              "r": "Bâtiment et Travaux Publics",
+              "choices": [
+                "Le Bâtiment et les Travaux Publics",
+                "Le Béton, la Terre et la Pierre",
+                "Le Bureau Technique des Plans",
+                "La Brigade Territoriale des Permis"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q7",
+              "q": "Quels documents encadrent le calcul des structures ?",
+              "r": "Les Eurocodes de calcul structurel",
+              "choices": [
+                "Les Eurocodes de calcul structurel",
+                "Les codes de la route routière",
+                "La seule norme ISO 9001",
+                "Les fiches de paie mensuelles"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le BAEL (Béton Armé aux États Limites) a précédé les Eurocodes.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q8",
+              "q": "Quel document décrit les ouvrages réellement exécutés ?",
+              "r": "Le plan de récolement final",
+              "choices": [
+                "Le plan de récolement final",
+                "Le plan de masse initial",
+                "L'esquisse du premier jet",
+                "Le bon de commande fournisseur"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q9",
+              "q": "Quel essai évalue la résistance du sol pour les fondations ?",
+              "r": "Un essai de sol géotechnique",
+              "choices": [
+                "Un essai de sol géotechnique",
+                "Un essai d'affaissement du béton",
+                "Un test de germination végétale",
+                "Un simple relevé météorologique local"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-6-q10",
+              "q": "Quel équipement de protection est fondamental sur chantier ?",
+              "r": "Le casque et les chaussures de sécurité",
+              "choices": [
+                "Le casque et les chaussures de sécurité",
+                "Une simple casquette en tissu léger",
+                "Des sandales ouvertes de ville",
+                "Aucun équipement de protection requis"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-7",
+          "type": "manche1",
+          "titre": "Logiciels et outils numériques du BTP",
+          "theme": "DAO/CAO, calcul de structures, topographie et SIG",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q1",
+              "q": "Quel logiciel de DAO est la référence du dessin technique ?",
+              "r": "Le logiciel de dessin AutoCAD",
+              "choices": [
+                "Le logiciel de dessin AutoCAD",
+                "Le traitement de texte Word",
+                "Le lecteur multimédia VLC",
+                "L'éditeur audio Audacity"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q2",
+              "q": "Quel logiciel sert à la topographie et aux projets VRD ?",
+              "r": "Covadis pour la topographie/VRD",
+              "choices": [
+                "Le logiciel de topographie Covadis",
+                "Le logiciel de présentation PowerPoint",
+                "L'archiveur de fichiers WinZip",
+                "L'application de musique Spotify"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Covadis et Mensura traitent levés, terrassements, profils et VRD.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q3",
+              "q": "Quel logiciel d'Autodesk calcule et analyse les structures ?",
+              "r": "Robot Structural Analysis",
+              "choices": [
+                "Le logiciel Robot Structural Analysis",
+                "Le logiciel de dessin Illustrator",
+                "Le navigateur internet Google Chrome",
+                "Le seul tableur Microsoft Excel"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q4",
+              "q": "Quels logiciels de l'éditeur CSI analysent les structures ?",
+              "r": "Les logiciels ETABS et SAP2000",
+              "choices": [
+                "Les logiciels ETABS et SAP2000",
+                "Les outils bureautiques Word et Excel",
+                "Les accessoires Paint et Notepad",
+                "Les visioconférences Zoom et Teams"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q5",
+              "q": "Que désigne le BIM en conception du bâtiment ?",
+              "r": "La maquette numérique du bâtiment",
+              "choices": [
+                "La maquette numérique du bâtiment",
+                "Un nouveau type de ciment",
+                "Une norme de sécurité incendie",
+                "Un appareil de levé topographique"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le BIM (Building Information Modeling) centralise les informations du projet en 3D.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q6",
+              "q": "Quels logiciels sont des Systèmes d'Information Géographique ?",
+              "r": "QGIS et ArcGIS (SIG)",
+              "choices": [
+                "Les logiciels QGIS et ArcGIS",
+                "Les logiciels AutoCAD et Revit",
+                "Les logiciels ETABS et SAP2000",
+                "Les logiciels Word et Excel"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q7",
+              "q": "Quel logiciel de modélisation 3D rapide sert aux esquisses ?",
+              "r": "SketchUp pour la modélisation rapide",
+              "choices": [
+                "SketchUp pour la modélisation rapide",
+                "Robot pour le calcul des structures",
+                "Covadis pour la topographie routière",
+                "QGIS pour la cartographie SIG"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q8",
+              "q": "À quoi sert un logiciel de métré et d'estimation ?",
+              "r": "Quantifier et chiffrer les ouvrages",
+              "choices": [
+                "Quantifier et chiffrer les ouvrages",
+                "Mesurer des angles sur le terrain",
+                "Calculer la résistance d'un poteau",
+                "Piloter une station totale moderne"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q9",
+              "q": "À quoi sert le post-traitement d'un levé GNSS ?",
+              "r": "Affiner la précision des coordonnées",
+              "choices": [
+                "Affiner la précision des coordonnées",
+                "Colorer les plans de dessin",
+                "Doser les composants du béton",
+                "Rédiger le permis de construire"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-7-q10",
+              "q": "Quel format est le standard d'échange du dessin technique ?",
+              "r": "Le format DWG (et DXF)",
+              "choices": [
+                "Le format de dessin DWG",
+                "Le format audio MP3",
+                "Le format image JPEG",
+                "Le format texte DOCX"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-8",
+          "type": "manche1",
+          "titre": "VRD, assainissement et réseaux",
+          "theme": "Voirie, réseaux divers et évacuation des eaux",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q1",
+              "q": "Que désigne le sigle VRD dans le BTP ?",
+              "r": "Voirie et Réseaux Divers",
+              "choices": [
+                "La Voirie et les Réseaux Divers",
+                "La Vérification des Routes Départementales",
+                "La Voie Rapide à grande circulation",
+                "Le Volume des Remblais et Déblais"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 1
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q2",
+              "q": "Dans un système séparatif, comment sont gérées les eaux ?",
+              "r": "Eaux usées et pluviales séparées",
+              "choices": [
+                "Eaux usées et pluviales en réseaux séparés",
+                "Toutes les eaux dans un seul tuyau",
+                "Aucune évacuation des eaux prévue",
+                "Les eaux pluviales mises en bouteille"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le système unitaire mélange eaux usées et pluviales dans un même collecteur.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q3",
+              "q": "Quel ouvrage de visite donne accès à un réseau enterré ?",
+              "r": "Le regard de visite enterré",
+              "choices": [
+                "Le regard de visite enterré",
+                "Le linteau au-dessus de la porte",
+                "Le chevron de la charpente bois",
+                "Le dévers de la chaussée courbe"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q4",
+              "q": "Quel ouvrage longitudinal collecte les eaux de ruissellement ?",
+              "r": "Le caniveau le long de la voie",
+              "choices": [
+                "Le caniveau le long de la voie",
+                "Le poteau électrique du réseau",
+                "La panne de la toiture inclinée",
+                "Le radier de la fondation profonde"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q5",
+              "q": "Quelle condition est essentielle à un réseau gravitaire ?",
+              "r": "Respecter une pente d'écoulement suffisante",
+              "choices": [
+                "Respecter une pente d'écoulement suffisante",
+                "Poser les tuyaux parfaitement horizontaux",
+                "Poser les tuyaux en pente inverse",
+                "Supprimer tous les regards de visite"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q6",
+              "q": "Quel dispositif assure le prétraitement des eaux usées domestiques ?",
+              "r": "La fosse septique de décantation",
+              "choices": [
+                "La fosse septique de décantation",
+                "Le château d'eau surélevé",
+                "Le caniveau ouvert de rue",
+                "Le radier de la dalle"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q7",
+              "q": "Que désigne le sigle AEP dans les réseaux ?",
+              "r": "Adduction d'Eau Potable",
+              "choices": [
+                "L'Adduction d'Eau Potable",
+                "L'Assainissement des Eaux Pluviales",
+                "L'Agence de l'Énergie Publique",
+                "L'Aire d'Évacuation des Polluants"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q8",
+              "q": "Quel ouvrage rectangulaire fait traverser l'eau sous une route ?",
+              "r": "Le dalot de section rectangulaire",
+              "choices": [
+                "Le dalot de section rectangulaire",
+                "Le linteau de l'ouverture murale",
+                "Le chaînage horizontal du mur",
+                "Le poteau porteur en béton"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "La buse (tuyau circulaire) joue un rôle similaire pour de plus faibles débits.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q9",
+              "q": "Comment appelle-t-on le point de rejet final d'un réseau ?",
+              "r": "L'exutoire de rejet final",
+              "choices": [
+                "L'exutoire de rejet final",
+                "Le regard borgne sans accès",
+                "Le tirant d'air supérieur libre",
+                "Le dévers de la route"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-8-q10",
+              "q": "Quelle latrine améliorée limite odeurs et mouches ?",
+              "r": "La latrine VIP à fosse ventilée",
+              "choices": [
+                "La latrine VIP à fosse ventilée",
+                "La latrine sans dalle de couverture",
+                "La fosse ouverte à ciel ouvert",
+                "Le simple trou non couvert"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-9",
+          "type": "manche1",
+          "titre": "Routes et chaussées",
+          "theme": "Structure, matériaux et tracé routier",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q1",
+              "q": "Quelle couche est en contact direct avec les pneus ?",
+              "r": "La couche de roulement supérieure",
+              "choices": [
+                "La couche de roulement supérieure",
+                "La couche de forme inférieure",
+                "La plateforme support du sol",
+                "La nappe phréatique souterraine"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q2",
+              "q": "Quel matériau est très utilisé en base des routes ouest-africaines ?",
+              "r": "La grave latéritique compactée",
+              "choices": [
+                "La grave latéritique compactée",
+                "Le marbre blanc poli",
+                "Le verre finement concassé",
+                "Le plâtre de moulage fin"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le graveleux latéritique est courant pour les chaussées au Togo et dans la sous-région.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q3",
+              "q": "Qu'est-ce qui distingue chaussée souple et chaussée rigide ?",
+              "r": "Souple en bitume, rigide en béton",
+              "choices": [
+                "Souple en bitume, rigide en béton",
+                "Souple en béton, rigide en bitume",
+                "Aucune différence entre les deux",
+                "La souple n'a pas de fondation"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q4",
+              "q": "Quel essai donne la teneur en eau optimale de compactage ?",
+              "r": "L'essai Proctor de compactage",
+              "choices": [
+                "L'essai Proctor de compactage",
+                "L'essai d'affaissement du béton",
+                "L'essai de traction sur acier",
+                "L'essai de germination des graines"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q5",
+              "q": "Que mesure l'essai CBR en technique routière ?",
+              "r": "La capacité portante du sol",
+              "choices": [
+                "La capacité portante du sol",
+                "La résistance du béton durci",
+                "Le débit d'un caniveau ouvert",
+                "L'angle mesuré au théodolite"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le CBR aide à dimensionner les couches de chaussée selon la portance du sol.",
+              "ref": "",
+              "pts": 4
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q6",
+              "q": "Quelle vue montre la pente d'une route le long de son axe ?",
+              "r": "Le profil en long axial",
+              "choices": [
+                "Le profil en long axial",
+                "Le profil en travers transversal",
+                "Le tracé en plan horizontal",
+                "Le plan de masse général"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q7",
+              "q": "Quelle inclinaison transversale donne-t-on à la chaussée en courbe ?",
+              "r": "Le dévers de la chaussée",
+              "choices": [
+                "Le dévers de la chaussée",
+                "Le déblai du terrain naturel",
+                "Le remblai d'apport compacté",
+                "Le tassement du sol support"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le dévers évacue l'eau et compense la force centrifuge en virage.",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q8",
+              "q": "Comment distingue-t-on déblai et remblai en terrassement ?",
+              "r": "Déblai enlève, remblai apporte la terre",
+              "choices": [
+                "Le déblai enlève, le remblai apporte la terre",
+                "Le déblai apporte, le remblai enlève la terre",
+                "Les deux désignent la même opération",
+                "Aucun ne concerne le terrassement"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q9",
+              "q": "Pourquoi compacte-t-on les couches d'une chaussée ?",
+              "r": "Densifier et améliorer la portance",
+              "choices": [
+                "Densifier et améliorer la portance",
+                "Rendre la route plus molle",
+                "Ajouter de l'eau en surface",
+                "Décorer la chaussée déjà finie"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-9-q10",
+              "q": "Comment appelle-t-on un ouvrage de franchissement routier ?",
+              "r": "Un ouvrage d'art (pont)",
+              "choices": [
+                "Un ouvrage d'art comme un pont",
+                "Un regard de visite enterré",
+                "Un coffrage en bois provisoire",
+                "Un linteau de porte intérieure"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            }
+          ],
+          "isCustom": true
+        },
+        {
+          "id": "custom-topographie--g-nie-civil-manche1-10",
+          "type": "manche1",
+          "titre": "Urbanisme, lotissement et aménagement (Togo)",
+          "theme": "Lotissement, cadastre et planification urbaine",
+          "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+          "timing": null,
+          "questions": [
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q1",
+              "q": "Qu'est-ce qu'un lotissement ?",
+              "r": "Diviser un terrain en lots à bâtir",
+              "choices": [
+                "Diviser un terrain en lots à bâtir",
+                "Construire un seul grand immeuble",
+                "Abattre une forêt entière classée",
+                "Creuser un forage d'eau profond"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q2",
+              "q": "Quelle autorisation est nécessaire pour lotir un terrain ?",
+              "r": "Le permis de lotir officiel",
+              "choices": [
+                "Le permis de lotir officiel",
+                "Le permis de conduire routier",
+                "La carte d'électeur nationale",
+                "Le passeport de voyage international"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q3",
+              "q": "Quel registre recense les parcelles et leurs propriétaires ?",
+              "r": "Le cadastre des parcelles",
+              "choices": [
+                "Le cadastre des parcelles",
+                "Le carnet de chèques bancaire",
+                "Le bordereau de livraison commercial",
+                "Le devis estimatif des travaux"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 2
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q4",
+              "q": "Comment appelle-t-on les espaces réservés aux équipements publics ?",
+              "r": "Les réserves administratives publiques",
+              "choices": [
+                "Les réserves administratives publiques",
+                "Les lots privés à vendre",
+                "Les zones interdites à l'État",
+                "Les terrains agricoles cultivés"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q5",
+              "q": "Que désigne un SDAU en planification urbaine ?",
+              "r": "Schéma Directeur d'Aménagement et d'Urbanisme",
+              "choices": [
+                "Le Schéma Directeur d'Aménagement et d'Urbanisme",
+                "Le Service Départemental des Adductions d'Urgence",
+                "Le Système de Drainage Automatique Urbain",
+                "Le Sondage Direct des Aquifères Urbains"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "Le SDAU oriente le développement spatial d'une agglomération (ex. Grand Lomé).",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q6",
+              "q": "Comment appelle-t-on une charge grevant un terrain (ex. passage) ?",
+              "r": "Une servitude grevant le terrain",
+              "choices": [
+                "Une servitude grevant le terrain",
+                "Une hypothèque sur un meuble",
+                "Une assurance vie souscrite récemment",
+                "Une caution bancaire déjà déposée"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q7",
+              "q": "Comment qualifie-t-on une construction sur le terrain d'autrui ?",
+              "r": "Un empiètement sur autrui",
+              "choices": [
+                "Un empiètement sur le voisin",
+                "Un alignement réglementaire correct",
+                "Un bornage parfaitement régulier",
+                "Un récolement de fin chantier"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q8",
+              "q": "Comment appelle-t-on la ligne séparant voie publique et propriétés ?",
+              "r": "L'alignement fixé par l'administration",
+              "choices": [
+                "L'alignement fixé par l'administration",
+                "Le dévers de la chaussée courbe",
+                "Le talweg au fond du vallon",
+                "Le linteau de la baie vitrée"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q9",
+              "q": "Quel intérêt présente l'immatriculation des lots au Togo ?",
+              "r": "Obtenir un titre foncier sécurisé",
+              "choices": [
+                "Obtenir un titre foncier sécurisé",
+                "Augmenter la pente des routes",
+                "Supprimer le cadastre existant",
+                "Éviter toute taxe à vie"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "https://www.lqdd.org/titre-foncier-au-togo-procedure-couts-documents/",
+              "pts": 3
+            },
+            {
+              "id": "custom-topographie--g-nie-civil-manche1-10-q10",
+              "q": "Comment appelle-t-on la réorganisation de parcelles pour l'aménagement ?",
+              "r": "Le remembrement des parcelles",
+              "choices": [
+                "Le remembrement des parcelles",
+                "Le morcellement anarchique désordonné",
+                "Le terrassement du sol naturel",
+                "Le décoffrage des éléments béton"
+              ],
+              "correctIndices": [
+                0
+              ],
+              "e": "",
+              "ref": "",
+              "pts": 3
+            }
+          ],
+          "isCustom": true
+        }
+      ]
     }
   ]
 }
