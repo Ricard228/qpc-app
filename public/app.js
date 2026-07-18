@@ -1475,9 +1475,10 @@ function renderReviewCard() {
 // (nb questions, seuil, timer) viennent du serveur (/api/me/parcours).
 
 const PARCOURS_COLORS = {
-  debutant: { main: '#16a34a', soft: '#dcfce7', dark: '#14532d' },
-  avance:   { main: '#2563eb', soft: '#dbeafe', dark: '#1e3a8a' },
-  expert:   { main: '#b45309', soft: '#fef3c7', dark: '#78350f' }
+  debutant:      { main: '#16a34a', soft: '#dcfce7', dark: '#14532d' },
+  intermediaire: { main: '#0891b2', soft: '#cffafe', dark: '#164e63' },
+  avance:        { main: '#2563eb', soft: '#dbeafe', dark: '#1e3a8a' },
+  expert:        { main: '#b45309', soft: '#fef3c7', dark: '#78350f' }
 };
 
 let _parcoursData = null;   // cache {levels, byDomain} du serveur
@@ -1537,12 +1538,14 @@ function renderParcoursLevels(domain) {
       : '';
   }
 
-  ['debutant', 'avance', 'expert'].forEach(key => {
+  ['debutant', 'intermediaire', 'avance', 'expert'].forEach(key => {
     const def = levels[key];
     if (!def) return;
     const col = PARCOURS_COLORS[key];
     const earned = progress[key];
-    const prereqOk = !def.prereq || !!progress[def.prereq];
+    // Un niveau déjà certifié reste rejouable même si la chaîne de
+    // prérequis a changé depuis (ex. ajout du niveau Intermédiaire)
+    const prereqOk = !def.prereq || !!progress[def.prereq] || !!earned;
     const nQuestions = Math.min(def.questions, available);
 
     const tile = el('div', { class: 'parcours-tile', style: `border-color:${col.main};` });

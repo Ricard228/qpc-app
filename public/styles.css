@@ -637,8 +637,11 @@ html, body {
   grid-template-columns: 1fr;
   gap: 12px;
 }
-@media (min-width: 860px) {
-  .parcours-levels { grid-template-columns: 1fr 1fr 1fr; }
+@media (min-width: 640px) {
+  .parcours-levels { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1100px) {
+  .parcours-levels { grid-template-columns: 1fr 1fr 1fr 1fr; }
 }
 .parcours-tile {
   border: 2px solid var(--line);

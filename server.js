@@ -1944,13 +1944,14 @@ app.delete('/api/admin/editor/question/:id/override', requireSuperAdmin, (req, r
 // PARCOURS & CERTIFICATS (v2.28)
 // =====================================================================
 // Chaque domaine (intégré ou personnalisé) est un « parcours » jouable
-// en 3 niveaux successifs. Un certificat est délivré par niveau réussi,
+// en 4 niveaux successifs. Un certificat est délivré par niveau réussi,
 // avec une distinction selon le score. Les niveaux se débloquent dans
-// l'ordre : Débutant → Avancé → Expert.
+// l'ordre : Débutant → Intermédiaire → Avancé → Expert.
 const PARCOURS_LEVELS = {
-  debutant: { key: 'debutant', label: 'Débutant', order: 1, questions: 10, passPct: 50, timer: 40, prereq: null },
-  avance:   { key: 'avance',   label: 'Avancé',   order: 2, questions: 15, passPct: 60, timer: 30, prereq: 'debutant' },
-  expert:   { key: 'expert',   label: 'Expert',   order: 3, questions: 20, passPct: 70, timer: 20, prereq: 'avance' }
+  debutant:      { key: 'debutant',      label: 'Débutant',      order: 1, questions: 10, passPct: 50, timer: 40, prereq: null },
+  intermediaire: { key: 'intermediaire', label: 'Intermédiaire', order: 2, questions: 12, passPct: 55, timer: 35, prereq: 'debutant' },
+  avance:        { key: 'avance',        label: 'Avancé',        order: 3, questions: 15, passPct: 60, timer: 30, prereq: 'intermediaire' },
+  expert:        { key: 'expert',        label: 'Expert',        order: 4, questions: 20, passPct: 70, timer: 20, prereq: 'avance' }
 };
 
 // Distinction portée sur le certificat, selon le pourcentage de réussite.
@@ -2009,7 +2010,7 @@ app.post('/api/me/parcours/complete', requireUser, (req, res) => {
   const nbCorrect = parseInt(req.body.nbCorrect, 10);
 
   const level = PARCOURS_LEVELS[levelKey];
-  if (!level) return res.status(400).json({ error: 'Niveau invalide (attendu : debutant, avance, expert)' });
+  if (!level) return res.status(400).json({ error: 'Niveau invalide (attendu : debutant, intermediaire, avance, expert)' });
   if (!domain) return res.status(400).json({ error: 'Domaine requis' });
   if (!Number.isFinite(nbQuestions) || nbQuestions < 4) {
     return res.status(400).json({ error: 'Nombre de questions invalide (minimum 4)' });
@@ -2026,8 +2027,12 @@ app.post('/api/me/parcours/complete', requireUser, (req, res) => {
   store.certificates = store.certificates || [];
   const mine = store.certificates.filter(c => c.owner === owner && c.domain === domain);
 
-  // Prérequis : le niveau précédent doit être certifié pour ce domaine
-  if (level.prereq && !mine.some(c => c.level === level.prereq)) {
+  // Prérequis : le niveau précédent doit être certifié pour ce domaine.
+  // Exception : si le joueur détient DÉJÀ le certificat de ce niveau
+  // (ex. obtenu avant l'ajout du niveau Intermédiaire), il peut toujours
+  // le rejouer pour améliorer son score.
+  const alreadyHolds = mine.some(c => c.level === levelKey);
+  if (level.prereq && !alreadyHolds && !mine.some(c => c.level === level.prereq)) {
     const prereqLabel = PARCOURS_LEVELS[level.prereq].label;
     return res.status(403).json({ error: `Vous devez d'abord obtenir le certificat ${prereqLabel} de ce domaine.` });
   }
