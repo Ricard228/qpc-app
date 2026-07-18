@@ -1578,6 +1578,10 @@ function renderParcoursLevels(domain) {
       : '';
   }
 
+  // v2.32 : limite hebdomadaire de tentatives (fixée par l'admin)
+  const weeklyLimit = _parcoursData && _parcoursData.attemptsPerWeek;   // null = illimité
+  const attemptsMap = (_parcoursData && _parcoursData.attemptsThisWeek) || {};
+
   ['debutant', 'intermediaire', 'avance', 'expert'].forEach(key => {
     const def = levels[key];
     if (!def) return;
@@ -1587,6 +1591,8 @@ function renderParcoursLevels(domain) {
     // prérequis a changé depuis (ex. ajout du niveau Intermédiaire)
     const prereqOk = !def.prereq || !!progress[def.prereq] || !!earned;
     const nQuestions = Math.min(def.questions, available);
+    const used = (attemptsMap[domain] || {})[key] || 0;
+    const quotaExhausted = !!(weeklyLimit && used >= weeklyLimit);
 
     const tile = el('div', { class: 'parcours-tile', style: `border-color:${col.main};` });
     tile.appendChild(el('div', { class: 'parcours-tile-head', style: `background:${col.soft}; color:${col.dark};` },
@@ -1602,20 +1608,33 @@ function renderParcoursLevels(domain) {
         el('strong', {}, earned.distinction),
         el('span', { class: 'small muted' }, ` (${fmtDate(earned.date)})`)
       ));
-      body.appendChild(el('button', {
-        class: 'btn btn-small',
-        onclick: () => startParcoursLevel(domain, key)
-      }, '↺ Rejouer (améliorer le score)'));
+      if (quotaExhausted) {
+        body.appendChild(el('div', { class: 'muted quota-note' },
+          `⛔ Limite hebdomadaire atteinte (${used}/${weeklyLimit}) — rejouable à partir de lundi prochain.`));
+      } else {
+        body.appendChild(el('button', {
+          class: 'btn btn-small',
+          onclick: () => startParcoursLevel(domain, key)
+        }, '↺ Rejouer (améliorer le score)'));
+      }
     } else if (!prereqOk) {
       const prereqLabel = levels[def.prereq] ? levels[def.prereq].label : def.prereq;
       body.appendChild(el('div', { class: 'muted' }, `🔒 Verrouillé — obtenez d'abord le certificat ${prereqLabel} de ce domaine.`));
     } else if (available < 4) {
       body.appendChild(el('div', { class: 'muted' }, '⚠ Ce domaine contient trop peu de questions (minimum 4).'));
+    } else if (quotaExhausted) {
+      body.appendChild(el('div', { class: 'muted quota-note' },
+        `⛔ Limite hebdomadaire atteinte (${used}/${weeklyLimit} tentatives) — réessayez à partir de lundi prochain.`));
     } else {
       body.appendChild(el('button', {
         class: 'btn btn-primary',
         onclick: () => startParcoursLevel(domain, key)
       }, `▶ Commencer le niveau ${def.label}`));
+    }
+    // Compteur visible dès qu'une limite est configurée par l'admin
+    if (weeklyLimit && !quotaExhausted) {
+      body.appendChild(el('div', { class: 'small muted' },
+        `Essais cette semaine : ${used}/${weeklyLimit}${weeklyLimit - used === 1 ? ' — dernier essai !' : ''}`));
     }
     tile.appendChild(body);
     box.appendChild(tile);
@@ -2600,6 +2619,8 @@ async function renderAdmin() {
     if (t1) t1.value = tm.manche1;
     if (t2) t2.value = tm.manche2;
     if (t3) t3.value = tm.manche3;
+    const apw = $('#attempts-per-week');
+    if (apw) apw.value = s.parcoursAttemptsPerWeek || 0;
   } catch (e) {}
   toggle.addEventListener('change', async () => {
     try {
@@ -2650,6 +2671,26 @@ async function renderAdmin() {
   if (resetTimingsBtn) resetTimingsBtn.onclick = async () => {
     t1.value = 40; t2.value = 25; t3.value = 15;
     saveTimingsBtn.click();
+  };
+
+  // v2.32 : limite hebdomadaire de tentatives de certificat
+  const saveAttemptsBtn = $('#btn-save-attempts');
+  if (saveAttemptsBtn) saveAttemptsBtn.onclick = async () => {
+    const inp = $('#attempts-per-week');
+    const v = parseInt(inp.value, 10);
+    if (!Number.isFinite(v) || v < 0 || v > 99) {
+      alert('La limite doit être un entier entre 0 (illimité) et 99.');
+      return;
+    }
+    try {
+      await api.adminSetSettings({ parcoursAttemptsPerWeek: v });
+      const note = $('#attempts-saved-note');
+      if (note) {
+        note.textContent = v === 0 ? '✓ Enregistré (illimité)' : `✓ Enregistré (${v}/semaine)`;
+        note.hidden = false;
+        setTimeout(() => { note.hidden = true; }, 2500);
+      }
+    } catch (e) { alert('Erreur : ' + e.message); }
   };
 
   // Liste des comptes auto-inscrits

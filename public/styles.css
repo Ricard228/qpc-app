@@ -1469,3 +1469,13 @@ textarea.editor-input { font-family: inherit; resize: vertical; }
   .play-timer { font-size: 22px; min-width: 60px; padding: 2px 12px; }
   .play-question { font-size: 17px; }
 }
+
+/* v2.32 : limite hebdomadaire de tentatives */
+.quota-note {
+  background: rgba(239, 68, 68, 0.07);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: #991b1b;
+}

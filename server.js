@@ -149,6 +149,7 @@ function loadAuth() {
     if (data.settings.helpEnabledForUsers == null) data.settings.helpEnabledForUsers = true;
     if (data.settings.selfRegistrationEnabled == null) data.settings.selfRegistrationEnabled = true;
     if (!data.settings.timings) data.settings.timings = { ...DEFAULT_TIMINGS };
+    if (data.settings.parcoursAttemptsPerWeek == null) data.settings.parcoursAttemptsPerWeek = 0;   // 0 = illimité
     if (!data.accounts) data.accounts = {};
     if (!data.codes) data.codes = {};
     return data;
@@ -1250,6 +1251,11 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
       if (Number.isFinite(v) && v >= 5 && v <= 600) auth.settings.timings[k] = v;
     }
   }
+  // v2.32 : limite hebdomadaire de tentatives par certificat (0 = illimité)
+  if (req.body.parcoursAttemptsPerWeek != null) {
+    const v = parseInt(req.body.parcoursAttemptsPerWeek, 10);
+    if (Number.isFinite(v) && v >= 0 && v <= 99) auth.settings.parcoursAttemptsPerWeek = v;
+  }
   saveAuth(auth);
   res.json(auth.settings);
 });
@@ -2048,6 +2054,35 @@ function domainQuestionCount(name) {
   return seen.size;
 }
 
+// v2.32 : semaine calendaire (clé = date du lundi, ISO). Toute tentative
+// (réussie OU échouée) d'un même certificat (domaine + niveau) est
+// journalisée ; l'admin peut plafonner le nombre de tentatives/semaine.
+function weekKeyOf(dateIso) {
+  const d = new Date(dateIso);
+  const day = (d.getDay() + 6) % 7;        // 0 = lundi
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() - day);
+  return d.toISOString().slice(0, 10);
+}
+function attemptsThisWeekOf(store, owner) {
+  const wk = weekKeyOf(new Date().toISOString());
+  const map = {};
+  for (const a of (store.attempts || [])) {
+    if (a.owner !== owner) continue;
+    if (weekKeyOf(a.date) !== wk) continue;
+    if (!map[a.domain]) map[a.domain] = {};
+    map[a.domain][a.level] = (map[a.domain][a.level] || 0) + 1;
+  }
+  return map;
+}
+function recordAttempt(store, owner, domain, level, passed, scorePct) {
+  store.attempts = store.attempts || [];
+  store.attempts.push({ owner, domain, level, passed, scorePct, date: new Date().toISOString() });
+  // Purge des tentatives de plus de 60 jours (le comptage est hebdomadaire)
+  const cutoff = Date.now() - 60 * 24 * 3600 * 1000;
+  store.attempts = store.attempts.filter(a => new Date(a.date).getTime() >= cutoff);
+}
+
 // Progression du joueur : niveaux réussis par domaine + définitions.
 app.get('/api/me/parcours', requireUser, (req, res) => {
   const owner = ownerKeyOf(req.user);
@@ -2063,7 +2098,14 @@ app.get('/api/me/parcours', requireUser, (req, res) => {
       date: c.date
     };
   }
-  res.json({ levels: PARCOURS_LEVELS, byDomain });
+  const auth = loadAuth();
+  const limit = (auth.settings && auth.settings.parcoursAttemptsPerWeek) || 0;
+  res.json({
+    levels: PARCOURS_LEVELS,
+    byDomain,
+    attemptsPerWeek: limit > 0 ? limit : null,        // null = illimité
+    attemptsThisWeek: attemptsThisWeekOf(store, owner)
+  });
 });
 
 // Soumission d'un niveau de parcours. Le serveur valide le seuil et le
@@ -2102,7 +2144,25 @@ app.post('/api/me/parcours/complete', requireUser, (req, res) => {
     return res.status(403).json({ error: `Vous devez d'abord obtenir le certificat ${prereqLabel} de ce domaine.` });
   }
 
+  // v2.32 : plafond hebdomadaire de tentatives pour un même certificat
+  const authStore = loadAuth();
+  const weeklyLimit = (authStore.settings && authStore.settings.parcoursAttemptsPerWeek) || 0;
+  if (weeklyLimit > 0) {
+    const used = ((attemptsThisWeekOf(store, owner)[domain] || {})[levelKey]) || 0;
+    if (used >= weeklyLimit) {
+      return res.status(403).json({
+        error: `Limite hebdomadaire atteinte : ${weeklyLimit} tentative(s) par semaine pour un même certificat (${domain} — niveau ${level.label}). Réessayez à partir de lundi prochain.`,
+        weeklyLimitReached: true,
+        attemptsUsed: used,
+        limit: weeklyLimit
+      });
+    }
+  }
+
   const scorePct = Math.round(1000 * nbCorrect / nbQuestions) / 10;
+  // Journaliser la tentative (réussie ou non) pour le décompte hebdomadaire
+  recordAttempt(store, owner, domain, levelKey, scorePct >= level.passPct, scorePct);
+  saveCertificates(store);
   if (scorePct < level.passPct) {
     return res.json({
       passed: false,

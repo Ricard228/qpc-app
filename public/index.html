@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.31" />
+  <link rel="stylesheet" href="styles.css?v=2.32" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -1257,6 +1257,24 @@ PTS: 6
             <span id="timings-saved-note" class="muted" style="font-size:13px;" hidden>✓ Enregistré</span>
           </div>
         </div>
+
+        <!-- v2.32 : limite hebdomadaire de tentatives par certificat -->
+        <div style="margin-top:18px; padding-top:18px; border-top:1px solid var(--line);">
+          <strong>🎓 Tentatives de certificat par semaine</strong>
+          <div class="muted" style="font-size:13px; margin-top:2px;">
+            Nombre maximal de fois qu'un joueur peut passer <em>un même certificat</em>
+            (même domaine, même niveau) au cours d'une semaine calendaire (lundi → dimanche).
+            Les tentatives échouées comptent aussi. <strong>0 = illimité.</strong>
+          </div>
+          <div class="form-row" style="margin-top:10px; align-items:center;">
+            <label class="field" style="max-width:260px;">
+              <span>Tentatives max / semaine (ex. 3)</span>
+              <input type="number" id="attempts-per-week" min="0" max="99" step="1" />
+            </label>
+            <button id="btn-save-attempts" class="btn btn-primary">💾 Enregistrer la limite</button>
+            <span id="attempts-saved-note" class="muted" style="font-size:13px;" hidden>✓ Enregistré</span>
+          </div>
+        </div>
       </div>
 
       <div class="card">
@@ -1529,6 +1547,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.31"></script>
+  <script src="app.js?v=2.32"></script>
 </body>
 </html>
