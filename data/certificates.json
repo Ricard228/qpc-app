@@ -55,6 +55,20 @@
       "distinction": "Très Bien",
       "date": "2026-07-18T12:25:40.594Z",
       "updatedAt": "2026-07-18T12:25:40.594Z"
+    },
+    {
+      "id": "05db266761a039a3",
+      "owner": "ACC-0e50203e",
+      "name": "Richard1",
+      "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+      "level": "debutant",
+      "levelLabel": "Débutant",
+      "scorePct": 100,
+      "nbCorrect": 10,
+      "nbQuestions": 10,
+      "distinction": "Excellent",
+      "date": "2026-07-18T15:02:30.135Z",
+      "updatedAt": "2026-07-18T15:02:30.135Z"
     }
   ]
 }
