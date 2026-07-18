@@ -27,6 +27,20 @@
       "distinction": "Excellent",
       "date": "2026-07-18T12:14:56.186Z",
       "updatedAt": "2026-07-18T12:14:56.186Z"
+    },
+    {
+      "id": "42a0e1a93a26d481",
+      "owner": "ACC-0e50203e",
+      "name": "Richard1",
+      "domain": "Statistiques et économétrie",
+      "level": "avance",
+      "levelLabel": "Avancé",
+      "scorePct": 93.3,
+      "nbCorrect": 14,
+      "nbQuestions": 15,
+      "distinction": "Excellent",
+      "date": "2026-07-18T12:19:21.124Z",
+      "updatedAt": "2026-07-18T12:19:21.124Z"
     }
   ]
 }
