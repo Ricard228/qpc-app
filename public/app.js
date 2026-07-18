@@ -93,7 +93,8 @@ const api = {
   adminPromoteAccount:     (id) => apiFetch(`/api/admin/accounts/${id}/promote`, { method: 'POST', body: '{}' }, true),
   adminDemoteAccount:      (id) => apiFetch(`/api/admin/accounts/${id}/demote`,  { method: 'POST', body: '{}' }, true),
   meta:       ()         => apiFetch('/api/meta'),
-  packs:      (m, doms)  => apiFetch(`/api/packs/${m}?domains=${encodeURIComponent((doms||[]).join(','))}`),
+  // v2.30 : tableau JSON — robuste aux virgules dans les noms de domaines
+  packs:      (m, doms)  => apiFetch(`/api/packs/${m}?domains=${encodeURIComponent(JSON.stringify(doms || []))}`),
   myGames:    ()         => apiFetch('/api/me/games'),
   // Parcours & certificats (v2.28)
   myParcours:       ()     => apiFetch('/api/me/parcours'),
@@ -1802,6 +1803,97 @@ function showParcoursResult() {
   $('#btn-pc-back').onclick = () => { State.parcours = null; route('parcours'); };
 }
 
+// ---------- Signature manuscrite (v2.30) ------------------------------
+// Tracé vectoriel de la signature « Nevame DataHouse » reproduisant la
+// signature manuscrite de référence : grande boucle d'attaque, groupe
+// « pc » pointé, « Ateli » lié, soulignement ponctué.
+// (x, y) = coin supérieur gauche de la zone ; w = largeur cible.
+function drawSignature(ctx, x, y, w) {
+  const s = w / 320;                 // référentiel local 320 × 140
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(s, s);
+  ctx.rotate(-0.03);
+  ctx.strokeStyle = '#1d4ea8';       // bleu stylo bille
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  // 1. Grande boucle initiale (attaque en haut, grand ovale à gauche)
+  ctx.lineWidth = 7;
+  ctx.beginPath();
+  ctx.moveTo(96, 18);
+  ctx.bezierCurveTo(88, 4, 68, 6, 66, 20);      // petite boucle d'attaque
+  ctx.bezierCurveTo(64, 34, 84, 34, 84, 50);
+  ctx.bezierCurveTo(84, 78, 52, 122, 34, 108);  // grand plongeon à gauche
+  ctx.bezierCurveTo(16, 92, 34, 44, 62, 40);    // remontée de l'ovale
+  ctx.bezierCurveTo(84, 37, 96, 58, 92, 84);    // referme vers le bas droit
+  ctx.bezierCurveTo(90, 98, 84, 108, 80, 114);
+  ctx.stroke();
+
+  // 2. « p » : hampe descendante + panse
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.moveTo(112, 62);
+  ctx.quadraticCurveTo(110, 92, 109, 116);      // descendante sous la ligne
+  ctx.moveTo(110, 74);
+  ctx.bezierCurveTo(112, 62, 130, 60, 131, 72);
+  ctx.bezierCurveTo(132, 84, 116, 88, 111, 82); // panse du p
+  ctx.stroke();
+
+  // 3. « c » + point
+  ctx.beginPath();
+  ctx.moveTo(152, 70);
+  ctx.bezierCurveTo(140, 64, 132, 74, 136, 84);
+  ctx.bezierCurveTo(140, 94, 152, 92, 156, 86);
+  ctx.stroke();
+  ctx.fillStyle = '#1d4ea8';
+  ctx.beginPath(); ctx.arc(163, 90, 3.2, 0, Math.PI * 2); ctx.fill();
+
+  // 4. « A » pointu
+  ctx.lineWidth = 6.5;
+  ctx.beginPath();
+  ctx.moveTo(178, 96);
+  ctx.lineTo(196, 44);                          // montée raide
+  ctx.lineTo(210, 96);                          // descente
+  ctx.moveTo(186, 78);
+  ctx.quadraticCurveTo(198, 72, 208, 76);       // barre liée
+  ctx.stroke();
+
+  // 5. « t » barré haut
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.moveTo(222, 46);
+  ctx.quadraticCurveTo(224, 74, 222, 96);
+  ctx.moveTo(210, 60);
+  ctx.quadraticCurveTo(226, 52, 240, 54);       // barre du t
+  ctx.stroke();
+
+  // 6. « e l i » + crochet final
+  ctx.beginPath();
+  ctx.moveTo(236, 84);
+  ctx.bezierCurveTo(244, 74, 252, 78, 248, 88); // e
+  ctx.quadraticCurveTo(246, 95, 256, 92);
+  ctx.moveTo(264, 58);
+  ctx.quadraticCurveTo(268, 80, 264, 94);       // l court
+  ctx.moveTo(274, 80);
+  ctx.quadraticCurveTo(278, 88, 282, 92);       // i
+  ctx.moveTo(286, 76);
+  ctx.quadraticCurveTo(296, 84, 292, 100);
+  ctx.quadraticCurveTo(290, 110, 300, 112);     // crochet final
+  ctx.stroke();
+  ctx.beginPath(); ctx.arc(280, 68, 3, 0, Math.PI * 2); ctx.fill(); // point du i
+
+  // 7. Soulignement + point
+  ctx.lineWidth = 7;
+  ctx.beginPath();
+  ctx.moveTo(104, 118);
+  ctx.quadraticCurveTo(210, 124, 306, 116);
+  ctx.stroke();
+  ctx.beginPath(); ctx.arc(216, 130, 4.5, 0, Math.PI * 2); ctx.fill();
+
+  ctx.restore();
+}
+
 // ---------- Dessin du certificat (canvas) -----------------------------
 // A4 paysage à 150 dpi environ : 1754 × 1240 px.
 function drawCertificate(canvas, cert) {
@@ -1890,8 +1982,8 @@ function drawCertificate(canvas, cert) {
   ctx.fillText('NEVAME Data House · QPC', W - 150, 1090);
   ctx.strokeStyle = '#999999'; ctx.lineWidth = 1.5;
   ctx.beginPath(); ctx.moveTo(W - 480, 1055); ctx.lineTo(W - 150, 1055); ctx.stroke();
-  ctx.font = 'italic 22px Georgia, serif';
-  ctx.fillText('Signature', W - 150, 1035);
+  // Signature manuscrite Nevame DataHouse (v2.30), posée sur la ligne
+  drawSignature(ctx, W - 470, 900, 310);
 }
 
 // Canvas offscreen pour les téléchargements depuis la liste

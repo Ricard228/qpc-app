@@ -10,6 +10,10 @@ const extra     = require('./data_extra.js');
 const extraMF   = require('./data_extra_mf.js');
 const extraEcon = require('./data_extra_econ.js');
 const extraTogo = require('./data_extra_togo.js');
+const extra230a = require('./data_extra_v230a.js');   // v2.30 Fisc/MP/Compta
+const extra230  = require('./data_extra_v230.js');    // v2.30 renforts 12 domaines
+const extra230f = require('./data_extra_v230f.js');   // v2.30 IA + BTP (nouveaux)
+const extra230g = require('./data_extra_v230g.js');   // v2.30 compléments finaux
 
 const QPATH = path.join(__dirname, 'data', 'questions.json');
 const Q = JSON.parse(fs.readFileSync(QPATH, 'utf8'));
@@ -71,6 +75,55 @@ const r3e = appendPacks(Q.manche3, 'manche3', extraEcon.m3Packs);
 const r1t = appendPacks(Q.manche1, 'manche1', extraTogo.m1Packs);
 const r2t = appendPacks(Q.manche2, 'manche2', extraTogo.m2Packs);
 const r3t = appendPacks(Q.manche3, 'manche3', extraTogo.m3Packs);
+
+// v2.30 — tous les domaines à ≥120 questions + 2 nouveaux domaines
+const r1v = appendPacks(Q.manche1, 'manche1', extra230a.m1Packs);
+const r1w = appendPacks(Q.manche1, 'manche1', extra230.m1Packs);
+const r1x = appendPacks(Q.manche1, 'manche1', extra230f.m1Packs);
+const r1y = appendPacks(Q.manche1, 'manche1', extra230g.m1Packs);
+console.log(`  v2.30 : +${r1v.added + r1w.added + r1x.added + r1y.added} packs (fisc/mp/cpt=${r1v.added}, renforts=${r1w.added}, IA+BTP=${r1x.added}, compléments=${r1y.added})`);
+
+// v2.30 — Déduplication des choix QCM : si un distracteur coïncide avec
+// la bonne réponse ou un autre choix, on le remplace par une variante
+// unique (perturbation du premier nombre, ou école de secours).
+const FALLBACK_TXT = ['L\'école mercantiliste', 'L\'école physiocrate', 'L\'école institutionnaliste', 'L\'école néokeynésienne'];
+function dedupeChoices() {
+  let fixed = 0;
+  const numRe = /-?\d[\d   .,]*/;
+  for (const m of ['manche1', 'manche2', 'manche3']) {
+    for (const p of Q[m]) {
+      for (const q of p.questions) {
+        if (!Array.isArray(q.choices)) continue;
+        const correct = new Set((q.correctIndices || []).map(i => q.choices[i]));
+        const seen = new Set();
+        q.choices = q.choices.map((c, idx) => {
+          let v = c;
+          if ((q.correctIndices || []).includes(idx)) { seen.add(v); return v; }
+          let guard = 0, fbIdx = 0;
+          while ((seen.has(v) || correct.has(v)) && guard < 12) {
+            const mnum = String(v).match(numRe);
+            if (mnum) {
+              const raw = mnum[0].replace(/[   ]/g, '').replace(',', '.');
+              const n = parseFloat(raw);
+              const variants = [n * 3, n * 7, n + 1, n * 9, n + 11, n * 13];
+              const nv = variants[guard % variants.length];
+              const fmt = Number.isInteger(nv) ? nv.toLocaleString('fr-FR') : String(nv.toFixed(1)).replace('.', ',');
+              v = String(v).replace(mnum[0], fmt + (mnum[0].endsWith(' ') ? ' ' : ''));
+            } else {
+              v = FALLBACK_TXT[fbIdx++ % FALLBACK_TXT.length];
+            }
+            guard++;
+          }
+          if (v !== c) fixed++;
+          seen.add(v);
+          return v;
+        });
+      }
+    }
+  }
+  if (fixed) console.log(`  🔧 ${fixed} distracteur(s) dupliqué(s) corrigé(s)`);
+}
+dedupeChoices();
 
 // Recalculer meta + domains
 const allQuestions = []

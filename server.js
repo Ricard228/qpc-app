@@ -366,6 +366,41 @@ function applyAllEdits() {
 }
 applyAllEdits();
 
+// v2.30 : migration au démarrage — toute question d'un domaine personnalisé
+// qui n'a pas de choix QCM (import .txt/.json sans lignes */-) reçoit des
+// distracteurs générés automatiquement. Rend les spécialités importées
+// jouables en mode QCM comme les domaines intégrés.
+function migrateCustomPacksChoices() {
+  const store = loadCustomDomains();
+  let fixed = 0;
+  for (const d of (store.domains || [])) {
+    for (const p of (d.packs || [])) {
+      for (const q of (p.questions || [])) {
+        if (!Array.isArray(q.choices) || q.choices.length < 2) {
+          const distractors = generateDistractors(q.q, q.r, 3);
+          if (distractors.length >= 2) {
+            q.choices = [q.r, ...distractors];
+            q.correctIndices = [0];
+            fixed += 1;
+          }
+        } else if (!Array.isArray(q.correctIndices) || q.correctIndices.length === 0) {
+          // Choix présents mais index de bonne réponse manquant : retrouver
+          const idx = q.choices.findIndex(c => String(c).trim().toLowerCase() === String(q.r).trim().toLowerCase());
+          q.correctIndices = [idx >= 0 ? idx : 0];
+          fixed += 1;
+        }
+      }
+    }
+  }
+  if (fixed > 0) {
+    saveCustomDomains(store);
+    console.log(`✓ QCM générés pour ${fixed} question(s) de domaines personnalisés`);
+  }
+}
+// NB : l'appel se fait dans la séquence de démarrage (après ghPullInitial),
+// jamais au chargement du module — generateDistractors dépend de constantes
+// déclarées plus bas dans le fichier.
+
 // =====================================================================
 // Domaines personnalisés (import admin de .txt ou .json)
 // =====================================================================
@@ -1044,7 +1079,16 @@ app.get('/api/packs/:manche', requireUser, (req, res) => {
   const { manche } = req.params;
   if (!['manche1', 'manche2', 'manche3'].includes(manche))
     return res.status(400).json({ error: 'manche invalide' });
-  const domains = (req.query.domains || '').split(',').filter(Boolean);
+  // v2.30 : le client envoie un tableau JSON (robuste aux virgules dans
+  // les noms de domaines, ex. « Agronomie, agroécologie… »). L'ancien
+  // format CSV reste accepté pour les clients en cache.
+  const rawD = String(req.query.domains || '');
+  let domains = [];
+  if (rawD.trim().startsWith('[')) {
+    try { domains = JSON.parse(rawD).map(String).filter(Boolean); } catch { domains = []; }
+  } else {
+    domains = rawD.split(',').filter(Boolean);
+  }
   let packs = getPacksForManche(manche);
   if (domains.length) packs = packs.filter(p => domains.includes(p.domain));
   res.json(packs);
@@ -1482,6 +1526,23 @@ app.post('/api/admin/custom-domains', requireAdmin, (req, res) => {
     return res.status(400).json({ error: 'Aucun pack valide après parsing (vérifiez que chaque Q a une R)' });
   }
 
+  // v2.30 : générer des QCM pour toute question importée sans choix
+  // (fichier .txt sans lignes */- ou .json sans "choices"). Les
+  // spécialités importées sont ainsi jouables en QCM immédiatement.
+  let generated = 0;
+  for (const p of normalizedPacks) {
+    for (const q of p.questions) {
+      if (!Array.isArray(q.choices) || q.choices.length < 2) {
+        const distractors = generateDistractors(q.q, q.r, 3);
+        if (distractors.length >= 2) {
+          q.choices = [q.r, ...distractors];
+          q.correctIndices = [0];
+          generated += 1;
+        }
+      }
+    }
+  }
+
   // Empêcher la collision avec un nom de domaine builtin
   const builtinNames = (QUESTIONS.domains || []).map(d => d.name.toLowerCase());
   if (builtinNames.includes(domainName.toLowerCase())) {
@@ -1510,6 +1571,7 @@ app.post('/api/admin/custom-domains', requireAdmin, (req, res) => {
     domain: domainName,
     packsCount: normalizedPacks.length,
     questionsCount: qCount,
+    qcmGenerated: generated,
     manches: [...new Set(normalizedPacks.map(p => p.type))]
   });
 });
@@ -2474,6 +2536,10 @@ app.delete('/api/admin/all-data', requireAdmin, (req, res) => {
   if (!fs.existsSync(GAMES_PATH)) saveGames({ games: [] });
   if (!fs.existsSync(MATCHES_PATH)) saveMatches({ matches: [] });
   if (!fs.existsSync(CUSTOM_PATH)) saveCustomDomains({ domains: [] });
+  // Re-migrer APRÈS le pull GitHub : les packs custom fraîchement
+  // téléchargés (importés avant v2.30) reçoivent leurs QCM ici.
+  migrateCustomPacksChoices();
+  applyAllEdits();
 
   app.listen(PORT, () => {
     console.log(`\n🎯  QPC Économie & Sciences sociales — v2.1`);
