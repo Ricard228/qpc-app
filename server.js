@@ -103,6 +103,7 @@ const MATCHES_PATH   = path.join(DATA, 'matches.json');
 const CUSTOM_PATH    = path.join(DATA, 'custom-packs.json');
 const QUESTIONS_PATH = path.join(DATA, 'questions.json');
 const EDITS_PATH     = path.join(DATA, 'question-edits.json');   // v2.26 : overrides
+const CERTS_PATH     = path.join(DATA, 'certificates.json');     // v2.28 : parcours + certificats
 
 // Mot de passe super-admin par défaut. À surcharger via ADMIN_PASSWORD.
 const DEFAULT_ADMIN_PASSWORD = 'qpc-admin-2026';
@@ -207,6 +208,16 @@ function saveCustomDomains(d) {
   scheduleGhSync('data/custom-packs.json');
 }
 
+// v2.28 : certificats de parcours.
+// Schéma : { certificates: [ { id, owner, name, domain, level, scorePct,
+//                              nbCorrect, nbQuestions, distinction,
+//                              date, updatedAt } ] }
+function loadCertificates() { return readJson(CERTS_PATH, { certificates: [] }); }
+function saveCertificates(c) {
+  writeJson(CERTS_PATH, c);
+  scheduleGhSync('data/certificates.json');
+}
+
 // v2.26 : overrides du super-admin sur les questions builtin.
 // Schéma : { edits: { "<questionId>": { q?, r?, ref?, updatedAt, updatedBy } } }
 // Les édits sont appliqués en mémoire sur QUESTIONS au démarrage et
@@ -281,7 +292,7 @@ async function ghPullInitial() {
     return;
   }
   console.log(`🔁 Téléchargement initial depuis ${GH_REPO}#${GH_BRANCH}...`);
-  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json', 'data/custom-packs.json', 'data/question-edits.json']) {
+  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json', 'data/custom-packs.json', 'data/question-edits.json', 'data/certificates.json']) {
     try {
       const content = await ghGetFile(remotePath);
       if (content) {
@@ -1455,7 +1466,8 @@ app.post('/api/admin/custom-domains', requireAdmin, (req, res) => {
   }
 
   if (!parsed.domain) return res.status(400).json({ error: 'Le fichier doit indiquer un nom de domaine (DOMAINE: …)' });
-  const domainName = parsed.domain.trim().slice(0, 80);
+  // Une virgule dans le nom casserait le filtre ?domains=a,b côté jeu
+  const domainName = parsed.domain.trim().replace(/,/g, ' ').replace(/\s+/g, ' ').slice(0, 80);
   if (!domainName) return res.status(400).json({ error: 'Nom de domaine invalide' });
   if (!parsed.packs || parsed.packs.length === 0) {
     return res.status(400).json({ error: 'Aucun pack trouvé dans le fichier' });
@@ -1515,7 +1527,8 @@ app.post('/api/admin/custom-domains', requireAdmin, (req, res) => {
 //   des distracteurs réalistes pour chaque question, et enregistre le
 //   domaine dans le store (utilise normalizeImportedPack).
 app.post('/api/admin/custom-domains/from-natural', requireAdmin, (req, res) => {
-  const domainName = String(req.body.domain || '').trim().slice(0, 80);
+  // Une virgule dans le nom casserait le filtre ?domains=a,b côté jeu
+  const domainName = String(req.body.domain || '').trim().replace(/,/g, ' ').replace(/\s+/g, ' ').slice(0, 80);
   const title      = String(req.body.title  || '').trim().slice(0, 120);
   // v2.27 : on accepte soit `manches: [...]` (array, nouveau), soit
   // `manche: '...'` (string, legacy). Si rien : manche1 par défaut.
@@ -1925,6 +1938,155 @@ app.delete('/api/admin/editor/question/:id/override', requireSuperAdmin, (req, r
     if (original.choices) BUILTIN_INDEX[qid].q.choices = [...original.choices];
   }
   res.json({ ok: true, id: qid, restored: !!original });
+});
+
+// =====================================================================
+// PARCOURS & CERTIFICATS (v2.28)
+// =====================================================================
+// Chaque domaine (intégré ou personnalisé) est un « parcours » jouable
+// en 3 niveaux successifs. Un certificat est délivré par niveau réussi,
+// avec une distinction selon le score. Les niveaux se débloquent dans
+// l'ordre : Débutant → Avancé → Expert.
+const PARCOURS_LEVELS = {
+  debutant: { key: 'debutant', label: 'Débutant', order: 1, questions: 10, passPct: 50, timer: 40, prereq: null },
+  avance:   { key: 'avance',   label: 'Avancé',   order: 2, questions: 15, passPct: 60, timer: 30, prereq: 'debutant' },
+  expert:   { key: 'expert',   label: 'Expert',   order: 3, questions: 20, passPct: 70, timer: 20, prereq: 'avance' }
+};
+
+// Distinction portée sur le certificat, selon le pourcentage de réussite.
+function distinctionFor(pct) {
+  if (pct >= 90) return 'Excellent';
+  if (pct >= 80) return 'Très Bien';
+  if (pct >= 70) return 'Bien';
+  return 'Passable';
+}
+
+// Identité stable du joueur pour les certificats. Pour une session
+// visiteur, chaque pseudo a ses propres certificats.
+function ownerKeyOf(user) {
+  if (user.authType === 'visitor') return `${user.code}:${user.visitorName}`;
+  return user.code;
+}
+
+// Vérifie qu'un domaine existe (builtin ou custom) et renvoie son nombre
+// total de questions uniques, toutes manches confondues.
+function domainQuestionCount(name) {
+  const lower = String(name).toLowerCase();
+  const seen = new Set();
+  for (const m of ['manche1', 'manche2', 'manche3']) {
+    for (const p of getPacksForManche(m)) {
+      if ((p.domain || '').toLowerCase() !== lower) continue;
+      for (const q of (p.questions || [])) seen.add(q.q);   // dédup par texte (packs multi-manches dupliqués)
+    }
+  }
+  return seen.size;
+}
+
+// Progression du joueur : niveaux réussis par domaine + définitions.
+app.get('/api/me/parcours', requireUser, (req, res) => {
+  const owner = ownerKeyOf(req.user);
+  const store = loadCertificates();
+  const mine = (store.certificates || []).filter(c => c.owner === owner);
+  const byDomain = {};
+  for (const c of mine) {
+    if (!byDomain[c.domain]) byDomain[c.domain] = {};
+    byDomain[c.domain][c.level] = {
+      certId: c.id,
+      scorePct: c.scorePct,
+      distinction: c.distinction,
+      date: c.date
+    };
+  }
+  res.json({ levels: PARCOURS_LEVELS, byDomain });
+});
+
+// Soumission d'un niveau de parcours. Le serveur valide le seuil et le
+// prérequis, puis délivre (ou met à jour) le certificat.
+app.post('/api/me/parcours/complete', requireUser, (req, res) => {
+  const domain = String(req.body.domain || '').trim();
+  const levelKey = String(req.body.level || '').trim();
+  const nbQuestions = parseInt(req.body.nbQuestions, 10);
+  const nbCorrect = parseInt(req.body.nbCorrect, 10);
+
+  const level = PARCOURS_LEVELS[levelKey];
+  if (!level) return res.status(400).json({ error: 'Niveau invalide (attendu : debutant, avance, expert)' });
+  if (!domain) return res.status(400).json({ error: 'Domaine requis' });
+  if (!Number.isFinite(nbQuestions) || nbQuestions < 4) {
+    return res.status(400).json({ error: 'Nombre de questions invalide (minimum 4)' });
+  }
+  if (!Number.isFinite(nbCorrect) || nbCorrect < 0 || nbCorrect > nbQuestions) {
+    return res.status(400).json({ error: 'Score invalide' });
+  }
+  if (domainQuestionCount(domain) === 0) {
+    return res.status(404).json({ error: 'Domaine introuvable' });
+  }
+
+  const owner = ownerKeyOf(req.user);
+  const store = loadCertificates();
+  store.certificates = store.certificates || [];
+  const mine = store.certificates.filter(c => c.owner === owner && c.domain === domain);
+
+  // Prérequis : le niveau précédent doit être certifié pour ce domaine
+  if (level.prereq && !mine.some(c => c.level === level.prereq)) {
+    const prereqLabel = PARCOURS_LEVELS[level.prereq].label;
+    return res.status(403).json({ error: `Vous devez d'abord obtenir le certificat ${prereqLabel} de ce domaine.` });
+  }
+
+  const scorePct = Math.round(1000 * nbCorrect / nbQuestions) / 10;
+  if (scorePct < level.passPct) {
+    return res.json({
+      passed: false,
+      scorePct,
+      required: level.passPct,
+      message: `Score insuffisant : ${scorePct} % (minimum ${level.passPct} % pour le niveau ${level.label}). Réessayez !`
+    });
+  }
+
+  const distinction = distinctionFor(scorePct);
+  const now = new Date().toISOString();
+  let cert = mine.find(c => c.level === levelKey);
+  let improved = false;
+  if (cert) {
+    // Certificat existant : on ne met à jour que si le score est meilleur
+    if (scorePct > cert.scorePct) {
+      cert.scorePct = scorePct;
+      cert.nbCorrect = nbCorrect;
+      cert.nbQuestions = nbQuestions;
+      cert.distinction = distinction;
+      cert.updatedAt = now;
+      improved = true;
+    }
+  } else {
+    cert = {
+      id: crypto.randomBytes(8).toString('hex'),
+      owner,
+      name: req.user.name || req.user.code,
+      domain,
+      level: levelKey,
+      levelLabel: level.label,
+      scorePct,
+      nbCorrect,
+      nbQuestions,
+      distinction,
+      date: now,
+      updatedAt: now
+    };
+    store.certificates.push(cert);
+    improved = true;
+  }
+  if (improved) saveCertificates(store);
+
+  res.json({ passed: true, improved, certificate: cert });
+});
+
+// Liste des certificats du joueur connecté
+app.get('/api/me/certificates', requireUser, (req, res) => {
+  const owner = ownerKeyOf(req.user);
+  const store = loadCertificates();
+  const mine = (store.certificates || [])
+    .filter(c => c.owner === owner)
+    .sort((a, b) => (b.updatedAt || b.date || '').localeCompare(a.updatedAt || a.date || ''));
+  res.json(mine);
 });
 
 // =====================================================================

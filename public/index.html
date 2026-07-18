@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.27" />
+  <link rel="stylesheet" href="styles.css?v=2.28" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -224,6 +224,11 @@
           <h2 class="card-title">Révision libre</h2>
           <p>Parcourir les <span id="card-review-count">…</span> questions par domaine, sans timer ni score.</p>
         </div>
+        <div class="card card-action" id="card-parcours">
+          <div class="card-icon">🎓</div>
+          <h2 class="card-title">Parcours &amp; Certificats</h2>
+          <p>Validez un domaine en 3 niveaux (Débutant, Avancé, Expert) et téléchargez vos certificats en PDF ou JPG.</p>
+        </div>
         <div class="card card-action" id="card-history">
           <div class="card-icon">📊</div>
           <h2 class="card-title">Mes parties</h2>
@@ -285,6 +290,88 @@
 
       <div class="actions-row">
         <button id="btn-rev-home" class="btn btn-ghost">Retour à l'accueil</button>
+      </div>
+    </section>
+  </template>
+
+  <!-- 🎓 v2.28 : Parcours & Certificats -->
+  <template id="tpl-parcours">
+    <section class="screen">
+      <h1 class="title-xl">🎓 Parcours &amp; Certificats</h1>
+      <p class="lead">Choisissez un domaine (ou une spécialité importée par votre administrateur), validez les 3 niveaux dans l'ordre et obtenez un <strong>certificat téléchargeable</strong> à chaque réussite — avec une distinction selon votre score.</p>
+
+      <div class="card">
+        <h2 class="card-title">1. Choisir un parcours (domaine / spécialité)</h2>
+        <div class="form-row">
+          <select id="parcours-domain" style="flex:1; padding:10px; border:1px solid var(--line); border-radius:8px; font-size:15px;"></select>
+        </div>
+        <p class="muted" id="parcours-domain-info" style="margin-bottom:0;"></p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">2. Niveaux du parcours</h2>
+        <div class="parcours-levels" id="parcours-levels"></div>
+        <p class="muted" style="font-size:13px; margin-bottom:0;">
+          Seuils de réussite : Débutant ≥ 50 % · Avancé ≥ 60 % · Expert ≥ 70 %.
+          Distinctions : Passable · Bien (≥ 70 %) · Très Bien (≥ 80 %) · Excellent (≥ 90 %).
+          Chaque niveau se débloque après la réussite du précédent.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">🏅 Mes certificats</h2>
+        <div id="parcours-certs"></div>
+      </div>
+
+      <div class="actions-row">
+        <button id="btn-parcours-home" class="btn btn-ghost">Retour à l'accueil</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-parcours-play">
+    <section class="screen">
+      <div class="play-topbar">
+        <div>
+          <span class="play-tag" id="pc-tag">…</span>
+          <span class="play-pack" id="pc-domain">…</span>
+        </div>
+        <div class="play-score">Score : <strong id="pc-score">0</strong> / <span id="pc-total">0</span></div>
+      </div>
+
+      <div class="play-timer"><div class="play-timer-bar" id="pc-timer-bar"></div></div>
+      <div class="play-counter" id="pc-counter">Question 1</div>
+
+      <div class="card play-card">
+        <div class="play-question" id="pc-question">…</div>
+        <div id="pc-answer-zone"></div>
+        <div id="pc-reveal" class="play-reveal" hidden></div>
+        <div class="actions-row" id="pc-next-row" hidden>
+          <button id="btn-pc-next" class="btn btn-primary">Question suivante →</button>
+        </div>
+      </div>
+
+      <!-- Écran de fin : résultat + certificat -->
+      <div id="pc-result" hidden>
+        <div class="card" id="pc-result-card"></div>
+        <div class="card" id="pc-cert-card" hidden>
+          <h2 class="card-title">🏅 Votre certificat</h2>
+          <div class="cert-preview-wrap">
+            <canvas id="pc-cert-canvas" class="cert-canvas"></canvas>
+          </div>
+          <div class="form-row" style="margin-top:12px;">
+            <button id="btn-cert-pdf" class="btn btn-primary">⬇ Télécharger en PDF</button>
+            <button id="btn-cert-jpg" class="btn">⬇ Télécharger en JPG</button>
+          </div>
+        </div>
+        <div class="actions-row">
+          <button id="btn-pc-retry" class="btn">↺ Refaire ce niveau</button>
+          <button id="btn-pc-back" class="btn btn-ghost">← Retour aux parcours</button>
+        </div>
+      </div>
+
+      <div class="actions-row" id="pc-quit-row">
+        <button id="btn-pc-quit" class="btn btn-ghost">Abandonner le niveau</button>
       </div>
     </section>
   </template>
@@ -1433,6 +1520,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.27"></script>
+  <script src="app.js?v=2.28"></script>
 </body>
 </html>

@@ -631,6 +631,76 @@ html, body {
 }
 .visitor-pseudo-info strong { color: #92400E; }
 
+/* v2.28 : Parcours & Certificats */
+.parcours-levels {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 860px) {
+  .parcours-levels { grid-template-columns: 1fr 1fr 1fr; }
+}
+.parcours-tile {
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.parcours-tile-head {
+  padding: 10px 14px;
+  font-size: 14px;
+}
+.parcours-tile-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+}
+.parcours-earned { font-size: 14px; line-height: 1.5; }
+.cert-badge {
+  display: inline-block;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+.cert-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: #fff;
+}
+.cert-row-info { flex: 1; min-width: 220px; }
+.cert-row-actions { display: flex; gap: 8px; }
+.cert-preview-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f6f6f8;
+  padding: 10px;
+}
+.cert-canvas {
+  display: block;
+  width: 100%;
+  max-width: 880px;
+  height: auto;
+  margin: 0 auto;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+  background: #fff;
+}
+
 /* v2.27 : badges manches par domaine dans Setup */
 .domain-manches {
   display: inline-flex;

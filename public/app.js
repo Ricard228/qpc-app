@@ -95,6 +95,10 @@ const api = {
   meta:       ()         => apiFetch('/api/meta'),
   packs:      (m, doms)  => apiFetch(`/api/packs/${m}?domains=${encodeURIComponent((doms||[]).join(','))}`),
   myGames:    ()         => apiFetch('/api/me/games'),
+  // Parcours & certificats (v2.28)
+  myParcours:       ()     => apiFetch('/api/me/parcours'),
+  parcoursComplete: (body) => apiFetch('/api/me/parcours/complete', { method: 'POST', body: JSON.stringify(body) }),
+  myCertificates:   ()     => apiFetch('/api/me/certificates'),
   archiveGame:(summary)  => apiFetch('/api/me/game',     { method: 'POST', body: JSON.stringify(summary) }),
   adminCodes: ()         => apiFetch('/api/admin/codes', {}, true),
   adminCreateCode: (name, visitor) => apiFetch('/api/admin/codes', { method: 'POST', body: JSON.stringify({ name, visitor: !!visitor }) }, true),
@@ -319,6 +323,8 @@ async function route(view, params = {}) {
     case 'result':   return renderResult(params.archived);
     case 'history':  return renderHistory();
     case 'review':   return renderReview();
+    case 'parcours': return renderParcours();
+    case 'parcours-play': return renderParcoursPlay();
     case 'duels':    return renderDuels();
     case 'duel-result': return renderDuelResult(params.duelId);
     case 'admin':    return renderAdmin();
@@ -716,6 +722,8 @@ async function renderHome() {
   $('#card-review').onclick   = () => route('review');
   $('#card-duels').onclick    = () => route('duels');
   $('#card-history').onclick  = () => route('history');
+  const cardParcours = $('#card-parcours');
+  if (cardParcours) cardParcours.onclick = () => route('parcours');
 
   // Les sessions visiteur ne participent pas aux duels (identité partagée
   // → conflit) : on masque la carte « Mes duels » et on ignore le badge.
@@ -1457,6 +1465,520 @@ function renderReviewCard() {
   $('#btn-rev-prev').disabled = (_reviewState.idx === 0);
   $('#btn-rev-next').disabled = (_reviewState.idx >= _reviewState.pool.length - 1);
 }
+
+// =====================================================================
+// PARCOURS & CERTIFICATS (v2.28)
+// =====================================================================
+// Un parcours = un domaine joué en 3 niveaux (Débutant / Avancé / Expert).
+// Chaque niveau réussi délivre un certificat téléchargeable (PDF / JPG)
+// avec une distinction selon le score. Les définitions de niveaux
+// (nb questions, seuil, timer) viennent du serveur (/api/me/parcours).
+
+const PARCOURS_COLORS = {
+  debutant: { main: '#16a34a', soft: '#dcfce7', dark: '#14532d' },
+  avance:   { main: '#2563eb', soft: '#dbeafe', dark: '#1e3a8a' },
+  expert:   { main: '#b45309', soft: '#fef3c7', dark: '#78350f' }
+};
+
+let _parcoursData = null;   // cache {levels, byDomain} du serveur
+
+async function renderParcours() {
+  if (!Session.token) return route('login');
+  refreshWho();
+  mount('tpl-parcours');
+  $('#btn-parcours-home').onclick = () => route('home');
+
+  if (!State.meta) {
+    try { State.meta = await api.meta(); } catch (e) { return route('login'); }
+  }
+  try { _parcoursData = await api.myParcours(); }
+  catch (e) { alert('Erreur : ' + e.message); return route('home'); }
+
+  // Remplir le sélecteur de domaines (custom d'abord — ce sont souvent
+  // les « spécialités » importées par l'admin — puis intégrés)
+  const sel = $('#parcours-domain');
+  sel.innerHTML = '';
+  const customD = (State.meta.domains || []).filter(d => d.isCustom);
+  const builtinD = (State.meta.domains || []).filter(d => !d.isCustom);
+  function addGroup(label, list) {
+    if (!list.length) return;
+    const og = document.createElement('optgroup');
+    og.label = label;
+    for (const d of list) {
+      const opt = document.createElement('option');
+      opt.value = d.name;
+      opt.textContent = `${d.name} — ${d.count} question(s)`;
+      og.appendChild(opt);
+    }
+    sel.appendChild(og);
+  }
+  addGroup('✨ Spécialités importées', customD);
+  addGroup('🏛 Domaines intégrés', builtinD);
+
+  sel.onchange = () => renderParcoursLevels(sel.value);
+  renderParcoursLevels(sel.value);
+
+  await renderMyCertificates();
+}
+
+function renderParcoursLevels(domain) {
+  const box = $('#parcours-levels');
+  if (!box) return;
+  box.innerHTML = '';
+  const levels = (_parcoursData && _parcoursData.levels) || {};
+  const progress = (_parcoursData && _parcoursData.byDomain && _parcoursData.byDomain[domain]) || {};
+  const dMeta = (State.meta.domains || []).find(d => d.name === domain);
+  const available = dMeta ? dMeta.count : 0;
+
+  const info = $('#parcours-domain-info');
+  if (info) {
+    info.textContent = dMeta
+      ? `${available} question(s) disponible(s) dans ce parcours${dMeta.isCustom ? ' (spécialité importée)' : ''}.`
+      : '';
+  }
+
+  ['debutant', 'avance', 'expert'].forEach(key => {
+    const def = levels[key];
+    if (!def) return;
+    const col = PARCOURS_COLORS[key];
+    const earned = progress[key];
+    const prereqOk = !def.prereq || !!progress[def.prereq];
+    const nQuestions = Math.min(def.questions, available);
+
+    const tile = el('div', { class: 'parcours-tile', style: `border-color:${col.main};` });
+    tile.appendChild(el('div', { class: 'parcours-tile-head', style: `background:${col.soft}; color:${col.dark};` },
+      el('strong', {}, def.label),
+      el('span', { class: 'small' }, ` · ${nQuestions} questions · ${def.timer} s/question · réussite ≥ ${def.passPct} %`)
+    ));
+
+    const body = el('div', { class: 'parcours-tile-body' });
+    if (earned) {
+      body.appendChild(el('div', { class: 'parcours-earned' },
+        el('span', { class: 'cert-badge', style: `background:${col.main};` }, '✓ CERTIFIÉ'),
+        ` ${earned.scorePct} % — Distinction : `,
+        el('strong', {}, earned.distinction),
+        el('span', { class: 'small muted' }, ` (${fmtDate(earned.date)})`)
+      ));
+      body.appendChild(el('button', {
+        class: 'btn btn-small',
+        onclick: () => startParcoursLevel(domain, key)
+      }, '↺ Rejouer (améliorer le score)'));
+    } else if (!prereqOk) {
+      const prereqLabel = levels[def.prereq] ? levels[def.prereq].label : def.prereq;
+      body.appendChild(el('div', { class: 'muted' }, `🔒 Verrouillé — obtenez d'abord le certificat ${prereqLabel} de ce domaine.`));
+    } else if (available < 4) {
+      body.appendChild(el('div', { class: 'muted' }, '⚠ Ce domaine contient trop peu de questions (minimum 4).'));
+    } else {
+      body.appendChild(el('button', {
+        class: 'btn btn-primary',
+        onclick: () => startParcoursLevel(domain, key)
+      }, `▶ Commencer le niveau ${def.label}`));
+    }
+    tile.appendChild(body);
+    box.appendChild(tile);
+  });
+}
+
+async function renderMyCertificates() {
+  const box = $('#parcours-certs');
+  if (!box) return;
+  box.innerHTML = '';
+  let certs = [];
+  try { certs = await api.myCertificates(); } catch (e) {}
+  if (!certs.length) {
+    box.appendChild(el('div', { class: 'muted' }, 'Aucun certificat pour le moment. Terminez un niveau pour obtenir le vôtre !'));
+    return;
+  }
+  for (const c of certs) {
+    const col = PARCOURS_COLORS[c.level] || PARCOURS_COLORS.debutant;
+    box.appendChild(el('div', { class: 'cert-row' },
+      el('div', { class: 'cert-row-info' },
+        el('div', {},
+          el('span', { class: 'cert-badge', style: `background:${col.main};` }, (c.levelLabel || c.level).toUpperCase()),
+          ' ', el('strong', {}, c.domain)),
+        el('div', { class: 'small muted' },
+          `${c.scorePct} % (${c.nbCorrect}/${c.nbQuestions}) · Distinction : ${c.distinction} · ${fmtDate(c.date)} · n° ${c.id}`)),
+      el('div', { class: 'cert-row-actions' },
+        el('button', { class: 'btn btn-small btn-primary', onclick: () => downloadCertPDF(c) }, '⬇ PDF'),
+        el('button', { class: 'btn btn-small', onclick: () => downloadCertJPG(c) }, '⬇ JPG'))
+    ));
+  }
+}
+
+// ---------- Lancement d'un niveau -------------------------------------
+async function startParcoursLevel(domain, levelKey) {
+  const def = _parcoursData && _parcoursData.levels && _parcoursData.levels[levelKey];
+  if (!def) return;
+  // Récupérer toutes les questions du domaine (3 manches), dédupliquées
+  let all = [];
+  try {
+    const [p1, p2, p3] = await Promise.all([
+      api.packs('manche1', [domain]),
+      api.packs('manche2', [domain]),
+      api.packs('manche3', [domain])
+    ]);
+    const seen = new Set();
+    for (const p of [...p1, ...p2, ...p3]) {
+      for (const q of (p.questions || [])) {
+        const k = (q.q || '').trim().toLowerCase();
+        if (k && !seen.has(k)) { seen.add(k); all.push(q); }
+      }
+    }
+  } catch (e) { alert('Erreur de chargement des questions : ' + e.message); return; }
+
+  if (all.length < 4) {
+    alert('Ce domaine contient trop peu de questions pour un parcours (minimum 4).');
+    return;
+  }
+  const n = Math.min(def.questions, all.length);
+  State.parcours = {
+    domain,
+    levelKey,
+    def,
+    questions: shuffle(all).slice(0, n),
+    idx: 0,
+    correct: 0,
+    finished: false,
+    result: null
+  };
+  route('parcours-play');
+}
+
+// ---------- Boucle de jeu du parcours ---------------------------------
+function renderParcoursPlay() {
+  if (!Session.token || !State.parcours) return route('parcours');
+  mount('tpl-parcours-play');
+  const P = State.parcours;
+  const col = PARCOURS_COLORS[P.levelKey];
+
+  $('#pc-tag').textContent = `Niveau ${P.def.label}`;
+  $('#pc-tag').style.background = col.main;
+  $('#pc-domain').textContent = P.domain;
+  $('#pc-total').textContent = String(P.questions.length);
+  $('#btn-pc-quit').onclick = () => {
+    if (!confirm('Abandonner ce niveau ? Votre progression sera perdue.')) return;
+    clearTimer();
+    State.parcours = null;
+    route('parcours');
+  };
+
+  if (P.finished) return showParcoursResult();
+  showParcoursQuestion();
+}
+
+function showParcoursQuestion() {
+  const P = State.parcours;
+  const q = P.questions[P.idx];
+  $('#pc-counter').textContent = `Question ${P.idx + 1} / ${P.questions.length}`;
+  $('#pc-score').textContent = String(P.correct);
+  $('#pc-question').textContent = q.q;
+  const reveal = $('#pc-reveal');
+  reveal.hidden = true;
+  $('#pc-next-row').hidden = true;
+
+  const zone = $('#pc-answer-zone');
+  zone.innerHTML = '';
+  // Le parcours privilégie le QCM quand la question a des choix
+  // (sauvegarde/restauration pour ne pas polluer le mode des parties)
+  const savedQcm = State.qcmMode;
+  State.qcmMode = true;
+  const form = buildAnswerForm(q, (val) => answerParcours(val));
+  State.qcmMode = savedQcm;
+  zone.appendChild(form);
+
+  const total = P.def.timer;
+  const bar = $('#pc-timer-bar');
+  startTimer(total, (remaining) => {
+    if (bar) {
+      bar.style.width = `${Math.max(0, 100 * remaining / total)}%`;
+      bar.style.background = remaining <= 5 ? '#dc2626' : PARCOURS_COLORS[P.levelKey].main;
+    }
+  }, () => answerParcours(''));
+}
+
+function answerParcours(val) {
+  clearTimer();
+  const P = State.parcours;
+  if (!P || P.finished) return;
+  const q = P.questions[P.idx];
+  const ok = evalAnswer(val, q);
+  if (ok) P.correct += 1;
+  $('#pc-score').textContent = String(P.correct);
+
+  // Feedback
+  const zone = $('#pc-answer-zone');
+  zone.innerHTML = '';
+  const reveal = $('#pc-reveal');
+  reveal.hidden = false;
+  reveal.className = 'play-reveal ' + (ok ? 'correct' : 'wrong');
+  reveal.innerHTML = '';
+  reveal.appendChild(el('div', { class: 'reveal-label' }, ok ? '✓ Bonne réponse !' : '✗ Mauvaise réponse'));
+  if (!ok) reveal.appendChild(el('div', {}, 'Votre réponse : ', el('em', {}, displayGiven(val, q))));
+  reveal.appendChild(el('div', { class: 'reveal-answer' }, 'Réponse attendue : ', el('strong', {}, q.r)));
+  if (q.e)   reveal.appendChild(el('div', { class: 'reveal-explain' }, q.e));
+  if (q.ref) reveal.appendChild(el('div', { class: 'reveal-ref' }, linkify(q.ref)));
+
+  const nextRow = $('#pc-next-row');
+  nextRow.hidden = false;
+  const isLast = (P.idx >= P.questions.length - 1);
+  $('#btn-pc-next').textContent = isLast ? 'Voir mon résultat →' : 'Question suivante →';
+  $('#btn-pc-next').onclick = () => {
+    if (isLast) return finishParcoursLevel();
+    P.idx += 1;
+    showParcoursQuestion();
+  };
+}
+
+async function finishParcoursLevel() {
+  clearTimer();
+  const P = State.parcours;
+  P.finished = true;
+  try {
+    P.result = await api.parcoursComplete({
+      domain: P.domain,
+      level: P.levelKey,
+      nbQuestions: P.questions.length,
+      nbCorrect: P.correct
+    });
+  } catch (e) {
+    P.result = { passed: false, error: e.message };
+  }
+  // Invalider le cache de progression pour le prochain renderParcours
+  _parcoursData = null;
+  showParcoursResult();
+}
+
+function showParcoursResult() {
+  const P = State.parcours;
+  const r = P.result || {};
+  // Masquer la zone de jeu
+  const playCard = document.querySelector('.play-card');
+  if (playCard) playCard.hidden = true;
+  $('#pc-quit-row').hidden = true;
+  const timerEl = document.querySelector('.play-timer');
+  if (timerEl) timerEl.hidden = true;
+  $('#pc-counter').hidden = true;
+
+  const resBox = $('#pc-result');
+  resBox.hidden = false;
+  const card = $('#pc-result-card');
+  card.innerHTML = '';
+  const pct = Math.round(1000 * P.correct / P.questions.length) / 10;
+
+  if (r.passed && r.certificate) {
+    const c = r.certificate;
+    const col = PARCOURS_COLORS[P.levelKey];
+    card.appendChild(el('h2', { class: 'card-title', style: `color:${col.dark};` }, `🎉 Niveau ${P.def.label} réussi !`));
+    card.appendChild(el('p', {},
+      `Score : `, el('strong', {}, `${pct} %`), ` (${P.correct}/${P.questions.length}) — Distinction : `,
+      el('strong', {}, c.distinction), '.'));
+    if (r.improved === false) {
+      card.appendChild(el('p', { class: 'muted' }, 'Votre certificat existant a un meilleur score : il est conservé tel quel.'));
+    }
+    // Dessiner le certificat
+    const certCard = $('#pc-cert-card');
+    certCard.hidden = false;
+    const canvas = $('#pc-cert-canvas');
+    drawCertificate(canvas, c);
+    $('#btn-cert-pdf').onclick = () => downloadCertPDF(c);
+    $('#btn-cert-jpg').onclick = () => downloadCertJPG(c);
+  } else if (r.error) {
+    card.appendChild(el('h2', { class: 'card-title' }, '⚠ Erreur'));
+    card.appendChild(el('p', {}, r.error));
+    card.appendChild(el('p', { class: 'muted' }, `Votre score local : ${pct} % (${P.correct}/${P.questions.length}).`));
+  } else {
+    card.appendChild(el('h2', { class: 'card-title', style: 'color:#b91c1c;' }, `Niveau ${P.def.label} non validé`));
+    card.appendChild(el('p', {},
+      `Score : `, el('strong', {}, `${pct} %`),
+      ` (${P.correct}/${P.questions.length}) — minimum requis : `,
+      el('strong', {}, `${r.required || P.def.passPct} %`), '.'));
+    card.appendChild(el('p', { class: 'muted' }, r.message || 'Révisez ce domaine puis réessayez !'));
+  }
+
+  $('#btn-pc-retry').onclick = () => startParcoursLevel(P.domain, P.levelKey);
+  $('#btn-pc-back').onclick = () => { State.parcours = null; route('parcours'); };
+}
+
+// ---------- Dessin du certificat (canvas) -----------------------------
+// A4 paysage à 150 dpi environ : 1754 × 1240 px.
+function drawCertificate(canvas, cert) {
+  const W = 1754, H = 1240;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  const col = PARCOURS_COLORS[cert.level] || PARCOURS_COLORS.debutant;
+
+  // Fond
+  ctx.fillStyle = '#fffdf8';
+  ctx.fillRect(0, 0, W, H);
+
+  // Double bordure
+  ctx.strokeStyle = col.main;
+  ctx.lineWidth = 14;
+  ctx.strokeRect(40, 40, W - 80, H - 80);
+  ctx.lineWidth = 3;
+  ctx.strokeRect(64, 64, W - 128, H - 128);
+
+  // Coins décoratifs
+  ctx.fillStyle = col.main;
+  [[40, 40], [W - 40, 40], [40, H - 40], [W - 40, H - 40]].forEach(([x, y]) => {
+    ctx.beginPath(); ctx.arc(x, y, 16, 0, Math.PI * 2); ctx.fill();
+  });
+
+  const cx = W / 2;
+  function fitText(text, maxWidth, baseSize, font, weight = '', style = '') {
+    let size = baseSize;
+    do {
+      ctx.font = `${style} ${weight} ${size}px ${font}`.trim();
+      if (ctx.measureText(text).width <= maxWidth) break;
+      size -= 2;
+    } while (size > 18);
+    return size;
+  }
+  function center(text, y, size, font, color, weight = '', style = '') {
+    fitText(text, W - 300, size, font, weight, style);
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center';
+    ctx.fillText(text, cx, y);
+  }
+
+  // En-tête
+  center('QPC — Questions pour un Champion', 170, 44, 'Georgia, serif', '#333333', 'bold');
+  center('Édition Économie & Sciences sociales', 215, 28, 'Georgia, serif', '#666666', '', 'italic');
+
+  // Filet
+  ctx.strokeStyle = col.main; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(cx - 320, 245); ctx.lineTo(cx + 320, 245); ctx.stroke();
+
+  // Titre
+  center('CERTIFICAT DE RÉUSSITE', 340, 76, 'Georgia, serif', col.dark, 'bold');
+  center(`Niveau ${cert.levelLabel || cert.level}`, 405, 44, 'Georgia, serif', col.main, 'bold');
+
+  // Médaille
+  const my = 500, mr = 52;
+  ctx.fillStyle = col.main;
+  ctx.beginPath(); ctx.arc(cx, my, mr, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = col.soft;
+  ctx.beginPath(); ctx.arc(cx, my, mr - 12, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = col.dark;
+  ctx.font = `bold 44px Georgia, serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('★', cx, my + 16);
+
+  // Bénéficiaire
+  center('décerné à', 615, 30, 'Georgia, serif', '#555555', '', 'italic');
+  center(cert.name || '—', 685, 62, 'Georgia, serif', '#111111', 'bold');
+
+  // Domaine
+  center('pour la validation du parcours', 745, 28, 'Georgia, serif', '#555555', '', 'italic');
+  center(`« ${cert.domain} »`, 805, 42, 'Georgia, serif', col.dark, 'bold');
+
+  // Score + distinction
+  center(`Score obtenu : ${cert.scorePct} %  (${cert.nbCorrect}/${cert.nbQuestions} bonnes réponses)`, 880, 32, 'Arial, sans-serif', '#333333');
+  center(`Distinction : ${cert.distinction}`, 935, 40, 'Georgia, serif', col.main, 'bold');
+
+  // Pied
+  const dateStr = new Date(cert.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  ctx.font = '26px Arial, sans-serif';
+  ctx.fillStyle = '#555555';
+  ctx.textAlign = 'left';
+  ctx.fillText(`Fait le ${dateStr}`, 150, 1090);
+  ctx.fillText(`Certificat n° ${cert.id}`, 150, 1130);
+  ctx.textAlign = 'right';
+  ctx.fillText('NEVAME Data House · QPC', W - 150, 1090);
+  ctx.strokeStyle = '#999999'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(W - 480, 1055); ctx.lineTo(W - 150, 1055); ctx.stroke();
+  ctx.font = 'italic 22px Georgia, serif';
+  ctx.fillText('Signature', W - 150, 1035);
+}
+
+// Canvas offscreen pour les téléchargements depuis la liste
+function certToCanvas(cert) {
+  const canvas = document.createElement('canvas');
+  drawCertificate(canvas, cert);
+  return canvas;
+}
+
+function certFileBase(cert) {
+  const slug = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase().slice(0, 40);
+  return `certificat-qpc-${slug(cert.domain)}-${cert.level}`;
+}
+
+function triggerDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+function downloadCertJPG(cert) {
+  const canvas = certToCanvas(cert);
+  canvas.toBlob((blob) => {
+    if (!blob) { alert('Échec de génération de l\'image.'); return; }
+    triggerDownload(blob, certFileBase(cert) + '.jpg');
+  }, 'image/jpeg', 0.92);
+}
+
+function downloadCertPDF(cert) {
+  const canvas = certToCanvas(cert);
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+  const b64 = dataUrl.split(',')[1];
+  const bin = atob(b64);
+  const jpegBytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) jpegBytes[i] = bin.charCodeAt(i);
+  const pdfBytes = buildPdfFromJpeg(jpegBytes, canvas.width, canvas.height);
+  triggerDownload(new Blob([pdfBytes], { type: 'application/pdf' }), certFileBase(cert) + '.pdf');
+}
+
+// PDF-BUILDER-START
+// Construit un PDF mono-page A4 paysage embarquant un JPEG plein cadre.
+// Aucune dépendance : la structure PDF (objets, xref, trailer) est
+// assemblée à la main avec des offsets exacts.
+function buildPdfFromJpeg(jpegBytes, imgW, imgH) {
+  const enc = (s) => {
+    const b = new Uint8Array(s.length);
+    for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i) & 0xFF;
+    return b;
+  };
+  const chunks = [];
+  let offset = 0;
+  const offsets = {};
+  const push = (bytes) => { chunks.push(bytes); offset += bytes.length; };
+  const pushStr = (s) => push(enc(s));
+
+  const PW = 842, PH = 595;   // A4 paysage en points
+  const content = `q ${PW} 0 0 ${PH} 0 0 cm /Im0 Do Q`;
+
+  pushStr('%PDF-1.4\n');
+  offsets[1] = offset;
+  pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  offsets[2] = offset;
+  pushStr('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
+  offsets[3] = offset;
+  pushStr(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 4 0 R >> /ProcSet [/PDF /ImageC] >> /Contents 5 0 R >>\nendobj\n`);
+  offsets[4] = offset;
+  pushStr(`4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.length} >>\nstream\n`);
+  push(jpegBytes);
+  pushStr('\nendstream\nendobj\n');
+  offsets[5] = offset;
+  pushStr(`5 0 obj\n<< /Length ${content.length} >>\nstream\n${content}\nendstream\nendobj\n`);
+
+  const xrefOffset = offset;
+  let xref = 'xref\n0 6\n0000000000 65535 f \n';
+  for (let i = 1; i <= 5; i++) {
+    xref += String(offsets[i]).padStart(10, '0') + ' 00000 n \n';
+  }
+  pushStr(xref);
+  pushStr(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`);
+
+  const total = chunks.reduce((s, c) => s + c.length, 0);
+  const out = new Uint8Array(total);
+  let pos = 0;
+  for (const c of chunks) { out.set(c, pos); pos += c.length; }
+  return out;
+}
+// PDF-BUILDER-END
 
 // ---------- Vue : mes duels -------------------------------------------
 function statusLabel(d) {
