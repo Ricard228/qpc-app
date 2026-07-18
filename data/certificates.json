@@ -70,5 +70,15 @@
       "date": "2026-07-18T15:02:30.135Z",
       "updatedAt": "2026-07-18T15:02:30.135Z"
     }
+  ],
+  "attempts": [
+    {
+      "owner": "ACC-0e50203e",
+      "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+      "level": "debutant",
+      "passed": true,
+      "scorePct": 100,
+      "date": "2026-07-18T16:42:31.448Z"
+    }
   ]
 }
