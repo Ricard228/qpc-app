@@ -98,6 +98,10 @@ const api = {
   myGames:    ()         => apiFetch('/api/me/games'),
   // Parcours & certificats (v2.28)
   myParcours:       ()     => apiFetch('/api/me/parcours'),
+  // Nom complet sur certificats (v2.31)
+  setMyFullName:        (fullName)      => apiFetch('/api/me/fullname', { method: 'PUT', body: JSON.stringify({ fullName }) }),
+  adminCodeFullName:    (code, fullName) => apiFetch(`/api/admin/codes/${encodeURIComponent(code)}/fullname`, { method: 'PUT', body: JSON.stringify({ fullName }) }, true),
+  adminAccountFullName: (id, fullName)   => apiFetch(`/api/admin/accounts/${id}/fullname`, { method: 'PUT', body: JSON.stringify({ fullName }) }, true),
   parcoursComplete: (body) => apiFetch('/api/me/parcours/complete', { method: 'POST', body: JSON.stringify(body) }),
   myCertificates:   ()     => apiFetch('/api/me/certificates'),
   archiveGame:(summary)  => apiFetch('/api/me/game',     { method: 'POST', body: JSON.stringify(summary) }),
@@ -1520,7 +1524,42 @@ async function renderParcours() {
   sel.onchange = () => renderParcoursLevels(sel.value);
   renderParcoursLevels(sel.value);
 
+  // v2.31 : nom complet imprimé sur les certificats
+  refreshIdentityCard();
   await renderMyCertificates();
+}
+
+function refreshIdentityCard() {
+  const card = $('#parcours-identity-card');
+  if (!card) return;
+  // Les sessions visiteur (identité partagée, éphémère) n'en ont pas
+  if (State.meta && State.meta.authType === 'visitor') {
+    card.hidden = true;
+    return;
+  }
+  card.hidden = false;
+  const cur = $('#parcours-fullname-current');
+  const full = State.meta && State.meta.fullName;
+  const fallback = Session.name || Session.code || '—';
+  cur.textContent = full || fallback;
+  cur.style.color = full ? '' : 'var(--muted)';
+  if (!full) cur.textContent += '  (pseudo — aucun nom complet défini)';
+  $('#btn-set-fullname').onclick = async () => {
+    const v = prompt(
+      'Nom et prénoms complets à imprimer sur vos certificats\n' +
+      `(votre pseudo « ${fallback} » et votre code d'accès restent inchangés ; laisser vide pour effacer) :`,
+      full || '');
+    if (v === null) return;
+    try {
+      const r = await api.setMyFullName(v.trim());
+      if (State.meta) State.meta.fullName = r.fullName;
+      alert(r.fullName
+        ? `✓ Vos certificats porteront désormais le nom : ${r.fullName}\n${r.certificatesRenamed} certificat(s) déjà obtenus mis à jour.`
+        : '✓ Nom complet effacé — vos certificats porteront votre pseudo.');
+      refreshIdentityCard();
+      renderMyCertificates();   // les noms des certificats existants ont changé
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
 }
 
 function renderParcoursLevels(domain) {
@@ -2406,9 +2445,27 @@ async function renderAdmin() {
           el('div', {},
             el('span', { class: 'code-mono', onclick: () => { navigator.clipboard.writeText(c.code); flash(this); } }, c.code),
             c.visitor ? el('span', { class: 'badge-visitor' }, 'VISITEUR') : null,
-            c.name ? el('span', { class: 'code-name' }, ' — ' + c.name) : null),
+            c.name ? el('span', { class: 'code-name' }, ' — ' + c.name) : null,
+            c.fullName ? el('span', { class: 'fullname-tag', title: 'Nom imprimé sur les certificats' }, ` 🪪 ${c.fullName}`) : null),
           el('div', { class: 'code-meta' }, metaBits.join(' · '))),
         el('div', { class: 'code-actions' },
+          !c.visitor ? el('button', {
+            class: 'btn btn-ghost',
+            title: 'Nom et prénoms complets imprimés sur les certificats (le code et le pseudo restent inchangés)',
+            onclick: async () => {
+              const v = prompt(
+                `Nom et prénoms complets à imprimer sur les certificats de ${c.name || c.code}\n(laisser vide pour effacer — le code d'accès reste ${c.code}) :`,
+                c.fullName || '');
+              if (v === null) return;
+              try {
+                const r = await api.adminCodeFullName(c.code, v.trim());
+                alert(r.fullName
+                  ? `✓ Nom enregistré : ${r.fullName}\n${r.certificatesRenamed} certificat(s) existant(s) mis à jour.`
+                  : '✓ Nom complet effacé.');
+                refresh();
+              } catch (e) { alert('Erreur : ' + e.message); }
+            }
+          }, '🪪 Nom') : null,
           el('button', { class: 'btn btn-ghost', onclick: () => {
             navigator.clipboard.writeText(c.code).then(() => alert('Code copié : ' + c.code));
           }}, '📋 Copier'),
@@ -2611,7 +2668,8 @@ async function renderAdmin() {
         el('div', { class: 'account-info' },
           el('div', {},
             el('strong', {}, a.pseudo || a.email),
-            a.isAdmin ? el('span', { class: 'badge-admin' }, '🛡 ADMIN') : null
+            a.isAdmin ? el('span', { class: 'badge-admin' }, '🛡 ADMIN') : null,
+            a.fullName ? el('span', { class: 'fullname-tag', title: 'Nom imprimé sur les certificats' }, ` 🪪 ${a.fullName}`) : null
           ),
           el('div', { class: 'code-meta' },
             a.email, ' · ',
@@ -2621,6 +2679,23 @@ async function renderAdmin() {
           )
         ),
         el('div', { class: 'account-actions' },
+          el('button', {
+            class: 'btn btn-ghost',
+            title: 'Nom et prénoms complets imprimés sur les certificats (le pseudo reste inchangé)',
+            onclick: async () => {
+              const v = prompt(
+                `Nom et prénoms complets à imprimer sur les certificats de ${a.pseudo}\n(laisser vide pour effacer — le pseudo reste « ${a.pseudo} ») :`,
+                a.fullName || '');
+              if (v === null) return;
+              try {
+                const r = await api.adminAccountFullName(a.id, v.trim());
+                alert(r.fullName
+                  ? `✓ Nom enregistré : ${r.fullName}\n${r.certificatesRenamed} certificat(s) existant(s) mis à jour.`
+                  : '✓ Nom complet effacé.');
+                refreshAccountsList();
+              } catch (e) { alert('Erreur : ' + e.message); }
+            }
+          }, '🪪 Nom'),
           a.isAdmin
             ? el('button', { class: 'btn btn-ghost', onclick: async () => {
                 if (!confirm(`Retirer les droits d'administrateur à ${a.pseudo} ?`)) return;

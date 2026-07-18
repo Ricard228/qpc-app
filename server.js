@@ -864,14 +864,14 @@ function requireUser(req, res, next) {
     const entry = auth.codes[tok.code];
     if (!entry) return res.status(401).json({ error: 'Code révoqué' });
     if (entry.visitor) return res.status(401).json({ error: 'Ce code est devenu un code visiteur — reconnectez-vous avec un pseudo' });
-    req.user = { code: tok.code, name: entry.name || null, authType: 'code' };
+    req.user = { code: tok.code, name: entry.name || null, fullName: entry.fullName || null, authType: 'code' };
     return next();
   }
   // Méthode B : compte auto-inscrit (email/pseudo + password)
   if (tok.accountId) {
     const acc = auth.accounts && auth.accounts[tok.accountId];
     if (!acc) return res.status(401).json({ error: 'Compte révoqué' });
-    req.user = { accountId: tok.accountId, name: acc.pseudo || acc.email, email: acc.email, code: 'ACC-' + tok.accountId.slice(0, 8), authType: 'account', isAdmin: !!acc.isAdmin };
+    req.user = { accountId: tok.accountId, name: acc.pseudo || acc.email, fullName: acc.fullName || null, email: acc.email, code: 'ACC-' + tok.accountId.slice(0, 8), authType: 'account', isAdmin: !!acc.isAdmin };
     return next();
   }
   return res.status(401).json({ error: 'Token invalide' });
@@ -1070,6 +1070,7 @@ app.get('/api/meta', requireUser, (req, res) => {
     settings: auth.settings || { reviewEnabled: true, qcmMode: 'user-choice', liveScoreboardMode: 'user-choice' },
     authType: req.user.authType,                                  // 'code' | 'visitor' | 'account'
     visitorName: req.user.visitorName || null,
+    fullName: req.user.fullName || null,                          // v2.31 : nom imprimé sur les certificats
     // Les sessions visiteur n'ont pas accès aux duels — pas de check
     hasActiveDuel: req.user.authType === 'visitor' ? false : userHasActiveDuel(req.user.code)
   });
@@ -1157,6 +1158,7 @@ app.get('/api/admin/codes', requireAdmin, (req, res) => {
       : 0;
     return {
       code, name: entry.name || null,
+      fullName: entry.fullName || null,
       createdAt: entry.createdAt,
       lastUsed:  entry.lastUsed || null,
       gamesPlayed: gamesOf.length,
@@ -1301,6 +1303,7 @@ app.get('/api/admin/accounts', requireAdmin, (req, res) => {
     const gOf = (games.games || []).filter(g => g.accountId === a.id);
     return {
       id: a.id, email: a.email, pseudo: a.pseudo,
+      fullName: a.fullName || null,
       createdAt: a.createdAt, lastUsed: a.lastUsed || null,
       isAdmin: !!a.isAdmin,
       gamesPlayed: gOf.length,
@@ -2127,7 +2130,7 @@ app.post('/api/me/parcours/complete', requireUser, (req, res) => {
     cert = {
       id: crypto.randomBytes(8).toString('hex'),
       owner,
-      name: req.user.name || req.user.code,
+      name: req.user.fullName || req.user.name || req.user.code,
       domain,
       level: levelKey,
       levelLabel: level.label,
@@ -2144,6 +2147,80 @@ app.post('/api/me/parcours/complete', requireUser, (req, res) => {
   if (improved) saveCertificates(store);
 
   res.json({ passed: true, improved, certificate: cert });
+});
+
+// ---------------------------------------------------------------------
+// v2.31 : nom et prénoms complets imprimés sur les certificats.
+// Le pseudo/libellé du code reste inchangé (identité de jeu) ; le
+// fullName ne sert qu'à l'état civil porté sur les certificats.
+// Modifiable par le joueur lui-même ET par un administrateur.
+// ---------------------------------------------------------------------
+function sanitizeFullName(v) {
+  return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, 80);
+}
+// Ré-imprime le nom sur les certificats déjà délivrés de ce joueur
+function renameCertificatesOf(owner, newName) {
+  const store = loadCertificates();
+  let changed = 0;
+  for (const c of (store.certificates || [])) {
+    if (c.owner === owner && c.name !== newName) { c.name = newName; changed++; }
+  }
+  if (changed) saveCertificates(store);
+  return changed;
+}
+
+// Le joueur définit son propre nom complet
+app.put('/api/me/fullname', requireUser, (req, res) => {
+  if (req.user.authType === 'visitor') {
+    return res.status(403).json({ error: 'Les sessions visiteur ne portent pas de nom complet. Utilisez un code nominatif ou un compte.' });
+  }
+  const fullName = sanitizeFullName(req.body.fullName);
+  const auth = loadAuth();
+  let fallback;
+  if (req.user.authType === 'code') {
+    if (!auth.codes[req.user.code]) return res.status(404).json({ error: 'Code introuvable' });
+    if (fullName) auth.codes[req.user.code].fullName = fullName;
+    else delete auth.codes[req.user.code].fullName;
+    fallback = auth.codes[req.user.code].name || req.user.code;
+  } else {
+    const acc = auth.accounts[req.user.accountId];
+    if (!acc) return res.status(404).json({ error: 'Compte introuvable' });
+    if (fullName) acc.fullName = fullName;
+    else delete acc.fullName;
+    fallback = acc.pseudo || acc.email;
+  }
+  saveAuth(auth);
+  const renamed = renameCertificatesOf(ownerKeyOf(req.user), fullName || fallback);
+  res.json({ ok: true, fullName: fullName || null, certificatesRenamed: renamed });
+});
+
+// L'admin définit le nom complet d'un code d'accès
+app.put('/api/admin/codes/:code/fullname', requireAdmin, (req, res) => {
+  const code = String(req.params.code).toUpperCase();
+  const auth = loadAuth();
+  const entry = auth.codes[code];
+  if (!entry) return res.status(404).json({ error: 'Code introuvable' });
+  if (entry.visitor) return res.status(400).json({ error: 'Un code visiteur partagé ne porte pas de nom complet.' });
+  const fullName = sanitizeFullName(req.body.fullName);
+  if (fullName) entry.fullName = fullName;
+  else delete entry.fullName;
+  saveAuth(auth);
+  const renamed = renameCertificatesOf(code, fullName || entry.name || code);
+  res.json({ ok: true, code, fullName: fullName || null, certificatesRenamed: renamed });
+});
+
+// L'admin définit le nom complet d'un compte auto-inscrit
+app.put('/api/admin/accounts/:id/fullname', requireAdmin, (req, res) => {
+  const auth = loadAuth();
+  const acc = auth.accounts && auth.accounts[req.params.id];
+  if (!acc) return res.status(404).json({ error: 'Compte introuvable' });
+  const fullName = sanitizeFullName(req.body.fullName);
+  if (fullName) acc.fullName = fullName;
+  else delete acc.fullName;
+  saveAuth(auth);
+  const owner = 'ACC-' + String(req.params.id).slice(0, 8);
+  const renamed = renameCertificatesOf(owner, fullName || acc.pseudo || acc.email);
+  res.json({ ok: true, id: req.params.id, fullName: fullName || null, certificatesRenamed: renamed });
 });
 
 // Liste des certificats du joueur connecté
