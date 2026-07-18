@@ -13,6 +13,20 @@
       "distinction": "Excellent",
       "date": "2026-07-18T12:09:05.105Z",
       "updatedAt": "2026-07-18T12:09:05.105Z"
+    },
+    {
+      "id": "840666398bdeadd2",
+      "owner": "ACC-0e50203e",
+      "name": "Richard1",
+      "domain": "Statistiques et économétrie",
+      "level": "intermediaire",
+      "levelLabel": "Intermédiaire",
+      "scorePct": 91.7,
+      "nbCorrect": 11,
+      "nbQuestions": 12,
+      "distinction": "Excellent",
+      "date": "2026-07-18T12:14:56.186Z",
+      "updatedAt": "2026-07-18T12:14:56.186Z"
     }
   ]
 }
