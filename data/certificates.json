@@ -97,6 +97,20 @@
       "distinction": "Excellent",
       "date": "2026-07-21T03:51:48.556Z",
       "updatedAt": "2026-07-21T03:51:48.556Z"
+    },
+    {
+      "id": "f10d4755c762742a",
+      "owner": "ACC-0e50203e",
+      "name": "AGBENU Kossi Nevame",
+      "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+      "level": "expert",
+      "levelLabel": "Expert",
+      "scorePct": 95,
+      "nbCorrect": 19,
+      "nbQuestions": 20,
+      "distinction": "Excellent",
+      "date": "2026-07-21T03:56:34.055Z",
+      "updatedAt": "2026-07-21T03:56:34.055Z"
     }
   ],
   "attempts": [
@@ -131,6 +145,14 @@
       "passed": true,
       "scorePct": 93.3,
       "date": "2026-07-21T03:51:48.570Z"
+    },
+    {
+      "owner": "ACC-0e50203e",
+      "domain": "Agronomie, agroécologie et politique agricole au Togo et en Afrique",
+      "level": "expert",
+      "passed": true,
+      "scorePct": 95,
+      "date": "2026-07-21T03:56:34.055Z"
     }
   ]
 }
