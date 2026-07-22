@@ -111,6 +111,20 @@
       "distinction": "Excellent",
       "date": "2026-07-21T03:56:34.055Z",
       "updatedAt": "2026-07-21T03:56:34.055Z"
+    },
+    {
+      "id": "52599bb35374c051",
+      "owner": "ACC-0e50203e",
+      "name": "AGBENU Kossi Nevame",
+      "domain": "Histoire de la pensée économique",
+      "level": "debutant",
+      "levelLabel": "Débutant",
+      "scorePct": 90,
+      "nbCorrect": 9,
+      "nbQuestions": 10,
+      "distinction": "Excellent",
+      "date": "2026-07-22T00:44:49.792Z",
+      "updatedAt": "2026-07-22T00:44:49.792Z"
     }
   ],
   "attempts": [
@@ -153,6 +167,14 @@
       "passed": true,
       "scorePct": 95,
       "date": "2026-07-21T03:56:34.055Z"
+    },
+    {
+      "owner": "ACC-0e50203e",
+      "domain": "Histoire de la pensée économique",
+      "level": "debutant",
+      "passed": true,
+      "scorePct": 90,
+      "date": "2026-07-22T00:44:49.792Z"
     }
   ]
 }
