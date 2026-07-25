@@ -125,6 +125,20 @@
       "distinction": "Excellent",
       "date": "2026-07-22T00:44:49.792Z",
       "updatedAt": "2026-07-22T00:44:49.792Z"
+    },
+    {
+      "id": "7498d5536e608239",
+      "owner": "ACC-0e50203e",
+      "name": "AGBENU Kossi Nevame",
+      "domain": "IA, LLM et Agents intelligents",
+      "level": "debutant",
+      "levelLabel": "Débutant",
+      "scorePct": 80,
+      "nbCorrect": 8,
+      "nbQuestions": 10,
+      "distinction": "Très Bien",
+      "date": "2026-07-25T18:44:17.344Z",
+      "updatedAt": "2026-07-25T18:44:17.344Z"
     }
   ],
   "attempts": [
@@ -175,6 +189,14 @@
       "passed": true,
       "scorePct": 90,
       "date": "2026-07-22T00:44:49.792Z"
+    },
+    {
+      "owner": "ACC-0e50203e",
+      "domain": "IA, LLM et Agents intelligents",
+      "level": "debutant",
+      "passed": true,
+      "scorePct": 80,
+      "date": "2026-07-25T18:44:17.344Z"
     }
   ]
 }
