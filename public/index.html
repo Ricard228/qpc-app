@@ -582,9 +582,9 @@
           <p class="help-cover-sub">Édition Économie &amp; Sciences sociales</p>
           <h2 class="help-cover-tag">GUIDE D'UTILISATION</h2>
           <p class="help-cover-desc">Manuel complet — joueurs, super-administrateurs, exploitation</p>
-          <p class="help-cover-info">770+ questions · 17 domaines · PWA installable Android/iOS</p>
+          <p class="help-cover-info">2 678 questions · 18 domaines · Parcours certifiants · PWA installable Android/iOS</p>
           <p class="help-cover-author">Conçu par Kossi Nevame AGBENU<br/>NEVAME Data House · ESA Université de Lomé</p>
-          <p class="help-cover-version">Version 2.19 — mai 2026</p>
+          <p class="help-cover-version">Version 2.34 — juillet 2026</p>
         </header>
 
         <nav class="help-toc">
@@ -594,33 +594,34 @@
             <li><a href="#h-start">2. Premier démarrage</a></li>
             <li><a href="#h-user">3. Guide utilisateur (joueur)</a></li>
             <li><a href="#h-admin">4. Guide super-administrateur</a></li>
-            <li><a href="#h-domains">5. Les 17 domaines couverts</a></li>
+            <li><a href="#h-domains">5. Les 18 domaines couverts</a></li>
             <li><a href="#h-api">6. Annexe technique : API REST</a></li>
             <li><a href="#h-faq">7. FAQ et dépannage</a></li>
             <li><a href="#h-credits">8. Crédits et licence</a></li>
+            <li><a href="#h-news">9. Nouveautés v2.20 → v2.33</a></li>
           </ol>
         </nav>
 
         <section id="h-intro" class="help-section">
           <h2>1. Présentation générale</h2>
           <h3>1.1 Qu'est-ce que QPC ?</h3>
-          <p>QPC (Questions pour un Champion) est une application web pédagogique inspirée de l'émission télévisée du même nom diffusée sur TV5 Monde. Elle transforme un recueil de plus de 770 questions documentées en jeu interactif chronométré, accessible depuis n'importe quel navigateur (ordinateur, tablette, smartphone) ou installable comme application native sur Android et iOS via la technologie PWA.</p>
+          <p>QPC (Questions pour un Champion) est une application web pédagogique inspirée de l'émission télévisée du même nom diffusée sur TV5 Monde. Elle transforme un recueil de près de 2 700 questions documentées en jeu interactif chronométré — et en parcours certifiants — accessible depuis n'importe quel navigateur (ordinateur, tablette, smartphone) ou installable comme application native sur Android et iOS via la technologie PWA.</p>
           <p>L'application a été conçue dans un contexte académique ouest-africain (UEMOA, Togo) mais couvre l'économie générale, les sciences sociales et de nombreux domaines spécialisés utiles à toute formation supérieure en économie, gestion ou data science.</p>
 
           <h3>1.2 Caractéristiques principales</h3>
           <ul>
-            <li>770 questions documentées sur 17 domaines (économie agricole, monnaie/finance, BRVM/UEMOA, ML/DL, suivi-évaluation projets, fiscalité Togo, marchés publics Togo, etc.)</li>
-            <li>3 manches chronométrées inspirées de l'émission TV5 : « Les 4 à la suite » (40 s), « Face-à-face » (25 s/question, 1 à 6 points), « La finale » (15 s/question, 9 points gagnants)</li>
+            <li>2 678 questions documentées sur 18 domaines — dont deux domaines récents : « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (chaque domaine compte au moins 140 questions)</li>
+            <li>3 manches chronométrées inspirées de l'émission TV5 : « Les 4 à la suite », « Face-à-face » (1 à 6 points), « La finale » (9 points gagnants) — durées paramétrables par l'administrateur</li>
             <li>Mode QCM ou saisie libre, paramétrable par l'administrateur ou choisi par le joueur</li>
             <li>Mode Révision libre pour parcourir toutes les questions sans timer ni score</li>
-            <li>Duels utilisateur-à-utilisateur et confrontations multi-joueurs organisées par l'admin</li>
-            <li>Scoreboard live en temps réel pendant les compétitions</li>
-            <li>Authentification par codes d'accès permanents générés par le super-administrateur</li>
-            <li>Dashboard centralisé : classement, parties récentes, statistiques globales</li>
-            <li>Import de domaines personnalisés (.txt ou .json)</li>
-            <li>Export Excel et JSON de toute la base</li>
-            <li>Persistance permanente des données via branche GitHub</li>
-            <li>Installable comme PWA sur Android et iOS (1 clic)</li>
+            <li>🎓 Parcours certifiants par domaine en 4 niveaux (Débutant, Intermédiaire, Avancé, Expert) avec certificats téléchargeables PDF/JPG signés, distinctions selon le score et limite hebdomadaire configurable</li>
+            <li>Duels utilisateur-à-utilisateur et confrontations multi-joueurs organisées par l'admin, avec scoreboard live</li>
+            <li>Trois modes d'accès : code d'accès permanent, compte auto-inscrit (email + pseudo + mot de passe), ou code visiteur partagé multi-sessions</li>
+            <li>Administrateurs nommés (comptes promus par le super-admin) avec bascule espace joueur ↔ panneau admin</li>
+            <li>Import de spécialités personnalisées : fichier .txt/.json, langage naturel (distracteurs générés automatiquement) ou upload direct Word/PDF/TXT — deux modèles .txt prêts à l'emploi téléchargeables</li>
+            <li>Éditeur intégré des questions/réponses/sources (super-admin : tous les domaines ; admin nommé : spécialités importées)</li>
+            <li>Dashboard centralisé : classement, parties récentes, statistiques, export Excel/JSON</li>
+            <li>Persistance permanente des données via branche GitHub ; installable comme PWA sur Android et iOS</li>
             <li>Chaque réponse contient au moins une référence cliquable vers une source vérifiée (Wikipedia FR + sites officiels institutionnels)</li>
           </ul>
 
@@ -951,27 +952,29 @@ PTS: 6
         </section>
 
         <section id="h-domains" class="help-section">
-          <h2>5. Les 17 domaines couverts</h2>
+          <h2>5. Les 18 domaines couverts (2 678 questions)</h2>
           <table class="help-table">
             <thead><tr><th>Domaine</th><th>Q</th><th>Thèmes principaux</th></tr></thead>
             <tbody>
-              <tr><td>Économie agricole et agribusiness</td><td>160</td><td>PDDAA/CAADP, MIFA, filières café-cacao-coton, sécurité alimentaire, FAO, FIDA.</td></tr>
-              <tr><td>Monnaie, finance et budget</td><td>89</td><td>BCEAO, UMOA-Titres, agrégats monétaires, dette publique, microfinance, EONIA.</td></tr>
-              <tr><td>Statistiques et économétrie</td><td>88</td><td>AIC/BIC, ADF/KPSS, ARIMA/GARCH, GMM, IV, panel, logit/probit, ridge/Lasso, bootstrap.</td></tr>
-              <tr><td>Commerce, développement et Afrique</td><td>65</td><td>ZLECAf, CEDEAO, UEMOA, OMC, IDE, balance des paiements, ODD.</td></tr>
-              <tr><td>Microéconomie et théorie</td><td>64</td><td>Préférences, Slutsky, Cournot, Nash, Pareto, externalités, biens publics.</td></tr>
-              <tr><td>Macroéconomie et politiques</td><td>64</td><td>IS-LM, AS-AD, Solow, Phillips, NAIRU, Mundell-Fleming, règle de Taylor.</td></tr>
-              <tr><td>Marchés financiers UEMOA / BRVM</td><td>35</td><td>BRVM, CREPMF, SGI, DC/BR, indices BRVM 10/30, OPCVM, PER, ROE, DCF.</td></tr>
-              <tr><td>Histoire de la pensée économique</td><td>31</td><td>Smith, Ricardo, Marx, Keynes, Hayek, Friedman, Schumpeter, Sen, Stiglitz.</td></tr>
-              <tr><td>Machine learning et deep learning</td><td>31</td><td>k-NN, SVM, RF, XGBoost, ReLU, dropout, CNN/RNN/Transformer, BERT, GPT.</td></tr>
-              <tr><td>Suivi-évaluation des projets et politiques</td><td>31</td><td>Cadre logique GAR, ToC, 6 critères CAD-OCDE, SYGRI FIDA, RCT, DID, PSM.</td></tr>
-              <tr><td>Histoire, travail, santé et éducation</td><td>22</td><td>Westphalie, OIT, OMS, modèle de Becker, capital humain.</td></tr>
-              <tr><td>Comptabilité générale et analytique</td><td>22</td><td>SYSCOHADA, plan OHADA, partie double Pacioli, ABC, IFRS 15.</td></tr>
-              <tr><td>Sciences sociales et politiques</td><td>18</td><td>Foucault, Bourdieu, Weber, Granovetter, hégémonie, biopouvoir.</td></tr>
-              <tr><td>Fiscalité (Togo)</td><td>18</td><td>OTR, CGI, IS 27 %, IMF 1 %, IRPP, TVA 18 %, TPU, zone franche SAZOF.</td></tr>
-              <tr><td>Marchés publics et passation (Togo)</td><td>18</td><td>Décret 2009-277/PR, ARMP, DNCMP, AOO, AOR, gré à gré, DRP, PPP.</td></tr>
-              <tr><td>Culture générale et environnement</td><td>10</td><td>Allégorie de la caverne, Accord de Paris, COP21, ODD.</td></tr>
-              <tr><td>Domaines personnalisés</td><td>+</td><td>Importés par l'administrateur (.txt ou .json).</td></tr>
+              <tr><td>Suivi-évaluation des projets et politiques</td><td>195</td><td>Cycle de projet, cadre logique, VAN/TRI, critères CAD-OCDE, RCT, DID (y c. staggered), PSM, IV/LATE, RDD, contrôle synthétique, AIPW, CATE, STATA 18/19 (didregress, teffects, rdrobust…).</td></tr>
+              <tr><td>Économie agricole et agribusiness</td><td>180</td><td>PDDAA/CAADP, MIFA, filières café-cacao-coton, warrantage, assurance indicielle, chaînes de valeur, sécurité alimentaire, FAO, FIDA.</td></tr>
+              <tr><td>IA, LLM et Agents intelligents</td><td>168</td><td>Transformers et attention, tokens, RAG, prompt engineering, agents et outils, RLHF/DPO, LoRA, quantification, MoE, sécurité (injections), AI Act, applications.</td></tr>
+              <tr><td>Microéconomie et théorie</td><td>144</td><td>Préférences, Slutsky/Hicks, Engel, Cournot, Nash, Pareto, Coase, Lerner/HHI, externalités, biens publics, asymétries d'information.</td></tr>
+              <tr><td>Macroéconomie et politiques</td><td>144</td><td>IS-LM, AS-AD, Solow, croissance endogène, Phillips, Okun, Mundell, règle de Taylor, PPA, output gap, multiplicateur.</td></tr>
+              <tr><td>Statistiques et économétrie</td><td>144</td><td>Tests d'hypothèses, IC, khi-deux, ADF/KPSS, cointégration, panel, logit/probit, MCO/IV, bootstrap, hétéroscédasticité.</td></tr>
+              <tr><td>Histoire de la pensée économique</td><td>143</td><td>Smith, Ricardo, Marx, Keynes, Hayek, Friedman, Schumpeter, Sen, Duflo, écoles et prix Nobel.</td></tr>
+              <tr><td>Machine learning et deep learning</td><td>143</td><td>k-NN, SVM, RF, XGBoost, ReLU, dropout, CNN/RNN, précision/rappel/F1, SMOTE, MLOps, dérive des données.</td></tr>
+              <tr><td>Marchés financiers UEMOA / BRVM</td><td>143</td><td>BRVM, CREPMF, SGI, DC/BR, BRVM 30, UMOA-Titres, PER, rendement, MEDAF, duration, OPCVM.</td></tr>
+              <tr><td>Sciences sociales et politiques</td><td>142</td><td>Durkheim, Weber, Bourdieu, méthodes d'enquête, institutions, décentralisation, genre, participation.</td></tr>
+              <tr><td>Histoire, travail, santé et éducation</td><td>142</td><td>OIT, OMS, CSU, capital humain, démographie, indicateurs d'éducation et de santé, Togo/Afrique.</td></tr>
+              <tr><td>Culture générale et environnement</td><td>142</td><td>Togo et Afrique, ODD, climat (GIEC, Accord de Paris), biodiversité, énergies renouvelables, économie circulaire.</td></tr>
+              <tr><td>Comptabilité générale et analytique</td><td>142</td><td>SYSCOHADA/OHADA, écritures, amortissements, SIG, seuil de rentabilité, BFR, CMP, audit.</td></tr>
+              <tr><td>Fiscalité (Togo)</td><td>142</td><td>OTR, CGI, IS 27 %, IRPP, TVA 18 %/10 %, TEC-CEDEAO, TPU, patente, procédures et calculs.</td></tr>
+              <tr><td>Marchés publics et passation (Togo)</td><td>142</td><td>ARMP/DNCMP, AOO/AOR/gré à gré, garanties, avenants, PPP, allotissement, contentieux, calculs.</td></tr>
+              <tr><td>Monnaie, finance et budget</td><td>141</td><td>BCEAO, agrégats, Bâle III, marché monétaire, titres publics, microfinance, budget-programme.</td></tr>
+              <tr><td>Commerce, développement et Afrique</td><td>141</td><td>ZLECAf, CEDEAO, OMC, HOS/Krugman, termes de l'échange, IDE, IDH, chaînes de valeur mondiales.</td></tr>
+              <tr><td>Topographie, génie civil et architecture</td><td>140</td><td>Levés et nivellement, UTM, bornage/titre foncier, dessin technique, AutoCAD/Covadis/BIM, RDM, bétons et dosages, VRD, métrés.</td></tr>
+              <tr><td>Spécialités personnalisées</td><td>+</td><td>Importées par l'administrateur (.txt, .json, langage naturel ou upload Word/PDF).</td></tr>
             </tbody>
           </table>
           <p><strong>Référencement des réponses :</strong> chaque question dispose d'au moins une référence textuelle (auteur, date, ouvrage) et d'au moins une URL cliquable vers Wikipedia FR + une URL institutionnelle pertinente (BCEAO, BRVM, IFRS, OHADA, FAO, Banque mondiale, OCDE, ONU…). Les liens s'ouvrent dans un nouvel onglet.</p>
@@ -985,9 +988,13 @@ PTS: 6
           <table class="help-table help-table-api">
             <thead><tr><th>Méthode</th><th>Chemin</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td>POST</td><td><code>/api/auth/login</code></td><td>Login avec un code QPC-XXXXXXXX.</td></tr>
-              <tr><td>GET</td><td><code>/api/meta</code></td><td>Méta-données + settings + hasActiveDuel.</td></tr>
-              <tr><td>GET</td><td><code>/api/packs/:manche</code></td><td>Packs filtrés (manche1/2/3) avec ?domains=A,B,C.</td></tr>
+              <tr><td>POST</td><td><code>/api/auth/login</code></td><td>Login avec un code QPC-XXXXXXXX (renvoie visitor:true pour un code visiteur).</td></tr>
+              <tr><td>POST</td><td><code>/api/auth/register</code> · <code>/login-account</code> · <code>/login-visitor</code></td><td>Comptes auto-inscrits et sessions visiteur.</td></tr>
+              <tr><td>GET</td><td><code>/api/meta</code></td><td>Méta-données + settings + authType + fullName + hasActiveDuel.</td></tr>
+              <tr><td>GET</td><td><code>/api/packs/:manche</code></td><td>Packs filtrés (manche1/2/3) — ?domains=["A","B"] (tableau JSON encodé).</td></tr>
+              <tr><td>GET/POST</td><td><code>/api/me/parcours</code> · <code>/parcours/complete</code></td><td>Progression des parcours et délivrance des certificats.</td></tr>
+              <tr><td>GET</td><td><code>/api/me/certificates</code></td><td>Certificats obtenus (rechargeables en PDF/JPG côté client).</td></tr>
+              <tr><td>PUT</td><td><code>/api/me/fullname</code></td><td>Nom complet imprimé sur les certificats.</td></tr>
               <tr><td>POST</td><td><code>/api/me/game</code></td><td>Archive une partie solo terminée.</td></tr>
               <tr><td>GET</td><td><code>/api/me/games</code></td><td>Historique personnel.</td></tr>
               <tr><td>GET</td><td><code>/api/me/duels</code></td><td>Liste des duels.</td></tr>
@@ -1016,7 +1023,11 @@ PTS: 6
               <tr><td>GET</td><td><code>/api/admin/export-excel</code></td><td>Export Excel (3 feuilles).</td></tr>
               <tr><td>POST</td><td><code>/api/admin/import</code></td><td>Restaure un export JSON.</td></tr>
               <tr><td>DELETE</td><td><code>/api/admin/all-data</code></td><td>Purge totale.</td></tr>
-              <tr><td>GET, POST, DELETE</td><td><code>/api/admin/custom-domains</code></td><td>Domaines personnalisés.</td></tr>
+              <tr><td>GET, POST, DELETE</td><td><code>/api/admin/custom-domains</code></td><td>Spécialités personnalisées (+ <code>/from-natural</code>, <code>/preview-natural</code>, <code>/extract-from-file</code>).</td></tr>
+              <tr><td>GET, POST, DELETE</td><td><code>/api/admin/accounts</code></td><td>Comptes auto-inscrits (+ <code>/promote</code>, <code>/demote</code> — super-admin).</td></tr>
+              <tr><td>PUT</td><td><code>/api/admin/codes/:code/fullname</code> · <code>/accounts/:id/fullname</code></td><td>Nom complet imprimé sur les certificats.</td></tr>
+              <tr><td>GET, PUT, DELETE</td><td><code>/api/admin/editor/*</code></td><td>Éditeur de questions/réponses/sources (RBAC).</td></tr>
+              <tr><td>PUT</td><td><code>/api/admin/settings</code></td><td>Réglages : révision, QCM, scoreboard, aide, inscription, durées, tentatives/semaine.</td></tr>
             </tbody>
           </table>
 
@@ -1129,6 +1140,45 @@ PTS: 6
           <p>ISC — Code source disponible sur <a href="https://github.com/Ricard228/qpc-app" target="_blank" rel="noopener noreferrer">https://github.com/Ricard228/qpc-app</a></p>
 
           <p style="margin-top:24px;">Pour toute remarque ou suggestion : <a href="https://github.com/Ricard228/qpc-app/issues" target="_blank" rel="noopener noreferrer">github.com/Ricard228/qpc-app/issues</a></p>
+        </section>
+
+        <section id="h-news" class="help-section">
+          <h2>9. Nouveautés v2.20 → v2.33</h2>
+          <p>Cette section résume les fonctionnalités ajoutées depuis la première édition du guide (v2.19).</p>
+
+          <h3>9.1 Comptes, rôles et connexion</h3>
+          <ul>
+            <li><strong>Auto-inscription</strong> : tout visiteur peut créer un compte (e-mail + pseudo + mot de passe ≥ 6 caractères) depuis l'onglet « Créer un compte » de la page de connexion. L'administrateur peut désactiver l'inscription libre.</li>
+            <li><strong>Administrateurs nommés</strong> : le super-administrateur peut promouvoir un compte au rang d'admin (et le rétrograder). À la connexion, un admin nommé choisit entre l'espace joueur et le panneau admin, et peut basculer à tout moment depuis l'en-tête.</li>
+            <li><strong>Sécurité de session</strong> : le code d'accès reste pré-rempli d'une ouverture à l'autre ; pour les comptes, le pseudo est retenu mais le <em>mot de passe doit être ressaisi à chaque ouverture</em> de l'application. Aucune connexion n'est possible sans mot de passe.</li>
+            <li><strong>Codes visiteur partagés</strong> : un code spécial utilisable par plusieurs personnes en même temps (démo, salle de classe, événement). Chaque personne choisit un pseudo de session ; l'admin voit le détail par pseudo. Les visiteurs ne participent pas aux duels.</li>
+          </ul>
+
+          <h3>9.2 Parcours &amp; Certificats</h3>
+          <ul>
+            <li>Chaque domaine (intégré ou spécialité importée) se valide en <strong>4 niveaux</strong> : Débutant (≥ 50 %), Intermédiaire (≥ 55 %), Avancé (≥ 60 %), Expert (≥ 70 %) — à débloquer dans l'ordre.</li>
+            <li>Chaque réussite délivre un <strong>certificat téléchargeable en PDF ou JPG</strong>, portant la distinction obtenue (Passable, Bien ≥ 70 %, Très Bien ≥ 80 %, Excellent ≥ 90 %), un numéro unique et la signature Nevame DataHouse.</li>
+            <li><strong>Nom et prénoms complets</strong> : l'administrateur ou le joueur lui-même peut associer un nom d'état civil au profil (ex. « Richard1 » → « Kossi Nevame AGBENU »). Les certificats — y compris ceux déjà obtenus — sont réédités à ce nom ; le pseudo et le code d'accès restent inchangés.</li>
+            <li><strong>Limite hebdomadaire</strong> : l'administrateur peut limiter le nombre de tentatives d'un même certificat par semaine calendaire (ex. 3/semaine ; 0 = illimité). Les échecs comptent, le compteur se réinitialise chaque lundi et s'affiche sur chaque niveau.</li>
+            <li>Rejouer un niveau ne peut qu'<em>améliorer</em> le score du certificat, jamais le dégrader.</li>
+          </ul>
+
+          <h3>9.3 Spécialités importées (domaines personnalisés)</h3>
+          <ul>
+            <li><strong>Import en langage naturel</strong> : collez simplement « Q1 : … / R1 : … » ; l'application structure le QCM et <strong>génère des distracteurs réalistes</strong> (années, pourcentages, montants, concepts proches), avec prévisualisation avant import.</li>
+            <li><strong>Upload de fichiers</strong> : déposez directement un document <strong>Word (.docx), PDF, TXT, RTF ou HTML</strong> — le texte est extrait automatiquement puis traité comme ci-dessus.</li>
+            <li><strong>Multi-manches</strong> : à l'import, cochez Manche 1, 2 et/ou 3 ; le setup du joueur affiche les manches couvertes par chaque domaine (badges M1/M2/M3) et désactive celles qui ne le sont pas.</li>
+            <li><strong>Modèles téléchargeables</strong> : deux fichiers .txt d'exemple, testés et directement importables (un complet avec QCM écrits, un simplifié où les QCM sont générés), disponibles dans le panneau admin.</li>
+            <li>Les questions importées sans choix reçoivent automatiquement leurs QCM (y compris rétroactivement au redémarrage du serveur), et fonctionnent en partie libre, en QCM, en révision libre et en parcours certifiant.</li>
+          </ul>
+
+          <h3>9.4 Contenus et réglages</h3>
+          <ul>
+            <li><strong>Éditeur de contenus</strong> : modification des questions, réponses et sources depuis le panneau admin — le super-administrateur sur tous les domaines (modifications conservées lors des redéploiements), les admins nommés sur les seules spécialités importées.</li>
+            <li><strong>Base enrichie</strong> : 2 678 questions, 18 domaines (tous ≥ 140 questions), dont deux nouveaux domaines « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture », et des renforts majeurs en évaluation d'impact (méthodes causales + STATA 18/19).</li>
+            <li><strong>Durées paramétrables</strong> : les temps des trois manches se règlent dans le panneau admin (5 à 600 s).</li>
+            <li><strong>Aide masquable</strong> : le présent guide peut être masqué côté joueur par le super-administrateur.</li>
+          </ul>
 
           <p class="help-end">— Fin du guide —</p>
         </section>

@@ -210,7 +210,7 @@ children.push(
   new Paragraph({
     spacing: { before: 1600 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: '770+ questions · 17 domaines · 16 langues d’affichage · PWA installable Android/iOS', font: 'Arial', size: 20, color: '6B7280' })]
+    children: [new TextRun({ text: '2 678 questions · 18 domaines · Parcours certifiants · PWA installable Android/iOS', font: 'Arial', size: 20, color: '6B7280' })]
   }),
   new Paragraph({
     spacing: { before: 200 },
@@ -224,7 +224,7 @@ children.push(
   new Paragraph({
     spacing: { before: 200 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'Version 2.18 — mai 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
+    children: [new TextRun({ text: 'Version 2.34 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
   }),
   new Paragraph({ children: [new PageBreak()] })
 );
@@ -247,11 +247,14 @@ children.push(
   h1('1. Présentation générale'),
 
   h2('1.1 Qu’est-ce que QPC ?'),
-  p('QPC (Questions pour un Champion) est une application web pédagogique inspirée de l’émission télévisée du même nom diffusée sur TV5 Monde. Elle transforme un recueil de plus de 770 questions documentées en jeu interactif chronométré, accessible depuis n’importe quel navigateur (ordinateur, tablette, smartphone) ou installable comme application native sur Android et iOS via la technologie PWA.'),
+  p('QPC (Questions pour un Champion) est une application web pédagogique inspirée de l’émission télévisée du même nom diffusée sur TV5 Monde. Elle transforme un recueil de près de 2 700 questions documentées en jeu interactif chronométré — et en parcours certifiants —, accessible depuis n’importe quel navigateur (ordinateur, tablette, smartphone) ou installable comme application native sur Android et iOS via la technologie PWA.'),
   p('L’application a été conçue dans un contexte académique ouest-africain (UEMOA, Togo) mais couvre l’économie générale, les sciences sociales et de nombreux domaines spécialisés utiles à toute formation supérieure en économie, gestion ou data science.'),
 
   h2('1.2 Caractéristiques principales'),
-  bullet('770 questions documentées sur 17 domaines (économie agricole, monnaie/finance, BRVM/UEMOA, ML/DL, suivi-évaluation projets, fiscalité Togo, marchés publics Togo, etc.)'),
+  bullet('2 678 questions documentées sur 18 domaines — dont « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (au moins 140 questions par domaine)'),
+  bullet('Parcours certifiants en 4 niveaux (Débutant, Intermédiaire, Avancé, Expert) avec certificats PDF/JPG signés, nom complet imprimable et limite hebdomadaire configurable'),
+  bullet('Comptes auto-inscrits, administrateurs nommés et codes visiteur partagés multi-sessions'),
+  bullet('Import de spécialités : .txt/.json, langage naturel avec distracteurs générés, ou upload Word/PDF/TXT — modèles téléchargeables'),
   bullet('3 manches chronométrées inspirées de l’émission TV5 : « Les 4 à la suite » (40 s), « Face-à-face » (25 s/question, 1 à 6 points), « La finale » (15 s/question, 9 points gagnants)'),
   bullet('Mode QCM ou saisie libre, paramétrable par l’administrateur ou choisi par le joueur'),
   bullet('Mode Révision libre pour parcourir toutes les questions sans timer ni score'),
@@ -348,7 +351,7 @@ children.push(
     [
       ['▶ Nouvelle partie', 'Configurer une partie en solo : choix des manches, des domaines, du mode de réponse, et du volume.'],
       ['⚔️ Mes duels', 'Défier un autre joueur, accepter une invitation, ou rejoindre une confrontation organisée par l’admin.'],
-      ['📖 Révision libre', 'Parcourir librement les 770 questions par domaine et par manche, sans timer ni score. Pour réviser.'],
+      ['📖 Révision libre', 'Parcourir librement les 2 678 questions par domaine et par manche, sans timer ni score. Pour réviser.'],
       ['📊 Mes parties', 'Historique de toutes vos parties terminées : score total, taux de bonnes réponses, comparaison entre manches.'],
     ],
     [2800, 6560]
@@ -641,8 +644,8 @@ PTS: 1
 
 // ---------- 5. DOMAINES COUVERTS -------------------------------------
 children.push(
-  h1('5. Les 17 domaines couverts'),
-  p('La base intégrée totalise 770 questions documentées (chiffre arrondi, peut évoluer avec les domaines personnalisés ajoutés par votre admin). Voici les domaines disponibles, triés par taille décroissante :'),
+  h1('5. Les 18 domaines couverts'),
+  p('La base intégrée totalise 2 678 questions documentées (18 domaines, au moins 140 questions chacun ; ce total évolue avec les spécialités personnalisées ajoutées par votre admin). Voici les domaines disponibles, triés par taille décroissante :'),
   table(
     ['Domaine', 'Questions', 'Thèmes principaux'],
     [
@@ -832,6 +835,38 @@ children.push(
     link('github.com/Ricard228/qpc-app/issues', 'https://github.com/Ricard228/qpc-app/issues')
   ]}),
 
+);
+
+// ---------- 9. NOUVEAUTÉS v2.20 → v2.33 ------------------------------
+children.push(
+  new Paragraph({ children: [new PageBreak()] }),
+  h1('9. Nouveautés v2.20 → v2.33'),
+  p('Résumé des fonctionnalités ajoutées depuis la première édition de ce guide (v2.18/2.19).'),
+
+  h2('Comptes, rôles et connexion'),
+  bullet('Auto-inscription : compte e-mail + pseudo + mot de passe (désactivable par l’admin) ; le mot de passe est exigé à chaque ouverture de l’application.'),
+  bullet('Administrateurs nommés : comptes promus par le super-admin, avec bascule permanente espace joueur ↔ panneau admin.'),
+  bullet('Codes visiteur partagés : un même code utilisable simultanément par plusieurs personnes (chacune choisit un pseudo de session) — idéal démos, classes, événements.'),
+
+  h2('Parcours & certificats'),
+  bullet('Chaque domaine se valide en 4 niveaux : Débutant (≥ 50 %), Intermédiaire (≥ 55 %), Avancé (≥ 60 %), Expert (≥ 70 %), à débloquer dans l’ordre.'),
+  bullet('Certificats téléchargeables en PDF ou JPG, avec distinction (Passable, Bien, Très Bien, Excellent), numéro unique et signature Nevame DataHouse.'),
+  bullet('Nom et prénoms complets imprimables sur les certificats (définis par l’admin ou le joueur), sans changer le pseudo ni le code d’accès — mise à jour rétroactive des certificats déjà obtenus.'),
+  bullet('Limite hebdomadaire de tentatives par certificat configurable par l’admin (ex. 3/semaine ; 0 = illimité) — les échecs comptent, remise à zéro chaque lundi.'),
+
+  h2('Spécialités importées'),
+  bullet('Import en langage naturel : coller « Q1 : … / R1 : … » suffit — les QCM et distracteurs réalistes sont générés automatiquement, avec prévisualisation.'),
+  bullet('Upload direct de fichiers Word (.docx), PDF, TXT, RTF ou HTML : le texte est extrait puis structuré automatiquement.'),
+  bullet('Multi-manches à l’import (M1/M2/M3), badges de couverture dans le setup, et deux modèles .txt prêts à l’emploi téléchargeables depuis le panneau admin.'),
+  bullet('Les spécialités importées fonctionnent en partie libre, en QCM, en révision libre et en parcours certifiant.'),
+
+  h2('Contenus et réglages'),
+  bullet('Éditeur intégré des questions/réponses/sources : super-admin sur tous les domaines (modifications persistantes), admins nommés sur les spécialités importées.'),
+  bullet('Base portée à 2 678 questions sur 18 domaines, avec renforts majeurs en évaluation d’impact (DID, PSM, IV, RDD, contrôle synthétique, CATE + commandes STATA 18/19) et en IA/LLM technique.'),
+  bullet('Durées des trois manches paramétrables (5 à 600 s) ; bouton Aide masquable côté joueur.'),
+);
+
+children.push(
   spacer(),
   new Paragraph({
     alignment: AlignmentType.CENTER,
