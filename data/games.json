@@ -8532,6 +8532,200 @@
           "ref": ""
         }
       ]
+    },
+    {
+      "id": "ef2712b00d5c",
+      "code": "ACC-0e50203e",
+      "accountId": "0e50203e6310fb96",
+      "visitorName": null,
+      "sessionId": null,
+      "name": "Richard1",
+      "finishedAt": "2026-07-25T23:09:41.298Z",
+      "totalScore": 4,
+      "byManche": {
+        "manche1": 4,
+        "manche2": 0,
+        "manche3": 0
+      },
+      "nbQuestions": 12,
+      "nbCorrect": 4,
+      "nbWrong": 8,
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "packsCount": 3
+      },
+      "log": [
+        {
+          "manche": "manche1",
+          "packId": "manche1-417",
+          "packTitle": "IA — ordres de grandeur — Série 12",
+          "qid": "manche1-417-q1",
+          "q": "Un service traite 4 000 requêtes IA par mois à 5 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "20 000 FCFA",
+          "given": "20 000 FCFA",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Coût = 4 000 × 5 = 20 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-417",
+          "packTitle": "IA — ordres de grandeur — Série 12",
+          "qid": "manche1-417-q2",
+          "q": "Un service traite 1 000 requêtes IA par mois à 45 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "45 000 FCFA",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Coût = 1 000 × 45 = 45 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-417",
+          "packTitle": "IA — ordres de grandeur — Série 12",
+          "qid": "manche1-417-q3",
+          "q": "Un service traite 750 requêtes IA par mois à 40 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "30 000 FCFA",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Coût = 750 × 40 = 30 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-417",
+          "packTitle": "IA — ordres de grandeur — Série 12",
+          "qid": "manche1-417-q4",
+          "q": "Un service traite 1 800 requêtes IA par mois à 25 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "45 000 FCFA",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Coût = 1 800 × 25 = 45 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-416",
+          "packTitle": "IA — ordres de grandeur — Série 11",
+          "qid": "manche1-416-q1",
+          "q": "Un service traite 800 requêtes IA par mois à 50 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "40 000 FCFA",
+          "given": "40 000 FCFA",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Coût = 800 × 50 = 40 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-416",
+          "packTitle": "IA — ordres de grandeur — Série 11",
+          "qid": "manche1-416-q2",
+          "q": "Un service traite 1 500 requêtes IA par mois à 20 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "30 000 FCFA",
+          "given": "30 000 FCFA",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Coût = 1 500 × 20 = 30 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-416",
+          "packTitle": "IA — ordres de grandeur — Série 11",
+          "qid": "manche1-416-q3",
+          "q": "Un service traite 2 500 requêtes IA par mois à 12 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "30 000 FCFA",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Coût = 2 500 × 12 = 30 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-416",
+          "packTitle": "IA — ordres de grandeur — Série 11",
+          "qid": "manche1-416-q4",
+          "q": "Un service traite 600 requêtes IA par mois à 30 FCFA la requête en moyenne. Coût mensuel :",
+          "expected": "18 000 FCFA",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Coût = 600 × 30 = 18 000 FCFA/mois — à optimiser par cache, distillation ou modèles plus petits.",
+          "ref": "https://fr.wikipedia.org/wiki/Grand_mod%C3%A8le_de_langage"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-314",
+          "packTitle": "IA, LLM et agents — Série 9",
+          "qid": "manche1-314-q1",
+          "q": "La confidentialité des données envoyées à un LLM en ligne exige de…",
+          "expected": "Éviter d'y saisir des données personnelles ou sensibles non nécessaires",
+          "given": "Éviter d'y saisir des données personnelles ou sensibles non nécessaires",
+          "correct": true,
+          "pts": 1,
+          "awarded": 1,
+          "explain": "Minimisation, anonymisation, contrats de traitement (RGPD/lois locales), ou modèles auto-hébergés pour les données critiques.",
+          "ref": "https://fr.wikipedia.org/wiki/Protection_des_donn%C3%A9es_personnelles"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-314",
+          "packTitle": "IA, LLM et agents — Série 9",
+          "qid": "manche1-314-q2",
+          "q": "L'« inférence » d'un modèle désigne…",
+          "expected": "La phase d'utilisation où le modèle produit des prédictions",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Après l'entraînement (coûteux, ponctuel), l'inférence sert les requêtes en production ; latence et coût par requête deviennent les métriques clés.",
+          "ref": "https://fr.wikipedia.org/wiki/Apprentissage_automatique"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-314",
+          "packTitle": "IA, LLM et agents — Série 9",
+          "qid": "manche1-314-q3",
+          "q": "La « distillation » de modèle consiste à…",
+          "expected": "Entraîner un petit modèle à imiter un grand pour réduire coûts et latence",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Le « student » apprend des sorties du « teacher » : performances proches, empreinte bien moindre — clé pour le déploiement mobile/edge.",
+          "ref": "https://fr.wikipedia.org/wiki/Distillation_des_connaissances"
+        },
+        {
+          "manche": "manche1",
+          "packId": "manche1-314",
+          "packTitle": "IA, LLM et agents — Série 9",
+          "qid": "manche1-314-q4",
+          "q": "Le watermarking des contenus générés par IA vise à…",
+          "expected": "Rendre détectable l'origine synthétique d'un texte ou d'une image",
+          "given": "(temps écoulé)",
+          "correct": false,
+          "pts": 1,
+          "awarded": 0,
+          "explain": "Signatures statistiques ou métadonnées (C2PA) : traçabilité contre la désinformation, exigée par plusieurs régulations.",
+          "ref": "https://fr.wikipedia.org/wiki/Tatouage_num%C3%A9rique"
+        }
+      ]
     }
   ]
 }
