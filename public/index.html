@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.32" />
+  <link rel="stylesheet" href="styles.css?v=2.33" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -1327,6 +1327,30 @@ PTS: 6
           <button id="btn-toggle-custom-help" class="btn btn-ghost">📖 Format attendu</button>
         </div>
 
+        <!-- v2.33 : exemples complets de spécialités prêts à importer -->
+        <div class="example-box">
+          <strong>📚 Exemples de spécialités prêtes à l'emploi</strong>
+          <p class="muted" style="margin:6px 0 10px;">
+            Deux fichiers <code>.txt</code> complets, testés et directement importables.
+            Ils couvrent <strong>les 3 manches</strong> et fonctionnent en
+            <strong>partie libre</strong>, en <strong>QCM</strong> et en <strong>révision libre</strong>.
+            Téléchargez-en un, remplacez les contenus par vos questions, puis réimportez-le.
+          </p>
+          <div class="form-row">
+            <a class="btn btn-primary" href="modeles/modele-specialite-complet.txt" download>
+              ⤓ Exemple complet (avec QCM écrits)
+            </a>
+            <a class="btn" href="modeles/modele-specialite-simple.txt" download>
+              ⤓ Exemple simplifié (QCM générés)
+            </a>
+          </div>
+          <ul class="muted" style="font-size:13px; margin:10px 0 0 18px; padding:0;">
+            <li><strong>Exemple complet</strong> — « Économie du numérique au Togo » : 4 packs, 3 manches, choix QCM écrits à la main (<code>*</code> bonne réponse, <code>-</code> distracteurs), explications et sources.</li>
+            <li><strong>Exemple simplifié</strong> — « Hygiène et sécurité au travail » : mêmes 3 manches, mais <em>aucun</em> choix écrit : l'application génère les distracteurs automatiquement à l'import.</li>
+            <li>Rappel : <code>MANCHE:</code> se place <em>avant</em> le <code>PACK:</code> — 4 questions en manche 1, 6 en manche 2 (avec <code>PTS:</code>), 9 en manche 3.</li>
+          </ul>
+        </div>
+
         <details id="custom-domain-help">
           <summary class="muted" style="cursor:pointer;">Voir le format en détail</summary>
           <div class="custom-doc">
@@ -1547,6 +1571,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.32"></script>
+  <script src="app.js?v=2.33"></script>
 </body>
 </html>

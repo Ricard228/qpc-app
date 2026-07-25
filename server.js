@@ -512,7 +512,13 @@ function parseCustomTxt(text) {
         break;
       case 'MANCHE':
         curManche = 'manche' + (parseInt(val, 10) || 1);
-        if (curPack) curPack.manche = curManche;
+        // Deux écritures valides :
+        //   PACK: … puis MANCHE: …  → s'applique au pack en cours
+        //   MANCHE: … puis PACK: …  → s'applique aux packs suivants
+        // On ne réaffecte le pack courant que s'il est encore vide, sinon
+        // une ligne MANCHE placée avant le PACK suivant reclasserait par
+        // erreur le pack précédent (bug v2.32 et antérieures).
+        if (curPack && curPack.questions.length === 0 && !curQ) curPack.manche = curManche;
         break;
       case 'THEME':
         if (curPack) curPack.theme = val;

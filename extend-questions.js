@@ -14,6 +14,8 @@ const extra230a = require('./data_extra_v230a.js');   // v2.30 Fisc/MP/Compta
 const extra230  = require('./data_extra_v230.js');    // v2.30 renforts 12 domaines
 const extra230f = require('./data_extra_v230f.js');   // v2.30 IA + BTP (nouveaux)
 const extra230g = require('./data_extra_v230g.js');   // v2.30 compléments finaux
+const extra233a = require('./data_extra_v233a.js');   // v2.33 S&E impact/STATA + IA technique
+const extra233b = require('./data_extra_v233b.js');   // v2.33 +20 q sur les 16 autres domaines
 
 const QPATH = path.join(__dirname, 'data', 'questions.json');
 const Q = JSON.parse(fs.readFileSync(QPATH, 'utf8'));
@@ -82,6 +84,11 @@ const r1w = appendPacks(Q.manche1, 'manche1', extra230.m1Packs);
 const r1x = appendPacks(Q.manche1, 'manche1', extra230f.m1Packs);
 const r1y = appendPacks(Q.manche1, 'manche1', extra230g.m1Packs);
 console.log(`  v2.30 : +${r1v.added + r1w.added + r1x.added + r1y.added} packs (fisc/mp/cpt=${r1v.added}, renforts=${r1w.added}, IA+BTP=${r1x.added}, compléments=${r1y.added})`);
+
+// v2.33 — renforts S&E/évaluation d'impact/STATA, IA technique, +20 q par domaine
+const r1za = appendPacks(Q.manche1, 'manche1', extra233a.m1Packs);
+const r1zb = appendPacks(Q.manche1, 'manche1', extra233b.m1Packs);
+console.log(`  v2.33 : +${r1za.added + r1zb.added} packs (S&E+IA=${r1za.added}, tous domaines=${r1zb.added})`);
 
 // v2.30 — Déduplication des choix QCM : si un distracteur coïncide avec
 // la bonne réponse ou un autre choix, on le remplace par une variante

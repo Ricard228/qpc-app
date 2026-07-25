@@ -1,0 +1,135 @@
+# =====================================================================
+# MODÈLE SIMPLIFIÉ DE SPÉCIALITÉ QPC — .txt à importer
+# ---------------------------------------------------------------------
+# Version minimale : AUCUN choix QCM n'est écrit à la main.
+# L'application génère automatiquement les distracteurs à l'import,
+# donc le domaine est jouable en QCM comme en saisie libre.
+#
+# Il suffit de recopier ce squelette et de remplacer les contenus :
+#   DOMAINE:  une seule fois, en haut (évitez les virgules)
+#   MANCHE:   1, 2 ou 3 — à placer AVANT le PACK concerné
+#   PACK:     4 questions pour la manche 1
+#             6 questions pour la manche 2 (avec PTS: 1 à 6)
+#             9 questions pour la manche 3
+#   Q: / R:   la paire question / réponse (le minimum vital)
+#   E: / S:   explication et source — facultatifs mais recommandés
+#
+# Enregistrez en UTF-8. Les lignes commençant par # sont ignorées.
+# =====================================================================
+
+DOMAINE: Hygiène et sécurité au travail
+DESCRIPTION: Spécialité exemple sans QCM manuel — les choix sont générés automatiquement
+
+MANCHE: 1
+
+PACK: Prévention des risques professionnels
+THEME: Notions de base
+
+Q: Comment appelle-t-on un événement soudain survenant du fait du travail et causant une lésion ?
+R: Un accident du travail
+E: Il se distingue de la maladie professionnelle, d'apparition progressive et inscrite à un tableau. Au Togo, la CNSS prend en charge la réparation des risques professionnels.
+S: https://fr.wikipedia.org/wiki/Accident_du_travail
+
+Q: Quel équipement protège individuellement le travailleur exposé à un risque ?
+R: L'équipement de protection individuelle
+E: Casque, gants, chaussures de sécurité, harnais : l'EPI intervient en dernier recours, après les protections collectives et la suppression du risque à la source.
+S: https://fr.wikipedia.org/wiki/%C3%89quipement_de_protection_individuelle
+
+Q: Quel document recense les risques par unité de travail dans une entreprise ?
+R: Le document unique d'évaluation des risques
+E: Il formalise l'identification, l'évaluation et la hiérarchisation des risques, et fonde le plan d'action de prévention.
+S: https://fr.wikipedia.org/wiki/%C3%89valuation_des_risques_professionnels
+
+Q: Que signifie le sigle CHSCT ?
+R: Comité d'hygiène, de sécurité et des conditions de travail
+E: Instance de représentation dédiée à la prévention ; elle analyse les risques, enquête après accident et rend des avis sur les projets modifiant les conditions de travail.
+S: https://fr.wikipedia.org/wiki/Comit%C3%A9_d%27hygi%C3%A8ne,_de_s%C3%A9curit%C3%A9_et_des_conditions_de_travail
+
+MANCHE: 2
+
+PACK: Sécurité — face-à-face
+THEME: Approfondissement
+
+Q: Quelle couleur signale un danger dans la signalisation de sécurité ?
+R: Le rouge
+PTS: 1
+
+Q: Comment nomme-t-on la démarche visant à supprimer le risque à sa source ?
+R: La prévention primaire
+PTS: 2
+E: Prévention primaire (éviter le risque), secondaire (dépister tôt), tertiaire (limiter les séquelles et maintenir dans l'emploi).
+S: https://fr.wikipedia.org/wiki/Pr%C3%A9vention
+
+Q: Quel indicateur rapporte le nombre d'accidents avec arrêt aux heures travaillées ?
+R: Le taux de fréquence
+PTS: 3
+E: Taux de fréquence = (accidents avec arrêt × 1 000 000) ÷ heures travaillées. Le taux de gravité rapporte, lui, les journées perdues au million d'heures.
+S: https://fr.wikipedia.org/wiki/Accident_du_travail
+
+Q: Quel produit doit obligatoirement être accompagné d'une fiche de données de sécurité ?
+R: Un produit chimique dangereux
+PTS: 4
+E: La FDS décrit dangers, précautions de stockage, EPI requis et conduite à tenir en cas d'exposition ; elle doit être accessible aux travailleurs.
+S: https://fr.wikipedia.org/wiki/Fiche_de_donn%C3%A9es_de_s%C3%A9curit%C3%A9
+
+Q: Comment appelle-t-on l'étude de l'adaptation du travail à l'être humain ?
+R: L'ergonomie
+PTS: 5
+E: Elle prévient les troubles musculo-squelettiques en agissant sur les postures, les manutentions, l'organisation et la conception des postes.
+S: https://fr.wikipedia.org/wiki/Ergonomie
+
+Q: Que vise un plan de continuité d'activité ?
+R: Maintenir les activités essentielles en cas de crise
+PTS: 6
+E: Le PCA identifie les activités critiques, les ressources minimales et les procédures de repli face à un sinistre, une épidémie ou une panne majeure.
+S: https://fr.wikipedia.org/wiki/Plan_de_continuit%C3%A9_d%27activit%C3%A9
+
+MANCHE: 3
+
+PACK: Finale sécurité
+THEME: Réflexes
+
+Q: Quel numéro compose-t-on en cas d'urgence médicale au Togo ?
+R: Le 8200
+E: Le SAMU national togolais est joignable au 8200 ; les numéros d'urgence doivent être affichés sur les lieux de travail.
+S: https://fr.wikipedia.org/wiki/Service_d%27aide_m%C3%A9dicale_urgente
+
+Q: Quel appareil sert à éteindre un début d'incendie ?
+R: L'extincteur
+E: Le choix de l'agent extincteur dépend de la classe de feu (A solides, B liquides, C gaz, D métaux, F huiles de cuisson).
+S: https://fr.wikipedia.org/wiki/Extincteur
+
+Q: Comment appelle-t-on l'exercice de simulation d'une évacuation ?
+R: L'exercice d'évacuation
+E: Réalisé périodiquement, il vérifie les cheminements, la signalisation, le rôle des guides-files et le rassemblement au point de regroupement.
+S: https://fr.wikipedia.org/wiki/%C3%89vacuation_d%27urgence
+
+Q: Quel salarié formé intervient en premier auprès d'un blessé ?
+R: Le sauveteur secouriste du travail
+E: Le SST protège, examine, alerte et secourt en attendant les secours ; sa formation est réactualisée régulièrement.
+S: https://fr.wikipedia.org/wiki/Premiers_secours
+
+Q: Que désigne le port de charges répété et contraignant ?
+R: La manutention manuelle
+E: Première cause de troubles musculo-squelettiques et de lombalgies : l'aide mécanique et la formation aux gestes réduisent le risque.
+S: https://fr.wikipedia.org/wiki/Manutention
+
+Q: Quel bruit continu impose le port de protections auditives ?
+R: Un bruit supérieur à 85 décibels
+E: Au-delà de 85 dB(A) sur 8 heures, la protection auditive s'impose ; l'exposition prolongée provoque une surdité irréversible.
+S: https://fr.wikipedia.org/wiki/Bruit_au_travail
+
+Q: Quel document atteste l'aptitude médicale d'un travailleur à son poste ?
+R: La fiche d'aptitude médicale
+E: Délivrée par le médecin du travail à l'embauche puis périodiquement, elle peut assortir l'aptitude de restrictions ou d'aménagements.
+S: https://fr.wikipedia.org/wiki/M%C3%A9decine_du_travail
+
+Q: Comment nomme-t-on une situation dangereuse sans conséquence corporelle ?
+R: Un presque-accident
+E: Signaler les presque-accidents permet de corriger les causes avant l'accident réel : c'est un pilier de la culture de sécurité.
+S: https://fr.wikipedia.org/wiki/Presque-accident
+
+Q: Quel pictogramme représente un produit inflammable ?
+R: Une flamme
+E: Pictogrammes SGH losangés à bordure rouge : flamme (inflammable), tête de mort (toxicité aiguë), point d'exclamation (irritant), etc.
+S: https://fr.wikipedia.org/wiki/Syst%C3%A8me_g%C3%A9n%C3%A9ral_harmonis%C3%A9

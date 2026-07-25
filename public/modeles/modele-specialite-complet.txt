@@ -1,0 +1,256 @@
+# =====================================================================
+# MODÈLE COMPLET DE SPÉCIALITÉ QPC — fichier .txt à importer
+# ---------------------------------------------------------------------
+# Ce fichier est un EXEMPLE RÉEL, prêt à importer tel quel.
+# Il couvre les 3 manches et fonctionne en partie libre, en QCM
+# et en révision libre.
+#
+# RÈGLES DU FORMAT (les lignes commençant par # sont ignorées)
+#   DOMAINE:     nom de la spécialité (obligatoire, une seule fois)
+#                → ÉVITEZ LES VIRGULES dans le nom
+#   DESCRIPTION: texte libre (facultatif)
+#   PACK:        début d'une série de questions (titre libre)
+#   MANCHE:      1, 2 ou 3 — à écrire AVANT la ligne PACK concernée
+#                  1 = Les 4 à la suite  (4 questions par pack)
+#                  2 = Face-à-face       (6 questions, PTS de 1 à 6)
+#                  3 = Finale/buzz       (9 questions)
+#   THEME:       sous-thème du pack (facultatif)
+#   Q:           énoncé de la question
+#   R:           réponse attendue (mode saisie libre)
+#   * choix      choix EXACT de la bonne réponse (mode QCM)
+#   - choix      distracteur (mode QCM)
+#   E:           explication affichée après la réponse (facultatif)
+#   S:           source / lien cliquable (facultatif)
+#   PTS:         points de la question — manche 2 uniquement (1 à 6)
+#
+# CONSEILS
+#   • Écrivez le * exactement comme la ligne R: → la bonne réponse est
+#     alors reconnue automatiquement en QCM.
+#   • Si vous n'écrivez aucun choix * / -, l'application génère
+#     automatiquement des distracteurs à l'import (le QCM marche quand même).
+#   • Faites des distracteurs au moins aussi longs que la bonne réponse.
+#   • Enregistrez le fichier en UTF-8 pour conserver les accents.
+# =====================================================================
+
+DOMAINE: Économie du numérique au Togo
+DESCRIPTION: Spécialité exemple — économie numérique togolaise et ouest-africaine (3 manches)
+
+# ---------------------------------------------------------------------
+# MANCHE 1 — séries de 4 questions (40 s pour les 4)
+# ---------------------------------------------------------------------
+MANCHE: 1
+
+PACK: Infrastructures numériques du Togo
+THEME: Connectivité
+
+Q: Quel câble sous-marin à fibre optique atterrit à Lomé et dessert le Togo ?
+R: Le câble WACS
+* Le câble WACS
+- Le câble transsaharien terrestre uniquement
+- Le réseau satellitaire géostationnaire national
+- La liaison hertzienne régionale de la CEDEAO
+E: Le West Africa Cable System (WACS) relie l'Afrique de l'Ouest à l'Europe ; le Togo est également connecté via d'autres systèmes régionaux, ce qui a permis de faire baisser le coût de la bande passante.
+S: https://fr.wikipedia.org/wiki/West_Africa_Cable_System
+
+Q: Comment appelle-t-on le paiement effectué depuis un téléphone mobile sans compte bancaire classique ?
+R: Le mobile money
+* Le mobile money
+- Le virement interbancaire de gros montants
+- Le crédit documentaire à l'international
+- L'escompte commercial des effets de commerce
+E: Le mobile money (T-Money, Flooz au Togo) permet dépôts, retraits, transferts et paiements marchands via un porte-monnaie électronique adossé à un numéro de téléphone.
+S: https://fr.wikipedia.org/wiki/Paiement_mobile
+
+Q: Quelle autorité régule le secteur des communications électroniques au Togo ?
+R: L'ARCEP Togo
+* L'ARCEP Togo
+- La Banque centrale des États de l'Afrique de l'Ouest
+- La direction générale des douanes togolaises
+- La chambre de commerce et d'industrie du Togo
+E: L'Autorité de Régulation des Communications Électroniques et des Postes attribue les licences, surveille la concurrence et protège les consommateurs du secteur.
+S: https://fr.wikipedia.org/wiki/Autorit%C3%A9_de_r%C3%A9gulation
+
+Q: Que désigne la « fracture numérique » ?
+R: L'inégalité d'accès aux technologies numériques
+* L'inégalité d'accès aux technologies numériques
+- La panne généralisée simultanée de tous les réseaux
+- La séparation comptable des activités télécoms
+- La rupture d'un câble de fibre optique sous-marine
+E: La fracture numérique recouvre les écarts d'accès (réseau, équipement), de coût et de compétences, entre milieux urbain et rural, riches et pauvres, hommes et femmes.
+S: https://fr.wikipedia.org/wiki/Fracture_num%C3%A9rique
+
+PACK: Économie des plateformes
+THEME: Modèles d'affaires
+
+Q: Qu'est-ce qu'un effet de réseau ?
+R: La valeur du service augmente avec le nombre d'utilisateurs
+* La valeur du service augmente avec le nombre d'utilisateurs
+- Le coût de production augmente avec chaque unité vendue
+- La qualité du service baisse dès le premier abonné supplémentaire
+- Le prix est fixé uniquement par l'autorité de régulation sectorielle
+E: Effet de réseau direct (plus d'utilisateurs = plus de valeur, ex. messagerie) ou indirect (deux versants : vendeurs/acheteurs). Il explique la tendance à la concentration des plateformes.
+S: https://fr.wikipedia.org/wiki/Effet_de_r%C3%A9seau
+
+Q: Dans une plateforme biface, la tarification consiste souvent à…
+R: Subventionner un versant pour attirer l'autre
+* Subventionner un versant pour attirer l'autre
+- Facturer le même prix unitaire aux deux versants du marché
+- Interdire l'accès au versant le plus nombreux du marché
+- Fixer un prix identique dans tous les pays sans exception
+E: Modèle Rochet-Tirole : on attire d'abord le versant le plus sensible au prix (souvent les utilisateurs), la monétisation venant de l'autre versant (annonceurs, marchands).
+S: https://fr.wikipedia.org/wiki/March%C3%A9_biface
+
+Q: Que mesure le taux de conversion d'un site marchand ?
+R: La part des visiteurs qui achètent
+* La part des visiteurs qui achètent
+- Le nombre total de pages vues durant le mois écoulé
+- La vitesse moyenne de chargement des pages du site
+- Le montant global des dépenses publicitaires engagées
+E: Taux de conversion = commandes ÷ visiteurs. C'est l'indicateur central de la performance commerciale d'un site, avec le panier moyen.
+S: https://fr.wikipedia.org/wiki/Taux_de_conversion
+
+Q: Qu'appelle-t-on « données personnelles » ?
+R: Toute information se rapportant à une personne identifiable
+* Toute information se rapportant à une personne identifiable
+- Uniquement les informations bancaires et fiscales officielles
+- Seulement les données publiées volontairement en ligne
+- Exclusivement les fichiers stockés sur un serveur public
+E: Au Togo, la loi de 2019 sur la protection des données à caractère personnel et l'IPDCP encadrent leur collecte et leur traitement.
+S: https://fr.wikipedia.org/wiki/Donn%C3%A9e_%C3%A0_caract%C3%A8re_personnel
+
+# ---------------------------------------------------------------------
+# MANCHE 2 — face-à-face : 6 questions, points croissants (PTS 1 à 6)
+# ---------------------------------------------------------------------
+MANCHE: 2
+
+PACK: Économie numérique — face-à-face
+THEME: Concepts et chiffres
+
+Q: Que signifie le sigle TIC ?
+R: Technologies de l'information et de la communication
+PTS: 1
+* Technologies de l'information et de la communication
+- Taxes indirectes sur la consommation intérieure
+- Traitement informatisé des créances commerciales
+- Transferts internationaux de capitaux
+
+Q: Comment nomme-t-on la mise à disposition de ressources informatiques à distance et à la demande ?
+R: L'informatique en nuage (cloud computing)
+PTS: 2
+* L'informatique en nuage (cloud computing)
+- L'archivage papier centralisé dans un entrepôt sécurisé
+- La duplication manuelle des fichiers sur clé USB
+- La virtualisation exclusive des équipements réseau locaux
+E: Le cloud transforme un investissement (CAPEX) en dépense de fonctionnement (OPEX) : facturation à l'usage, élasticité, mais dépendance au fournisseur et enjeux de souveraineté.
+S: https://fr.wikipedia.org/wiki/Cloud_computing
+
+Q: Quel indicateur rapporte la valeur ajoutée du secteur numérique au PIB ?
+R: Le poids du numérique dans le PIB
+PTS: 3
+* Le poids du numérique dans le PIB
+- L'indice des prix à la consommation des ménages urbains
+- Le taux directeur fixé par la banque centrale régionale
+- Le solde de la balance commerciale hors matières premières
+E: Il mesure la contribution directe du secteur ; les effets indirects (gains de productivité des autres secteurs) sont plus larges mais plus difficiles à estimer.
+S: https://fr.wikipedia.org/wiki/Produit_int%C3%A9rieur_brut
+
+Q: Qu'est-ce que l'interopérabilité des services de mobile money ?
+R: La possibilité de transférer entre opérateurs différents
+PTS: 4
+* La possibilité de transférer entre opérateurs différents
+- L'obligation d'ouvrir un compte auprès de chaque opérateur
+- L'interdiction des transferts transfrontaliers entre pays voisins
+- La limitation des retraits aux seuls guichets bancaires agréés
+E: L'interopérabilité (poussée par la BCEAO dans l'UEMOA) réduit les coûts et le cloisonnement des écosystèmes de paiement.
+S: https://fr.wikipedia.org/wiki/Interop%C3%A9rabilit%C3%A9
+
+Q: Quelle stratégie nationale porte la transformation numérique du Togo à l'horizon 2025 ?
+R: La stratégie Togo Digital 2025
+PTS: 5
+* La stratégie Togo Digital 2025
+- Le plan d'ajustement structurel de première génération
+- Le programme régional d'électrification rurale décentralisée
+- La convention internationale sur le commerce des services
+E: Adossée à la feuille de route gouvernementale, elle vise infrastructures, services publics numériques, inclusion et compétences.
+S: https://fr.wikipedia.org/wiki/Togo
+
+Q: Que désigne le terme « souveraineté numérique » ?
+R: La maîtrise par un État de ses infrastructures et données
+PTS: 6
+* La maîtrise par un État de ses infrastructures et données
+- L'interdiction pure et simple d'Internet sur le territoire
+- La gratuité obligatoire de tous les services numériques publics
+- Le monopole d'un opérateur privé sur l'ensemble des réseaux
+E: Elle recouvre l'hébergement local des données critiques, la capacité de régulation et l'autonomie technologique, sans fermeture au monde.
+S: https://fr.wikipedia.org/wiki/Souverainet%C3%A9_num%C3%A9rique
+
+# ---------------------------------------------------------------------
+# MANCHE 3 — finale : 9 questions courtes (buzz)
+# ---------------------------------------------------------------------
+MANCHE: 3
+
+PACK: Finale numérique
+THEME: Culture numérique
+
+Q: Que signifie l'acronyme IA ?
+R: Intelligence artificielle
+* Intelligence artificielle
+- Investissement amortissable de long terme
+- Indice d'accessibilité des infrastructures
+- Interface administrative unifiée
+
+Q: Quelle unité mesure le débit d'une connexion Internet ?
+R: Le mégabit par seconde
+* Le mégabit par seconde
+- Le kilowattheure consommé mensuellement
+- Le franc CFA par gigaoctet téléchargé
+- Le nombre d'utilisateurs simultanément connectés
+
+Q: Comment appelle-t-on un logiciel malveillant qui chiffre les fichiers contre rançon ?
+R: Un rançongiciel
+* Un rançongiciel
+- Un correctif de sécurité publié par l'éditeur
+- Un pare-feu applicatif de nouvelle génération
+- Un protocole de chiffrement des communications
+
+Q: Quel document encadre l'usage des données personnelles par un site ?
+R: La politique de confidentialité
+* La politique de confidentialité
+- Le bilan comptable annuel certifié par le commissaire
+- Le règlement intérieur du personnel de l'entreprise
+- Le cahier des charges techniques du prestataire
+
+Q: Que désigne le « e-gouvernement » ?
+R: La dématérialisation des services publics
+* La dématérialisation des services publics
+- L'élection des responsables publics par vote électronique seul
+- La privatisation totale de l'administration territoriale
+- La suppression définitive des guichets physiques d'accueil
+
+Q: Qu'est-ce qu'une startup ?
+R: Une jeune entreprise à fort potentiel de croissance
+* Une jeune entreprise à fort potentiel de croissance
+- Une société publique de plus de cinquante ans d'existence
+- Une coopérative agricole de commercialisation groupée
+- Une association reconnue d'utilité publique sans activité
+
+Q: Que mesure le taux de pénétration mobile ?
+R: Le nombre d'abonnements rapporté à la population
+* Le nombre d'abonnements rapporté à la population
+- La vitesse moyenne de téléchargement observée en ville
+- Le coût mensuel moyen d'un forfait téléphonique prépayé
+- La part de marché du premier opérateur du pays
+
+Q: Comment nomme-t-on l'ensemble des compétences nécessaires pour utiliser le numérique ?
+R: La littératie numérique
+* La littératie numérique
+- La certification comptable des systèmes d'information
+- L'homologation technique des équipements importés
+- La normalisation industrielle des composants électroniques
+
+Q: Quel espace de travail partagé accueille souvent les jeunes pousses ?
+R: L'incubateur
+* L'incubateur
+- L'entrepôt frigorifique portuaire sous douane
+- Le centre de formalités administratives des entreprises
+- Le bureau régional de la statistique nationale
