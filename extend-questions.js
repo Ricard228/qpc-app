@@ -16,6 +16,8 @@ const extra230f = require('./data_extra_v230f.js');   // v2.30 IA + BTP (nouveau
 const extra230g = require('./data_extra_v230g.js');   // v2.30 compléments finaux
 const extra233a = require('./data_extra_v233a.js');   // v2.33 S&E impact/STATA + IA technique
 const extra233b = require('./data_extra_v233b.js');   // v2.33 +20 q sur les 16 autres domaines
+const extra235a = require('./data_extra_v235a.js');   // v2.35 3 manches partout (1/2)
+const extra235b = require('./data_extra_v235b.js');   // v2.35 3 manches partout (2/2)
 
 const QPATH = path.join(__dirname, 'data', 'questions.json');
 const Q = JSON.parse(fs.readFileSync(QPATH, 'utf8'));
@@ -89,6 +91,15 @@ console.log(`  v2.30 : +${r1v.added + r1w.added + r1x.added + r1y.added} packs (
 const r1za = appendPacks(Q.manche1, 'manche1', extra233a.m1Packs);
 const r1zb = appendPacks(Q.manche1, 'manche1', extra233b.m1Packs);
 console.log(`  v2.33 : +${r1za.added + r1zb.added} packs (S&E+IA=${r1za.added}, tous domaines=${r1zb.added})`);
+
+// v2.35 — toutes les manches dans tous les domaines + >= 200 q/domaine
+const r35a1 = appendPacks(Q.manche1, 'manche1', extra235a.m1Packs);
+const r35a2 = appendPacks(Q.manche2, 'manche2', extra235a.m2Packs);
+const r35a3 = appendPacks(Q.manche3, 'manche3', extra235a.m3Packs);
+const r35b1 = appendPacks(Q.manche1, 'manche1', extra235b.m1Packs);
+const r35b2 = appendPacks(Q.manche2, 'manche2', extra235b.m2Packs);
+const r35b3 = appendPacks(Q.manche3, 'manche3', extra235b.m3Packs);
+console.log(`  v2.35 : +${r35a1.added+r35b1.added} packs M1, +${r35a2.added+r35b2.added} packs M2, +${r35a3.added+r35b3.added} packs M3`);
 
 // v2.30 — Déduplication des choix QCM : si un distracteur coïncide avec
 // la bonne réponse ou un autre choix, on le remplace par une variante

@@ -210,7 +210,7 @@ children.push(
   new Paragraph({
     spacing: { before: 1600 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: '2 678 questions · 18 domaines · Parcours certifiants · PWA installable Android/iOS', font: 'Arial', size: 20, color: '6B7280' })]
+    children: [new TextRun({ text: '3 658 questions · 18 domaines · 3 manches partout · Parcours certifiants · PWA installable Android/iOS', font: 'Arial', size: 20, color: '6B7280' })]
   }),
   new Paragraph({
     spacing: { before: 200 },
@@ -224,7 +224,7 @@ children.push(
   new Paragraph({
     spacing: { before: 200 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'Version 2.34 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
+    children: [new TextRun({ text: 'Version 2.35 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
   }),
   new Paragraph({ children: [new PageBreak()] })
 );
@@ -247,11 +247,11 @@ children.push(
   h1('1. Présentation générale'),
 
   h2('1.1 Qu’est-ce que QPC ?'),
-  p('QPC (Questions pour un Champion) est une application web pédagogique inspirée de l’émission télévisée du même nom diffusée sur TV5 Monde. Elle transforme un recueil de près de 2 700 questions documentées en jeu interactif chronométré — et en parcours certifiants —, accessible depuis n’importe quel navigateur (ordinateur, tablette, smartphone) ou installable comme application native sur Android et iOS via la technologie PWA.'),
+  p('QPC (Questions pour un Champion) est une application web pédagogique inspirée de l’émission télévisée du même nom diffusée sur TV5 Monde. Elle transforme un recueil de plus de 3 600 questions documentées en jeu interactif chronométré — et en parcours certifiants —, accessible depuis n’importe quel navigateur (ordinateur, tablette, smartphone) ou installable comme application native sur Android et iOS via la technologie PWA.'),
   p('L’application a été conçue dans un contexte académique ouest-africain (UEMOA, Togo) mais couvre l’économie générale, les sciences sociales et de nombreux domaines spécialisés utiles à toute formation supérieure en économie, gestion ou data science.'),
 
   h2('1.2 Caractéristiques principales'),
-  bullet('2 678 questions documentées sur 18 domaines — dont « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (au moins 140 questions par domaine)'),
+  bullet('2 678 questions documentées sur 18 domaines — dont « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (au moins 200 questions par domaine, chaque domaine couvrant les 3 manches)'),
   bullet('Parcours certifiants en 4 niveaux (Débutant, Intermédiaire, Avancé, Expert) avec certificats PDF/JPG signés, nom complet imprimable et limite hebdomadaire configurable'),
   bullet('Comptes auto-inscrits, administrateurs nommés et codes visiteur partagés multi-sessions'),
   bullet('Import de spécialités : .txt/.json, langage naturel avec distracteurs générés, ou upload Word/PDF/TXT — modèles téléchargeables'),
@@ -351,7 +351,7 @@ children.push(
     [
       ['▶ Nouvelle partie', 'Configurer une partie en solo : choix des manches, des domaines, du mode de réponse, et du volume.'],
       ['⚔️ Mes duels', 'Défier un autre joueur, accepter une invitation, ou rejoindre une confrontation organisée par l’admin.'],
-      ['📖 Révision libre', 'Parcourir librement les 2 678 questions par domaine et par manche, sans timer ni score. Pour réviser.'],
+      ['📖 Révision libre', 'Parcourir librement les 3 658 questions par domaine et par manche, sans timer ni score. Pour réviser.'],
       ['📊 Mes parties', 'Historique de toutes vos parties terminées : score total, taux de bonnes réponses, comparaison entre manches.'],
     ],
     [2800, 6560]
@@ -645,7 +645,7 @@ PTS: 1
 // ---------- 5. DOMAINES COUVERTS -------------------------------------
 children.push(
   h1('5. Les 18 domaines couverts'),
-  p('La base intégrée totalise 2 678 questions documentées (18 domaines, au moins 140 questions chacun ; ce total évolue avec les spécialités personnalisées ajoutées par votre admin). Voici les domaines disponibles, triés par taille décroissante :'),
+  p('La base intégrée totalise 3 658 questions documentées (18 domaines, au moins 200 questions chacun, tous jouables dans les 3 manches ; ce total évolue avec les spécialités personnalisées ajoutées par votre admin). Voici les domaines disponibles, triés par taille décroissante :'),
   table(
     ['Domaine', 'Questions', 'Thèmes principaux'],
     [
