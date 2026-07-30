@@ -224,7 +224,7 @@ children.push(
   new Paragraph({
     spacing: { before: 200 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'Version 2.35 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
+    children: [new TextRun({ text: 'Version 2.36 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
   }),
   new Paragraph({ children: [new PageBreak()] })
 );
@@ -251,7 +251,7 @@ children.push(
   p('L’application a été conçue dans un contexte académique ouest-africain (UEMOA, Togo) mais couvre l’économie générale, les sciences sociales et de nombreux domaines spécialisés utiles à toute formation supérieure en économie, gestion ou data science.'),
 
   h2('1.2 Caractéristiques principales'),
-  bullet('2 678 questions documentées sur 18 domaines — dont « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (au moins 200 questions par domaine, chaque domaine couvrant les 3 manches)'),
+  bullet('3 658 questions documentées sur 18 domaines — dont « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (au moins 200 questions par domaine, chaque domaine couvrant les 3 manches)'),
   bullet('Parcours certifiants en 4 niveaux (Débutant, Intermédiaire, Avancé, Expert) avec certificats PDF/JPG signés, nom complet imprimable et limite hebdomadaire configurable'),
   bullet('Comptes auto-inscrits, administrateurs nommés et codes visiteur partagés multi-sessions'),
   bullet('Import de spécialités : .txt/.json, langage naturel avec distracteurs générés, ou upload Word/PDF/TXT — modèles téléchargeables'),
@@ -837,10 +837,10 @@ children.push(
 
 );
 
-// ---------- 9. NOUVEAUTÉS v2.20 → v2.33 ------------------------------
+// ---------- 9. NOUVEAUTÉS v2.20 → v2.36 ------------------------------
 children.push(
   new Paragraph({ children: [new PageBreak()] }),
-  h1('9. Nouveautés v2.20 → v2.33'),
+  h1('9. Nouveautés v2.20 → v2.36'),
   p('Résumé des fonctionnalités ajoutées depuis la première édition de ce guide (v2.18/2.19).'),
 
   h2('Comptes, rôles et connexion'),
@@ -862,8 +862,9 @@ children.push(
 
   h2('Contenus et réglages'),
   bullet('Éditeur intégré des questions/réponses/sources : super-admin sur tous les domaines (modifications persistantes), admins nommés sur les spécialités importées.'),
-  bullet('Base portée à 2 678 questions sur 18 domaines, avec renforts majeurs en évaluation d’impact (DID, PSM, IV, RDD, contrôle synthétique, CATE + commandes STATA 18/19) et en IA/LLM technique.'),
+  bullet('Base portée à 3 658 questions sur 18 domaines (au moins 200 questions et les 3 manches par domaine), avec renforts majeurs en évaluation d’impact (DID, PSM, IV, RDD, contrôle synthétique, CATE + commandes STATA 18/19) et en IA/LLM technique.'),
   bullet('Durées des trois manches paramétrables (5 à 600 s) ; bouton Aide masquable côté joueur.'),
+  bullet('Plateau TV pour les duels (v2.36) : activé par l’administrateur, il affiche pendant les duels et confrontations un plateau façon émission — chrono digital lumineux, cartes des candidats avec avatar, scores en direct, jauges de progression, statuts et candidat en tête couronné. Les scores en direct sont automatiquement activés.'),
 );
 
 children.push(

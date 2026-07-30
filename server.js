@@ -150,6 +150,7 @@ function loadAuth() {
     if (data.settings.selfRegistrationEnabled == null) data.settings.selfRegistrationEnabled = true;
     if (!data.settings.timings) data.settings.timings = { ...DEFAULT_TIMINGS };
     if (data.settings.parcoursAttemptsPerWeek == null) data.settings.parcoursAttemptsPerWeek = 0;   // 0 = illimité
+    if (data.settings.arenaEnabled == null) data.settings.arenaEnabled = false;                       // v2.36 : plateau TV duels
     if (!data.accounts) data.accounts = {};
     if (!data.codes) data.codes = {};
     return data;
@@ -1257,6 +1258,8 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
       if (Number.isFinite(v) && v >= 5 && v <= 600) auth.settings.timings[k] = v;
     }
   }
+  // v2.36 : plateau TV (arène) pendant les duels et confrontations
+  if (typeof req.body.arenaEnabled === 'boolean') auth.settings.arenaEnabled = req.body.arenaEnabled;
   // v2.32 : limite hebdomadaire de tentatives par certificat (0 = illimité)
   if (req.body.parcoursAttemptsPerWeek != null) {
     const v = parseInt(req.body.parcoursAttemptsPerWeek, 10);
@@ -2386,6 +2389,9 @@ function publicMatchView(m, viewerCode) {
 // sinon respecte le choix du créateur du match (config.liveScoreboard).
 function isLiveScoreboardEnabled(match) {
   const auth = loadAuth();
+  // v2.36 : quand le plateau TV est activé par l'admin, les scores en
+  // temps réel sont toujours accessibles (l'arène en dépend).
+  if (auth.settings && auth.settings.arenaEnabled) return true;
   const mode = (auth.settings && auth.settings.liveScoreboardMode) || 'user-choice';
   if (mode === 'force-on') return true;
   if (mode === 'force-off') return false;

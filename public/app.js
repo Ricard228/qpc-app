@@ -1013,9 +1013,12 @@ function displayGiven(userInput, q) {
 function startTimer(seconds, onTick, onEnd) {
   clearTimer();
   let remaining = seconds;
+  window._arenaTotal = seconds;
+  if (window._arenaTick) window._arenaTick(remaining, seconds);
   onTick(remaining);
   _timerId = setInterval(() => {
     remaining -= 1;
+    if (window._arenaTick) window._arenaTick(remaining, window._arenaTotal);
     onTick(remaining);
     if (remaining <= 0) { clearTimer(); onEnd && onEnd(); }
   }, 1000);
@@ -1033,6 +1036,8 @@ function renderPlay() {
   $('#play-pack-title').textContent = step.pack.titre;
   $('#play-pack-sub').textContent = `${step.pack.theme || ''} · Domaine : ${step.pack.domain}`;
   $('#play-score').textContent = g.score.total;
+  // v2.36 : plateau TV (arène) pour les duels/confrontations si activé
+  if (g.duelId && g.arena) mountArena(g, step);
   // Démarrer le widget scoreboard live si activé
   if (g.duelId && g.liveScoreboard) startLiveScoreboardPolling();
   if (step.manche === 'manche1') return renderManche1();
@@ -2326,6 +2331,9 @@ async function startDuelGame(duelId) {
   if (liveMode === 'force-on') liveOn = true;
   else if (liveMode === 'force-off') liveOn = false;
   else liveOn = !!d.config.liveScoreboard;
+  // v2.36 : plateau TV activé par l'admin → scores live obligatoires
+  const arenaOn = !!(State.meta && State.meta.settings && State.meta.settings.arenaEnabled);
+  if (arenaOn) liveOn = true;
   // Construire le State.game avec les packs fixés
   State.game = {
     duelId: d.id,
@@ -2334,7 +2342,10 @@ async function startDuelGame(duelId) {
     score: { total: 0, byManche: { manche1: 0, manche2: 0, manche3: 0 } },
     log: [],
     qcmMode: useQcm,
-    liveScoreboard: liveOn
+    liveScoreboard: liveOn,
+    arena: arenaOn,
+    duelType: d.type,
+    duelParticipants: (d.participants || []).map(x => ({ code: x.code, name: x.name || x.code }))
   };
   // Pas de persistance localStorage pour les duels (on joue d'une traite)
   route('play');
@@ -2357,6 +2368,7 @@ function stopLiveScoreboardPolling() {
 }
 
 function ensureLiveBoardWidget() {
+  if (State.game && State.game.arena) return;   // l'arène remplace le widget flottant
   if (document.getElementById('live-board')) return;
   const widget = document.createElement('div');
   widget.id = 'live-board';
@@ -2369,6 +2381,7 @@ async function refreshLiveBoard() {
   if (!State.game || !State.game.duelId) return stopLiveScoreboardPolling();
   try {
     const data = await api.duelScoreboard(State.game.duelId);
+    if (State.game && State.game.arena) { _arenaLastData = data; renderArenaBoard(data); return; }
     const body = document.querySelector('#live-board .live-board-body');
     if (!body) return;
     body.innerHTML = '';
@@ -2399,6 +2412,123 @@ function destroyLiveBoardWidget() {
   stopLiveScoreboardPolling();
   const w = document.getElementById('live-board');
   if (w) w.remove();
+  // v2.36 : nettoyage de l'arène TV
+  const a = document.getElementById('arena');
+  if (a) a.remove();
+  window._arenaTick = null;
+  _arenaLastData = null;
+  renderArenaBoard._prev = null;
+}
+
+// =====================================================================
+// ARÈNE TV (v2.36) — plateau de jeu façon émission pour les duels et
+// confrontations, activé par l'administrateur (settings.arenaEnabled).
+// Chronos digitaux, cartes candidats (avatar-initiales, score, jauge de
+// progression, statut), leader mis en lumière, mises à jour temps réel.
+// =====================================================================
+let _arenaLastData = null;
+const ARENA_PALETTES = [
+  ['#2563eb', '#60a5fa'], ['#dc2626', '#f87171'], ['#16a34a', '#4ade80'],
+  ['#d97706', '#fbbf24'], ['#7c3aed', '#a78bfa'], ['#0891b2', '#22d3ee'],
+  ['#db2777', '#f472b6'], ['#4b5563', '#9ca3af']
+];
+
+function arenaInitials(name) {
+  const parts = String(name || '?').trim().split(/\s+/);
+  const ini = (parts[0][0] || '?') + (parts[1] ? parts[1][0] : (parts[0][1] || ''));
+  return ini.toUpperCase();
+}
+
+// (Re)construit le plateau au-dessus de la zone de jeu. Appelé à chaque
+// renderPlay (le mount() efface l'écran) ; les dernières données de
+// score connues sont réaffichées immédiatement.
+function mountArena(g, step) {
+  const screen = document.querySelector('.screen');
+  if (!screen || document.getElementById('arena')) return;
+  const isConf = (g.duelParticipants || []).length > 2 || g.duelType === 'tournament';
+  const arena = el('div', { id: 'arena', class: 'arena' },
+    el('div', { class: 'arena-head' },
+      el('span', { class: 'arena-badge' }, isConf ? '🏟 CONFRONTATION' : '⚔️ DUEL'),
+      el('div', { class: 'arena-clock-wrap' },
+        el('div', { id: 'arena-clock', class: 'arena-clock' }, '--:--'),
+        el('div', { class: 'arena-clock-label' }, labelManche(step.manche))),
+      el('span', { class: 'arena-live' }, '● EN DIRECT')),
+    el('div', { id: 'arena-grid', class: 'arena-grid' })
+  );
+  screen.insertBefore(arena, screen.firstChild);
+
+  // Cartes initiales à partir des participants du match (scores à 0),
+  // remplacées dès la première réponse du serveur.
+  if (_arenaLastData && _arenaLastData.participants) {
+    renderArenaBoard(_arenaLastData);
+  } else {
+    renderArenaBoard({
+      totalQuestions: g.plan.reduce((s, x) => s + x.pack.questions.length, 0),
+      participants: (g.duelParticipants || []).map(p => ({
+        code: p.code, name: p.name, score: 0, questionsAnswered: 0,
+        totalQuestions: g.plan.reduce((s, x) => s + x.pack.questions.length, 0),
+        finished: false
+      }))
+    });
+  }
+
+  // Chrono digital branché sur le timer réel du jeu
+  window._arenaTick = (remaining, total) => {
+    const clock = document.getElementById('arena-clock');
+    if (!clock) return;
+    const r = Math.max(0, remaining);
+    clock.textContent = `${String(Math.floor(r / 60)).padStart(2, '0')}:${String(r % 60).padStart(2, '0')}`;
+    clock.classList.toggle('danger', r <= 10);
+    clock.classList.toggle('warn', r > 10 && total && r <= total * 0.4);
+  };
+}
+
+function renderArenaBoard(data) {
+  const grid = document.getElementById('arena-grid');
+  if (!grid || !data || !Array.isArray(data.participants)) return;
+  const g = State.game || {};
+  // Score/progression LOCAUX pour ma carte : réactivité immédiate
+  const list = data.participants.map(p => {
+    const isMe = p.code === Session.code;
+    if (isMe && g.score) {
+      return { ...p,
+        score: Math.max(p.score || 0, g.score.total || 0),
+        questionsAnswered: Math.max(p.questionsAnswered || 0, (g.log || []).length) };
+    }
+    return { ...p };
+  });
+  const best = Math.max(...list.map(p => p.score || 0));
+  grid.innerHTML = '';
+  list.forEach((p, i) => {
+    const isMe = p.code === Session.code;
+    const leader = (p.score || 0) === best && best > 0;
+    const pal = ARENA_PALETTES[i % ARENA_PALETTES.length];
+    const pct = p.totalQuestions ? Math.round(100 * (p.questionsAnswered || 0) / p.totalQuestions) : 0;
+    const status = p.finished ? '✓ TERMINÉ'
+                 : (p.questionsAnswered > 0 || isMe) ? '🔵 EN JEU'
+                 : '⏳ PRÊT';
+    const card = el('div', { class: 'arena-card' + (isMe ? ' me' : '') + (leader ? ' leader' : '') + (p.finished ? ' done' : '') },
+      leader ? el('div', { class: 'arena-crown' }, '👑') : null,
+      el('div', { class: 'arena-avatar', style: `background:linear-gradient(135deg, ${pal[0]}, ${pal[1]});` }, arenaInitials(p.name)),
+      el('div', { class: 'arena-name' }, (p.name || p.code || '').toUpperCase().slice(0, 16)),
+      el('div', { class: 'arena-score', 'data-code': p.code }, String(p.score || 0)),
+      el('div', { class: 'arena-bar' }, el('div', { class: 'arena-bar-fill', style: `width:${pct}%;` })),
+      el('div', { class: 'arena-prog' }, `${p.questionsAnswered || 0}/${p.totalQuestions || '–'} questions`),
+      el('div', { class: 'arena-status' + (p.finished ? ' ok' : '') }, status + (isMe ? ' · VOUS' : ''))
+    );
+    grid.appendChild(card);
+  });
+  // Flash sur les scores qui viennent de changer
+  if (renderArenaBoard._prev) {
+    list.forEach(p => {
+      const before = renderArenaBoard._prev[p.code];
+      if (before != null && before !== (p.score || 0)) {
+        const elScore = grid.querySelector(`.arena-score[data-code="${CSS.escape(p.code)}"]`);
+        if (elScore) { elScore.classList.add('bump'); setTimeout(() => elScore.classList.remove('bump'), 700); }
+      }
+    });
+  }
+  renderArenaBoard._prev = Object.fromEntries(list.map(p => [p.code, p.score || 0]));
 }
 
 // Envoyer le progress courant au serveur (debounced via requestIdle)
@@ -2621,6 +2751,8 @@ async function renderAdmin() {
     if (t3) t3.value = tm.manche3;
     const apw = $('#attempts-per-week');
     if (apw) apw.value = s.parcoursAttemptsPerWeek || 0;
+    const tArena = $('#toggle-arena');
+    if (tArena) tArena.checked = (s.arenaEnabled === true);
   } catch (e) {}
   toggle.addEventListener('change', async () => {
     try {
@@ -2650,6 +2782,18 @@ async function renderAdmin() {
     } catch (e) {
       alert('Erreur : ' + e.message);
       toggleSelfReg.checked = !toggleSelfReg.checked;
+    }
+  });
+  // v2.36 : plateau TV pendant les duels
+  const toggleArena = $('#toggle-arena');
+  if (toggleArena) toggleArena.addEventListener('change', async () => {
+    try {
+      await api.adminSetSettings({ arenaEnabled: toggleArena.checked });
+      toggleArena.parentElement.style.opacity = '0.6';
+      setTimeout(() => { toggleArena.parentElement.style.opacity = '1'; }, 300);
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+      toggleArena.checked = !toggleArena.checked;
     }
   });
 

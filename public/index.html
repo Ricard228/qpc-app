@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.33" />
+  <link rel="stylesheet" href="styles.css?v=2.36" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -584,7 +584,7 @@
           <p class="help-cover-desc">Manuel complet — joueurs, super-administrateurs, exploitation</p>
           <p class="help-cover-info">3 658 questions · 18 domaines · 3 manches partout · Parcours certifiants · PWA installable Android/iOS</p>
           <p class="help-cover-author">Conçu par Kossi Nevame AGBENU<br/>NEVAME Data House · ESA Université de Lomé</p>
-          <p class="help-cover-version">Version 2.35 — juillet 2026</p>
+          <p class="help-cover-version">Version 2.36 — juillet 2026</p>
         </header>
 
         <nav class="help-toc">
@@ -598,7 +598,7 @@
             <li><a href="#h-api">6. Annexe technique : API REST</a></li>
             <li><a href="#h-faq">7. FAQ et dépannage</a></li>
             <li><a href="#h-credits">8. Crédits et licence</a></li>
-            <li><a href="#h-news">9. Nouveautés v2.20 → v2.33</a></li>
+            <li><a href="#h-news">9. Nouveautés v2.20 → v2.36</a></li>
           </ol>
         </nav>
 
@@ -1143,7 +1143,7 @@ PTS: 6
         </section>
 
         <section id="h-news" class="help-section">
-          <h2>9. Nouveautés v2.20 → v2.33</h2>
+          <h2>9. Nouveautés v2.20 → v2.36</h2>
           <p>Cette section résume les fonctionnalités ajoutées depuis la première édition du guide (v2.19).</p>
 
           <h3>9.1 Comptes, rôles et connexion</h3>
@@ -1175,9 +1175,10 @@ PTS: 6
           <h3>9.4 Contenus et réglages</h3>
           <ul>
             <li><strong>Éditeur de contenus</strong> : modification des questions, réponses et sources depuis le panneau admin — le super-administrateur sur tous les domaines (modifications conservées lors des redéploiements), les admins nommés sur les seules spécialités importées.</li>
-            <li><strong>Base enrichie</strong> : 2 678 questions, 18 domaines (tous ≥ 140 questions), dont deux nouveaux domaines « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture », et des renforts majeurs en évaluation d'impact (méthodes causales + STATA 18/19).</li>
+            <li><strong>Base enrichie</strong> : 3 658 questions, 18 domaines (tous ≥ 200 questions, jouables dans les 3 manches), dont deux nouveaux domaines « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture », et des renforts majeurs en évaluation d'impact (méthodes causales + STATA 18/19).</li>
             <li><strong>Durées paramétrables</strong> : les temps des trois manches se règlent dans le panneau admin (5 à 600 s).</li>
             <li><strong>Aide masquable</strong> : le présent guide peut être masqué côté joueur par le super-administrateur.</li>
+            <li><strong>Plateau TV pour les duels (v2.36)</strong> : lorsqu'il est activé par l'administrateur, les duels et confrontations affichent chez chaque joueur un plateau façon émission de télévision — chrono digital lumineux, cartes des candidats avec avatar, scores en direct, jauges de progression, statuts (prêt / en jeu / terminé), candidat en tête couronné 👑. Les scores en direct sont automatiquement activés.</li>
           </ul>
 
           <p class="help-end">— Fin du guide —</p>
@@ -1280,6 +1281,23 @@ PTS: 6
           </div>
           <label class="toggle">
             <input type="checkbox" id="toggle-self-register" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- v2.36 : plateau TV pendant les duels -->
+        <div class="setting-row" style="margin-top:14px;">
+          <div>
+            <strong>🎬 Plateau TV (duels &amp; confrontations)</strong>
+            <div class="muted" style="font-size:13px;">
+              Affiche chez les joueurs, pendant les duels et confrontations, un plateau de jeu
+              façon émission : chronos digitaux, cartes des candidats avec photo-avatar, scores
+              et progression en temps réel, candidat en tête mis en lumière.
+              Active automatiquement les scores en direct.
+            </div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-arena" />
             <span class="toggle-slider"></span>
           </label>
         </div>
@@ -1621,6 +1639,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.33"></script>
+  <script src="app.js?v=2.36"></script>
 </body>
 </html>
