@@ -6265,6 +6265,237 @@
         }
       },
       "winner": "QPC-NZXE8MYU"
+    },
+    {
+      "id": "2a4e57b97e4505fe",
+      "type": "duel",
+      "createdAt": "2026-07-30T21:23:58.916Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-3VY2WXWP",
+        "QPC-NZXE8MYU"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 0
+        },
+        "domains": [
+          "Microéconomie et théorie",
+          "Statistiques et économétrie"
+        ],
+        "liveScoreboard": true,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-84",
+              "type": "manche1",
+              "titre": "Structures de marché",
+              "theme": "Concurrence et monopole",
+              "domain": "Microéconomie et théorie",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-84-q1",
+                  "q": "En concurrence pure et parfaite, quel est le profit économique de long terme ?",
+                  "r": "Nul à long terme",
+                  "choices": [
+                    "Nul à long terme",
+                    "Le modèle de Bertrand",
+                    "Équilibre Nash Pareto-dominé",
+                    "Effet total d'une variation de prix"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Les 5 conditions de la CPP (atomicité, homogénéité, libre entrée/sortie, transparence, mobilité des facteurs) impliquent que tout profit positif attire de nouveaux entrants jusqu'à élimination du surprofit. À long terme : P = CM = CMU min. Une firme couvre ses coûts d'opportunité (profit comptable existe, profit économique = 0).",
+                  "ref": "Marshall, 1890 ; Varian chap. 23.  → https://fr.wikipedia.org/w/index.php?search=Nul%20%C3%A0%20long%20terme  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-84-q2",
+                  "q": "Le monopole maximise son profit lorsque…",
+                  "r": "Rm = CM",
+                  "choices": [
+                    "Rm = CM",
+                    "Équilibre Nash Pareto-dominé",
+                    "L'équilibre partiel",
+                    "John von Neumann"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Condition d'optimum universelle des firmes en présence de pouvoir de marché. Le prix est ensuite tiré de la courbe de demande au-dessus du point Rm = CM. Marge prix-coût = indice de Lerner = (P − CM)/P = −1/ε (lié à l'élasticité de la demande).",
+                  "ref": "Cournot, 1838 ; Lerner, 1934.  → https://fr.wikipedia.org/w/index.php?search=Rm%20%3D%20CM  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-84-q3",
+                  "q": "Qu'est-ce que la concurrence monopolistique ?",
+                  "r": "Produits différenciés + libre entrée",
+                  "choices": [
+                    "Les prix de garantie (et prix d'intervention)",
+                    "Produits différenciés + libre entrée",
+                    "Le premier théorème de l'économie du bien-être",
+                    "Aucune amélioration sans détérioration"
+                  ],
+                  "correctIndices": [
+                    1
+                  ],
+                  "e": "Modèle de Chamberlin (1933) et Robinson (1933). Chaque firme a un pouvoir de monopole limité grâce à la différenciation (marque, design, localisation), mais la libre entrée annule les surprofits à long terme. P > CM mais profit = 0. Exemple : restaurants, parfumerie, librairies.",
+                  "ref": "Chamberlin, \"The Theory of Monopolistic Competition\", 1933.  → https://fr.wikipedia.org/w/index.php?search=Produits%20diff%C3%A9renci%C3%A9s%20%2B%20libre%20entr%C3%A9e  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-84-q4",
+                  "q": "Dans l'oligopole de Cournot, les firmes choisissent…",
+                  "r": "Quantités simultanées (équilibre de Nash en quantités)",
+                  "choices": [
+                    "Quantités simultanées (équilibre de Nash en quantités)",
+                    "La Théorie générale de l'emploi, de l'intérêt et de la monnaie",
+                    "La Richesse des nations (An Inquiry into the Nature and Causes of the Wealth of Nations)",
+                    "L'éviction des motivations intrinsèques (crowding-out)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Cournot (1838) : chaque firme maximise son profit en supposant que la quantité de l'autre est donnée. Solution par fonctions de réaction. À 2 firmes symétriques, chacune produit 1/3 de la quantité concurrentielle (vs 1/2 en monopole). Plus le nombre de firmes augmente, plus on tend vers la CPP.",
+                  "ref": "Cournot, \"Recherches sur les principes mathématiques de la théorie des richesses\", 1838.  → https://fr.wikipedia.org/w/index.php?search=Quantit%C3%A9s%20simultan%C3%A9es  → https://fr.wikipedia.org/wiki/Microéconomie",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-6",
+              "type": "manche2",
+              "titre": "Duel 6",
+              "theme": "Statistiques inférentielles",
+              "domain": "Statistiques et économétrie",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-6-q1",
+                  "q": "Quelle probabilité, associée à la statistique de test observée, est comparée au seuil de significativité ?",
+                  "r": "La p-value (valeur-p)",
+                  "e": "P(T ≥ t_obs | H₀) ; rejet si p < α ; débats sur son interprétation.",
+                  "ref": "R.A. Fisher, Statistical Methods for Research Workers, 1925.  → https://fr.wikipedia.org/w/index.php?search=p-value  → https://stats.oecd.org/",
+                  "pts": 1,
+                  "choices": [
+                    "Le coefficient de corrélation (de Pearson)",
+                    "La causalité au sens de Granger",
+                    "La p-value (valeur-p)",
+                    "Le test ADF (Augmented Dickey-Fuller)"
+                  ],
+                  "correctIndices": [
+                    2
+                  ]
+                },
+                {
+                  "id": "manche2-6-q2",
+                  "q": "Quel test paramétrique, publié sous le pseudonyme « Student », compare les moyennes de deux échantillons ?",
+                  "r": "Le test t",
+                  "e": "W. Gosset, employé chez Guinness, signait « Student » pour préserver le secret commercial.",
+                  "ref": "Student, Biometrika, 1908.  → https://fr.wikipedia.org/w/index.php?search=test%20t  → https://stats.oecd.org/",
+                  "pts": 2,
+                  "choices": [
+                    "Le test du rapport de vraisemblance (LR)",
+                    "L'intervalle de confiance",
+                    "Le test t",
+                    "Validité des instruments"
+                  ],
+                  "correctIndices": [
+                    2
+                  ]
+                },
+                {
+                  "id": "manche2-6-q3",
+                  "q": "Quelle méthode d'estimation choisit les paramètres qui rendent les données observées les plus probables ?",
+                  "r": "Le maximum de vraisemblance (MLE)",
+                  "e": "L(θ) = Π f(xᵢ;θ) ; estimateur consistant, asymptotiquement normal et efficace.",
+                  "ref": "R.A. Fisher, Phil. Trans. Royal Society A, 1922.  → https://fr.wikipedia.org/w/index.php?search=maximum%20de%20vraisemblance  → https://stats.oecd.org/",
+                  "pts": 3,
+                  "choices": [
+                    "La différence-en-différences (DiD)",
+                    "Les moindres carrés ordinaires (MCO)",
+                    "Le maximum de vraisemblance (MLE)",
+                    "La méthode des moments généralisée (GMM)"
+                  ],
+                  "correctIndices": [
+                    2
+                  ]
+                },
+                {
+                  "id": "manche2-6-q4",
+                  "q": "Quelle approche statistique combine une distribution a priori et la vraisemblance pour mettre à jour les croyances ?",
+                  "r": "L'inférence bayésienne",
+                  "e": "P(θ|x) ∝ P(x|θ) P(θ) ; choix du prior crucial.",
+                  "ref": "T. Bayes, Phil. Trans. Royal Society, 1763 (posthume).  → https://fr.wikipedia.org/w/index.php?search=inf%C3%A9rence%20bay%C3%A9sienne  → https://stats.oecd.org/",
+                  "pts": 4,
+                  "choices": [
+                    "L'inférence bayésienne",
+                    "Hétéroscédasticité ou autocorrélation",
+                    "Les critères AIC (Akaike) et BIC (Schwarz)",
+                    "Les moindres carrés ordinaires (MCO)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ]
+                },
+                {
+                  "id": "manche2-6-q5",
+                  "q": "Quelle famille d'algorithmes échantillonne efficacement des distributions postérieures complexes en statistique bayésienne ?",
+                  "r": "Les méthodes MCMC (Metropolis-Hastings, Gibbs)",
+                  "e": "Révolution bayésienne computationnelle des années 1990.",
+                  "ref": "Metropolis et al. (1953) ; Hastings (1970).  → https://fr.wikipedia.org/w/index.php?search=m%C3%A9thodes%20MCMC  → https://stats.oecd.org/",
+                  "pts": 5,
+                  "choices": [
+                    "Les méthodes MCMC (Metropolis-Hastings, Gibbs)",
+                    "La BIDC (Banque d'Investissement et de Développement de la CEDEAO)",
+                    "L'estimateur Arellano-Bond (GMM en différences)",
+                    "3 ans (droit commun), allongée en cas de fraude"
+                  ],
+                  "correctIndices": [
+                    0
+                  ]
+                },
+                {
+                  "id": "manche2-6-q6",
+                  "q": "Quel paradoxe illustre l'inversion possible d'une corrélation lorsqu'on agrège deux sous-populations ?",
+                  "r": "Le paradoxe de Simpson",
+                  "e": "Exemple classique : admissions à Berkeley, 1973 ; impose la stratification.",
+                  "ref": "E. Simpson, JRSS B, 1951.  → https://fr.wikipedia.org/w/index.php?search=paradoxe%20de%20Simpson  → https://stats.oecd.org/",
+                  "pts": 6,
+                  "choices": [
+                    "Le paradoxe de Simpson",
+                    "L'inégalité de Bienaymé-Tchebychev",
+                    "L'analyse en composantes principales (ACP)",
+                    "La puissance du test (1 − β)"
+                  ],
+                  "correctIndices": [
+                    0
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-3VY2WXWP": "accepted",
+        "QPC-NZXE8MYU": "accepted"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
