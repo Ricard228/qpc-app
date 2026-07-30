@@ -6265,6 +6265,337 @@
         }
       },
       "winner": "QPC-NZXE8MYU"
+    },
+    {
+      "id": "39718a6ac9d0fe0c",
+      "type": "duel",
+      "createdAt": "2026-07-30T21:19:08.212Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-3VY2WXWP",
+        "QPC-NZXE8MYU"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 0
+        },
+        "domains": [],
+        "liveScoreboard": true,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "custom-topographie--g-nie-civil-manche1-1",
+              "type": "manche1",
+              "titre": "Topographie et levés",
+              "theme": "Instruments, mesures et représentation du terrain",
+              "domain": "Topographie, génie civil, architecture et droit foncier au Togo",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q1",
+                  "q": "Que mesure principalement un théodolite ?",
+                  "r": "Des angles horizontaux et verticaux",
+                  "choices": [
+                    "Des angles horizontaux et verticaux",
+                    "Uniquement des volumes de béton",
+                    "La résistance des sols",
+                    "La teneur en eau d'un ciment"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le théodolite sert à mesurer des angles ; associé à un distancemètre, il devient une station totale.",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q2",
+                  "q": "Quel instrument moderne combine la mesure des angles et des distances et enregistre les données ?",
+                  "r": "La station totale",
+                  "choices": [
+                    "La station totale",
+                    "Le niveau de chantier",
+                    "Le double-décamètre",
+                    "Le fil à plomb"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La station totale intègre théodolite électronique et distancemètre (souvent laser).",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q3",
+                  "q": "À quoi sert principalement un niveau (de chantier) en topographie ?",
+                  "r": "À déterminer des différences d'altitude (nivellement)",
+                  "choices": [
+                    "À mesurer des dénivelées et déterminer des altitudes",
+                    "À mesurer des angles horizontaux précis",
+                    "À calculer des surfaces de toiture",
+                    "À doser le béton"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le nivellement détermine les altitudes des points par visées sur une mire.",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q4",
+                  "q": "Comment appelle-t-on l'opération de mesure du terrain destinée à le représenter sur un plan ?",
+                  "r": "Le levé topographique",
+                  "choices": [
+                    "Le levé topographique",
+                    "Le coulage",
+                    "Le ferraillage",
+                    "Le décoffrage"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 1
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q5",
+                  "q": "Que représentent les courbes de niveau sur une carte topographique ?",
+                  "r": "Des lignes joignant les points de même altitude",
+                  "choices": [
+                    "Des lignes reliant les points de même altitude",
+                    "Les limites de propriété",
+                    "Les réseaux électriques",
+                    "Les fissures du sol"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q6",
+                  "q": "Quel système de positionnement par satellites est utilisé pour le géoréférencement des levés ?",
+                  "r": "Le GNSS (dont le GPS)",
+                  "choices": [
+                    "Le GNSS (systèmes satellitaires, dont le GPS)",
+                    "Le sonar",
+                    "Le radar météo",
+                    "Le théodolite optique seul"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le GNSS (GPS, GLONASS, Galileo…) fournit des coordonnées géoréférencées, souvent en mode RTK.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q7",
+                  "q": "Que distingue-t-on dans un levé entre la planimétrie et l'altimétrie ?",
+                  "r": "Planimétrie = position en plan (X, Y) ; altimétrie = altitude (Z)",
+                  "choices": [
+                    "La planimétrie donne X et Y ; l'altimétrie donne l'altitude Z",
+                    "La planimétrie donne l'altitude ; l'altimétrie la surface",
+                    "Ce sont deux mots pour la même chose",
+                    "La planimétrie concerne le béton"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q8",
+                  "q": "Sur un plan à l'échelle 1/200, à quelle distance réelle correspond 1 cm sur le papier ?",
+                  "r": "2 mètres",
+                  "choices": [
+                    "2 m",
+                    "20 m",
+                    "200 m",
+                    "0,2 m"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "À l'échelle 1/200, 1 cm sur le plan = 200 cm = 2 m sur le terrain.",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q9",
+                  "q": "Comment appelle-t-on une suite de points reliés par des mesures d'angles et de distances servant de canevas au levé ?",
+                  "r": "Une polygonale (cheminement)",
+                  "choices": [
+                    "Une polygonale, ou cheminement",
+                    "Une courbe de niveau",
+                    "Une semelle filante",
+                    "Une poutre maîtresse"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 3
+                },
+                {
+                  "id": "custom-topographie--g-nie-civil-manche1-1-q10",
+                  "q": "Quel modèle numérique représente le relief du terrain à partir des altitudes ?",
+                  "r": "Le MNT (Modèle Numérique de Terrain)",
+                  "choices": [
+                    "Le MNT (Modèle Numérique de Terrain)",
+                    "Le BAEL",
+                    "Le DTU",
+                    "Le PVC"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "",
+                  "ref": "",
+                  "pts": 2
+                }
+              ],
+              "isCustom": true
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-70",
+              "type": "manche2",
+              "titre": "Statistiques — Face-à-face v35 A",
+              "theme": "Méthodes quantitatives",
+              "domain": "Statistiques et économétrie",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-70-q1",
+                  "q": "Comment appelle-t-on : l'écart entre la valeur observée et la valeur prédite par le modèle ?",
+                  "r": "Le résidu",
+                  "choices": [
+                    "Le résidu",
+                    "La valeur ajustée",
+                    "La variable muette",
+                    "L'autocorrélation"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le résidu : l'écart entre la valeur observée et la valeur prédite par le modèle.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-70-q2",
+                  "q": "Comment appelle-t-on : la prédiction du modèle pour une observation de l'échantillon ?",
+                  "r": "La valeur ajustée",
+                  "choices": [
+                    "La valeur ajustée",
+                    "Le coefficient standardisé",
+                    "L'interaction",
+                    "Le test de Durbin-Watson"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La valeur ajustée : la prédiction du modèle pour une observation de l'échantillon.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-70-q3",
+                  "q": "Comment appelle-t-on : l'effet exprimé en écarts types pour comparer les variables ?",
+                  "r": "Le coefficient standardisé",
+                  "choices": [
+                    "Le coefficient standardisé",
+                    "La variable muette",
+                    "La forme fonctionnelle",
+                    "L'erreur de mesure"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le coefficient standardisé : l'effet exprimé en écarts types pour comparer les variables.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-70-q4",
+                  "q": "Comment appelle-t-on : la variable binaire codant l'appartenance à une catégorie ?",
+                  "r": "La variable muette",
+                  "choices": [
+                    "La variable muette",
+                    "L'interaction",
+                    "Le logarithme en économétrie",
+                    "Le biais d'atténuation"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La variable muette : la variable binaire codant l'appartenance à une catégorie.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-70-q5",
+                  "q": "Comment appelle-t-on : le terme croisé qui fait dépendre un effet du niveau d'une autre variable ?",
+                  "r": "L'interaction",
+                  "choices": [
+                    "L'interaction",
+                    "La forme fonctionnelle",
+                    "L'autocorrélation",
+                    "La variable omise"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "L'interaction : le terme croisé qui fait dépendre un effet du niveau d'une autre variable.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-70-q6",
+                  "q": "Comment appelle-t-on : la spécification mathématique de la relation estimée ?",
+                  "r": "La forme fonctionnelle",
+                  "choices": [
+                    "La forme fonctionnelle",
+                    "Le logarithme en économétrie",
+                    "Le test de Durbin-Watson",
+                    "La causalité de Granger"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La forme fonctionnelle : la spécification mathématique de la relation estimée.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 6
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-3VY2WXWP": "accepted",
+        "QPC-NZXE8MYU": "accepted"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
