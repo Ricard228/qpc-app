@@ -6387,6 +6387,77 @@
           "progressScore": 4,
           "progressQ": 3,
           "progressUpdatedAt": "2026-07-30T20:06:02.112Z"
+        },
+        "QPC-A4URHTEJ": {
+          "startedAt": "2026-07-30T20:08:18.692Z",
+          "completedAt": "2026-07-30T20:08:18.692Z",
+          "totalScore": 0,
+          "byManche": {
+            "manche1": 0,
+            "manche2": 0,
+            "manche3": 0
+          },
+          "nbQuestions": 4,
+          "nbCorrect": 0,
+          "nbWrong": 4,
+          "log": [
+            {
+              "manche": "manche1",
+              "packId": "manche1-637",
+              "packTitle": "Fiscalité togolaise — Consolidation v35 — Série 4",
+              "qid": "manche1-637-q1",
+              "q": "Une retenue à la source de 5 % s'applique à une prestation de 4 800 000 FCFA. Montant retenu :",
+              "expected": "240 000 FCFA",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Retenue = 5 % × 4 800 000 = 240 000 FCFA, reversée à l'OTR par la partie versante.",
+              "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-637",
+              "packTitle": "Fiscalité togolaise — Consolidation v35 — Série 4",
+              "qid": "manche1-637-q2",
+              "q": "Une retenue à la source de 3 % s'applique à une prestation de 900 000 FCFA. Montant retenu :",
+              "expected": "27 000 FCFA",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Retenue = 3 % × 900 000 = 27 000 FCFA, reversée à l'OTR par la partie versante.",
+              "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-637",
+              "packTitle": "Fiscalité togolaise — Consolidation v35 — Série 4",
+              "qid": "manche1-637-q3",
+              "q": "Une retenue à la source de 10 % s'applique à une prestation de 5 400 000 FCFA. Montant retenu :",
+              "expected": "540 000 FCFA",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Retenue = 10 % × 5 400 000 = 540 000 FCFA, reversée à l'OTR par la partie versante.",
+              "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-637",
+              "packTitle": "Fiscalité togolaise — Consolidation v35 — Série 4",
+              "qid": "manche1-637-q4",
+              "q": "Une retenue à la source de 5 % s'applique à une prestation de 2 100 000 FCFA. Montant retenu :",
+              "expected": "105 000 FCFA",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Retenue = 5 % × 2 100 000 = 105 000 FCFA, reversée à l'OTR par la partie versante.",
+              "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source"
+            }
+          ]
         }
       },
       "winner": null
