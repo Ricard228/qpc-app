@@ -139,6 +139,20 @@
       "distinction": "Très Bien",
       "date": "2026-07-25T18:44:17.344Z",
       "updatedAt": "2026-07-25T18:44:17.344Z"
+    },
+    {
+      "id": "e47f026d00dd3937",
+      "owner": "QPC-3VY2WXWP",
+      "name": "EDZOE Emélefa Atsu",
+      "domain": "Macroéconomie et politiques",
+      "level": "debutant",
+      "levelLabel": "Débutant",
+      "scorePct": 90,
+      "nbCorrect": 9,
+      "nbQuestions": 10,
+      "distinction": "Excellent",
+      "date": "2026-07-30T21:14:16.025Z",
+      "updatedAt": "2026-07-30T21:14:16.025Z"
     }
   ],
   "attempts": [
@@ -197,6 +211,14 @@
       "passed": true,
       "scorePct": 80,
       "date": "2026-07-25T18:44:17.344Z"
+    },
+    {
+      "owner": "QPC-3VY2WXWP",
+      "domain": "Macroéconomie et politiques",
+      "level": "debutant",
+      "passed": true,
+      "scorePct": 90,
+      "date": "2026-07-30T21:14:16.025Z"
     }
   ]
 }
