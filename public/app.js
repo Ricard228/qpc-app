@@ -1056,6 +1056,7 @@ function renderManche1() {
     el('span', { class: 'qnum' }, String(qIdx + 1)),
     document.createTextNode(q.q)));
   card.appendChild(buildAnswerForm(q, (val) => answerM1(val)));
+  if (g.arena && window._arenaMechUpdate) window._arenaMechUpdate('m1', { qIdx, total: pack.questions.length });
 
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
@@ -1085,6 +1086,7 @@ function answerM1(userInput) {
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
   sendDuelProgress();
+  if (g.arena && window._arenaAnswer) window._arenaAnswer('m1', correct, { qIdx, total: pack.questions.length });
   showReveal(correct, q, userInput);
   setTimeout(() => {
     g.cursor.qIdx += 1; persistGame();
@@ -1150,6 +1152,7 @@ function renderM2Picker(pack) {
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   $('#play-timer').textContent = '—'; $('#play-timer').classList.remove('warn', 'danger');
   clearTimer();
+  if (g.arena && window._arenaMechUpdate) window._arenaMechUpdate('m2-pick', {});
 }
 
 function renderM2Question(pack, pts) {
@@ -1160,6 +1163,7 @@ function renderM2Question(pack, pts) {
   card.appendChild(el('div', { class: 'play-question' },
     el('span', { class: 'qnum' }, `${pts}`), document.createTextNode(q.q)));
   card.appendChild(buildAnswerForm(q, (val) => answerM2(val), `Valider (${pts} pt${pts > 1 ? 's' : ''})`));
+  if (g.arena && window._arenaMechUpdate) window._arenaMechUpdate('m2-q', { pts });
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   actions.appendChild(el('button', { class: 'btn btn-ghost', onclick: () => answerM2('') }, 'Passer'));
@@ -1184,6 +1188,7 @@ function answerM2(userInput) {
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
   sendDuelProgress();
+  if (g.arena && window._arenaAnswer) window._arenaAnswer('m2', correct, { pts });
   showReveal(correct, q, userInput);
   g.cursor.m2RemainingPts = g.cursor.m2RemainingPts.filter(v => v !== pts);
   g.cursor.m2Picked = null;
@@ -1210,7 +1215,23 @@ function renderManche3() {
   card.appendChild(el('div', { class: 'muted', html: `Finale en cours : <strong>${g.cursor.m3Score}</strong>/9 points.` }));
   const wrap = el('div', { style: 'margin-top:14px;' });
   wrap.appendChild(buildAnswerForm(q, (val) => answerM3(val)));
+  // v2.37 : en mode arène, il faut BUZZER pour prendre la main avant de répondre
+  if (g.arena) {
+    wrap.classList.add('arena-locked');
+    const buzz = el('button', {
+      class: 'arena-buzz-btn', type: 'button',
+      onclick: () => { if (window._arenaBuzz) window._arenaBuzz(); }
+    }, el('span', { class: 'arena-buzz-dome' }), el('span', { class: 'arena-buzz-txt' }, 'BUZZ !'));
+    card.appendChild(buzz);
+    window._arenaOnBuzz = () => {
+      buzz.remove();
+      wrap.classList.remove('arena-locked');
+      const inp = wrap.querySelector('input, button');
+      if (inp) inp.focus();
+    };
+  }
   card.appendChild(wrap);
+  if (g.arena && window._arenaMechUpdate) window._arenaMechUpdate('m3', { m3Score: g.cursor.m3Score || 0 });
   const actions = $('#play-actions'); actions.innerHTML = '';
   actions.appendChild(el('button', { class: 'btn btn-ghost left', onclick: pauseAndExit }, 'Mettre en pause'));
   actions.appendChild(el('button', { class: 'btn btn-ghost', onclick: () => answerM3('') }, 'Passer'));
@@ -1235,6 +1256,7 @@ function answerM3(userInput) {
     explain: q.e, ref: q.ref });
   $('#play-score').textContent = g.score.total;
   sendDuelProgress();
+  if (g.arena && window._arenaAnswer) window._arenaAnswer('m3', correct, { m3Score: g.cursor.m3Score || 0 });
   showReveal(correct, q, userInput);
   setTimeout(() => { g.cursor.qIdx += 1; persistGame(); renderManche3(); }, 1500);
 }
@@ -2412,26 +2434,39 @@ function destroyLiveBoardWidget() {
   stopLiveScoreboardPolling();
   const w = document.getElementById('live-board');
   if (w) w.remove();
-  // v2.36 : nettoyage de l'arène TV
+  // v2.36/v2.37 : nettoyage de l'arène TV (pupitres + mécanique de manche)
   const a = document.getElementById('arena');
   if (a) a.remove();
   window._arenaTick = null;
+  window._arenaOnBuzz = null;
   _arenaLastData = null;
+  _arenaMech = { mode: null, dots: [], pts: null, m3Score: 0, hand: false, buzzed: false, total: 4, qIdx: 0, flash: null };
+  if (_arenaFlashTimer) { clearTimeout(_arenaFlashTimer); _arenaFlashTimer = null; }
   renderArenaBoard._prev = null;
 }
 
 // =====================================================================
-// ARÈNE TV (v2.36) — plateau de jeu façon émission pour les duels et
+// ARÈNE TV (v2.37) — plateau façon émission pour les duels et
 // confrontations, activé par l'administrateur (settings.arenaEnabled).
-// Chronos digitaux, cartes candidats (avatar-initiales, score, jauge de
-// progression, statut), leader mis en lumière, mises à jour temps réel.
+// Chaque candidat a son PUPITRE-PODIUM avec buzzeur, écran de score
+// digital et jauge de progression. Le bandeau central reproduit les
+// mécaniques du jeu selon la manche :
+//   Manche 1 « Les 4 à la suite »   : pastilles de série à allumer
+//   Manche 2 « Neuf points gagnants »: valeur de la question, garder
+//                                      ou perdre la main
+//   Manche 3 « Face à face »        : BUZZER pour prendre la main
+//                                      avant de répondre, course à 9
 // =====================================================================
 let _arenaLastData = null;
+// Mécanique de manche du joueur local (réinitialisée au montage)
+let _arenaMech = { mode: null, dots: [], pts: null, m3Score: 0, hand: false, buzzed: false, total: 4, qIdx: 0, flash: null };
+let _arenaFlashTimer = null;
 const ARENA_PALETTES = [
   ['#2563eb', '#60a5fa'], ['#dc2626', '#f87171'], ['#16a34a', '#4ade80'],
   ['#d97706', '#fbbf24'], ['#7c3aed', '#a78bfa'], ['#0891b2', '#22d3ee'],
   ['#db2777', '#f472b6'], ['#4b5563', '#9ca3af']
 ];
+const ARENA_MANCHE_TV = { manche1: 'LES 4 À LA SUITE', manche2: 'NEUF POINTS GAGNANTS', manche3: 'FACE À FACE' };
 
 function arenaInitials(name) {
   const parts = String(name || '?').trim().split(/\s+/);
@@ -2451,26 +2486,28 @@ function mountArena(g, step) {
       el('span', { class: 'arena-badge' }, isConf ? '🏟 CONFRONTATION' : '⚔️ DUEL'),
       el('div', { class: 'arena-clock-wrap' },
         el('div', { id: 'arena-clock', class: 'arena-clock' }, '--:--'),
-        el('div', { class: 'arena-clock-label' }, labelManche(step.manche))),
+        el('div', { class: 'arena-clock-label' }, ARENA_MANCHE_TV[step.manche] || labelManche(step.manche))),
       el('span', { class: 'arena-live' }, '● EN DIRECT')),
-    el('div', { id: 'arena-grid', class: 'arena-grid' })
+    el('div', { id: 'arena-mech', class: 'arena-mech' }),
+    el('div', { id: 'arena-grid', class: 'arena-stage' })
   );
   screen.insertBefore(arena, screen.firstChild);
 
-  // Cartes initiales à partir des participants du match (scores à 0),
-  // remplacées dès la première réponse du serveur.
+  // Pupitres initiaux à partir des participants du match (scores à 0),
+  // remplacés dès la première réponse du serveur.
   if (_arenaLastData && _arenaLastData.participants) {
     renderArenaBoard(_arenaLastData);
   } else {
+    const totalQ = g.plan.reduce((s, x) => s + x.pack.questions.length, 0);
     renderArenaBoard({
-      totalQuestions: g.plan.reduce((s, x) => s + x.pack.questions.length, 0),
+      totalQuestions: totalQ,
       participants: (g.duelParticipants || []).map(p => ({
         code: p.code, name: p.name, score: 0, questionsAnswered: 0,
-        totalQuestions: g.plan.reduce((s, x) => s + x.pack.questions.length, 0),
-        finished: false
+        totalQuestions: totalQ, finished: false
       }))
     });
   }
+  renderArenaMech();
 
   // Chrono digital branché sur le timer réel du jeu
   window._arenaTick = (remaining, total) => {
@@ -2483,11 +2520,124 @@ function mountArena(g, step) {
   };
 }
 
+// ---------- Bandeau mécanique de manche (joueur local) ---------------
+// Appelé par le moteur de jeu à chaque question affichée.
+window._arenaMechUpdate = (mode, info) => {
+  info = info || {};
+  const m = _arenaMech;
+  if (mode === 'm1') {
+    if (m.mode !== 'm1' || info.qIdx === 0) { m.dots = new Array(info.total || 4).fill(null); }
+    m.mode = 'm1'; m.total = info.total || 4; m.qIdx = info.qIdx || 0;
+  } else if (mode === 'm2-pick') {
+    m.mode = 'm2-pick'; m.pts = null; m.hand = true;
+  } else if (mode === 'm2-q') {
+    m.mode = 'm2-q'; m.pts = info.pts; m.hand = true;
+  } else if (mode === 'm3') {
+    m.mode = 'm3'; m.m3Score = info.m3Score || 0; m.buzzed = false; m.hand = false;
+  }
+  renderArenaMech();
+  updateMyPodiumHand();
+};
+
+// Appelé par le moteur de jeu après chaque réponse évaluée.
+window._arenaAnswer = (mode, correct, info) => {
+  info = info || {};
+  const m = _arenaMech;
+  if (mode === 'm1') {
+    if (m.dots.length) m.dots[Math.min(info.qIdx || 0, m.dots.length - 1)] = correct ? 'ok' : 'ko';
+    const fullStreak = m.dots.length && m.dots.every(d => d === 'ok');
+    if (fullStreak) arenaFlash('🌟 LES ' + m.dots.length + ' À LA SUITE !', 'gold');
+    else if (!correct) arenaFlash('✗ SÉRIE BRISÉE', 'ko');
+    else arenaFlash('✓ BONNE RÉPONSE', 'ok');
+  } else if (mode === 'm2') {
+    m.hand = correct;
+    if (correct) arenaFlash('✋ +' + (info.pts || 0) + ' PTS — VOUS GARDEZ LA MAIN', 'ok');
+    else arenaFlash('✗ VOUS PERDEZ LA MAIN', 'ko');
+  } else if (mode === 'm3') {
+    m.m3Score = info.m3Score || 0;
+    m.hand = false; m.buzzed = false;
+    if (correct) arenaFlash('✓ POINT MARQUÉ — ' + m.m3Score + '/9', 'ok');
+    else arenaFlash('✗ VOUS PERDEZ LA MAIN', 'ko');
+  }
+  renderArenaMech();
+  updateMyPodiumHand(correct === false);
+};
+
+// Buzz (manche 3) : prendre la main pour pouvoir répondre. Déclenché
+// par le gros buzzeur sous la question OU par le buzzeur du pupitre.
+window._arenaBuzz = () => {
+  const m = _arenaMech;
+  if (m.mode !== 'm3' || m.buzzed) return;
+  m.buzzed = true; m.hand = true;
+  arenaFlash('🔔 VOUS PRENEZ LA MAIN !', 'gold');
+  renderArenaMech();
+  updateMyPodiumHand();
+  const myBuzzer = document.querySelector('.podium.me .podium-buzzer');
+  if (myBuzzer) { myBuzzer.classList.add('pressed'); setTimeout(() => myBuzzer.classList.remove('pressed'), 900); }
+  if (window._arenaOnBuzz) { try { window._arenaOnBuzz(); } catch (e) {} window._arenaOnBuzz = null; }
+};
+
+// Message flash au centre du bandeau mécanique (1,6 s)
+function arenaFlash(text, kind) {
+  _arenaMech.flash = { text, kind };
+  renderArenaMech();
+  if (_arenaFlashTimer) clearTimeout(_arenaFlashTimer);
+  _arenaFlashTimer = setTimeout(() => { _arenaMech.flash = null; renderArenaMech(); }, 1600);
+}
+
+function renderArenaMech() {
+  const box = document.getElementById('arena-mech');
+  if (!box) return;
+  const m = _arenaMech;
+  box.innerHTML = '';
+  if (m.flash) {
+    box.appendChild(el('div', { class: 'mech-flash ' + m.flash.kind }, m.flash.text));
+    return;
+  }
+  if (m.mode === 'm1') {
+    const dots = el('div', { class: 'mech-dots' });
+    m.dots.forEach((d, i) => dots.appendChild(el('span', {
+      class: 'mech-dot' + (d === 'ok' ? ' ok' : d === 'ko' ? ' ko' : '') + (i === m.qIdx && d == null ? ' current' : '')
+    }, d === 'ok' ? '✓' : d === 'ko' ? '✗' : String(i + 1))));
+    box.appendChild(el('div', { class: 'mech-row' },
+      el('span', { class: 'mech-label' }, 'SÉRIE'), dots,
+      el('span', { class: 'mech-hint' }, 'Enchaînez les ' + m.dots.length + ' bonnes réponses !')));
+  } else if (m.mode === 'm2-pick') {
+    box.appendChild(el('div', { class: 'mech-row' },
+      el('span', { class: 'mech-hand on' }, '✋ VOUS AVEZ LA MAIN'),
+      el('span', { class: 'mech-hint' }, 'Choisissez la valeur de votre question')));
+  } else if (m.mode === 'm2-q') {
+    box.appendChild(el('div', { class: 'mech-row' },
+      el('span', { class: 'mech-pts' }, 'QUESTION À ' + m.pts + ' PT' + (m.pts > 1 ? 'S' : '')),
+      el('span', { class: 'mech-hand' + (m.hand ? ' on' : '') }, '✋ LA MAIN'),
+      el('span', { class: 'mech-hint' }, 'Bonne réponse : vous gardez la main')));
+  } else if (m.mode === 'm3') {
+    const dots = el('div', { class: 'mech-dots small' });
+    for (let i = 0; i < 9; i++) dots.appendChild(el('span', { class: 'mech-dot tiny' + (i < m.m3Score ? ' ok' : '') }));
+    box.appendChild(el('div', { class: 'mech-row' },
+      el('span', { class: 'mech-label' }, m.m3Score + '/9'), dots,
+      m.buzzed
+        ? el('span', { class: 'mech-hand on' }, '✋ VOUS AVEZ LA MAIN — RÉPONDEZ !')
+        : el('span', { class: 'mech-buzz-hint' }, '🔔 BUZZEZ POUR PRENDRE LA MAIN')));
+  }
+}
+
+// Reflète l'état « main » sur mon pupitre (halo doré / flash rouge)
+function updateMyPodiumHand(justLost) {
+  const mine = document.querySelector('.podium.me');
+  if (!mine) return;
+  mine.classList.toggle('has-hand', !!_arenaMech.hand);
+  if (justLost) {
+    mine.classList.add('lost-hand');
+    setTimeout(() => mine.classList.remove('lost-hand'), 1200);
+  }
+}
+
 function renderArenaBoard(data) {
   const grid = document.getElementById('arena-grid');
   if (!grid || !data || !Array.isArray(data.participants)) return;
   const g = State.game || {};
-  // Score/progression LOCAUX pour ma carte : réactivité immédiate
+  // Score/progression LOCAUX pour mon pupitre : réactivité immédiate
   const list = data.participants.map(p => {
     const isMe = p.code === Session.code;
     if (isMe && g.score) {
@@ -2507,24 +2657,37 @@ function renderArenaBoard(data) {
     const status = p.finished ? '✓ TERMINÉ'
                  : (p.questionsAnswered > 0 || isMe) ? '🔵 EN JEU'
                  : '⏳ PRÊT';
-    const card = el('div', { class: 'arena-card' + (isMe ? ' me' : '') + (leader ? ' leader' : '') + (p.finished ? ' done' : '') },
-      leader ? el('div', { class: 'arena-crown' }, '👑') : null,
-      el('div', { class: 'arena-avatar', style: `background:linear-gradient(135deg, ${pal[0]}, ${pal[1]});` }, arenaInitials(p.name)),
-      el('div', { class: 'arena-name' }, (p.name || p.code || '').toUpperCase().slice(0, 16)),
-      el('div', { class: 'arena-score', 'data-code': p.code }, String(p.score || 0)),
-      el('div', { class: 'arena-bar' }, el('div', { class: 'arena-bar-fill', style: `width:${pct}%;` })),
-      el('div', { class: 'arena-prog' }, `${p.questionsAnswered || 0}/${p.totalQuestions || '–'} questions`),
-      el('div', { class: 'arena-status' + (p.finished ? ' ok' : '') }, status + (isMe ? ' · VOUS' : ''))
+    const pod = el('div', { class: 'podium' + (isMe ? ' me' : '') + (leader ? ' leader' : '') + (p.finished ? ' done' : ''), 'data-code': p.code },
+      leader ? el('div', { class: 'podium-crown' }, '👑') : null,
+      el('div', { class: 'podium-avatar', style: `background:linear-gradient(135deg, ${pal[0]}, ${pal[1]});` }, arenaInitials(p.name)),
+      el('div', { class: 'podium-desk' },
+        el('button', {
+          class: 'podium-buzzer', type: 'button', title: isMe ? 'Buzzer' : (p.name || p.code),
+          onclick: isMe ? (() => { if (window._arenaBuzz) window._arenaBuzz(); }) : (() => {})
+        }, el('span', { class: 'buzzer-dome' })),
+        el('div', { class: 'podium-name' }, (p.name || p.code || '').toUpperCase().slice(0, 14)),
+        el('div', { class: 'podium-screen' },
+          el('span', { class: 'podium-score', 'data-code': p.code }, String(p.score || 0))),
+        el('div', { class: 'podium-bar' }, el('div', { class: 'podium-bar-fill', style: `width:${pct}%;` })),
+        el('div', { class: 'podium-prog' }, `${p.questionsAnswered || 0}/${p.totalQuestions || '–'}`),
+        el('div', { class: 'podium-status' + (p.finished ? ' ok' : '') }, status + (isMe ? ' · VOUS' : ''))),
+      el('div', { class: 'podium-foot' })
     );
-    grid.appendChild(card);
+    grid.appendChild(pod);
   });
-  // Flash sur les scores qui viennent de changer
+  // État « main » persistant sur mon pupitre + flash sur les scores qui changent
+  updateMyPodiumHand();
   if (renderArenaBoard._prev) {
     list.forEach(p => {
       const before = renderArenaBoard._prev[p.code];
       if (before != null && before !== (p.score || 0)) {
-        const elScore = grid.querySelector(`.arena-score[data-code="${CSS.escape(p.code)}"]`);
-        if (elScore) { elScore.classList.add('bump'); setTimeout(() => elScore.classList.remove('bump'), 700); }
+        const scoreEl = grid.querySelector(`.podium-score[data-code="${CSS.escape(p.code)}"]`);
+        if (scoreEl) { scoreEl.classList.add('bump'); setTimeout(() => scoreEl.classList.remove('bump'), 700); }
+        const pod = grid.querySelector(`.podium[data-code="${CSS.escape(p.code)}"]`);
+        if (pod && p.code !== Session.code) {
+          pod.classList.add('scored');
+          setTimeout(() => pod.classList.remove('scored'), 900);
+        }
       }
     });
   }

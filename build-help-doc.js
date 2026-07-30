@@ -224,7 +224,7 @@ children.push(
   new Paragraph({
     spacing: { before: 200 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'Version 2.36 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
+    children: [new TextRun({ text: 'Version 2.37 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
   }),
   new Paragraph({ children: [new PageBreak()] })
 );
@@ -837,10 +837,10 @@ children.push(
 
 );
 
-// ---------- 9. NOUVEAUTÉS v2.20 → v2.36 ------------------------------
+// ---------- 9. NOUVEAUTÉS v2.20 → v2.37 ------------------------------
 children.push(
   new Paragraph({ children: [new PageBreak()] }),
-  h1('9. Nouveautés v2.20 → v2.36'),
+  h1('9. Nouveautés v2.20 → v2.37'),
   p('Résumé des fonctionnalités ajoutées depuis la première édition de ce guide (v2.18/2.19).'),
 
   h2('Comptes, rôles et connexion'),
@@ -864,7 +864,8 @@ children.push(
   bullet('Éditeur intégré des questions/réponses/sources : super-admin sur tous les domaines (modifications persistantes), admins nommés sur les spécialités importées.'),
   bullet('Base portée à 3 658 questions sur 18 domaines (au moins 200 questions et les 3 manches par domaine), avec renforts majeurs en évaluation d’impact (DID, PSM, IV, RDD, contrôle synthétique, CATE + commandes STATA 18/19) et en IA/LLM technique.'),
   bullet('Durées des trois manches paramétrables (5 à 600 s) ; bouton Aide masquable côté joueur.'),
-  bullet('Plateau TV pour les duels (v2.36) : activé par l’administrateur, il affiche pendant les duels et confrontations un plateau façon émission — chrono digital lumineux, cartes des candidats avec avatar, scores en direct, jauges de progression, statuts et candidat en tête couronné. Les scores en direct sont automatiquement activés.'),
+  bullet('Plateau TV pour les duels (v2.36–v2.37) : activé par l’administrateur, il affiche pendant les duels et confrontations un plateau façon émission — chaque candidat a son pupitre-podium avec buzzeur, écran de score digital et jauge de progression ; chrono digital lumineux, candidat en tête couronné, scores en direct automatiques.'),
+  bullet('Mécaniques du jeu télévisé (v2.37) : Les 4 à la suite (pastilles de série, bannière si sans-faute), Neuf points gagnants (valeur de la question, on garde la main sur bonne réponse, on la perd sinon), Face à face (buzzer obligatoire pour prendre la main avant de répondre, course à 9 points). Le pupitre s’illumine quand on a la main et clignote en rouge quand on la perd.'),
 );
 
 children.push(
