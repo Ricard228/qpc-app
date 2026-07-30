@@ -7200,7 +7200,14 @@
         "QPC-X2VJFGD2": "accepted",
         "QPC-NZXE8MYU": "accepted"
       },
-      "results": {},
+      "results": {
+        "QPC-NZXE8MYU": {
+          "startedAt": "2026-07-30T23:29:07.892Z",
+          "progressScore": 0,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-07-30T23:29:07.892Z"
+        }
+      },
       "winner": null
     }
   ]
