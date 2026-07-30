@@ -7206,6 +7206,12 @@
           "progressScore": 3,
           "progressQ": 3,
           "progressUpdatedAt": "2026-07-30T23:07:13.938Z"
+        },
+        "QPC-VHZKGGQV": {
+          "startedAt": "2026-07-30T23:08:10.334Z",
+          "progressScore": 0,
+          "progressQ": 4,
+          "progressUpdatedAt": "2026-07-30T23:08:17.031Z"
         }
       },
       "winner": null
