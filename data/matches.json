@@ -7215,6 +7215,116 @@
         }
       },
       "winner": null
+    },
+    {
+      "id": "517b3a07585c071c",
+      "type": "duel",
+      "createdAt": "2026-07-30T23:11:15.651Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-MDX45EJ3",
+        "QPC-VHZKGGQV"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "counts": {
+          "manche1": 1
+        },
+        "domains": [],
+        "liveScoreboard": false,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-668",
+              "type": "manche1",
+              "titre": "Bourse régionale — Consolidation v35 — Série 7",
+              "theme": "Bourse régionale",
+              "domain": "Marchés financiers UEMOA / BRVM",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-668-q1",
+                  "q": "Que désigne « l'ordre au marché » ?",
+                  "r": "L'ordre exécuté immédiatement au meilleur prix disponible",
+                  "choices": [
+                    "L'ordre exécuté immédiatement au meilleur prix disponible",
+                    "Le volume d'ordres disponible aux différents niveaux de prix",
+                    "La division du nominal qui multiplie le nombre de titres",
+                    "Le document visé par le régulateur présentant une émission au public"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "L'ordre au marché : l'ordre exécuté immédiatement au meilleur prix disponible.",
+                  "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-668-q2",
+                  "q": "Que désigne « la fourchette de cotation » ?",
+                  "r": "L'écart entre le meilleur prix acheteur et le meilleur prix vendeur",
+                  "choices": [
+                    "L'écart entre le meilleur prix acheteur et le meilleur prix vendeur",
+                    "L'ampleur des variations de prix d'un actif",
+                    "La distribution ponctuelle hors politique habituelle",
+                    "Le document détaillé exigé pour l'appel public à l'épargne"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La fourchette de cotation : l'écart entre le meilleur prix acheteur et le meilleur prix vendeur.",
+                  "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-668-q3",
+                  "q": "Que désigne « la profondeur du marché » ?",
+                  "r": "Le volume d'ordres disponible aux différents niveaux de prix",
+                  "choices": [
+                    "Le volume d'ordres disponible aux différents niveaux de prix",
+                    "La part du capital réellement disponible aux échanges en bourse",
+                    "La date à partir de laquelle l'action se négocie sans le dividende",
+                    "L'intermédiaire qui affiche en permanence des prix acheteur et vendeur"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La profondeur du marché : le volume d'ordres disponible aux différents niveaux de prix.",
+                  "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-668-q4",
+                  "q": "Que désigne « la volatilité » ?",
+                  "r": "L'ampleur des variations de prix d'un actif",
+                  "choices": [
+                    "L'ampleur des variations de prix d'un actif",
+                    "La division du nominal qui multiplie le nombre de titres",
+                    "L'émission d'actions nouvelles pour lever des fonds propres",
+                    "Le dénouement simultané du paiement et du transfert des titres"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La volatilité : l'ampleur des variations de prix d'un actif.",
+                  "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res",
+                  "pts": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-MDX45EJ3": "accepted",
+        "QPC-VHZKGGQV": "accepted"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
