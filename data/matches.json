@@ -6265,6 +6265,131 @@
         }
       },
       "winner": "QPC-NZXE8MYU"
+    },
+    {
+      "id": "2ef221cc33dd95dd",
+      "type": "tournament",
+      "createdAt": "2026-07-30T20:06:02.067Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-YHD6V97S",
+        "QPC-U23YACEH",
+        "QPC-A4URHTEJ"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "counts": {
+          "manche1": 1
+        },
+        "domains": [],
+        "liveScoreboard": false,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-637",
+              "type": "manche1",
+              "titre": "Fiscalité togolaise — Consolidation v35 — Série 4",
+              "theme": "Fiscalité togolaise",
+              "domain": "Fiscalité (Togo)",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-637-q1",
+                  "q": "Une retenue à la source de 5 % s'applique à une prestation de 4 800 000 FCFA. Montant retenu :",
+                  "r": "240 000 FCFA",
+                  "choices": [
+                    "240 000 FCFA",
+                    "480 000 FCFA",
+                    "120 000 FCFA",
+                    "4 800 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Retenue = 5 % × 4 800 000 = 240 000 FCFA, reversée à l'OTR par la partie versante.",
+                  "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-637-q2",
+                  "q": "Une retenue à la source de 3 % s'applique à une prestation de 900 000 FCFA. Montant retenu :",
+                  "r": "27 000 FCFA",
+                  "choices": [
+                    "27 000 FCFA",
+                    "54 000 FCFA",
+                    "13 500 FCFA",
+                    "900 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Retenue = 3 % × 900 000 = 27 000 FCFA, reversée à l'OTR par la partie versante.",
+                  "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-637-q3",
+                  "q": "Une retenue à la source de 10 % s'applique à une prestation de 5 400 000 FCFA. Montant retenu :",
+                  "r": "540 000 FCFA",
+                  "choices": [
+                    "540 000 FCFA",
+                    "1 080 000 FCFA",
+                    "270 000 FCFA",
+                    "5 400 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Retenue = 10 % × 5 400 000 = 540 000 FCFA, reversée à l'OTR par la partie versante.",
+                  "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-637-q4",
+                  "q": "Une retenue à la source de 5 % s'applique à une prestation de 2 100 000 FCFA. Montant retenu :",
+                  "r": "105 000 FCFA",
+                  "choices": [
+                    "105 000 FCFA",
+                    "210 000 FCFA",
+                    "52 500 FCFA",
+                    "2 100 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Retenue = 5 % × 2 100 000 = 105 000 FCFA, reversée à l'OTR par la partie versante.",
+                  "ref": "https://fr.wikipedia.org/wiki/Retenue_%C3%A0_la_source",
+                  "pts": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-YHD6V97S": "accepted",
+        "QPC-U23YACEH": "accepted",
+        "QPC-A4URHTEJ": "accepted"
+      },
+      "results": {
+        "QPC-YHD6V97S": {
+          "startedAt": "2026-07-30T20:06:02.093Z",
+          "progressScore": 2,
+          "progressQ": 2,
+          "progressUpdatedAt": "2026-07-30T20:06:02.093Z"
+        },
+        "QPC-U23YACEH": {
+          "startedAt": "2026-07-30T20:06:02.111Z",
+          "progressScore": 4,
+          "progressQ": 3,
+          "progressUpdatedAt": "2026-07-30T20:06:02.112Z"
+        }
+      },
+      "winner": null
     }
   ]
 }
