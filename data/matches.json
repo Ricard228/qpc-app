@@ -7323,7 +7323,79 @@
         "QPC-MDX45EJ3": "accepted",
         "QPC-VHZKGGQV": "accepted"
       },
-      "results": {},
+      "results": {
+        "QPC-VHZKGGQV": {
+          "startedAt": "2026-07-30T23:11:29.555Z",
+          "completedAt": "2026-07-30T23:11:37.247Z",
+          "totalScore": 4,
+          "byManche": {
+            "manche1": 4,
+            "manche2": 0,
+            "manche3": 0
+          },
+          "nbQuestions": 4,
+          "nbCorrect": 4,
+          "nbWrong": 0,
+          "log": [
+            {
+              "manche": "manche1",
+              "packId": "manche1-668",
+              "packTitle": "Bourse régionale — Consolidation v35 — Série 7",
+              "qid": "manche1-668-q1",
+              "q": "Que désigne « l'ordre au marché » ?",
+              "expected": "L'ordre exécuté immédiatement au meilleur prix disponible",
+              "given": "L'ordre exécuté immédiatement au meilleur prix disponible",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "L'ordre au marché : l'ordre exécuté immédiatement au meilleur prix disponible.",
+              "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-668",
+              "packTitle": "Bourse régionale — Consolidation v35 — Série 7",
+              "qid": "manche1-668-q2",
+              "q": "Que désigne « la fourchette de cotation » ?",
+              "expected": "L'écart entre le meilleur prix acheteur et le meilleur prix vendeur",
+              "given": "L'écart entre le meilleur prix acheteur et le meilleur prix vendeur",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "La fourchette de cotation : l'écart entre le meilleur prix acheteur et le meilleur prix vendeur.",
+              "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-668",
+              "packTitle": "Bourse régionale — Consolidation v35 — Série 7",
+              "qid": "manche1-668-q3",
+              "q": "Que désigne « la profondeur du marché » ?",
+              "expected": "Le volume d'ordres disponible aux différents niveaux de prix",
+              "given": "Le volume d'ordres disponible aux différents niveaux de prix",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "La profondeur du marché : le volume d'ordres disponible aux différents niveaux de prix.",
+              "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-668",
+              "packTitle": "Bourse régionale — Consolidation v35 — Série 7",
+              "qid": "manche1-668-q4",
+              "q": "Que désigne « la volatilité » ?",
+              "expected": "L'ampleur des variations de prix d'un actif",
+              "given": "L'ampleur des variations de prix d'un actif",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "La volatilité : l'ampleur des variations de prix d'un actif.",
+              "ref": "https://fr.wikipedia.org/wiki/Bourse_r%C3%A9gionale_des_valeurs_mobili%C3%A8res"
+            }
+          ]
+        }
+      },
       "winner": null
     }
   ]
