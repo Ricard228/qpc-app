@@ -6829,7 +6829,14 @@
         "QPC-3VY2WXWP": "accepted",
         "QPC-NZXE8MYU": "accepted"
       },
-      "results": {},
+      "results": {
+        "QPC-3VY2WXWP": {
+          "startedAt": "2026-07-30T21:22:09.246Z",
+          "progressScore": 0,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-07-30T21:22:09.246Z"
+        }
+      },
       "winner": null
     }
   ]
