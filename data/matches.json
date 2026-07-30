@@ -7206,6 +7206,12 @@
           "progressScore": 0,
           "progressQ": 1,
           "progressUpdatedAt": "2026-07-30T23:29:07.892Z"
+        },
+        "QPC-X2VJFGD2": {
+          "startedAt": "2026-07-30T23:29:15.655Z",
+          "progressScore": 0,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-07-30T23:29:15.655Z"
         }
       },
       "winner": null
