@@ -6807,6 +6807,401 @@
         }
       },
       "winner": "QPC-NZXE8MYU"
+    },
+    {
+      "id": "eea4d45b4313c3ea",
+      "type": "duel",
+      "createdAt": "2026-07-30T23:26:37.426Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-X2VJFGD2",
+        "QPC-NZXE8MYU"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1",
+          "manche2",
+          "manche3"
+        ],
+        "counts": {
+          "manche1": 1,
+          "manche2": 1,
+          "manche3": 0
+        },
+        "domains": [],
+        "liveScoreboard": true,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-444",
+              "type": "manche1",
+              "titre": "Machine learning — calculs d'entraînement — Série 7",
+              "theme": "Apprentissage automatique",
+              "domain": "Machine learning et deep learning",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-444-q1",
+                  "q": "Jeu de 800 exemples, batchs de 32, 30 époques. Nombre total d'itérations (mises à jour) :",
+                  "r": "750",
+                  "choices": [
+                    "750",
+                    "1 500",
+                    "375",
+                    "800"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Itérations = (n ÷ batch) × époques = (800 ÷ 32) × 30 = 750.",
+                  "ref": "https://fr.wikipedia.org/wiki/Descente_de_gradient_stochastique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-444-q2",
+                  "q": "Jeu de 6 000 exemples, batchs de 60, 15 époques. Nombre total d'itérations (mises à jour) :",
+                  "r": "1 500",
+                  "choices": [
+                    "1 500",
+                    "3 000",
+                    "750",
+                    "6 000"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Itérations = (n ÷ batch) × époques = (6 000 ÷ 60) × 15 = 1 500.",
+                  "ref": "https://fr.wikipedia.org/wiki/Descente_de_gradient_stochastique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-444-q3",
+                  "q": "Jeu de 1 600 exemples, batchs de 64, 50 époques. Nombre total d'itérations (mises à jour) :",
+                  "r": "1 250",
+                  "choices": [
+                    "1 250",
+                    "2 500",
+                    "625",
+                    "1 600"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Itérations = (n ÷ batch) × époques = (1 600 ÷ 64) × 50 = 1 250.",
+                  "ref": "https://fr.wikipedia.org/wiki/Descente_de_gradient_stochastique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-444-q4",
+                  "q": "Jeu de 4 000 exemples, batchs de 80, 8 époques. Nombre total d'itérations (mises à jour) :",
+                  "r": "400",
+                  "choices": [
+                    "400",
+                    "800",
+                    "200",
+                    "4 000"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Itérations = (n ÷ batch) × époques = (4 000 ÷ 80) × 8 = 400.",
+                  "ref": "https://fr.wikipedia.org/wiki/Descente_de_gradient_stochastique",
+                  "pts": 1
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche2",
+            "pack": {
+              "id": "manche2-75",
+              "type": "manche2",
+              "titre": "Économie — Face-à-face v35 B",
+              "theme": "Économie agricole",
+              "domain": "Économie agricole et agribusiness",
+              "timing": "25 s / question",
+              "questions": [
+                {
+                  "id": "manche2-75-q1",
+                  "q": "Comment appelle-t-on : l'organisation réunissant tous les maillons d'une filière ?",
+                  "r": "L'interprofession",
+                  "choices": [
+                    "L'interprofession",
+                    "Le prix bord champ",
+                    "Le conseil agricole",
+                    "Le bas-fond"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "L'interprofession : l'organisation réunissant tous les maillons d'une filière.",
+                  "ref": "https://fr.wikipedia.org/wiki/Agriculture",
+                  "pts": 1
+                },
+                {
+                  "id": "manche2-75-q2",
+                  "q": "Comment appelle-t-on : le prix payé au producteur sur le lieu de récolte ?",
+                  "r": "Le prix bord champ",
+                  "choices": [
+                    "Le prix bord champ",
+                    "Le prix plancher garanti",
+                    "Le champ école paysan",
+                    "Le périmètre irrigué"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le prix bord champ : le prix payé au producteur sur le lieu de récolte.",
+                  "ref": "https://fr.wikipedia.org/wiki/Agriculture",
+                  "pts": 2
+                },
+                {
+                  "id": "manche2-75-q3",
+                  "q": "Comment appelle-t-on : le prix minimal assuré aux producteurs par les pouvoirs publics ?",
+                  "r": "Le prix plancher garanti",
+                  "choices": [
+                    "Le prix plancher garanti",
+                    "Le conseil agricole",
+                    "La mécanisation",
+                    "La sécurisation foncière"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le prix plancher garanti : le prix minimal assuré aux producteurs par les pouvoirs publics.",
+                  "ref": "https://fr.wikipedia.org/wiki/Agriculture",
+                  "pts": 3
+                },
+                {
+                  "id": "manche2-75-q4",
+                  "q": "Comment appelle-t-on : l'accompagnement technique des producteurs par des conseillers ?",
+                  "r": "Le conseil agricole",
+                  "choices": [
+                    "Le conseil agricole",
+                    "Le champ école paysan",
+                    "L'irrigation goutte à goutte",
+                    "La campagne agricole"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le conseil agricole : l'accompagnement technique des producteurs par des conseillers.",
+                  "ref": "https://fr.wikipedia.org/wiki/Agriculture",
+                  "pts": 4
+                },
+                {
+                  "id": "manche2-75-q5",
+                  "q": "Comment appelle-t-on : la parcelle d'apprentissage collectif par l'expérimentation ?",
+                  "r": "Le champ école paysan",
+                  "choices": [
+                    "Le champ école paysan",
+                    "La mécanisation",
+                    "Le bas-fond",
+                    "La soudure"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le champ école paysan : la parcelle d'apprentissage collectif par l'expérimentation.",
+                  "ref": "https://fr.wikipedia.org/wiki/Agriculture",
+                  "pts": 5
+                },
+                {
+                  "id": "manche2-75-q6",
+                  "q": "Comment appelle-t-on : l'introduction de machines dans les opérations agricoles ?",
+                  "r": "La mécanisation",
+                  "choices": [
+                    "La mécanisation",
+                    "L'irrigation goutte à goutte",
+                    "Le périmètre irrigué",
+                    "Le calendrier cultural"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La mécanisation : l'introduction de machines dans les opérations agricoles.",
+                  "ref": "https://fr.wikipedia.org/wiki/Agriculture",
+                  "pts": 6
+                }
+              ]
+            }
+          },
+          {
+            "manche": "manche3",
+            "pack": {
+              "id": "manche3-42",
+              "type": "manche3",
+              "titre": "Statistiques — Finale v35 B",
+              "theme": "Méthodes quantitatives",
+              "domain": "Statistiques et économétrie",
+              "timing": "Buzz libre — 1 min 30 — 1 point par bonne réponse — 9 points gagnants",
+              "questions": [
+                {
+                  "id": "manche3-42-q1",
+                  "q": "Comment appelle-t-on : l'observation anormalement éloignée du reste de la distribution ?",
+                  "r": "La valeur aberrante",
+                  "choices": [
+                    "La valeur aberrante",
+                    "L'étendue",
+                    "Le coefficient de variation",
+                    "Le nuage de points"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La valeur aberrante : l'observation anormalement éloignée du reste de la distribution.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q2",
+                  "q": "Comment appelle-t-on : l'écart entre la valeur maximale et la valeur minimale d'une série ?",
+                  "r": "L'étendue",
+                  "choices": [
+                    "L'étendue",
+                    "L'écart interquartile",
+                    "L'asymétrie",
+                    "La droite des moindres carrés"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "L'étendue : l'écart entre la valeur maximale et la valeur minimale d'une série.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q3",
+                  "q": "Comment appelle-t-on : la dispersion des cinquante pour cent centraux de la distribution ?",
+                  "r": "L'écart interquartile",
+                  "choices": [
+                    "L'écart interquartile",
+                    "Le coefficient de variation",
+                    "L'aplatissement",
+                    "Le résidu"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "L'écart interquartile : la dispersion des cinquante pour cent centraux de la distribution.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q4",
+                  "q": "Comment appelle-t-on : l'écart type rapporté à la moyenne pour comparer des dispersions ?",
+                  "r": "Le coefficient de variation",
+                  "choices": [
+                    "Le coefficient de variation",
+                    "L'asymétrie",
+                    "La covariance",
+                    "La valeur ajustée"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le coefficient de variation : l'écart type rapporté à la moyenne pour comparer des dispersions.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q5",
+                  "q": "Comment appelle-t-on : le degré de déformation d'une distribution par rapport à la symétrie ?",
+                  "r": "L'asymétrie",
+                  "choices": [
+                    "L'asymétrie",
+                    "L'aplatissement",
+                    "Le nuage de points",
+                    "Le coefficient standardisé"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "L'asymétrie : le degré de déformation d'une distribution par rapport à la symétrie.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q6",
+                  "q": "Comment appelle-t-on : l'épaisseur des queues d'une distribution comparée à la loi normale ?",
+                  "r": "L'aplatissement",
+                  "choices": [
+                    "L'aplatissement",
+                    "La covariance",
+                    "La droite des moindres carrés",
+                    "La variable muette"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "L'aplatissement : l'épaisseur des queues d'une distribution comparée à la loi normale.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q7",
+                  "q": "Comment appelle-t-on : la mesure de variation conjointe de deux variables ?",
+                  "r": "La covariance",
+                  "choices": [
+                    "La covariance",
+                    "Le nuage de points",
+                    "Le résidu",
+                    "L'interaction"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La covariance : la mesure de variation conjointe de deux variables.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q8",
+                  "q": "Comment appelle-t-on : la représentation graphique des couples d'observations de deux variables ?",
+                  "r": "Le nuage de points",
+                  "choices": [
+                    "Le nuage de points",
+                    "La droite des moindres carrés",
+                    "La valeur ajustée",
+                    "La forme fonctionnelle"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Le nuage de points : la représentation graphique des couples d'observations de deux variables.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                },
+                {
+                  "id": "manche3-42-q9",
+                  "q": "Comment appelle-t-on : la droite qui minimise la somme des carrés des écarts verticaux ?",
+                  "r": "La droite des moindres carrés",
+                  "choices": [
+                    "La droite des moindres carrés",
+                    "Le résidu",
+                    "Le coefficient standardisé",
+                    "Le logarithme en économétrie"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "La droite des moindres carrés : la droite qui minimise la somme des carrés des écarts verticaux.",
+                  "ref": "https://fr.wikipedia.org/wiki/Statistique",
+                  "pts": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-X2VJFGD2": "accepted",
+        "QPC-NZXE8MYU": "accepted"
+      },
+      "results": {},
+      "winner": null
     }
   ]
 }
