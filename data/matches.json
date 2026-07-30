@@ -6497,15 +6497,164 @@
       "results": {
         "QPC-NZXE8MYU": {
           "startedAt": "2026-07-30T21:25:40.925Z",
-          "progressScore": 15,
-          "progressQ": 9,
-          "progressUpdatedAt": "2026-07-30T21:27:17.405Z"
+          "completedAt": "2026-07-30T21:27:26.883Z",
+          "totalScore": 21,
+          "byManche": {
+            "manche1": 0,
+            "manche2": 21,
+            "manche3": 0
+          },
+          "nbQuestions": 10,
+          "nbCorrect": 6,
+          "nbWrong": 4,
+          "log": [
+            {
+              "manche": "manche1",
+              "packId": "manche1-84",
+              "packTitle": "Structures de marché",
+              "qid": "manche1-84-q1",
+              "q": "En concurrence pure et parfaite, quel est le profit économique de long terme ?",
+              "expected": "Nul à long terme",
+              "given": "Le modèle de Bertrand",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Les 5 conditions de la CPP (atomicité, homogénéité, libre entrée/sortie, transparence, mobilité des facteurs) impliquent que tout profit positif attire de nouveaux entrants jusqu'à élimination du surprofit. À long terme : P = CM = CMU min. Une firme couvre ses coûts d'opportunité (profit comptable existe, profit économique = 0).",
+              "ref": "Marshall, 1890 ; Varian chap. 23.  → https://fr.wikipedia.org/w/index.php?search=Nul%20%C3%A0%20long%20terme  → https://fr.wikipedia.org/wiki/Microéconomie"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-84",
+              "packTitle": "Structures de marché",
+              "qid": "manche1-84-q2",
+              "q": "Le monopole maximise son profit lorsque…",
+              "expected": "Rm = CM",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Condition d'optimum universelle des firmes en présence de pouvoir de marché. Le prix est ensuite tiré de la courbe de demande au-dessus du point Rm = CM. Marge prix-coût = indice de Lerner = (P − CM)/P = −1/ε (lié à l'élasticité de la demande).",
+              "ref": "Cournot, 1838 ; Lerner, 1934.  → https://fr.wikipedia.org/w/index.php?search=Rm%20%3D%20CM  → https://fr.wikipedia.org/wiki/Microéconomie"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-84",
+              "packTitle": "Structures de marché",
+              "qid": "manche1-84-q3",
+              "q": "Qu'est-ce que la concurrence monopolistique ?",
+              "expected": "Produits différenciés + libre entrée",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Modèle de Chamberlin (1933) et Robinson (1933). Chaque firme a un pouvoir de monopole limité grâce à la différenciation (marque, design, localisation), mais la libre entrée annule les surprofits à long terme. P > CM mais profit = 0. Exemple : restaurants, parfumerie, librairies.",
+              "ref": "Chamberlin, \"The Theory of Monopolistic Competition\", 1933.  → https://fr.wikipedia.org/w/index.php?search=Produits%20diff%C3%A9renci%C3%A9s%20%2B%20libre%20entr%C3%A9e  → https://fr.wikipedia.org/wiki/Microéconomie"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-84",
+              "packTitle": "Structures de marché",
+              "qid": "manche1-84-q4",
+              "q": "Dans l'oligopole de Cournot, les firmes choisissent…",
+              "expected": "Quantités simultanées (équilibre de Nash en quantités)",
+              "given": "(temps écoulé)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Cournot (1838) : chaque firme maximise son profit en supposant que la quantité de l'autre est donnée. Solution par fonctions de réaction. À 2 firmes symétriques, chacune produit 1/3 de la quantité concurrentielle (vs 1/2 en monopole). Plus le nombre de firmes augmente, plus on tend vers la CPP.",
+              "ref": "Cournot, \"Recherches sur les principes mathématiques de la théorie des richesses\", 1838.  → https://fr.wikipedia.org/w/index.php?search=Quantit%C3%A9s%20simultan%C3%A9es  → https://fr.wikipedia.org/wiki/Microéconomie"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-6",
+              "packTitle": "Duel 6",
+              "qid": "manche2-6-q1",
+              "q": "Quelle probabilité, associée à la statistique de test observée, est comparée au seuil de significativité ?",
+              "expected": "La p-value (valeur-p)",
+              "given": "La p-value (valeur-p)",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "P(T ≥ t_obs | H₀) ; rejet si p < α ; débats sur son interprétation.",
+              "ref": "R.A. Fisher, Statistical Methods for Research Workers, 1925.  → https://fr.wikipedia.org/w/index.php?search=p-value  → https://stats.oecd.org/"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-6",
+              "packTitle": "Duel 6",
+              "qid": "manche2-6-q2",
+              "q": "Quel test paramétrique, publié sous le pseudonyme « Student », compare les moyennes de deux échantillons ?",
+              "expected": "Le test t",
+              "given": "Le test t",
+              "correct": true,
+              "pts": 2,
+              "awarded": 2,
+              "explain": "W. Gosset, employé chez Guinness, signait « Student » pour préserver le secret commercial.",
+              "ref": "Student, Biometrika, 1908.  → https://fr.wikipedia.org/w/index.php?search=test%20t  → https://stats.oecd.org/"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-6",
+              "packTitle": "Duel 6",
+              "qid": "manche2-6-q3",
+              "q": "Quelle méthode d'estimation choisit les paramètres qui rendent les données observées les plus probables ?",
+              "expected": "Le maximum de vraisemblance (MLE)",
+              "given": "Le maximum de vraisemblance (MLE)",
+              "correct": true,
+              "pts": 3,
+              "awarded": 3,
+              "explain": "L(θ) = Π f(xᵢ;θ) ; estimateur consistant, asymptotiquement normal et efficace.",
+              "ref": "R.A. Fisher, Phil. Trans. Royal Society A, 1922.  → https://fr.wikipedia.org/w/index.php?search=maximum%20de%20vraisemblance  → https://stats.oecd.org/"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-6",
+              "packTitle": "Duel 6",
+              "qid": "manche2-6-q4",
+              "q": "Quelle approche statistique combine une distribution a priori et la vraisemblance pour mettre à jour les croyances ?",
+              "expected": "L'inférence bayésienne",
+              "given": "L'inférence bayésienne",
+              "correct": true,
+              "pts": 4,
+              "awarded": 4,
+              "explain": "P(θ|x) ∝ P(x|θ) P(θ) ; choix du prior crucial.",
+              "ref": "T. Bayes, Phil. Trans. Royal Society, 1763 (posthume).  → https://fr.wikipedia.org/w/index.php?search=inf%C3%A9rence%20bay%C3%A9sienne  → https://stats.oecd.org/"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-6",
+              "packTitle": "Duel 6",
+              "qid": "manche2-6-q5",
+              "q": "Quelle famille d'algorithmes échantillonne efficacement des distributions postérieures complexes en statistique bayésienne ?",
+              "expected": "Les méthodes MCMC (Metropolis-Hastings, Gibbs)",
+              "given": "Les méthodes MCMC (Metropolis-Hastings, Gibbs)",
+              "correct": true,
+              "pts": 5,
+              "awarded": 5,
+              "explain": "Révolution bayésienne computationnelle des années 1990.",
+              "ref": "Metropolis et al. (1953) ; Hastings (1970).  → https://fr.wikipedia.org/w/index.php?search=m%C3%A9thodes%20MCMC  → https://stats.oecd.org/"
+            },
+            {
+              "manche": "manche2",
+              "packId": "manche2-6",
+              "packTitle": "Duel 6",
+              "qid": "manche2-6-q6",
+              "q": "Quel paradoxe illustre l'inversion possible d'une corrélation lorsqu'on agrège deux sous-populations ?",
+              "expected": "Le paradoxe de Simpson",
+              "given": "Le paradoxe de Simpson",
+              "correct": true,
+              "pts": 6,
+              "awarded": 6,
+              "explain": "Exemple classique : admissions à Berkeley, 1973 ; impose la stratification.",
+              "ref": "E. Simpson, JRSS B, 1951.  → https://fr.wikipedia.org/w/index.php?search=paradoxe%20de%20Simpson  → https://stats.oecd.org/"
+            }
+          ]
         },
         "QPC-3VY2WXWP": {
           "startedAt": "2026-07-30T21:26:13.336Z",
           "progressScore": 6,
-          "progressQ": 8,
-          "progressUpdatedAt": "2026-07-30T21:26:59.513Z"
+          "progressQ": 9,
+          "progressUpdatedAt": "2026-07-30T21:27:22.208Z"
         }
       },
       "winner": null
