@@ -6586,9 +6586,74 @@
         },
         "QPC-A4URHTEJ": {
           "startedAt": "2026-07-30T20:09:56.308Z",
-          "progressScore": 1,
-          "progressQ": 1,
-          "progressUpdatedAt": "2026-07-30T20:09:56.308Z"
+          "completedAt": "2026-07-30T20:11:39.852Z",
+          "totalScore": 1,
+          "byManche": {
+            "manche1": 1,
+            "manche2": 0,
+            "manche3": 0
+          },
+          "nbQuestions": 4,
+          "nbCorrect": 1,
+          "nbWrong": 3,
+          "log": [
+            {
+              "manche": "manche1",
+              "packId": "manche1-163",
+              "packTitle": "Comptabilité — approfondissement — Série 8",
+              "qid": "manche1-163-q1",
+              "q": "Un matériel acquis 10 000 000 FCFA est amorti linéairement sur 5 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+              "expected": "2 000 000 FCFA",
+              "given": "2 000 000 FCFA",
+              "correct": true,
+              "pts": 1,
+              "awarded": 1,
+              "explain": "Annuité = 10 000 000 ÷ 5 = 2 000 000 FCFA par an.",
+              "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-163",
+              "packTitle": "Comptabilité — approfondissement — Série 8",
+              "qid": "manche1-163-q2",
+              "q": "Un matériel acquis 24 000 000 FCFA est amorti linéairement sur 8 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+              "expected": "3 000 000 FCFA",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Annuité = 24 000 000 ÷ 8 = 3 000 000 FCFA par an.",
+              "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-163",
+              "packTitle": "Comptabilité — approfondissement — Série 8",
+              "qid": "manche1-163-q3",
+              "q": "Un matériel acquis 15 000 000 FCFA est amorti linéairement sur 10 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+              "expected": "1 500 000 FCFA",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Annuité = 15 000 000 ÷ 10 = 1 500 000 FCFA par an.",
+              "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable"
+            },
+            {
+              "manche": "manche1",
+              "packId": "manche1-163",
+              "packTitle": "Comptabilité — approfondissement — Série 8",
+              "qid": "manche1-163-q4",
+              "q": "Un matériel acquis 36 000 000 FCFA est amorti linéairement sur 6 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+              "expected": "6 000 000 FCFA",
+              "given": "(passée)",
+              "correct": false,
+              "pts": 1,
+              "awarded": 0,
+              "explain": "Annuité = 36 000 000 ÷ 6 = 6 000 000 FCFA par an.",
+              "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable"
+            }
+          ]
         }
       },
       "winner": null
