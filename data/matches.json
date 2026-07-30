@@ -6583,6 +6583,12 @@
           "progressScore": 4,
           "progressQ": 3,
           "progressUpdatedAt": "2026-07-30T20:09:04.701Z"
+        },
+        "QPC-A4URHTEJ": {
+          "startedAt": "2026-07-30T20:09:56.308Z",
+          "progressScore": 1,
+          "progressQ": 1,
+          "progressUpdatedAt": "2026-07-30T20:09:56.308Z"
         }
       },
       "winner": null
