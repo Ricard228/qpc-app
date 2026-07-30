@@ -6461,6 +6461,131 @@
         }
       },
       "winner": null
+    },
+    {
+      "id": "be811d8f81b597e9",
+      "type": "tournament",
+      "createdAt": "2026-07-30T20:09:04.663Z",
+      "createdBy": "admin",
+      "participants": [
+        "QPC-YHD6V97S",
+        "QPC-U23YACEH",
+        "QPC-A4URHTEJ"
+      ],
+      "status": "active",
+      "config": {
+        "manches": [
+          "manche1"
+        ],
+        "counts": {
+          "manche1": 1
+        },
+        "domains": [],
+        "liveScoreboard": false,
+        "packs": [
+          {
+            "manche": "manche1",
+            "pack": {
+              "id": "manche1-163",
+              "type": "manche1",
+              "titre": "Comptabilité — approfondissement — Série 8",
+              "theme": "Comptabilité OHADA",
+              "domain": "Comptabilité générale et analytique",
+              "timing": null,
+              "questions": [
+                {
+                  "id": "manche1-163-q1",
+                  "q": "Un matériel acquis 10 000 000 FCFA est amorti linéairement sur 5 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+                  "r": "2 000 000 FCFA",
+                  "choices": [
+                    "2 000 000 FCFA",
+                    "4 000 000 FCFA",
+                    "1 000 000 FCFA",
+                    "2 700 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Annuité = 10 000 000 ÷ 5 = 2 000 000 FCFA par an.",
+                  "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-163-q2",
+                  "q": "Un matériel acquis 24 000 000 FCFA est amorti linéairement sur 8 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+                  "r": "3 000 000 FCFA",
+                  "choices": [
+                    "3 000 000 FCFA",
+                    "6 000 000 FCFA",
+                    "1 500 000 FCFA",
+                    "6 480 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Annuité = 24 000 000 ÷ 8 = 3 000 000 FCFA par an.",
+                  "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-163-q3",
+                  "q": "Un matériel acquis 15 000 000 FCFA est amorti linéairement sur 10 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+                  "r": "1 500 000 FCFA",
+                  "choices": [
+                    "1 500 000 FCFA",
+                    "3 000 000 FCFA",
+                    "750 000 FCFA",
+                    "4 050 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Annuité = 15 000 000 ÷ 10 = 1 500 000 FCFA par an.",
+                  "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable",
+                  "pts": 1
+                },
+                {
+                  "id": "manche1-163-q4",
+                  "q": "Un matériel acquis 36 000 000 FCFA est amorti linéairement sur 6 ans (valeur résiduelle nulle). Annuité d'amortissement :",
+                  "r": "6 000 000 FCFA",
+                  "choices": [
+                    "6 000 000 FCFA",
+                    "12 000 000 FCFA",
+                    "3 000 000 FCFA",
+                    "9 720 000 FCFA"
+                  ],
+                  "correctIndices": [
+                    0
+                  ],
+                  "e": "Annuité = 36 000 000 ÷ 6 = 6 000 000 FCFA par an.",
+                  "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable",
+                  "pts": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "QPC-YHD6V97S": "accepted",
+        "QPC-U23YACEH": "accepted",
+        "QPC-A4URHTEJ": "accepted"
+      },
+      "results": {
+        "QPC-YHD6V97S": {
+          "startedAt": "2026-07-30T20:09:04.691Z",
+          "progressScore": 2,
+          "progressQ": 2,
+          "progressUpdatedAt": "2026-07-30T20:09:04.691Z"
+        },
+        "QPC-U23YACEH": {
+          "startedAt": "2026-07-30T20:09:04.701Z",
+          "progressScore": 4,
+          "progressQ": 3,
+          "progressUpdatedAt": "2026-07-30T20:09:04.701Z"
+        }
+      },
+      "winner": null
     }
   ]
 }
