@@ -15,6 +15,7 @@ data/matches.json
 data/custom-packs.json
 data/certificates.json
 data/question-edits.json
+data/cert-branding.json
 data/profiles/
 
 # Macros de build / archives

@@ -224,7 +224,7 @@ children.push(
   new Paragraph({
     spacing: { before: 200 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'Version 2.37 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
+    children: [new TextRun({ text: 'Version 2.38 — juillet 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
   }),
   new Paragraph({ children: [new PageBreak()] })
 );
@@ -837,10 +837,10 @@ children.push(
 
 );
 
-// ---------- 9. NOUVEAUTÉS v2.20 → v2.37 ------------------------------
+// ---------- 9. NOUVEAUTÉS v2.20 → v2.38 ------------------------------
 children.push(
   new Paragraph({ children: [new PageBreak()] }),
-  h1('9. Nouveautés v2.20 → v2.37'),
+  h1('9. Nouveautés v2.20 → v2.38'),
   p('Résumé des fonctionnalités ajoutées depuis la première édition de ce guide (v2.18/2.19).'),
 
   h2('Comptes, rôles et connexion'),
@@ -866,6 +866,7 @@ children.push(
   bullet('Durées des trois manches paramétrables (5 à 600 s) ; bouton Aide masquable côté joueur.'),
   bullet('Plateau TV pour les duels (v2.36–v2.37) : activé par l’administrateur, il affiche pendant les duels et confrontations un plateau façon émission — chaque candidat a son pupitre-podium avec buzzeur, écran de score digital et jauge de progression ; chrono digital lumineux, candidat en tête couronné, scores en direct automatiques.'),
   bullet('Mécaniques du jeu télévisé (v2.37) : Les 4 à la suite (pastilles de série, bannière si sans-faute), Neuf points gagnants (valeur de la question, on garde la main sur bonne réponse, on la perd sinon), Face à face (buzzer obligatoire pour prendre la main avant de répondre, course à 9 points). Le pupitre s’illumine quand on a la main et clignote en rouge quand on la perd.'),
+  bullet('Certificats authentifiables (v2.38) : chaque certificat porte un QR code d’authenticité qui ouvre la page publique de vérification (titulaire, parcours, niveau, score, distinction, date, institution — vérification aussi possible en saisissant le numéro sur /verifier.html). L’administrateur peut définir le nom de l’institution certifiante et charger son logo : ils s’impriment sur tous les certificats.'),
 );
 
 children.push(

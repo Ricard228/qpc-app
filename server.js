@@ -12,6 +12,7 @@ const XLSX    = require('xlsx');
 const multer  = require('multer');
 const mammoth = require('mammoth');
 const { PDFParse } = require('pdf-parse');
+const QRCode  = require('qrcode');           // v2.38 : QR d'authenticité sur les certificats
 
 // Upload en mémoire (jamais persisté sur disque), limité à 10 Mo
 const uploadMem = multer({
@@ -104,6 +105,7 @@ const CUSTOM_PATH    = path.join(DATA, 'custom-packs.json');
 const QUESTIONS_PATH = path.join(DATA, 'questions.json');
 const EDITS_PATH     = path.join(DATA, 'question-edits.json');   // v2.26 : overrides
 const CERTS_PATH     = path.join(DATA, 'certificates.json');     // v2.28 : parcours + certificats
+const BRANDING_PATH  = path.join(DATA, 'cert-branding.json');    // v2.38 : institution + logo des certificats
 
 // Mot de passe super-admin par défaut. À surcharger via ADMIN_PASSWORD.
 const DEFAULT_ADMIN_PASSWORD = 'qpc-admin-2026';
@@ -220,6 +222,14 @@ function saveCertificates(c) {
   scheduleGhSync('data/certificates.json');
 }
 
+// v2.38 : habillage des certificats (nom d'institution + logo).
+// Schéma : { institution: string, logoDataUrl: string|null, updatedAt }
+function loadCertBranding() { return readJson(BRANDING_PATH, { institution: '', logoDataUrl: null }); }
+function saveCertBranding(b) {
+  writeJson(BRANDING_PATH, b);
+  scheduleGhSync('data/cert-branding.json');
+}
+
 // v2.26 : overrides du super-admin sur les questions builtin.
 // Schéma : { edits: { "<questionId>": { q?, r?, ref?, updatedAt, updatedBy } } }
 // Les édits sont appliqués en mémoire sur QUESTIONS au démarrage et
@@ -294,7 +304,7 @@ async function ghPullInitial() {
     return;
   }
   console.log(`🔁 Téléchargement initial depuis ${GH_REPO}#${GH_BRANCH}...`);
-  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json', 'data/custom-packs.json', 'data/question-edits.json', 'data/certificates.json']) {
+  for (const remotePath of ['data/auth.json', 'data/games.json', 'data/matches.json', 'data/custom-packs.json', 'data/question-edits.json', 'data/certificates.json', 'data/cert-branding.json']) {
     try {
       const content = await ghGetFile(remotePath);
       if (content) {
@@ -2300,6 +2310,100 @@ app.get('/api/me/certificates', requireUser, (req, res) => {
     .filter(c => c.owner === owner)
     .sort((a, b) => (b.updatedAt || b.date || '').localeCompare(a.updatedAt || a.date || ''));
   res.json(mine);
+});
+
+// ---------------------------------------------------------------------
+// v2.38 : QR d'authenticité + habillage des certificats (institution,
+// logo) configurable par l'administrateur.
+// ---------------------------------------------------------------------
+
+// Matrice QR (modules) pour un texte donné — le client la dessine sur
+// le canvas du certificat. ECC niveau M.
+app.get('/api/qr', requireUser, (req, res) => {
+  const text = String(req.query.text || '').slice(0, 300);
+  if (!text) return res.status(400).json({ error: 'Paramètre text requis' });
+  try {
+    const qr = QRCode.create(text, { errorCorrectionLevel: 'M' });
+    const size = qr.modules.size;
+    const rows = [];
+    for (let r = 0; r < size; r++) {
+      let line = '';
+      for (let c = 0; c < size; c++) line += qr.modules.get(r, c) ? '1' : '0';
+      rows.push(line);
+    }
+    res.json({ size, rows, text });
+  } catch (e) {
+    res.status(500).json({ error: 'Génération QR impossible : ' + e.message });
+  }
+});
+
+// Habillage lu par les joueurs au moment de dessiner un certificat
+app.get('/api/me/cert-branding', requireUser, (req, res) => {
+  const b = loadCertBranding();
+  res.json({ institution: b.institution || '', logoDataUrl: b.logoDataUrl || null });
+});
+
+// Lecture / réglage côté administrateur
+app.get('/api/admin/cert-branding', requireAdmin, (req, res) => {
+  const b = loadCertBranding();
+  res.json({ institution: b.institution || '', logoDataUrl: b.logoDataUrl || null, updatedAt: b.updatedAt || null });
+});
+
+app.put('/api/admin/cert-branding', requireAdmin, (req, res) => {
+  const b = loadCertBranding();
+  if (typeof req.body.institution === 'string') {
+    b.institution = req.body.institution.replace(/\s+/g, ' ').trim().slice(0, 120);
+  }
+  if (req.body.logoDataUrl === null) {
+    b.logoDataUrl = null;
+  } else if (typeof req.body.logoDataUrl === 'string') {
+    const v = req.body.logoDataUrl;
+    if (!/^data:image\/(png|jpeg|jpg|webp);base64,[A-Za-z0-9+/=]+$/.test(v)) {
+      return res.status(400).json({ error: 'Logo invalide : image PNG/JPEG/WebP en data-URL attendue' });
+    }
+    if (v.length > 700000) {
+      return res.status(400).json({ error: 'Logo trop lourd (max ~500 Ko). Réduisez l\'image.' });
+    }
+    b.logoDataUrl = v;
+  }
+  b.updatedAt = new Date().toISOString();
+  saveCertBranding(b);
+  res.json({ ok: true, institution: b.institution || '', logoDataUrl: b.logoDataUrl || null, updatedAt: b.updatedAt });
+});
+
+// Vérification PUBLIQUE d'un certificat par son numéro (page verifier.html,
+// cible du QR imprimé sur le certificat). Aucune authentification : ne
+// renvoie que les informations portées sur le certificat lui-même.
+app.get('/api/public/certificate/:id', (req, res) => {
+  const id = String(req.params.id || '').trim().toLowerCase();
+  if (!/^[a-f0-9]{8,32}$/.test(id)) return res.json({ valid: false });
+  const store = loadCertificates();
+  const cert = (store.certificates || []).find(c => String(c.id).toLowerCase() === id);
+  if (!cert) return res.json({ valid: false });
+  const branding = loadCertBranding();
+  res.json({
+    valid: true,
+    id: cert.id,
+    name: cert.name,
+    domain: cert.domain,
+    level: cert.level,
+    levelLabel: cert.levelLabel || cert.level,
+    scorePct: cert.scorePct,
+    distinction: cert.distinction,
+    date: cert.date,
+    updatedAt: cert.updatedAt || cert.date,
+    institution: branding.institution || 'NEVAME Data House · QPC'
+  });
+});
+
+// Gestion admin : suppression d'un certificat délivré (erreur, fraude…)
+app.delete('/api/admin/certificates/:id', requireAdmin, (req, res) => {
+  const store = loadCertificates();
+  const idx = (store.certificates || []).findIndex(c => c.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Certificat introuvable' });
+  const removed = store.certificates.splice(idx, 1)[0];
+  saveCertificates(store);
+  res.json({ ok: true, removed: { id: removed.id, owner: removed.owner, domain: removed.domain, level: removed.level } });
 });
 
 // =====================================================================

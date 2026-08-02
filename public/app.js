@@ -117,6 +117,12 @@ const api = {
   adminGetSettings: ()    => apiFetch('/api/admin/settings', {}, true),
   adminSetSettings: (s)   => apiFetch('/api/admin/settings', { method: 'PUT', body: JSON.stringify(s) }, true),
   adminPurgeAll:    ()    => apiFetch('/api/admin/all-data', { method: 'DELETE', body: JSON.stringify({ confirm: 'OUI-SUPPRIMER-TOUT' }) }, true),
+  // Certificats : QR + habillage (v2.38)
+  qrMatrix:            (text) => apiFetch(`/api/qr?text=${encodeURIComponent(text)}`),
+  certBranding:        ()     => apiFetch('/api/me/cert-branding'),
+  adminCertBranding:   ()     => apiFetch('/api/admin/cert-branding', {}, true),
+  adminSetCertBranding:(body) => apiFetch('/api/admin/cert-branding', { method: 'PUT', body: JSON.stringify(body) }, true),
+  adminDeleteCertificate: (id) => apiFetch(`/api/admin/certificates/${encodeURIComponent(id)}`, { method: 'DELETE' }, true),
   // Duels — utilisateur
   myDuels:        ()         => apiFetch('/api/me/duels'),
   myDuelGet:      (id)       => apiFetch(`/api/me/duels/${id}`),
@@ -1864,11 +1870,12 @@ function showParcoursResult() {
     if (r.improved === false) {
       card.appendChild(el('p', { class: 'muted' }, 'Votre certificat existant a un meilleur score : il est conservé tel quel.'));
     }
-    // Dessiner le certificat
+    // Dessiner le certificat (assets v2.38 : logo, institution, QR)
     const certCard = $('#pc-cert-card');
     certCard.hidden = false;
     const canvas = $('#pc-cert-canvas');
     drawCertificate(canvas, c);
+    prepareCertAssets(c).then(assets => drawCertificate(canvas, c, assets));
     $('#btn-cert-pdf').onclick = () => downloadCertPDF(c);
     $('#btn-cert-jpg').onclick = () => downloadCertJPG(c);
   } else if (r.error) {
@@ -1979,9 +1986,49 @@ function drawSignature(ctx, x, y, w) {
   ctx.restore();
 }
 
+// ---------- Assets du certificat (v2.38) -------------------------------
+// Habillage (institution + logo) et QR d'authenticité, préchargés avant
+// le dessin. Tout est facultatif : sans réseau ni réglage, le certificat
+// se dessine comme avant.
+let _certBranding = null;          // { institution, logoDataUrl } (cache session)
+let _certLogoImg = null;           // Image décodée du logo
+const _certQrCache = {};           // texte → { size, rows }
+
+async function prepareCertAssets(cert) {
+  const assets = { branding: null, logoImg: null, qr: null, verifyUrl: null };
+  // 1. Habillage institution/logo
+  try {
+    if (!_certBranding) _certBranding = await api.certBranding();
+    assets.branding = _certBranding;
+    if (_certBranding && _certBranding.logoDataUrl) {
+      if (!_certLogoImg || _certLogoImg._src !== _certBranding.logoDataUrl) {
+        _certLogoImg = await new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => { img._src = _certBranding.logoDataUrl; resolve(img); };
+          img.onerror = () => resolve(null);
+          img.src = _certBranding.logoDataUrl;
+        });
+      }
+      assets.logoImg = _certLogoImg;
+    }
+  } catch (e) { /* sans habillage */ }
+  // 2. QR d'authenticité → page publique de vérification
+  try {
+    if (cert && cert.id) {
+      assets.verifyUrl = `${location.origin}/verifier.html?n=${cert.id}`;
+      if (!_certQrCache[assets.verifyUrl]) {
+        _certQrCache[assets.verifyUrl] = await api.qrMatrix(assets.verifyUrl);
+      }
+      assets.qr = _certQrCache[assets.verifyUrl];
+    }
+  } catch (e) { /* sans QR */ }
+  return assets;
+}
+
 // ---------- Dessin du certificat (canvas) -----------------------------
 // A4 paysage à 150 dpi environ : 1754 × 1240 px.
-function drawCertificate(canvas, cert) {
+function drawCertificate(canvas, cert, assets) {
+  assets = assets || {};
   const W = 1754, H = 1240;
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
@@ -2014,16 +2061,57 @@ function drawCertificate(canvas, cert) {
     } while (size > 18);
     return size;
   }
-  function center(text, y, size, font, color, weight = '', style = '') {
-    fitText(text, W - 300, size, font, weight, style);
+  function center(text, y, size, font, color, weight = '', style = '', maxW = W - 300) {
+    fitText(text, maxW, size, font, weight, style);
     ctx.fillStyle = color;
     ctx.textAlign = 'center';
     ctx.fillText(text, cx, y);
   }
 
-  // En-tête
-  center('QPC — Questions pour un Champion', 170, 44, 'Georgia, serif', '#333333', 'bold');
-  center('Édition Économie & Sciences sociales', 215, 28, 'Georgia, serif', '#666666', '', 'italic');
+  // En-tête (largeur réduite si un logo ou une institution occupe les coins)
+  const inst = assets.branding && assets.branding.institution;
+  const headMaxW = (assets.logoImg || inst) ? 760 : W - 300;
+  center('QPC — Questions pour un Champion', 170, 44, 'Georgia, serif', '#333333', 'bold', '', headMaxW);
+  center('Édition Économie & Sciences sociales', 215, 28, 'Georgia, serif', '#666666', '', 'italic', headMaxW);
+
+  // v2.38 : logo de l'institution en haut à gauche (ratio préservé)
+  if (assets.logoImg) {
+    const img = assets.logoImg;
+    const maxW = 240, maxH = 130;
+    const k = Math.min(maxW / img.width, maxH / img.height, 1.5);
+    const lw = img.width * k, lh = img.height * k;
+    ctx.drawImage(img, 130, 105, lw, lh);
+  }
+  // v2.38 : nom de l'institution en haut à droite (sur 1 ou 2 lignes)
+  if (inst) {
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#12295f';
+    let instSize = 30;
+    do {
+      ctx.font = `bold ${instSize}px Georgia, serif`;
+      if (ctx.measureText(inst).width <= 340) break;
+      instSize -= 2;
+    } while (instSize > 15);
+    if (ctx.measureText(inst).width <= 340) {
+      ctx.fillText(inst, W - 130, 148);
+    } else {
+      // Trop long même en petit : couper en 2 lignes au dernier espace utile
+      const words = inst.split(' ');
+      let l1 = '', l2 = '';
+      for (const w2 of words) {
+        const test = (l1 ? l1 + ' ' : '') + w2;
+        ctx.font = `bold 22px Georgia, serif`;
+        if (ctx.measureText(test).width <= 340 && !l2) l1 = test;
+        else l2 = (l2 ? l2 + ' ' : '') + w2;
+      }
+      ctx.font = 'bold 22px Georgia, serif';
+      ctx.fillText(l1, W - 130, 136);
+      ctx.fillText(l2, W - 130, 164);
+    }
+    ctx.font = 'italic 19px Georgia, serif';
+    ctx.fillStyle = '#6b7280';
+    ctx.fillText('Institution certifiante', W - 130, 192);
+  }
 
   // Filet
   ctx.strokeStyle = col.main; ctx.lineWidth = 2;
@@ -2069,12 +2157,42 @@ function drawCertificate(canvas, cert) {
   ctx.beginPath(); ctx.moveTo(W - 480, 1055); ctx.lineTo(W - 150, 1055); ctx.stroke();
   // Signature manuscrite Nevame DataHouse (v2.30), posée sur la ligne
   drawSignature(ctx, W - 470, 900, 310);
+
+  // v2.38 : QR d'authenticité au centre-bas → page publique de vérification
+  // (sous la ligne Distinction, entre les mentions de gauche et la signature)
+  if (assets.qr && assets.qr.rows && assets.qr.size) {
+    const qrPix = 144;                        // zone utile du QR
+    const quiet = 12;                         // marge blanche (quiet zone)
+    const size = assets.qr.size;
+    const mod = qrPix / size;
+    const qx = cx - qrPix / 2, qy = 972;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(qx - quiet, qy - quiet, qrPix + 2 * quiet, qrPix + 2 * quiet);
+    ctx.strokeStyle = '#d1d5db'; ctx.lineWidth = 1;
+    ctx.strokeRect(qx - quiet, qy - quiet, qrPix + 2 * quiet, qrPix + 2 * quiet);
+    ctx.fillStyle = '#111111';
+    for (let r = 0; r < size; r++) {
+      const row = assets.qr.rows[r];
+      for (let c = 0; c < size; c++) {
+        if (row[c] === '1') {
+          // léger chevauchement (+0.5) pour éviter les hairlines à l'export JPEG
+          ctx.fillRect(qx + c * mod, qy + r * mod, mod + 0.5, mod + 0.5);
+        }
+      }
+    }
+    ctx.font = '18px Arial, sans-serif';
+    ctx.fillStyle = '#666666';
+    ctx.textAlign = 'center';
+    ctx.fillText('Scannez pour vérifier l\'authenticité', cx, qy + qrPix + quiet + 24);
+  }
 }
 
 // Canvas offscreen pour les téléchargements depuis la liste
-function certToCanvas(cert) {
+// (async depuis v2.38 : précharge logo/institution/QR avant le dessin)
+async function certToCanvas(cert) {
   const canvas = document.createElement('canvas');
-  drawCertificate(canvas, cert);
+  const assets = await prepareCertAssets(cert);
+  drawCertificate(canvas, cert, assets);
   return canvas;
 }
 
@@ -2092,16 +2210,16 @@ function triggerDownload(blob, filename) {
   setTimeout(() => URL.revokeObjectURL(url), 4000);
 }
 
-function downloadCertJPG(cert) {
-  const canvas = certToCanvas(cert);
+async function downloadCertJPG(cert) {
+  const canvas = await certToCanvas(cert);
   canvas.toBlob((blob) => {
     if (!blob) { alert('Échec de génération de l\'image.'); return; }
     triggerDownload(blob, certFileBase(cert) + '.jpg');
   }, 'image/jpeg', 0.92);
 }
 
-function downloadCertPDF(cert) {
-  const canvas = certToCanvas(cert);
+async function downloadCertPDF(cert) {
+  const canvas = await certToCanvas(cert);
   const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
   const b64 = dataUrl.split(',')[1];
   const bin = atob(b64);
@@ -2997,6 +3115,74 @@ async function renderAdmin() {
         note.hidden = false;
         setTimeout(() => { note.hidden = true; }, 2500);
       }
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
+
+  // v2.38 : habillage des certificats (institution + logo)
+  const instInput = $('#cert-institution');
+  const logoPreview = $('#cert-logo-preview');
+  const removeLogoBtn = $('#btn-remove-logo');
+  function showBrandingLogo(dataUrl) {
+    if (!logoPreview) return;
+    if (dataUrl) { logoPreview.src = dataUrl; logoPreview.hidden = false; if (removeLogoBtn) removeLogoBtn.hidden = false; }
+    else { logoPreview.hidden = true; logoPreview.removeAttribute('src'); if (removeLogoBtn) removeLogoBtn.hidden = true; }
+  }
+  if (instInput) {
+    api.adminCertBranding().then(b => {
+      instInput.value = b.institution || '';
+      showBrandingLogo(b.logoDataUrl);
+    }).catch(() => {});
+  }
+  const saveInstBtn = $('#btn-save-institution');
+  if (saveInstBtn) saveInstBtn.onclick = async () => {
+    try {
+      const r = await api.adminSetCertBranding({ institution: instInput.value });
+      _certBranding = null;                               // invalider le cache joueur local
+      const note = $('#branding-saved-note');
+      if (note) {
+        note.textContent = r.institution ? `✓ Enregistré : « ${r.institution} »` : '✓ Enregistré (aucun nom imprimé)';
+        note.hidden = false;
+        setTimeout(() => { note.hidden = true; }, 2600);
+      }
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
+  const logoFile = $('#cert-logo-file');
+  if (logoFile) logoFile.addEventListener('change', () => {
+    const f = logoFile.files && logoFile.files[0];
+    if (!f) return;
+    if (f.size > 4 * 1024 * 1024) { alert('Image trop lourde (max 4 Mo avant compression).'); logoFile.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = async () => {
+        // Redimensionner à 500 px max et convertir en PNG data-URL compact
+        const k = Math.min(1, 500 / img.width, 300 / img.height);
+        const cnv = document.createElement('canvas');
+        cnv.width = Math.max(1, Math.round(img.width * k));
+        cnv.height = Math.max(1, Math.round(img.height * k));
+        cnv.getContext('2d').drawImage(img, 0, 0, cnv.width, cnv.height);
+        let dataUrl = cnv.toDataURL('image/png');
+        if (dataUrl.length > 680000) dataUrl = cnv.toDataURL('image/jpeg', 0.85);
+        try {
+          await api.adminSetCertBranding({ logoDataUrl: dataUrl });
+          _certBranding = null; _certLogoImg = null;
+          showBrandingLogo(dataUrl);
+          const note = $('#logo-saved-note');
+          if (note) { note.hidden = false; setTimeout(() => { note.hidden = true; }, 2600); }
+        } catch (e) { alert('Erreur : ' + e.message); }
+        logoFile.value = '';
+      };
+      img.onerror = () => { alert('Image illisible.'); logoFile.value = ''; };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(f);
+  });
+  if (removeLogoBtn) removeLogoBtn.onclick = async () => {
+    if (!confirm('Retirer le logo des futurs certificats ?')) return;
+    try {
+      await api.adminSetCertBranding({ logoDataUrl: null });
+      _certBranding = null; _certLogoImg = null;
+      showBrandingLogo(null);
     } catch (e) { alert('Erreur : ' + e.message); }
   };
 

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vérification de certificat — QPC Économie & Sciences sociales</title>
+  <link rel="icon" href="icons/favicon-32.png" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(160deg, #0b1e4b 0%, #12295f 55%, #0a1740 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #1f2937;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(2, 8, 30, 0.5);
+      max-width: 560px;
+      width: 100%;
+      padding: 30px 28px;
+    }
+    .brand { text-align: center; margin-bottom: 18px; }
+    .brand h1 { font-size: 21px; color: #12295f; }
+    .brand p { font-size: 13px; color: #6b7280; margin-top: 4px; }
+    .searchrow { display: flex; gap: 8px; margin: 16px 0 6px; }
+    .searchrow input {
+      flex: 1; padding: 11px 12px; border: 1.5px solid #cbd5e1;
+      border-radius: 10px; font-size: 15px; font-family: Consolas, monospace;
+    }
+    .searchrow button {
+      padding: 11px 18px; border: 0; border-radius: 10px; cursor: pointer;
+      background: #12295f; color: #fff; font-weight: 700; font-size: 14px;
+    }
+    .result { margin-top: 18px; border-radius: 14px; padding: 20px; display: none; }
+    .result.valid { display: block; background: #ecfdf5; border: 1.5px solid #34d399; }
+    .result.invalid { display: block; background: #fef2f2; border: 1.5px solid #f87171; }
+    .verdict { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 800; margin-bottom: 12px; }
+    .valid .verdict { color: #047857; }
+    .invalid .verdict { color: #b91c1c; }
+    .row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px dashed #d1d5db; font-size: 14.5px; }
+    .row:last-child { border-bottom: 0; }
+    .row .k { color: #6b7280; }
+    .row .v { font-weight: 700; text-align: right; }
+    .muted { font-size: 12.5px; color: #6b7280; margin-top: 14px; text-align: center; }
+    .spin { text-align: center; color: #6b7280; padding: 14px 0; display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <h1>🎓 Vérification de certificat</h1>
+      <p>QPC — Questions pour un Champion · Édition Économie &amp; Sciences sociales</p>
+    </div>
+    <div class="searchrow">
+      <input id="serial" placeholder="Numéro du certificat (ex. 3f9c2a…)" autocomplete="off" />
+      <button id="go">Vérifier</button>
+    </div>
+    <div class="spin" id="spin">Vérification en cours…</div>
+    <div class="result" id="result"></div>
+    <p class="muted">Le numéro figure au bas de chaque certificat, à côté du QR code.<br/>La vérification interroge directement le registre officiel de la plateforme.</p>
+  </div>
+  <script>
+    const $ = (s) => document.querySelector(s);
+    function esc(t) { const d = document.createElement('div'); d.textContent = t == null ? '' : String(t); return d.innerHTML; }
+    async function verify(serial) {
+      serial = String(serial || '').trim().toLowerCase().replace(/[^a-f0-9]/g, '');
+      const box = $('#result');
+      box.className = 'result'; box.innerHTML = '';
+      if (!serial) return;
+      $('#spin').style.display = 'block';
+      let data = { valid: false };
+      try {
+        const r = await fetch('/api/public/certificate/' + encodeURIComponent(serial));
+        data = await r.json();
+      } catch (e) { /* réseau : reste invalid */ }
+      $('#spin').style.display = 'none';
+      if (data.valid) {
+        const dt = new Date(data.updatedAt || data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        box.className = 'result valid';
+        box.innerHTML =
+          '<div class="verdict">✅ Certificat authentique</div>' +
+          '<div class="row"><span class="k">Titulaire</span><span class="v">' + esc(data.name) + '</span></div>' +
+          '<div class="row"><span class="k">Parcours</span><span class="v">' + esc(data.domain) + '</span></div>' +
+          '<div class="row"><span class="k">Niveau</span><span class="v">' + esc(data.levelLabel) + '</span></div>' +
+          '<div class="row"><span class="k">Score</span><span class="v">' + esc(data.scorePct) + ' %</span></div>' +
+          '<div class="row"><span class="k">Distinction</span><span class="v">' + esc(data.distinction) + '</span></div>' +
+          '<div class="row"><span class="k">Délivré le</span><span class="v">' + esc(dt) + '</span></div>' +
+          '<div class="row"><span class="k">Délivré par</span><span class="v">' + esc(data.institution) + '</span></div>' +
+          '<div class="row"><span class="k">N° certificat</span><span class="v" style="font-family:Consolas,monospace;">' + esc(data.id) + '</span></div>';
+      } else {
+        box.className = 'result invalid';
+        box.innerHTML =
+          '<div class="verdict">❌ Certificat introuvable</div>' +
+          '<p style="font-size:14px;">Aucun certificat ne correspond à ce numéro dans le registre. Vérifiez la saisie ou contactez l\'administrateur de la plateforme.</p>';
+      }
+    }
+    $('#go').addEventListener('click', () => verify($('#serial').value));
+    $('#serial').addEventListener('keydown', (e) => { if (e.key === 'Enter') verify($('#serial').value); });
+    const params = new URLSearchParams(location.search);
+    const n = params.get('n');
+    if (n) { $('#serial').value = n; verify(n); }
+  </script>
+</body>
+</html>
