@@ -336,6 +336,8 @@ async function route(view, params = {}) {
     case 'review':   return renderReview();
     case 'parcours': return renderParcours();
     case 'parcours-play': return renderParcoursPlay();
+    case 'mooc':        return renderMoocList();
+    case 'mooc-course': return renderMoocCourse();
     case 'duels':    return renderDuels();
     case 'duel-result': return renderDuelResult(params.duelId);
     case 'admin':    return renderAdmin();
@@ -735,6 +737,8 @@ async function renderHome() {
   $('#card-history').onclick  = () => route('history');
   const cardParcours = $('#card-parcours');
   if (cardParcours) cardParcours.onclick = () => route('parcours');
+  const cardMooc = $('#card-mooc');
+  if (cardMooc) cardMooc.onclick = () => route('mooc');
 
   // Les sessions visiteur ne participent pas aux duels (identité partagée
   // → conflit) : on masque la carte « Mes duels » et on ignore le badge.
@@ -2255,10 +2259,11 @@ async function downloadCertPDF(cert) {
 }
 
 // PDF-BUILDER-START
-// Construit un PDF mono-page A4 paysage embarquant un JPEG plein cadre.
+// Construit un PDF multi-pages embarquant un JPEG plein cadre par page.
 // Aucune dépendance : la structure PDF (objets, xref, trailer) est
 // assemblée à la main avec des offsets exacts.
-function buildPdfFromJpeg(jpegBytes, imgW, imgH) {
+// pages = [{ jpegBytes, imgW, imgH }] — orientation déduite du ratio.
+function buildPdfFromJpegs(pages) {
   const enc = (s) => {
     const b = new Uint8Array(s.length);
     for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i) & 0xFF;
@@ -2270,30 +2275,40 @@ function buildPdfFromJpeg(jpegBytes, imgW, imgH) {
   const push = (bytes) => { chunks.push(bytes); offset += bytes.length; };
   const pushStr = (s) => push(enc(s));
 
-  const PW = 842, PH = 595;   // A4 paysage en points
-  const content = `q ${PW} 0 0 ${PH} 0 0 cm /Im0 Do Q`;
+  const n = pages.length;
+  // Objets : 1 Catalog, 2 Pages, puis par page i : Page=3+3i, Image=4+3i, Contents=5+3i
+  const kids = pages.map((_, i) => `${3 + 3 * i} 0 R`).join(' ');
 
   pushStr('%PDF-1.4\n');
   offsets[1] = offset;
   pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
   offsets[2] = offset;
-  pushStr('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
-  offsets[3] = offset;
-  pushStr(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 4 0 R >> /ProcSet [/PDF /ImageC] >> /Contents 5 0 R >>\nendobj\n`);
-  offsets[4] = offset;
-  pushStr(`4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.length} >>\nstream\n`);
-  push(jpegBytes);
-  pushStr('\nendstream\nendobj\n');
-  offsets[5] = offset;
-  pushStr(`5 0 obj\n<< /Length ${content.length} >>\nstream\n${content}\nendstream\nendobj\n`);
+  pushStr(`2 0 obj\n<< /Type /Pages /Kids [${kids}] /Count ${n} >>\nendobj\n`);
 
+  pages.forEach((p, i) => {
+    // A4 : paysage si l'image est plus large que haute
+    const landscape = p.imgW >= p.imgH;
+    const PW = landscape ? 842 : 595, PH = landscape ? 595 : 842;
+    const content = `q ${PW} 0 0 ${PH} 0 0 cm /Im0 Do Q`;
+    const oPage = 3 + 3 * i, oImg = 4 + 3 * i, oCnt = 5 + 3 * i;
+    offsets[oPage] = offset;
+    pushStr(`${oPage} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 ${oImg} 0 R >> /ProcSet [/PDF /ImageC] >> /Contents ${oCnt} 0 R >>\nendobj\n`);
+    offsets[oImg] = offset;
+    pushStr(`${oImg} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${p.imgW} /Height ${p.imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${p.jpegBytes.length} >>\nstream\n`);
+    push(p.jpegBytes);
+    pushStr('\nendstream\nendobj\n');
+    offsets[oCnt] = offset;
+    pushStr(`${oCnt} 0 obj\n<< /Length ${content.length} >>\nstream\n${content}\nendstream\nendobj\n`);
+  });
+
+  const maxObj = 2 + 3 * n;
   const xrefOffset = offset;
-  let xref = 'xref\n0 6\n0000000000 65535 f \n';
-  for (let i = 1; i <= 5; i++) {
+  let xref = `xref\n0 ${maxObj + 1}\n0000000000 65535 f \n`;
+  for (let i = 1; i <= maxObj; i++) {
     xref += String(offsets[i]).padStart(10, '0') + ' 00000 n \n';
   }
   pushStr(xref);
-  pushStr(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`);
+  pushStr(`trailer\n<< /Size ${maxObj + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`);
 
   const total = chunks.reduce((s, c) => s + c.length, 0);
   const out = new Uint8Array(total);
@@ -2301,7 +2316,506 @@ function buildPdfFromJpeg(jpegBytes, imgW, imgH) {
   for (const c of chunks) { out.set(c, pos); pos += c.length; }
   return out;
 }
+
+// Compatibilité : PDF mono-page (certificats)
+function buildPdfFromJpeg(jpegBytes, imgW, imgH) {
+  return buildPdfFromJpegs([{ jpegBytes, imgW, imgH }]);
+}
+
+// Canvas → bytes JPEG
+function canvasToJpegBytes(canvas, quality) {
+  const dataUrl = canvas.toDataURL('image/jpeg', quality == null ? 0.92 : quality);
+  const bin = atob(dataUrl.split(',')[1]);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
 // PDF-BUILDER-END
+
+// =====================================================================
+// MOOC (v2.40) — cours en ligne par domaine : leçons progressives et
+// animées, quiz d'auto-évaluation sur les vraies questions du domaine,
+// références vérifiées et synthèse PDF téléchargeable.
+// Contenu : window.MOOC_DATA (mooc-data*.js). Progression : localStorage.
+// =====================================================================
+const MOOC_BLOC_META = {
+  c: { ic: '💡', lbl: 'Concept',          cls: 'concept' },
+  m: { ic: '🛠️', lbl: 'Méthode',          cls: 'methode' },
+  e: { ic: '🌍', lbl: 'Exemple appliqué', cls: 'exemple' },
+  p: { ic: '⚠️', lbl: 'Piège à éviter',   cls: 'piege' },
+  f: { ic: '🧮', lbl: 'Formule clé',      cls: 'formule' }
+};
+const MOOC_QUIZ_N = 3;          // questions par quiz de leçon
+const MOOC_QUIZ_PASS = 2;       // bonnes réponses requises
+
+function moocData() { return window.MOOC_DATA || {}; }
+function moocProgressKey() { return 'qpc.mooc.' + (Session.code || 'anon'); }
+function moocProgressAll() {
+  try { return JSON.parse(localStorage.getItem(moocProgressKey())) || {}; } catch (e) { return {}; }
+}
+function moocProgress(domain) {
+  const all = moocProgressAll();
+  return all[domain] || { done: {}, finishedAt: null };
+}
+function moocSaveLesson(domain, lessonIdx, score) {
+  const all = moocProgressAll();
+  const p = all[domain] || { done: {}, finishedAt: null };
+  p.done[lessonIdx] = Math.max(p.done[lessonIdx] || 0, score);
+  const total = (moocData()[domain] || { lecons: [] }).lecons.length;
+  if (Object.keys(p.done).length >= total && !p.finishedAt) p.finishedAt = new Date().toISOString();
+  all[domain] = p;
+  localStorage.setItem(moocProgressKey(), JSON.stringify(all));
+}
+function moocDoneCount(domain) {
+  return Object.keys(moocProgress(domain).done).length;
+}
+
+// ---------- Vue : liste des cours -------------------------------------
+function renderMoocList() {
+  if (!Session.token) return route('login');
+  mount('tpl-mooc-list');
+  $('#btn-mooc-home').onclick = () => route('home');
+  const grid = $('#mooc-grid');
+  const data = moocData();
+  const counts = {};
+  ((State.meta && State.meta.domains) || []).forEach(d => { counts[d.name] = d.count; });
+  const noms = Object.keys(data);
+  if (!noms.length) {
+    grid.appendChild(el('p', { class: 'muted' }, 'Aucun cours disponible.'));
+    return;
+  }
+  noms.forEach((nom, i) => {
+    const m = data[nom];
+    const total = m.lecons.length;
+    const done = moocDoneCount(nom);
+    const pct = Math.round(100 * done / total);
+    const fini = done >= total;
+    const card = el('div', { class: 'card mooc-card', style: `animation-delay:${Math.min(i * 60, 600)}ms;` },
+      el('div', { class: 'mooc-card-head' },
+        el('span', { class: 'mooc-ic' }, m.icon || '🎓'),
+        el('div', {},
+          el('h2', { class: 'card-title', style: 'margin:0;' }, nom),
+          el('div', { class: 'muted', style: 'font-size:12.5px;' },
+            `${total} leçons · ${m.duree}` + (counts[nom] ? ` · ${counts[nom]} questions` : '')))),
+      el('p', { class: 'mooc-tagline' }, m.tagline),
+      el('div', { class: 'mooc-bar' }, el('div', { class: 'mooc-bar-fill', style: `width:${pct}%;` })),
+      el('div', { class: 'mooc-card-foot' },
+        el('span', { class: 'muted', style: 'font-size:12.5px;' },
+          fini ? '✅ Cours terminé' : done ? `${done}/${total} leçons validées` : 'Pas encore commencé'),
+        el('button', { class: 'btn btn-primary btn-small', onclick: () => {
+          State.mooc = { domain: nom, lesson: null, quiz: null, final: false };
+          route('mooc-course');
+        } }, fini ? 'Revoir' : done ? 'Continuer' : 'Commencer'))
+    );
+    grid.appendChild(card);
+  });
+}
+
+// ---------- Vue : un cours ---------------------------------------------
+function renderMoocCourse() {
+  if (!Session.token) return route('login');
+  const S = State.mooc;
+  const data = S && moocData()[S.domain];
+  if (!data) return route('mooc');
+  mount('tpl-mooc');
+  $('#btn-mooc-back').onclick = () => route('mooc');
+  $('#btn-mooc-pdf').onclick = () => moocDownloadPdf(S.domain);
+
+  const prog = moocProgress(S.domain);
+  const total = data.lecons.length;
+  const done = Object.keys(prog.done).length;
+  // Leçon courante par défaut : la première non validée
+  if (S.lesson == null && !S.final) {
+    S.lesson = 0;
+    for (let i = 0; i < total; i++) { if (prog.done[i] == null) { S.lesson = i; break; } if (i === total - 1) S.final = true; }
+  }
+
+  // En-tête du cours
+  const head = $('#mooc-course-head');
+  head.innerHTML = '';
+  head.appendChild(el('div', { class: 'mooc-head-row' },
+    el('span', { class: 'mooc-ic big' }, data.icon || '🎓'),
+    el('div', { style: 'flex:1;min-width:0;' },
+      el('h1', { class: 'title-xl', style: 'margin:0;' }, S.domain),
+      el('p', { class: 'muted', style: 'margin:4px 0 0;' }, data.tagline)),
+    el('div', { class: 'mooc-head-prog' },
+      el('div', { class: 'mooc-bar' }, el('div', { class: 'mooc-bar-fill', style: `width:${Math.round(100 * done / total)}%;` })),
+      el('div', { class: 'muted', style: 'font-size:12px;text-align:right;' }, `${done}/${total} leçons`))));
+
+  // Sidebar : leçons + évaluation finale
+  const side = $('#mooc-side');
+  side.innerHTML = '';
+  data.lecons.forEach((l, i) => {
+    const ok = prog.done[i] != null;
+    const cur = !S.final && S.lesson === i;
+    side.appendChild(el('button', {
+      class: 'mooc-nav' + (cur ? ' cur' : '') + (ok ? ' ok' : ''),
+      onclick: () => { S.lesson = i; S.final = false; S.quiz = null; renderMoocCourse(); }
+    },
+      el('span', { class: 'mooc-nav-num' }, ok ? '✓' : String(i + 1)),
+      el('span', { class: 'mooc-nav-txt' }, l.titre),
+      el('span', { class: 'mooc-nav-dur' }, l.duree)));
+  });
+  side.appendChild(el('button', {
+    class: 'mooc-nav final' + (S.final ? ' cur' : '') + (done >= total ? ' ok' : ''),
+    onclick: () => { S.final = true; S.quiz = null; renderMoocCourse(); }
+  },
+    el('span', { class: 'mooc-nav-num' }, '🏁'),
+    el('span', { class: 'mooc-nav-txt' }, 'Terminer : évaluation & certification'),
+    el('span', { class: 'mooc-nav-dur' }, '')));
+
+  if (S.final) renderMoocFinal(data, prog);
+  else if (S.quiz) renderMoocQuiz(data);
+  else renderMoocLesson(data, prog);
+}
+
+function renderMoocLesson(data, prog) {
+  const S = State.mooc;
+  const main = $('#mooc-main');
+  main.innerHTML = '';
+  const l = data.lecons[S.lesson];
+  const dejaFaite = prog.done[S.lesson] != null;
+
+  main.appendChild(el('div', { class: 'mooc-lesson-head' },
+    el('h2', { class: 'mooc-lesson-title' }, l.titre),
+    el('span', { class: 'mooc-dur' }, '⏱ ' + l.duree + (dejaFaite ? ' · ✅ validée' : ''))));
+
+  // Blocs animés (apparition en cascade)
+  l.blocs.forEach((b, i) => {
+    const meta = MOOC_BLOC_META[b.t] || MOOC_BLOC_META.c;
+    main.appendChild(el('div', { class: 'mooc-bloc ' + meta.cls, style: `animation-delay:${Math.min(i * 140, 900)}ms;` },
+      el('div', { class: 'mooc-bloc-tag' }, meta.ic + ' ' + meta.lbl),
+      el('h3', { class: 'mooc-bloc-titre' }, b.titre),
+      el('p', { class: 'mooc-bloc-tx' }, b.tx)));
+  });
+
+  // À retenir
+  main.appendChild(el('div', { class: 'mooc-retenir', style: `animation-delay:${Math.min(l.blocs.length * 140, 1000)}ms;` },
+    el('h3', {}, '📌 À retenir'),
+    el('ul', {}, ...l.retenir.map(r => el('li', {}, r)))));
+
+  // Références de la leçon
+  main.appendChild(el('div', { class: 'mooc-refs' },
+    el('h4', {}, '📚 Pour approfondir'),
+    el('ul', {}, ...l.refs.map(r => el('li', {}, linkify(r))))));
+
+  // Actions
+  const actions = el('div', { class: 'mooc-actions' });
+  actions.appendChild(el('button', { class: 'btn btn-primary', onclick: () => moocStartQuiz() },
+    dejaFaite ? '🔁 Refaire le quiz de la leçon' : '✅ J\'ai compris — Quiz de la leçon'));
+  if (dejaFaite && S.lesson < data.lecons.length - 1) {
+    actions.appendChild(el('button', { class: 'btn', onclick: () => { S.lesson++; S.quiz = null; renderMoocCourse(); } }, 'Leçon suivante →'));
+  }
+  main.appendChild(actions);
+  window.scrollTo(0, 0);
+}
+
+// ---------- Quiz de leçon (vraies questions du domaine) ---------------
+const _moocPoolCache = {};
+async function moocFetchPool(domain) {
+  if (_moocPoolCache[domain]) return _moocPoolCache[domain];
+  const pool = [];
+  for (const m of ['manche1', 'manche2']) {
+    try {
+      const packs = await api.packs(m, [domain]);
+      for (const p of (packs || [])) {
+        for (const q of (p.questions || [])) {
+          if (Array.isArray(q.choices) && q.choices.length >= 2 && Array.isArray(q.correctIndices)) {
+            pool.push(q);
+          }
+        }
+      }
+    } catch (e) { /* manche indisponible pour ce domaine */ }
+  }
+  _moocPoolCache[domain] = pool;
+  return pool;
+}
+
+async function moocStartQuiz() {
+  const S = State.mooc;
+  const main = $('#mooc-main');
+  main.innerHTML = '';
+  main.appendChild(el('p', { class: 'muted' }, 'Préparation du quiz…'));
+  const pool = await moocFetchPool(S.domain);
+  if (pool.length < MOOC_QUIZ_N) {
+    main.innerHTML = '';
+    main.appendChild(el('p', {}, 'Pas assez de questions QCM disponibles pour ce domaine.'));
+    return;
+  }
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+  S.quiz = { questions: shuffled.slice(0, MOOC_QUIZ_N), current: 0, score: 0, answered: false };
+  renderMoocCourse();
+}
+
+function renderMoocQuiz(data) {
+  const S = State.mooc;
+  const Q = S.quiz;
+  const main = $('#mooc-main');
+  main.innerHTML = '';
+
+  if (Q.current >= Q.questions.length) {
+    // Résultat du quiz
+    const ok = Q.score >= MOOC_QUIZ_PASS;
+    if (ok) moocSaveLesson(S.domain, S.lesson, Q.score);
+    const box = el('div', { class: 'mooc-quiz-result ' + (ok ? 'ok' : 'ko') },
+      el('div', { class: 'mooc-quiz-big' }, ok ? '🎉' : '💪'),
+      el('h2', {}, ok ? 'Leçon validée !' : 'Presque !'),
+      el('p', {}, `Score : ${Q.score}/${Q.questions.length}` + (ok ? ' — bravo, la leçon est acquise.' : ` — il faut ${MOOC_QUIZ_PASS} bonnes réponses. Relisez la leçon et réessayez.`)));
+    const actions = el('div', { class: 'mooc-actions' });
+    if (ok) {
+      const last = S.lesson >= data.lecons.length - 1;
+      actions.appendChild(el('button', { class: 'btn btn-primary', onclick: () => {
+        if (last) { S.final = true; } else { S.lesson++; }
+        S.quiz = null; renderMoocCourse();
+      } }, last ? '🏁 Terminer le cours' : 'Leçon suivante →'));
+    } else {
+      actions.appendChild(el('button', { class: 'btn btn-primary', onclick: () => { S.quiz = null; renderMoocCourse(); } }, '📖 Relire la leçon'));
+      actions.appendChild(el('button', { class: 'btn', onclick: () => moocStartQuiz() }, '🔁 Nouveau quiz'));
+    }
+    box.appendChild(actions);
+    main.appendChild(box);
+    return;
+  }
+
+  const q = Q.questions[Q.current];
+  Q.answered = false;                      // garde anti double-validation
+  main.appendChild(el('div', { class: 'mooc-lesson-head' },
+    el('h2', { class: 'mooc-lesson-title' }, `Quiz — question ${Q.current + 1}/${Q.questions.length}`),
+    el('span', { class: 'mooc-dur' }, `Score : ${Q.score}`)));
+  main.appendChild(el('div', { class: 'play-question', style: 'margin-bottom:12px;' }, q.q));
+
+  const form = el('div', { class: 'mooc-quiz-choices' });
+  q.choices.forEach((c, i) => {
+    form.appendChild(el('label', { class: 'mooc-choice' },
+      el('input', { type: 'radio', name: 'mooc-q', value: String(i) }),
+      el('span', {}, c)));
+  });
+  main.appendChild(form);
+  const feedback = el('div', { class: 'mooc-quiz-feedback' });
+  main.appendChild(feedback);
+
+  const btn = el('button', { class: 'btn btn-primary', onclick: () => {
+    if (Q.answered) return;                // le clic « suivant » repasse ici (listener conservé) : ignorer
+    const sel = main.querySelector('input[name="mooc-q"]:checked');
+    if (!sel) { alert('Choisissez une réponse.'); return; }
+    Q.answered = true;
+    const idx = parseInt(sel.value, 10);
+    const correct = (q.correctIndices || []).includes(idx);
+    if (correct) Q.score++;
+    // Feedback + verrouillage
+    main.querySelectorAll('input[name="mooc-q"]').forEach(inp => {
+      inp.disabled = true;
+      const lab = inp.closest('label');
+      const v = parseInt(inp.value, 10);
+      if ((q.correctIndices || []).includes(v)) lab.classList.add('good');
+      else if (inp === sel) lab.classList.add('bad');
+    });
+    feedback.className = 'mooc-quiz-feedback show ' + (correct ? 'ok' : 'ko');
+    feedback.innerHTML = '';
+    feedback.appendChild(el('strong', {}, correct ? '✓ Bonne réponse !' : '✗ Mauvaise réponse.'));
+    feedback.appendChild(el('div', {}, 'Réponse : ', el('strong', {}, q.r)));
+    if (q.e) feedback.appendChild(el('div', { class: 'muted', style: 'margin-top:4px;' }, q.e));
+    if (q.ref) feedback.appendChild(el('div', { class: 'muted', style: 'font-size:12px;margin-top:4px;' }, linkify(q.ref)));
+    btn.textContent = Q.current + 1 < Q.questions.length ? 'Question suivante →' : 'Voir le résultat';
+    btn.onclick = () => { Q.current++; renderMoocCourse(); };
+  } }, 'Valider');
+  main.appendChild(el('div', { class: 'mooc-actions' }, btn));
+}
+
+// ---------- Écran final : synthèse + passerelles ----------------------
+function renderMoocFinal(data, prog) {
+  const S = State.mooc;
+  const main = $('#mooc-main');
+  main.innerHTML = '';
+  const total = data.lecons.length;
+  const done = Object.keys(prog.done).length;
+  const fini = done >= total;
+
+  main.appendChild(el('div', { class: 'mooc-final' + (fini ? ' ok' : '') },
+    el('div', { class: 'mooc-quiz-big' }, fini ? '🏆' : '🚧'),
+    el('h2', {}, fini ? 'Félicitations, cours terminé !' : `Encore ${total - done} leçon(s) à valider`),
+    el('p', { class: 'muted' }, fini
+      ? 'Vous avez validé toutes les leçons de ce cours. Téléchargez la synthèse PDF, puis passez la certification pour obtenir votre certificat officiel.'
+      : 'Validez chaque leçon (quiz) pour terminer le cours. Vous pouvez déjà télécharger la synthèse PDF pour réviser.')));
+
+  // Objectifs récapitulés
+  main.appendChild(el('div', { class: 'mooc-retenir', style: 'animation-delay:80ms;' },
+    el('h3', {}, '🎯 Ce que ce cours vous a appris'),
+    el('ul', {}, ...data.objectifs.map(o => el('li', {}, o)))));
+
+  // Références globales
+  main.appendChild(el('div', { class: 'mooc-refs' },
+    el('h4', {}, '📚 Références pour aller plus loin'),
+    el('ul', {}, ...data.refsGlobales.map(r => el('li', {}, linkify(r))))));
+
+  const actions = el('div', { class: 'mooc-actions' });
+  actions.appendChild(el('button', { class: 'btn', onclick: () => moocDownloadPdf(S.domain) }, '📥 Télécharger la synthèse PDF'));
+  actions.appendChild(el('button', { class: 'btn btn-primary', onclick: () => route('parcours') }, '🎓 Passer la certification'));
+  actions.appendChild(el('button', { class: 'btn', onclick: () => route('setup') }, '🎮 Jouer une partie sur ce domaine'));
+  main.appendChild(actions);
+}
+
+// ---------- Synthèse PDF (multi-pages, générée sur canvas) -------------
+function moocWrapText(ctx, text, maxWidth) {
+  const words = String(text).split(/\s+/);
+  const lines = [];
+  let line = '';
+  for (const w of words) {
+    const test = line ? line + ' ' + w : w;
+    if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
+    else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function moocDownloadPdf(domain) {
+  const data = moocData()[domain];
+  if (!data) return;
+  const W = 1240, H = 1754, MG = 110;           // A4 portrait ~150 dpi
+  const CW = W - 2 * MG;
+  const pages = [];
+  let canvas, ctx, y, pageNum = 0;
+
+  function newPage() {
+    canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, W, H);
+    pageNum++;
+    if (pageNum > 1) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '20px Arial, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(`MOOC QPC — ${domain}`, MG, 58);
+      ctx.textAlign = 'right';
+      ctx.fillText(`p. ${pageNum}`, W - MG, 58);
+      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(MG, 74); ctx.lineTo(W - MG, 74); ctx.stroke();
+    }
+    pages.push(canvas);
+    y = pageNum === 1 ? 0 : 120;
+  }
+  function need(h) { if (y + h > H - 90) newPage(); }
+  function para(text, font, color, lh, maxW) {
+    ctx.font = font;
+    const lines = moocWrapText(ctx, text, maxW || CW);
+    need(lines.length * lh + 6);
+    ctx.fillStyle = color;
+    ctx.textAlign = 'left';
+    for (const ln of lines) { ctx.fillText(ln, MG, y + lh * 0.8); y += lh; }
+    y += 6;
+  }
+
+  // --- Couverture ---
+  newPage();
+  const grad = ctx.createLinearGradient(0, 0, 0, 560);
+  grad.addColorStop(0, '#0b1e4b'); grad.addColorStop(1, '#12295f');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, 560);
+  ctx.textAlign = 'center';
+  ctx.font = '120px Arial';
+  ctx.fillText(data.icon || '🎓', W / 2, 250);
+  ctx.fillStyle = '#fbbf24';
+  ctx.font = 'bold 34px Arial, sans-serif';
+  ctx.fillText('MOOC — SYNTHÈSE DE COURS', W / 2, 340);
+  ctx.fillStyle = '#ffffff';
+  let ts = 56;
+  ctx.font = `bold ${ts}px Georgia, serif`;
+  while (ctx.measureText(domain).width > W - 200 && ts > 30) { ts -= 2; ctx.font = `bold ${ts}px Georgia, serif`; }
+  ctx.fillText(domain, W / 2, 425);
+  ctx.fillStyle = '#bfdbfe';
+  ctx.font = 'italic 26px Georgia, serif';
+  const tagLines = moocWrapText(ctx, data.tagline, W - 300);
+  let ty = 480;
+  for (const ln of tagLines) { ctx.fillText(ln, W / 2, ty); ty += 34; }
+  y = 640;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#0f172a';
+  ctx.font = 'bold 34px Georgia, serif';
+  ctx.fillText('Objectifs du cours', MG, y); y += 50;
+  for (const o of data.objectifs) para('•  ' + o, '26px Arial, sans-serif', '#1f2937', 36);
+  y += 20;
+  para(`Durée indicative : ${data.duree} · ${data.lecons.length} leçons · Quiz d'auto-évaluation à chaque leçon`, 'italic 24px Arial, sans-serif', '#64748b', 32);
+  para('Au terme du cours : passez la certification (Parcours & Certificats) pour obtenir votre certificat officiel avec QR d\'authenticité.', 'italic 24px Arial, sans-serif', '#64748b', 32);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '22px Arial, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('QPC — Questions pour un Champion · Édition Économie & Sciences sociales', W / 2, H - 100);
+  ctx.fillText(new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }), W / 2, H - 64);
+
+  // --- Leçons ---
+  const BLOC_COLORS = { c: '#2563eb', m: '#7c3aed', e: '#16a34a', p: '#dc2626', f: '#d97706' };
+  data.lecons.forEach((l, li) => {
+    newPage();
+    // Bandeau de leçon
+    ctx.fillStyle = '#eff6ff';
+    ctx.fillRect(MG - 20, y, CW + 40, 86);
+    ctx.fillStyle = '#12295f';
+    ctx.font = 'bold 32px Georgia, serif';
+    ctx.textAlign = 'left';
+    const tl = moocWrapText(ctx, `Leçon ${li + 1} · ${l.titre}`, CW - 20);
+    let by = y + 40;
+    for (const ln of tl.slice(0, 2)) { ctx.fillText(ln, MG, by); by += 38; }
+    y += Math.max(86, tl.length * 38 + 26); y += 24;
+
+    for (const b of l.blocs) {
+      const meta = MOOC_BLOC_META[b.t] || MOOC_BLOC_META.c;
+      need(120);
+      ctx.fillStyle = BLOC_COLORS[b.t] || '#2563eb';
+      ctx.font = 'bold 22px Arial, sans-serif';
+      ctx.fillText(`${meta.ic} ${meta.lbl.toUpperCase()}`, MG, y + 18); y += 34;
+      para(b.titre, 'bold 27px Georgia, serif', '#0f172a', 36);
+      para(b.tx, '24px Arial, sans-serif', '#334155', 33);
+      y += 10;
+    }
+
+    // Encadré À retenir
+    ctx.font = '24px Arial, sans-serif';
+    const retLines = [];
+    for (const r of l.retenir) retLines.push(...moocWrapText(ctx, '•  ' + r, CW - 60));
+    const boxH = retLines.length * 33 + 84;
+    need(boxH + 20);
+    ctx.fillStyle = '#fefce8';
+    ctx.fillRect(MG - 12, y, CW + 24, boxH);
+    ctx.strokeStyle = '#facc15'; ctx.lineWidth = 2.5;
+    ctx.strokeRect(MG - 12, y, CW + 24, boxH);
+    ctx.fillStyle = '#854d0e';
+    ctx.font = 'bold 26px Georgia, serif';
+    ctx.fillText('📌 À retenir', MG + 12, y + 44);
+    let ry = y + 84;
+    ctx.fillStyle = '#422006';
+    ctx.font = '24px Arial, sans-serif';
+    for (const ln of retLines) { ctx.fillText(ln, MG + 12, ry); ry += 33; }
+    y += boxH + 26;
+
+    // Références de leçon
+    para('Références : ' + l.refs.join(' · '), 'italic 21px Arial, sans-serif', '#64748b', 29);
+  });
+
+  // --- Page finale : aller plus loin ---
+  newPage();
+  ctx.fillStyle = '#12295f';
+  ctx.font = 'bold 40px Georgia, serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('📚 Aller plus loin', MG, y + 46); y += 90;
+  para('Références générales vérifiées pour approfondir ce domaine :', '25px Arial, sans-serif', '#334155', 34);
+  y += 8;
+  for (const r of data.refsGlobales) para('•  ' + r, '24px Arial, sans-serif', '#1f2937', 33);
+  y += 30;
+  para('Et maintenant ?', 'bold 30px Georgia, serif', '#0f172a', 42);
+  para('1. Révision libre : parcourez toutes les questions du domaine dans l\'application.', '24px Arial, sans-serif', '#334155', 33);
+  para('2. Partie libre ou QCM : entraînez-vous en conditions de jeu (3 manches).', '24px Arial, sans-serif', '#334155', 33);
+  para('3. Parcours & Certificats : validez les niveaux Débutant → Expert et téléchargez vos certificats officiels (QR d\'authenticité).', '24px Arial, sans-serif', '#334155', 33);
+
+  // Export PDF
+  const jpegPages = pages.map(cv => ({ jpegBytes: canvasToJpegBytes(cv, 0.9), imgW: cv.width, imgH: cv.height }));
+  const pdfBytes = buildPdfFromJpegs(jpegPages);
+  const slug = domain.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase().slice(0, 50);
+  triggerDownload(new Blob([pdfBytes], { type: 'application/pdf' }), `mooc-qpc-${slug}.pdf`);
+}
+
 
 // ---------- Vue : mes duels -------------------------------------------
 function statusLabel(d) {

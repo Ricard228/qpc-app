@@ -224,7 +224,7 @@ children.push(
   new Paragraph({
     spacing: { before: 200 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'Version 2.39 — août 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
+    children: [new TextRun({ text: 'Version 2.40 — août 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
   }),
   new Paragraph({ children: [new PageBreak()] })
 );
@@ -837,10 +837,10 @@ children.push(
 
 );
 
-// ---------- 9. NOUVEAUTÉS v2.20 → v2.39 ------------------------------
+// ---------- 9. NOUVEAUTÉS v2.20 → v2.40 ------------------------------
 children.push(
   new Paragraph({ children: [new PageBreak()] }),
-  h1('9. Nouveautés v2.20 → v2.39'),
+  h1('9. Nouveautés v2.20 → v2.40'),
   p('Résumé des fonctionnalités ajoutées depuis la première édition de ce guide (v2.18/2.19).'),
 
   h2('Comptes, rôles et connexion'),
@@ -868,6 +868,7 @@ children.push(
   bullet('Mécaniques du jeu télévisé (v2.37) : Les 4 à la suite (pastilles de série, bannière si sans-faute), Neuf points gagnants (valeur de la question, on garde la main sur bonne réponse, on la perd sinon), Face à face (buzzer obligatoire pour prendre la main avant de répondre, course à 9 points). Le pupitre s’illumine quand on a la main et clignote en rouge quand on la perd.'),
   bullet('Certificats authentifiables (v2.38) : chaque certificat porte un QR code d’authenticité qui ouvre la page publique de vérification (titulaire, parcours, niveau, score, distinction, date, institution — vérification aussi possible en saisissant le numéro sur /verifier.html). L’administrateur peut définir le nom de l’institution certifiante et charger son logo : ils s’impriment sur tous les certificats.'),
   bullet('Certificats entièrement personnalisables (v2.39) : l’administrateur peut remplacer le titre d’en-tête et son sous-titre, charger une image de signature (fond blanc automatiquement rendu transparent) et changer le nom du signataire. Chaque champ laissé vide conserve la valeur d’origine (QPC — Questions pour un Champion / Édition Économie & Sciences sociales / signature et nom Nevame DataHouse).'),
+  bullet('MOOC — cours en ligne par domaine (v2.40) : chaque domaine intégré dispose d’un cours progressif et animé (leçons avec concepts, méthodes, exemples appliqués Togo/UEMOA, pièges, formules, « À retenir » et références vérifiées), d’un quiz de validation par leçon sur de vraies questions du domaine, d’une synthèse PDF téléchargeable (couverture, leçons, encadrés, références) et d’une passerelle directe vers la certification. Accès par la carte « MOOC — Cours en ligne » de l’accueil ; la progression de chaque joueur est enregistrée sur son appareil.'),
 );
 
 children.push(

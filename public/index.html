@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.39" />
+  <link rel="stylesheet" href="styles.css?v=2.40" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -219,6 +219,11 @@
           <h2 class="card-title">Mes duels <span class="badge-pill" id="duels-badge" hidden>0</span></h2>
           <p>Défier un autre joueur ou voir vos confrontations en cours.</p>
         </div>
+        <div class="card card-action" id="card-mooc">
+          <div class="card-icon">🎬</div>
+          <h2 class="card-title">MOOC — Cours en ligne</h2>
+          <p>Apprenez chaque domaine par leçons progressives et animées : concepts, méthodes, exemples, quiz et synthèse PDF à télécharger.</p>
+        </div>
         <div class="card card-action" id="card-review">
           <div class="card-icon">📖</div>
           <h2 class="card-title">Révision libre</h2>
@@ -249,6 +254,33 @@
           <label class="btn" for="file-import-all" style="cursor:pointer;">Importer un fichier .json</label>
           <input id="file-import-all" type="file" accept="application/json,.json" hidden />
         </div>
+      </div>
+    </section>
+  </template>
+
+  <!-- 🎬 v2.40 : MOOC — liste des cours -->
+  <template id="tpl-mooc-list">
+    <section class="screen">
+      <h1 class="title-xl">🎬 MOOC — Cours en ligne</h1>
+      <p class="lead">Des cours progressifs et conviviaux pour maîtriser chaque domaine : leçons animées, quiz d'auto-évaluation, références vérifiées et synthèse PDF à télécharger. Au terme du cours, passez la certification !</p>
+      <div id="mooc-grid" class="mooc-grid"></div>
+      <div class="actions-row">
+        <button id="btn-mooc-home" class="btn btn-ghost">← Retour à l'accueil</button>
+      </div>
+    </section>
+  </template>
+
+  <!-- 🎬 v2.40 : MOOC — un cours -->
+  <template id="tpl-mooc">
+    <section class="screen mooc-screen">
+      <div class="mooc-course-head" id="mooc-course-head"></div>
+      <div class="mooc-layout">
+        <aside class="mooc-side" id="mooc-side"></aside>
+        <div class="mooc-main" id="mooc-main"></div>
+      </div>
+      <div class="actions-row">
+        <button id="btn-mooc-back" class="btn btn-ghost">← Tous les cours</button>
+        <button id="btn-mooc-pdf" class="btn">📥 Synthèse PDF</button>
       </div>
     </section>
   </template>
@@ -584,7 +616,7 @@
           <p class="help-cover-desc">Manuel complet — joueurs, super-administrateurs, exploitation</p>
           <p class="help-cover-info">3 658 questions · 18 domaines · 3 manches partout · Parcours certifiants · PWA installable Android/iOS</p>
           <p class="help-cover-author">Conçu par Kossi Nevame AGBENU<br/>NEVAME Data House · ESA Université de Lomé</p>
-          <p class="help-cover-version">Version 2.39 — août 2026</p>
+          <p class="help-cover-version">Version 2.40 — août 2026</p>
         </header>
 
         <nav class="help-toc">
@@ -598,7 +630,7 @@
             <li><a href="#h-api">6. Annexe technique : API REST</a></li>
             <li><a href="#h-faq">7. FAQ et dépannage</a></li>
             <li><a href="#h-credits">8. Crédits et licence</a></li>
-            <li><a href="#h-news">9. Nouveautés v2.20 → v2.39</a></li>
+            <li><a href="#h-news">9. Nouveautés v2.20 → v2.40</a></li>
           </ol>
         </nav>
 
@@ -1143,7 +1175,7 @@ PTS: 6
         </section>
 
         <section id="h-news" class="help-section">
-          <h2>9. Nouveautés v2.20 → v2.39</h2>
+          <h2>9. Nouveautés v2.20 → v2.40</h2>
           <p>Cette section résume les fonctionnalités ajoutées depuis la première édition du guide (v2.19).</p>
 
           <h3>9.1 Comptes, rôles et connexion</h3>
@@ -1182,6 +1214,7 @@ PTS: 6
             <li><strong>Mécaniques du jeu télévisé (v2.37)</strong> : le plateau reproduit les règles de l'émission selon la manche — <em>Les 4 à la suite</em> (pastilles de série à allumer, bannière « 4 à la suite ! » si sans-faute), <em>Neuf points gagnants</em> (valeur de la question affichée, on <strong>garde la main</strong> sur bonne réponse, on la <strong>perd</strong> sinon), <em>Face à face</em> (il faut <strong>buzzer pour prendre la main</strong> avant de pouvoir répondre, course à 9 points). Le pupitre s'illumine en doré quand vous avez la main et clignote en rouge quand vous la perdez.</li>
             <li><strong>Certificats authentifiables (v2.38)</strong> : chaque certificat porte désormais un <strong>QR code d'authenticité</strong> — le scanner ouvre la page publique de vérification qui confirme titulaire, parcours, niveau, score, distinction et date depuis le registre officiel (vérification aussi possible en saisissant le numéro sur <code>/verifier.html</code>). L'administrateur peut définir le <strong>nom de l'institution certifiante</strong> et charger son <strong>logo</strong> : ils s'impriment automatiquement sur tous les certificats (et les rééditions de certificats déjà obtenus).</li>
             <li><strong>Certificats entièrement personnalisables (v2.39)</strong> : l'administrateur peut aussi remplacer le <strong>titre d'en-tête</strong> et son <strong>sous-titre</strong> (par défaut « QPC — Questions pour un Champion » / « Édition Économie &amp; Sciences sociales »), charger une <strong>image de signature</strong> (le fond blanc d'un scan ou d'une photo est automatiquement rendu transparent) et changer le <strong>nom du signataire</strong> (par défaut « NEVAME Data House · QPC »). Chaque champ laissé vide conserve la valeur d'origine.</li>
+            <li><strong>MOOC — cours en ligne par domaine (v2.40)</strong> : chaque domaine intégré dispose d'un <strong>cours progressif et animé</strong> (4 leçons en moyenne : concepts 💡, méthodes 🛠️, exemples appliqués Togo/UEMOA 🌍, pièges ⚠️ et formules 🧮, « À retenir » et références vérifiées). Chaque leçon se valide par un <strong>quiz sur de vraies questions</strong> du domaine ; la progression est enregistrée. Une <strong>synthèse PDF</strong> soignée (couverture, leçons, encadrés, références) se télécharge à tout moment, et le cours débouche sur la <strong>certification</strong> (Parcours &amp; Certificats). Accès : carte « 🎬 MOOC — Cours en ligne » de l'accueil.</li>
           </ul>
 
           <p class="help-end">— Fin du guide —</p>
@@ -1702,6 +1735,9 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.39"></script>
+  <script src="mooc-data.js?v=2.40"></script>
+  <script src="mooc-data2.js?v=2.40"></script>
+  <script src="mooc-data3.js?v=2.40"></script>
+  <script src="app.js?v=2.40"></script>
 </body>
 </html>
