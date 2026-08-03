@@ -1990,26 +1990,37 @@ function drawSignature(ctx, x, y, w) {
 // Habillage (institution + logo) et QR d'authenticité, préchargés avant
 // le dessin. Tout est facultatif : sans réseau ni réglage, le certificat
 // se dessine comme avant.
-let _certBranding = null;          // { institution, logoDataUrl } (cache session)
+let _certBranding = null;          // habillage (cache session)
 let _certLogoImg = null;           // Image décodée du logo
+let _certSigImg = null;            // Image décodée de la signature (v2.39)
 const _certQrCache = {};           // texte → { size, rows }
 
+function _loadImage(dataUrl) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => { img._src = dataUrl; resolve(img); };
+    img.onerror = () => resolve(null);
+    img.src = dataUrl;
+  });
+}
+
 async function prepareCertAssets(cert) {
-  const assets = { branding: null, logoImg: null, qr: null, verifyUrl: null };
-  // 1. Habillage institution/logo
+  const assets = { branding: null, logoImg: null, sigImg: null, qr: null, verifyUrl: null };
+  // 1. Habillage : institution, logo, titres, signature, signataire
   try {
     if (!_certBranding) _certBranding = await api.certBranding();
     assets.branding = _certBranding;
     if (_certBranding && _certBranding.logoDataUrl) {
       if (!_certLogoImg || _certLogoImg._src !== _certBranding.logoDataUrl) {
-        _certLogoImg = await new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => { img._src = _certBranding.logoDataUrl; resolve(img); };
-          img.onerror = () => resolve(null);
-          img.src = _certBranding.logoDataUrl;
-        });
+        _certLogoImg = await _loadImage(_certBranding.logoDataUrl);
       }
       assets.logoImg = _certLogoImg;
+    }
+    if (_certBranding && _certBranding.signatureDataUrl) {
+      if (!_certSigImg || _certSigImg._src !== _certBranding.signatureDataUrl) {
+        _certSigImg = await _loadImage(_certBranding.signatureDataUrl);
+      }
+      assets.sigImg = _certSigImg;
     }
   } catch (e) { /* sans habillage */ }
   // 2. QR d'authenticité → page publique de vérification
@@ -2069,10 +2080,13 @@ function drawCertificate(canvas, cert, assets) {
   }
 
   // En-tête (largeur réduite si un logo ou une institution occupe les coins)
+  // v2.39 : titres personnalisables par l'administrateur
   const inst = assets.branding && assets.branding.institution;
+  const title1 = (assets.branding && assets.branding.titleLine1) || 'QPC — Questions pour un Champion';
+  const title2 = (assets.branding && assets.branding.titleLine2) || 'Édition Économie & Sciences sociales';
   const headMaxW = (assets.logoImg || inst) ? 760 : W - 300;
-  center('QPC — Questions pour un Champion', 170, 44, 'Georgia, serif', '#333333', 'bold', '', headMaxW);
-  center('Édition Économie & Sciences sociales', 215, 28, 'Georgia, serif', '#666666', '', 'italic', headMaxW);
+  center(title1, 170, 44, 'Georgia, serif', '#333333', 'bold', '', headMaxW);
+  center(title2, 215, 28, 'Georgia, serif', '#666666', '', 'italic', headMaxW);
 
   // v2.38 : logo de l'institution en haut à gauche (ratio préservé)
   if (assets.logoImg) {
@@ -2152,11 +2166,22 @@ function drawCertificate(canvas, cert, assets) {
   ctx.fillText(`Fait le ${dateStr}`, 150, 1090);
   ctx.fillText(`Certificat n° ${cert.id}`, 150, 1130);
   ctx.textAlign = 'right';
-  ctx.fillText('NEVAME Data House · QPC', W - 150, 1090);
+  // v2.39 : nom du signataire personnalisable
+  const signer = (assets.branding && assets.branding.signerName) || 'NEVAME Data House · QPC';
+  ctx.fillText(signer, W - 150, 1090);
   ctx.strokeStyle = '#999999'; ctx.lineWidth = 1.5;
   ctx.beginPath(); ctx.moveTo(W - 480, 1055); ctx.lineTo(W - 150, 1055); ctx.stroke();
-  // Signature manuscrite Nevame DataHouse (v2.30), posée sur la ligne
-  drawSignature(ctx, W - 470, 900, 310);
+  if (assets.sigImg) {
+    // v2.39 : signature image chargée par l'administrateur, posée sur la
+    // ligne (bas aligné à y=1048), centrée au-dessus du nom du signataire
+    const img = assets.sigImg;
+    const k = Math.min(330 / img.width, 150 / img.height);
+    const sw = img.width * k, sh = img.height * k;
+    ctx.drawImage(img, W - 315 - sw / 2, 1048 - sh, sw, sh);
+  } else {
+    // Signature manuscrite Nevame DataHouse (v2.30), posée sur la ligne
+    drawSignature(ctx, W - 470, 900, 310);
+  }
 
   // v2.38 : QR d'authenticité au centre-bas → page publique de vérification
   // (sous la ligne Distinction, entre les mentions de gauche et la signature)
@@ -3118,29 +3143,47 @@ async function renderAdmin() {
     } catch (e) { alert('Erreur : ' + e.message); }
   };
 
-  // v2.38 : habillage des certificats (institution + logo)
+  // v2.38/v2.39 : habillage des certificats (titres, institution, logo, signature)
   const instInput = $('#cert-institution');
+  const title1Input = $('#cert-title1');
+  const title2Input = $('#cert-title2');
+  const signerInput = $('#cert-signer');
   const logoPreview = $('#cert-logo-preview');
   const removeLogoBtn = $('#btn-remove-logo');
+  const sigPreview = $('#cert-sig-preview');
+  const removeSigBtn = $('#btn-remove-sig');
   function showBrandingLogo(dataUrl) {
     if (!logoPreview) return;
     if (dataUrl) { logoPreview.src = dataUrl; logoPreview.hidden = false; if (removeLogoBtn) removeLogoBtn.hidden = false; }
     else { logoPreview.hidden = true; logoPreview.removeAttribute('src'); if (removeLogoBtn) removeLogoBtn.hidden = true; }
   }
+  function showBrandingSig(dataUrl) {
+    if (!sigPreview) return;
+    if (dataUrl) { sigPreview.src = dataUrl; sigPreview.hidden = false; if (removeSigBtn) removeSigBtn.hidden = false; }
+    else { sigPreview.hidden = true; sigPreview.removeAttribute('src'); if (removeSigBtn) removeSigBtn.hidden = true; }
+  }
   if (instInput) {
     api.adminCertBranding().then(b => {
       instInput.value = b.institution || '';
+      if (title1Input) title1Input.value = b.titleLine1 || '';
+      if (title2Input) title2Input.value = b.titleLine2 || '';
+      if (signerInput) signerInput.value = b.signerName || '';
       showBrandingLogo(b.logoDataUrl);
+      showBrandingSig(b.signatureDataUrl);
     }).catch(() => {});
   }
   const saveInstBtn = $('#btn-save-institution');
   if (saveInstBtn) saveInstBtn.onclick = async () => {
     try {
-      const r = await api.adminSetCertBranding({ institution: instInput.value });
+      await api.adminSetCertBranding({
+        institution: instInput.value,
+        titleLine1: title1Input ? title1Input.value : '',
+        titleLine2: title2Input ? title2Input.value : '',
+        signerName: signerInput ? signerInput.value : ''
+      });
       _certBranding = null;                               // invalider le cache joueur local
       const note = $('#branding-saved-note');
       if (note) {
-        note.textContent = r.institution ? `✓ Enregistré : « ${r.institution} »` : '✓ Enregistré (aucun nom imprimé)';
         note.hidden = false;
         setTimeout(() => { note.hidden = true; }, 2600);
       }
@@ -3183,6 +3226,58 @@ async function renderAdmin() {
       await api.adminSetCertBranding({ logoDataUrl: null });
       _certBranding = null; _certLogoImg = null;
       showBrandingLogo(null);
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
+
+  // v2.39 : upload de la signature — redimensionnée puis fond blanc rendu
+  // transparent (une signature scannée/photographiée sur papier clair se
+  // pose ainsi proprement sur le fond crème du certificat).
+  const sigFile = $('#cert-sig-file');
+  if (sigFile) sigFile.addEventListener('change', () => {
+    const f = sigFile.files && sigFile.files[0];
+    if (!f) return;
+    if (f.size > 4 * 1024 * 1024) { alert('Image trop lourde (max 4 Mo avant compression).'); sigFile.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = async () => {
+        const k = Math.min(1, 600 / img.width, 300 / img.height);
+        const cnv = document.createElement('canvas');
+        cnv.width = Math.max(1, Math.round(img.width * k));
+        cnv.height = Math.max(1, Math.round(img.height * k));
+        const cx2 = cnv.getContext('2d');
+        cx2.drawImage(img, 0, 0, cnv.width, cnv.height);
+        // Fond clair → transparent (seuil de luminosité), lissé sur les bords
+        const id = cx2.getImageData(0, 0, cnv.width, cnv.height);
+        const d = id.data;
+        for (let i = 0; i < d.length; i += 4) {
+          const lum = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+          if (lum > 235) d[i + 3] = 0;
+          else if (lum > 205) d[i + 3] = Math.round(d[i + 3] * (235 - lum) / 30);
+        }
+        cx2.putImageData(id, 0, 0);
+        const dataUrl = cnv.toDataURL('image/png');
+        if (dataUrl.length > 680000) { alert('Signature trop lourde après traitement. Utilisez une image plus petite.'); sigFile.value = ''; return; }
+        try {
+          await api.adminSetCertBranding({ signatureDataUrl: dataUrl });
+          _certBranding = null; _certSigImg = null;
+          showBrandingSig(dataUrl);
+          const note = $('#sig-saved-note');
+          if (note) { note.hidden = false; setTimeout(() => { note.hidden = true; }, 2600); }
+        } catch (e) { alert('Erreur : ' + e.message); }
+        sigFile.value = '';
+      };
+      img.onerror = () => { alert('Image illisible.'); sigFile.value = ''; };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(f);
+  });
+  if (removeSigBtn) removeSigBtn.onclick = async () => {
+    if (!confirm('Retirer la signature chargée ? La signature Nevame DataHouse d\'origine sera de nouveau utilisée.')) return;
+    try {
+      await api.adminSetCertBranding({ signatureDataUrl: null });
+      _certBranding = null; _certSigImg = null;
+      showBrandingSig(null);
     } catch (e) { alert('Erreur : ' + e.message); }
   };
 

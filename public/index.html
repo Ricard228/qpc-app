@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Questions pour un Champion — Économie &amp; Sciences sociales</title>
-  <link rel="stylesheet" href="styles.css?v=2.38" />
+  <link rel="stylesheet" href="styles.css?v=2.39" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -584,7 +584,7 @@
           <p class="help-cover-desc">Manuel complet — joueurs, super-administrateurs, exploitation</p>
           <p class="help-cover-info">3 658 questions · 18 domaines · 3 manches partout · Parcours certifiants · PWA installable Android/iOS</p>
           <p class="help-cover-author">Conçu par Kossi Nevame AGBENU<br/>NEVAME Data House · ESA Université de Lomé</p>
-          <p class="help-cover-version">Version 2.38 — juillet 2026</p>
+          <p class="help-cover-version">Version 2.39 — août 2026</p>
         </header>
 
         <nav class="help-toc">
@@ -598,7 +598,7 @@
             <li><a href="#h-api">6. Annexe technique : API REST</a></li>
             <li><a href="#h-faq">7. FAQ et dépannage</a></li>
             <li><a href="#h-credits">8. Crédits et licence</a></li>
-            <li><a href="#h-news">9. Nouveautés v2.20 → v2.38</a></li>
+            <li><a href="#h-news">9. Nouveautés v2.20 → v2.39</a></li>
           </ol>
         </nav>
 
@@ -1143,7 +1143,7 @@ PTS: 6
         </section>
 
         <section id="h-news" class="help-section">
-          <h2>9. Nouveautés v2.20 → v2.38</h2>
+          <h2>9. Nouveautés v2.20 → v2.39</h2>
           <p>Cette section résume les fonctionnalités ajoutées depuis la première édition du guide (v2.19).</p>
 
           <h3>9.1 Comptes, rôles et connexion</h3>
@@ -1181,6 +1181,7 @@ PTS: 6
             <li><strong>Plateau TV pour les duels (v2.36–v2.37)</strong> : lorsqu'il est activé par l'administrateur, les duels et confrontations affichent chez chaque joueur un plateau façon émission de télévision : chaque candidat a son <strong>pupitre-podium avec buzzeur</strong>, écran de score digital, jauge de progression et statut ; chrono digital lumineux au centre, candidat en tête couronné 👑, scores en direct automatiques.</li>
             <li><strong>Mécaniques du jeu télévisé (v2.37)</strong> : le plateau reproduit les règles de l'émission selon la manche — <em>Les 4 à la suite</em> (pastilles de série à allumer, bannière « 4 à la suite ! » si sans-faute), <em>Neuf points gagnants</em> (valeur de la question affichée, on <strong>garde la main</strong> sur bonne réponse, on la <strong>perd</strong> sinon), <em>Face à face</em> (il faut <strong>buzzer pour prendre la main</strong> avant de pouvoir répondre, course à 9 points). Le pupitre s'illumine en doré quand vous avez la main et clignote en rouge quand vous la perdez.</li>
             <li><strong>Certificats authentifiables (v2.38)</strong> : chaque certificat porte désormais un <strong>QR code d'authenticité</strong> — le scanner ouvre la page publique de vérification qui confirme titulaire, parcours, niveau, score, distinction et date depuis le registre officiel (vérification aussi possible en saisissant le numéro sur <code>/verifier.html</code>). L'administrateur peut définir le <strong>nom de l'institution certifiante</strong> et charger son <strong>logo</strong> : ils s'impriment automatiquement sur tous les certificats (et les rééditions de certificats déjà obtenus).</li>
+            <li><strong>Certificats entièrement personnalisables (v2.39)</strong> : l'administrateur peut aussi remplacer le <strong>titre d'en-tête</strong> et son <strong>sous-titre</strong> (par défaut « QPC — Questions pour un Champion » / « Édition Économie &amp; Sciences sociales »), charger une <strong>image de signature</strong> (le fond blanc d'un scan ou d'une photo est automatiquement rendu transparent) et changer le <strong>nom du signataire</strong> (par défaut « NEVAME Data House · QPC »). Chaque champ laissé vide conserve la valeur d'origine.</li>
           </ul>
 
           <p class="help-end">— Fin du guide —</p>
@@ -1346,24 +1347,42 @@ PTS: 6
           </div>
         </div>
 
-        <!-- v2.38 : habillage des certificats (institution + logo) -->
+        <!-- v2.38/v2.39 : habillage des certificats (titres, institution, logo, signature) -->
         <div style="margin-top:18px; padding-top:18px; border-top:1px solid var(--line);">
-          <strong>🏛️ Certificats — institution &amp; logo</strong>
+          <strong>🏛️ Certificats — titres, institution, logo &amp; signature</strong>
           <div class="muted" style="font-size:13px; margin-top:2px;">
-            Le nom de l'institution s'imprime en haut à droite de chaque certificat, le logo en haut
-            à gauche. Chaque certificat porte aussi un <strong>QR code d'authenticité</strong> : le scanner
-            ouvre la page publique de vérification
-            (<code>/verifier.html</code>) qui confirme le titulaire, le niveau et la distinction.
+            Personnalisez ce qui s'imprime sur les certificats : le <strong>titre d'en-tête</strong> et son
+            <strong>sous-titre</strong> (au centre), le <strong>nom de l'institution</strong> (haut droite), le
+            <strong>logo</strong> (haut gauche), la <strong>signature</strong> (image, posée sur la ligne) et le
+            <strong>nom du signataire</strong> (sous la ligne). Chaque champ laissé vide garde la valeur
+            d'origine. Chaque certificat porte aussi un <strong>QR code d'authenticité</strong> : le scanner
+            ouvre la page publique de vérification (<code>/verifier.html</code>).
           </div>
-          <div class="form-row" style="margin-top:10px; align-items:flex-end; flex-wrap:wrap;">
+          <div class="form-row" style="margin-top:10px; flex-wrap:wrap; gap:10px;">
             <label class="field" style="min-width:280px; flex:1;">
-              <span>Nom de l'institution (ex. Université de Lomé — FaSEG)</span>
+              <span>Titre d'en-tête (ligne 1) — défaut : QPC — Questions pour un Champion</span>
+              <input type="text" id="cert-title1" maxlength="90" placeholder="QPC — Questions pour un Champion" />
+            </label>
+            <label class="field" style="min-width:280px; flex:1;">
+              <span>Sous-titre (ligne 2) — défaut : Édition Économie &amp; Sciences sociales</span>
+              <input type="text" id="cert-title2" maxlength="90" placeholder="Édition Économie &amp; Sciences sociales" />
+            </label>
+          </div>
+          <div class="form-row" style="margin-top:10px; align-items:flex-end; flex-wrap:wrap; gap:10px;">
+            <label class="field" style="min-width:260px; flex:1;">
+              <span>Nom de l'institution (haut droite, ex. Université de Lomé — FaSEG)</span>
               <input type="text" id="cert-institution" maxlength="120" placeholder="Laisser vide pour ne rien imprimer" />
             </label>
-            <button id="btn-save-institution" class="btn btn-primary">💾 Enregistrer le nom</button>
+            <label class="field" style="min-width:260px; flex:1;">
+              <span>Nom du signataire — défaut : NEVAME Data House · QPC</span>
+              <input type="text" id="cert-signer" maxlength="60" placeholder="NEVAME Data House · QPC" />
+            </label>
+          </div>
+          <div class="form-row" style="margin-top:10px;">
+            <button id="btn-save-institution" class="btn btn-primary">💾 Enregistrer les textes</button>
             <span id="branding-saved-note" class="muted" style="font-size:13px;" hidden>✓ Enregistré</span>
           </div>
-          <div class="form-row" style="margin-top:12px; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div class="form-row" style="margin-top:14px; align-items:center; flex-wrap:wrap; gap:12px;">
             <img id="cert-logo-preview" alt="" style="max-height:64px; max-width:170px; border:1px solid var(--line); border-radius:8px; padding:4px; background:#fff;" hidden />
             <label class="btn btn-ghost" style="cursor:pointer;">
               🖼️ Charger un logo (PNG/JPG)
@@ -1371,6 +1390,20 @@ PTS: 6
             </label>
             <button id="btn-remove-logo" class="btn btn-ghost" hidden>🗑 Retirer le logo</button>
             <span id="logo-saved-note" class="muted" style="font-size:13px;" hidden>✓ Logo enregistré</span>
+          </div>
+          <div class="form-row" style="margin-top:10px; align-items:center; flex-wrap:wrap; gap:12px;">
+            <img id="cert-sig-preview" alt="" style="max-height:64px; max-width:200px; border:1px solid var(--line); border-radius:8px; padding:4px; background:#fff;" hidden />
+            <label class="btn btn-ghost" style="cursor:pointer;">
+              ✍️ Charger une signature (PNG/JPG)
+              <input type="file" id="cert-sig-file" accept="image/png,image/jpeg,image/webp" hidden />
+            </label>
+            <button id="btn-remove-sig" class="btn btn-ghost" hidden>🗑 Retirer la signature</button>
+            <span id="sig-saved-note" class="muted" style="font-size:13px;" hidden>✓ Signature enregistrée</span>
+          </div>
+          <div class="muted" style="font-size:12.5px; margin-top:6px;">
+            💡 Signature : photographiez ou scannez-la sur fond blanc — le fond est automatiquement rendu
+            transparent avant impression. Sans signature chargée, la signature manuscrite Nevame DataHouse
+            d'origine est utilisée.
           </div>
         </div>
       </div>
@@ -1669,6 +1702,6 @@ Q4 : Quel est le taux directeur actuel de la BCEAO ?
     </section>
   </template>
 
-  <script src="app.js?v=2.38"></script>
+  <script src="app.js?v=2.39"></script>
 </body>
 </html>

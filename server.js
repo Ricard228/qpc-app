@@ -2337,38 +2337,63 @@ app.get('/api/qr', requireUser, (req, res) => {
   }
 });
 
+// Vue « client » de l'habillage : ce que le dessinateur de certificats lit
+function certBrandingView(b) {
+  return {
+    institution: b.institution || '',
+    logoDataUrl: b.logoDataUrl || null,
+    titleLine1: b.titleLine1 || '',          // vide = « QPC — Questions pour un Champion »
+    titleLine2: b.titleLine2 || '',          // vide = « Édition Économie & Sciences sociales »
+    signerName: b.signerName || '',          // vide = « NEVAME Data House · QPC »
+    signatureDataUrl: b.signatureDataUrl || null   // null = signature vectorielle par défaut
+  };
+}
+
 // Habillage lu par les joueurs au moment de dessiner un certificat
 app.get('/api/me/cert-branding', requireUser, (req, res) => {
-  const b = loadCertBranding();
-  res.json({ institution: b.institution || '', logoDataUrl: b.logoDataUrl || null });
+  res.json(certBrandingView(loadCertBranding()));
 });
 
 // Lecture / réglage côté administrateur
 app.get('/api/admin/cert-branding', requireAdmin, (req, res) => {
   const b = loadCertBranding();
-  res.json({ institution: b.institution || '', logoDataUrl: b.logoDataUrl || null, updatedAt: b.updatedAt || null });
+  res.json({ ...certBrandingView(b), updatedAt: b.updatedAt || null });
 });
 
 app.put('/api/admin/cert-branding', requireAdmin, (req, res) => {
   const b = loadCertBranding();
-  if (typeof req.body.institution === 'string') {
-    b.institution = req.body.institution.replace(/\s+/g, ' ').trim().slice(0, 120);
-  }
+  const cleanText = (v, max) => String(v).replace(/\s+/g, ' ').trim().slice(0, max);
+  // Valide une image en data-URL ; renvoie un message d'erreur ou null
+  const imageError = (v, label) => {
+    if (!/^data:image\/(png|jpeg|jpg|webp);base64,[A-Za-z0-9+/=]+$/.test(v)) {
+      return `${label} invalide : image PNG/JPEG/WebP en data-URL attendue`;
+    }
+    if (v.length > 700000) {
+      return `${label} trop lourd(e) (max ~500 Ko). Réduisez l'image.`;
+    }
+    return null;
+  };
+  if (typeof req.body.institution === 'string') b.institution = cleanText(req.body.institution, 120);
+  if (typeof req.body.titleLine1 === 'string')  b.titleLine1  = cleanText(req.body.titleLine1, 90);
+  if (typeof req.body.titleLine2 === 'string')  b.titleLine2  = cleanText(req.body.titleLine2, 90);
+  if (typeof req.body.signerName === 'string')  b.signerName  = cleanText(req.body.signerName, 60);
   if (req.body.logoDataUrl === null) {
     b.logoDataUrl = null;
   } else if (typeof req.body.logoDataUrl === 'string') {
-    const v = req.body.logoDataUrl;
-    if (!/^data:image\/(png|jpeg|jpg|webp);base64,[A-Za-z0-9+/=]+$/.test(v)) {
-      return res.status(400).json({ error: 'Logo invalide : image PNG/JPEG/WebP en data-URL attendue' });
-    }
-    if (v.length > 700000) {
-      return res.status(400).json({ error: 'Logo trop lourd (max ~500 Ko). Réduisez l\'image.' });
-    }
-    b.logoDataUrl = v;
+    const err = imageError(req.body.logoDataUrl, 'Logo');
+    if (err) return res.status(400).json({ error: err });
+    b.logoDataUrl = req.body.logoDataUrl;
+  }
+  if (req.body.signatureDataUrl === null) {
+    b.signatureDataUrl = null;
+  } else if (typeof req.body.signatureDataUrl === 'string') {
+    const err = imageError(req.body.signatureDataUrl, 'Signature');
+    if (err) return res.status(400).json({ error: err });
+    b.signatureDataUrl = req.body.signatureDataUrl;
   }
   b.updatedAt = new Date().toISOString();
   saveCertBranding(b);
-  res.json({ ok: true, institution: b.institution || '', logoDataUrl: b.logoDataUrl || null, updatedAt: b.updatedAt });
+  res.json({ ok: true, ...certBrandingView(b), updatedAt: b.updatedAt });
 });
 
 // Vérification PUBLIQUE d'un certificat par son numéro (page verifier.html,
