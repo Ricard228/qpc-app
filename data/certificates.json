@@ -181,20 +181,6 @@
       "distinction": "Excellent",
       "date": "2026-08-03T00:09:55.410Z",
       "updatedAt": "2026-08-03T00:09:55.410Z"
-    },
-    {
-      "id": "c417866c3b3c8c2b",
-      "owner": "QPC-VFVAX5EW",
-      "name": "Ayélé Test SIGNATURE",
-      "domain": "Microéconomie et théorie",
-      "level": "debutant",
-      "levelLabel": "Débutant",
-      "scorePct": 80,
-      "nbCorrect": 8,
-      "nbQuestions": 10,
-      "distinction": "Très Bien",
-      "date": "2026-08-03T00:27:00.188Z",
-      "updatedAt": "2026-08-03T00:27:00.188Z"
     }
   ],
   "attempts": [
