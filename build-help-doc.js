@@ -210,7 +210,7 @@ children.push(
   new Paragraph({
     spacing: { before: 1600 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: '3 658 questions · 18 domaines · 3 manches partout · Parcours certifiants · PWA installable Android/iOS', font: 'Arial', size: 20, color: '6B7280' })]
+    children: [new TextRun({ text: '3 718 questions · 18 domaines · 3 manches partout · Parcours certifiants · PWA installable Android/iOS', font: 'Arial', size: 20, color: '6B7280' })]
   }),
   new Paragraph({
     spacing: { before: 200 },
@@ -224,7 +224,7 @@ children.push(
   new Paragraph({
     spacing: { before: 200 },
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'Version 2.40 — août 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
+    children: [new TextRun({ text: 'Version 2.41 — août 2026', font: 'Arial', size: 18, italics: true, color: '6B7280' })]
   }),
   new Paragraph({ children: [new PageBreak()] })
 );
@@ -251,7 +251,7 @@ children.push(
   p('L’application a été conçue dans un contexte académique ouest-africain (UEMOA, Togo) mais couvre l’économie générale, les sciences sociales et de nombreux domaines spécialisés utiles à toute formation supérieure en économie, gestion ou data science.'),
 
   h2('1.2 Caractéristiques principales'),
-  bullet('3 658 questions documentées sur 18 domaines — dont « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (au moins 200 questions par domaine, chaque domaine couvrant les 3 manches)'),
+  bullet('3 718 questions documentées sur 18 domaines — dont « IA, LLM et Agents intelligents » et « Topographie, génie civil et architecture » (au moins 200 questions par domaine, chaque domaine couvrant les 3 manches)'),
   bullet('Parcours certifiants en 4 niveaux (Débutant, Intermédiaire, Avancé, Expert) avec certificats PDF/JPG signés, nom complet imprimable et limite hebdomadaire configurable'),
   bullet('Comptes auto-inscrits, administrateurs nommés et codes visiteur partagés multi-sessions'),
   bullet('Import de spécialités : .txt/.json, langage naturel avec distracteurs générés, ou upload Word/PDF/TXT — modèles téléchargeables'),
@@ -645,7 +645,7 @@ PTS: 1
 // ---------- 5. DOMAINES COUVERTS -------------------------------------
 children.push(
   h1('5. Les 18 domaines couverts'),
-  p('La base intégrée totalise 3 658 questions documentées (18 domaines, au moins 200 questions chacun, tous jouables dans les 3 manches ; ce total évolue avec les spécialités personnalisées ajoutées par votre admin). Voici les domaines disponibles, triés par taille décroissante :'),
+  p('La base intégrée totalise 3 718 questions documentées (18 domaines, au moins 200 questions chacun, tous jouables dans les 3 manches ; ce total évolue avec les spécialités personnalisées ajoutées par votre admin). Voici les domaines disponibles, triés par taille décroissante :'),
   table(
     ['Domaine', 'Questions', 'Thèmes principaux'],
     [
@@ -837,10 +837,10 @@ children.push(
 
 );
 
-// ---------- 9. NOUVEAUTÉS v2.20 → v2.40 ------------------------------
+// ---------- 9. NOUVEAUTÉS v2.20 → v2.41 ------------------------------
 children.push(
   new Paragraph({ children: [new PageBreak()] }),
-  h1('9. Nouveautés v2.20 → v2.40'),
+  h1('9. Nouveautés v2.20 → v2.41'),
   p('Résumé des fonctionnalités ajoutées depuis la première édition de ce guide (v2.18/2.19).'),
 
   h2('Comptes, rôles et connexion'),
@@ -862,13 +862,14 @@ children.push(
 
   h2('Contenus et réglages'),
   bullet('Éditeur intégré des questions/réponses/sources : super-admin sur tous les domaines (modifications persistantes), admins nommés sur les spécialités importées.'),
-  bullet('Base portée à 3 658 questions sur 18 domaines (au moins 200 questions et les 3 manches par domaine), avec renforts majeurs en évaluation d’impact (DID, PSM, IV, RDD, contrôle synthétique, CATE + commandes STATA 18/19) et en IA/LLM technique.'),
+  bullet('Base portée à 3 718 questions sur 18 domaines (au moins 200 questions et les 3 manches par domaine), avec renforts majeurs en évaluation d’impact (DID, PSM, IV, RDD, contrôle synthétique, CATE + commandes STATA 18/19) et en IA/LLM technique.'),
   bullet('Durées des trois manches paramétrables (5 à 600 s) ; bouton Aide masquable côté joueur.'),
   bullet('Plateau TV pour les duels (v2.36–v2.37) : activé par l’administrateur, il affiche pendant les duels et confrontations un plateau façon émission — chaque candidat a son pupitre-podium avec buzzeur, écran de score digital et jauge de progression ; chrono digital lumineux, candidat en tête couronné, scores en direct automatiques.'),
   bullet('Mécaniques du jeu télévisé (v2.37) : Les 4 à la suite (pastilles de série, bannière si sans-faute), Neuf points gagnants (valeur de la question, on garde la main sur bonne réponse, on la perd sinon), Face à face (buzzer obligatoire pour prendre la main avant de répondre, course à 9 points). Le pupitre s’illumine quand on a la main et clignote en rouge quand on la perd.'),
   bullet('Certificats authentifiables (v2.38) : chaque certificat porte un QR code d’authenticité qui ouvre la page publique de vérification (titulaire, parcours, niveau, score, distinction, date, institution — vérification aussi possible en saisissant le numéro sur /verifier.html). L’administrateur peut définir le nom de l’institution certifiante et charger son logo : ils s’impriment sur tous les certificats.'),
   bullet('Certificats entièrement personnalisables (v2.39) : l’administrateur peut remplacer le titre d’en-tête et son sous-titre, charger une image de signature (fond blanc automatiquement rendu transparent) et changer le nom du signataire. Chaque champ laissé vide conserve la valeur d’origine (QPC — Questions pour un Champion / Édition Économie & Sciences sociales / signature et nom Nevame DataHouse).'),
   bullet('MOOC — cours en ligne par domaine (v2.40) : chaque domaine intégré dispose d’un cours progressif et animé (leçons avec concepts, méthodes, exemples appliqués Togo/UEMOA, pièges, formules, « À retenir » et références vérifiées), d’un quiz de validation par leçon sur de vraies questions du domaine, d’une synthèse PDF téléchargeable (couverture, leçons, encadrés, références) et d’une passerelle directe vers la certification. Accès par la carte « MOOC — Cours en ligne » de l’accueil ; la progression de chaque joueur est enregistrée sur son appareil.'),
+  bullet('Agribusiness approfondi (v2.41) : le domaine Économie agricole et agribusiness passe à 270 questions (+60) et son MOOC à 8 leçons (≈ 4 h 30) — compte d’exploitation et gestion de l’entreprise agricole (marges brutes, EBE, seuil de rentabilité, trésorerie), business models et montage de projets d’agrobusiness (canvas, faisabilité, VAN/TRI, financement), chaînes de valeur intégrées et agriculture contractuelle (financement de chaîne, typologie FAO, vente parallèle), et commerce international des produits agricoles (Incoterms, couverture à terme, normes SPS, certifications, préférences commerciales).'),
 );
 
 children.push(

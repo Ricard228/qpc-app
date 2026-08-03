@@ -18,6 +18,7 @@ const extra233a = require('./data_extra_v233a.js');   // v2.33 S&E impact/STATA 
 const extra233b = require('./data_extra_v233b.js');   // v2.33 +20 q sur les 16 autres domaines
 const extra235a = require('./data_extra_v235a.js');   // v2.35 3 manches partout (1/2)
 const extra235b = require('./data_extra_v235b.js');   // v2.35 3 manches partout (2/2)
+const extra241  = require('./data_extra_v241.js');    // v2.41 agribusiness approfondi
 
 const QPATH = path.join(__dirname, 'data', 'questions.json');
 const Q = JSON.parse(fs.readFileSync(QPATH, 'utf8'));
@@ -100,6 +101,12 @@ const r35b1 = appendPacks(Q.manche1, 'manche1', extra235b.m1Packs);
 const r35b2 = appendPacks(Q.manche2, 'manche2', extra235b.m2Packs);
 const r35b3 = appendPacks(Q.manche3, 'manche3', extra235b.m3Packs);
 console.log(`  v2.35 : +${r35a1.added+r35b1.added} packs M1, +${r35a2.added+r35b2.added} packs M2, +${r35a3.added+r35b3.added} packs M3`);
+
+// v2.41 — agribusiness : gestion, business models, projets, CVA, contrats, export
+const r41m1 = appendPacks(Q.manche1, 'manche1', extra241.m1Packs);
+const r41m2 = appendPacks(Q.manche2, 'manche2', extra241.m2Packs);
+const r41m3 = appendPacks(Q.manche3, 'manche3', extra241.m3Packs);
+console.log(`  v2.41 : +${r41m1.added} packs M1, +${r41m2.added} packs M2, +${r41m3.added} packs M3 (agribusiness)`);
 
 // v2.30 — Déduplication des choix QCM : si un distracteur coïncide avec
 // la bonne réponse ou un autre choix, on le remplace par une variante

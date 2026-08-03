@@ -53898,6 +53898,474 @@
           "pts": 1
         }
       ]
+    },
+    {
+      "id": "manche1-692",
+      "type": "manche1",
+      "titre": "Agribusiness — gestion, projets et marchés — Série 1",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-692-q1",
+          "q": "Dans le compte d'exploitation d'une ferme, la marge brute d'une culture se calcule comme…",
+          "r": "Produit brut de la culture − charges variables qui lui sont affectées",
+          "choices": [
+            "Produit brut de la culture − charges variables qui lui sont affectées",
+            "Chiffre d'affaires total − toutes les charges fixes",
+            "Produit brut + subventions − impôts",
+            "Ventes − amortissements du matériel"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La marge brute (produit brut − charges opérationnelles : semences, engrais, produits, main-d'œuvre saisonnière) est l'outil de comparaison des ateliers : les charges fixes, communes, ne lui sont pas imputées.",
+          "ref": "https://fr.wikipedia.org/wiki/Marge_brute",
+          "pts": 1
+        },
+        {
+          "id": "manche1-692-q2",
+          "q": "Le produit brut d'un atelier maïs comprend les ventes ET…",
+          "r": "L'autoconsommation et les variations de stocks valorisées",
+          "choices": [
+            "L'autoconsommation et les variations de stocks valorisées",
+            "Uniquement les subventions reçues",
+            "Les emprunts de campagne obtenus",
+            "La valeur du matériel acheté dans l'année"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le produit brut = ventes + autoconsommation + dons + stock final − stock initial, le tout valorisé au prix du marché : l'autoconsommation est un vrai produit, souvent majeur en exploitation familiale.",
+          "ref": "https://fr.wikipedia.org/wiki/Comptabilit%C3%A9_agricole",
+          "pts": 1
+        },
+        {
+          "id": "manche1-692-q3",
+          "q": "Les charges de structure (fixes) d'une exploitation agricole sont celles qui…",
+          "r": "Ne varient pas avec les surfaces ou volumes produits à court terme",
+          "choices": [
+            "Ne varient pas avec les surfaces ou volumes produits à court terme",
+            "Augmentent proportionnellement aux quantités récoltées",
+            "Concernent uniquement les intrants importés",
+            "Sont payées seulement les années de bonne récolte"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Amortissements, fermage, salaires permanents, assurances : elles courent quelle que soit la production — d'où l'enjeu de les couvrir par la somme des marges brutes.",
+          "ref": "https://fr.wikipedia.org/wiki/Charge_fixe",
+          "pts": 1
+        },
+        {
+          "id": "manche1-692-q4",
+          "q": "L'excédent brut d'exploitation (EBE) d'une entreprise agricole mesure…",
+          "r": "Le cash dégagé par l'exploitation avant amortissements et frais financiers",
+          "choices": [
+            "Le cash dégagé par l'exploitation avant amortissements et frais financiers",
+            "Le bénéfice net après impôt",
+            "La valeur totale du cheptel",
+            "Le montant des subventions d'équipement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "EBE = produits d'exploitation − charges opérationnelles − charges de personnel : il finance annuités, autofinancement et prélèvements privés — l'indicateur clé de viabilité.",
+          "ref": "https://fr.wikipedia.org/wiki/Exc%C3%A9dent_brut_d%27exploitation",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-693",
+      "type": "manche1",
+      "titre": "Agribusiness — gestion, projets et marchés — Série 2",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-693-q1",
+          "q": "Le coût de production d'un kilogramme de riz paddy s'obtient en divisant…",
+          "r": "L'ensemble des charges (variables + fixes imputées) par les kg produits",
+          "choices": [
+            "L'ensemble des charges (variables + fixes imputées) par les kg produits",
+            "Le prix de vente par le rendement",
+            "Les seules charges d'engrais par la surface",
+            "La marge brute par le nombre de sacs"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Coût de revient unitaire = charges totales imputables / production totale : comparé au prix de vente, il détermine la marge unitaire et le seuil de compétitivité.",
+          "ref": "https://fr.wikipedia.org/wiki/Co%C3%BBt_de_production",
+          "pts": 1
+        },
+        {
+          "id": "manche1-693-q2",
+          "q": "Une exploitation dégage 3 000 000 FCFA de marges brutes ; ses charges de structure sont de 1 800 000 FCFA dont 600 000 d'amortissements. Son EBE est de…",
+          "r": "1 800 000 FCFA",
+          "choices": [
+            "1 800 000 FCFA",
+            "1 200 000 FCFA",
+            "3 000 000 FCFA",
+            "600 000 FCFA"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "EBE = Σ marges brutes − charges de structure HORS amortissements = 3 000 000 − (1 800 000 − 600 000) = 1 800 000 FCFA. L'amortissement, charge calculée, se déduit ensuite pour le résultat.",
+          "ref": "https://fr.wikipedia.org/wiki/Exc%C3%A9dent_brut_d%27exploitation",
+          "pts": 1
+        },
+        {
+          "id": "manche1-693-q3",
+          "q": "Le plan de trésorerie de campagne d'une exploitation sert à…",
+          "r": "Anticiper mois par mois les décaissements et encaissements pour éviter l'impasse",
+          "choices": [
+            "Anticiper mois par mois les décaissements et encaissements pour éviter l'impasse",
+            "Calculer l'impôt foncier annuel",
+            "Mesurer la fertilité des sols",
+            "Fixer le prix de vente au marché"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Les dépenses (intrants, main-d'œuvre) précèdent de plusieurs mois les recettes de récolte : le plan de trésorerie dimensionne le crédit de campagne et évite de brader la récolte à la soudure.",
+          "ref": "https://fr.wikipedia.org/wiki/Plan_de_tr%C3%A9sorerie",
+          "pts": 1
+        },
+        {
+          "id": "manche1-693-q4",
+          "q": "Le carnet de bord technico-économique d'une exploitation permet avant tout de…",
+          "r": "Enregistrer opérations, quantités et coûts pour calculer les marges réelles",
+          "choices": [
+            "Enregistrer opérations, quantités et coûts pour calculer les marges réelles",
+            "Remplacer la déclaration fiscale",
+            "Garantir un prix minimum au producteur",
+            "Obtenir automatiquement un label bio"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Sans enregistrement (itinéraire technique, intrants, temps de travaux, ventes), pas de coût de revient fiable ni de comparaison entre parcelles, campagnes ou pairs (réseaux de fermes de référence).",
+          "ref": "https://fr.wikipedia.org/wiki/Gestion_agricole",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-694",
+      "type": "manche1",
+      "titre": "Agribusiness — gestion, projets et marchés — Série 3",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-694-q1",
+          "q": "Dans le Business Model Canvas appliqué à l'agribusiness, la « proposition de valeur » désigne…",
+          "r": "Ce qui rend l'offre unique et utile pour un segment de clients donné",
+          "choices": [
+            "Ce qui rend l'offre unique et utile pour un segment de clients donné",
+            "Le montant du capital social de départ",
+            "La liste des équipements de l'usine",
+            "Le taux d'intérêt du crédit bancaire"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Exemples : jus « 100 % ananas du Togo » traçable, poulet local abattu aux normes, soja non-OGM certifié : la proposition de valeur répond à un besoin client précis, pas à ce que l'on sait produire.",
+          "ref": "https://fr.wikipedia.org/wiki/Business_Model_Canvas",
+          "pts": 1
+        },
+        {
+          "id": "manche1-694-q2",
+          "q": "Le modèle « nucleus estate + outgrowers » (noyau + planteurs satellites) consiste à…",
+          "r": "Combiner une plantation-usine centrale et des producteurs contractuels alentour",
+          "choices": [
+            "Combiner une plantation-usine centrale et des producteurs contractuels alentour",
+            "Vendre uniquement sur le marché de gros urbain",
+            "Produire sans aucun contrat avec des tiers",
+            "Importer la matière première transformée"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le noyau garantit un volume de base à l'usine et diffuse l'itinéraire technique ; les outgrowers complètent l'approvisionnement sous contrat — modèle classique de l'huile de palme ou de la canne.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 1
+        },
+        {
+          "id": "manche1-694-q3",
+          "q": "Pour une PME de transformation agroalimentaire, les « flux de revenus » du canvas incluent typiquement…",
+          "r": "Ventes du produit principal, sous-produits valorisés et prestations annexes",
+          "choices": [
+            "Ventes du produit principal, sous-produits valorisés et prestations annexes",
+            "Les seuls apports des actionnaires",
+            "Les subventions comme unique ressource durable",
+            "Les dettes fournisseurs"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Une huilerie de soja vend l'huile ET le tourteau (aliment bétail), parfois la prestation de trituration : la viabilité vient souvent des coproduits et services, pas du seul produit phare.",
+          "ref": "https://fr.wikipedia.org/wiki/Mod%C3%A8le_d%27affaires",
+          "pts": 1
+        },
+        {
+          "id": "manche1-694-q4",
+          "q": "Une étude de faisabilité complète d'un projet agro-industriel couvre…",
+          "r": "Marché, technique, organisation, finances et impacts environnementaux et sociaux",
+          "choices": [
+            "Marché, technique, organisation, finances et impacts environnementaux et sociaux",
+            "Uniquement le calcul du TRI",
+            "La seule disponibilité du terrain",
+            "Le choix du logo et du slogan"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Étude de marché (demande, prix, concurrence), faisabilité technique (procédé, approvisionnement), montage institutionnel, analyse financière (VAN/TRI) et sauvegardes E&S : un volet faible invalide le tout.",
+          "ref": "https://fr.wikipedia.org/wiki/%C3%89tude_de_faisabilit%C3%A9",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-695",
+      "type": "manche1",
+      "titre": "Agribusiness — gestion, projets et marchés — Série 4",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-695-q1",
+          "q": "Pour un verger d'anacardiers qui n'entre en pleine production qu'en année 6, l'analyse financière doit…",
+          "r": "Actualiser des flux négatifs initiaux puis positifs sur la durée de vie du verger",
+          "choices": [
+            "Actualiser des flux négatifs initiaux puis positifs sur la durée de vie du verger",
+            "Ignorer les premières années sans recettes",
+            "Compter la récolte de l'année 1 comme normale",
+            "Amortir les arbres sur une seule campagne"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Les cultures pérennes ont un profil de flux très étalé : VAN et TRI se calculent sur 15-25 ans, avec trésorerie de soudure des années improductives — c'est là que meurent les projets mal financés.",
+          "ref": "https://fr.wikipedia.org/wiki/Valeur_actuelle_nette",
+          "pts": 1
+        },
+        {
+          "id": "manche1-695-q2",
+          "q": "Dans un plan d'affaires agricole, le besoin en fonds de roulement (BFR) initial correspond…",
+          "r": "Au financement des charges de campagne avant les premières recettes",
+          "choices": [
+            "Au financement des charges de campagne avant les premières recettes",
+            "Au prix d'achat du terrain uniquement",
+            "À la valeur des bâtiments amortis",
+            "Aux dividendes prévus la première année"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Intrants, salaires, énergie et stocks se paient des mois avant l'encaissement des ventes : sous-estimer le BFR est la première cause d'asphyxie des entreprises agricoles naissantes.",
+          "ref": "https://fr.wikipedia.org/wiki/Besoin_en_fonds_de_roulement",
+          "pts": 1
+        },
+        {
+          "id": "manche1-695-q3",
+          "q": "Le plan de financement d'un projet agribusiness équilibre…",
+          "r": "Emplois durables (investissements, BFR) et ressources durables (fonds propres, emprunts, subventions)",
+          "choices": [
+            "Emplois durables (investissements, BFR) et ressources durables (fonds propres, emprunts, subventions)",
+            "Recettes et dépenses du seul premier mois",
+            "Salaires et impôts",
+            "Actif circulant et chiffre d'affaires"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La règle d'or : les emplois longs se financent par des ressources longues ; financer une chambre froide par un découvert court expose au retrait brutal du financement.",
+          "ref": "https://fr.wikipedia.org/wiki/Plan_de_financement",
+          "pts": 1
+        },
+        {
+          "id": "manche1-695-q4",
+          "q": "Le suivi d'exécution d'un projet d'entreprise agricole croise en permanence…",
+          "r": "Avancement physique, consommation budgétaire et indicateurs techniques",
+          "choices": [
+            "Avancement physique, consommation budgétaire et indicateurs techniques",
+            "Le seul relevé bancaire",
+            "La météo et rien d'autre",
+            "Les réseaux sociaux de l'entreprise"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Taux d'exécution physique vs financier, rendements réels vs prévus, coûts unitaires : les écarts déclenchent des actions correctives (replanification, renégociation) avant que le projet ne dérive.",
+          "ref": "https://fr.wikipedia.org/wiki/Gestion_de_projet",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-696",
+      "type": "manche1",
+      "titre": "Agribusiness — gestion, projets et marchés — Série 5",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-696-q1",
+          "q": "Une chaîne de valeur agricole « intégrée » se caractérise par…",
+          "r": "La coordination organisée des maillons, de l'intrant au consommateur",
+          "choices": [
+            "La coordination organisée des maillons, de l'intrant au consommateur",
+            "La vente exclusive au bord du champ",
+            "L'absence totale d'intermédiaires et de règles",
+            "La production sans transformation ni commercialisation"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Intégration = flux physiques, financiers et d'information coordonnés (contrats, standards, traçabilité, financement de chaîne) — par opposition aux transactions ponctuelles au comptant.",
+          "ref": "https://fr.wikipedia.org/wiki/Cha%C3%AEne_de_valeur",
+          "pts": 1
+        },
+        {
+          "id": "manche1-696-q2",
+          "q": "Le financement « de chaîne de valeur » (value chain finance) repose sur…",
+          "r": "La solidité des relations commerciales de la chaîne plutôt que sur des garanties classiques",
+          "choices": [
+            "La solidité des relations commerciales de la chaîne plutôt que sur des garanties classiques",
+            "L'hypothèque systématique des terres du producteur",
+            "Le financement exclusif par l'État",
+            "Des dons sans remboursement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La banque prête au producteur PARCE QU'un acheteur fiable s'est engagé (contrat tripartite, domiciliation des paiements) : le flux commercial sert de garantie — clé quand le foncier n'est pas titré.",
+          "ref": "https://fr.wikipedia.org/wiki/Financement_de_la_cha%C3%AEne_de_valeur",
+          "pts": 1
+        },
+        {
+          "id": "manche1-696-q3",
+          "q": "Dans la typologie FAO de l'agriculture contractuelle, le modèle « multipartite » associe…",
+          "r": "Entreprise, producteurs et acteurs tiers (État, banque, ONG) dans le dispositif contractuel",
+          "choices": [
+            "Entreprise, producteurs et acteurs tiers (État, banque, ONG) dans le dispositif contractuel",
+            "Deux producteurs entre eux uniquement",
+            "L'entreprise et ses seuls salariés",
+            "Des acheteurs anonymes au marché de gros"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Aux côtés des modèles centralisé, nucleus estate, intermédiaire et informel, le modèle multipartite mobilise banque (crédit), État ou ONG (appui-conseil) autour du couple acheteur-producteurs.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 1
+        },
+        {
+          "id": "manche1-696-q4",
+          "q": "Dans un contrat de production, la fourniture d'intrants à crédit par l'acheteur est généralement remboursée…",
+          "r": "Par déduction sur la valeur de la récolte livrée",
+          "choices": [
+            "Par déduction sur la valeur de la récolte livrée",
+            "En espèces avant le semis",
+            "Par la banque centrale",
+            "Jamais : c'est un don définitif"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'acheteur avance semences/engrais et récupère leur coût à la livraison — le producteur accède aux intrants sans garantie bancaire ; le risque : la vente parallèle qui esquive le remboursement.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche1-697",
+      "type": "manche1",
+      "titre": "Agribusiness — gestion, projets et marchés — Série 6",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": null,
+      "questions": [
+        {
+          "id": "manche1-697-q1",
+          "q": "Le « side-selling » (vente parallèle), principal risque de l'agriculture contractuelle, désigne…",
+          "r": "La vente de la récolte sous contrat à un tiers offrant un prix spot supérieur",
+          "choices": [
+            "La vente de la récolte sous contrat à un tiers offrant un prix spot supérieur",
+            "La vente de produits transformés en ligne",
+            "L'exportation légale via un transitaire",
+            "La vente des terres de l'exploitation"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Quand le prix du marché dépasse le prix contractuel, la tentation de vendre ailleurs ruine l'acheteur qui a préfinancé. Antidotes : prix indexés, relation de long terme, services liés, pression du groupe.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 1
+        },
+        {
+          "id": "manche1-697-q2",
+          "q": "L'Incoterm FOB (Free On Board) signifie que l'exportateur togolais de soja supporte les coûts et risques…",
+          "r": "Jusqu'au chargement à bord du navire au port de Lomé",
+          "choices": [
+            "Jusqu'au chargement à bord du navire au port de Lomé",
+            "Jusqu'à l'entrepôt de l'acheteur en Europe",
+            "Uniquement jusqu'à la sortie du champ",
+            "Y compris l'assurance maritime et le fret jusqu'au port d'arrivée"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "FOB : le vendeur dédouane à l'export et charge à bord ; fret maritime et assurance incombent à l'acheteur. En CIF, le vendeur paie en plus coût, assurance et fret jusqu'au port de destination.",
+          "ref": "https://fr.wikipedia.org/wiki/Incoterm",
+          "pts": 1
+        },
+        {
+          "id": "manche1-697-q3",
+          "q": "Les mesures SPS (sanitaires et phytosanitaires) qui conditionnent l'export agricole visent…",
+          "r": "La protection de la santé humaine, animale et végétale (résidus, ravageurs, hygiène)",
+          "choices": [
+            "La protection de la santé humaine, animale et végétale (résidus, ravageurs, hygiène)",
+            "La fixation des prix mondiaux",
+            "La conception des emballages marketing",
+            "Le calcul des droits de douane"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "LMR de pesticides, aflatoxines, certificats phytosanitaires : l'accord SPS de l'OMC encadre ces exigences, premier motif de refoulement des produits africains aux frontières des marchés riches.",
+          "ref": "https://fr.wikipedia.org/wiki/Accord_sur_les_mesures_sanitaires_et_phytosanitaires",
+          "pts": 1
+        },
+        {
+          "id": "manche1-697-q4",
+          "q": "L'« escalade tarifaire » pratiquée par certains importateurs pénalise les pays agricoles car elle…",
+          "r": "Taxe davantage les produits transformés que les matières premières brutes",
+          "choices": [
+            "Taxe davantage les produits transformés que les matières premières brutes",
+            "Supprime tous les droits de douane",
+            "Ne concerne que les produits industriels",
+            "Subventionne la transformation locale africaine"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Cacao brut à droit quasi nul, chocolat taxé : l'escalade décourage la transformation à l'origine et verrouille les pays producteurs dans l'export de matières brutes à faible valeur.",
+          "ref": "https://fr.wikipedia.org/wiki/Escalade_tarifaire",
+          "pts": 1
+        }
+      ]
     }
   ],
   "manche2": [
@@ -62524,6 +62992,342 @@
           "pts": 6
         }
       ]
+    },
+    {
+      "id": "manche2-78",
+      "type": "manche2",
+      "titre": "Gestion de l'exploitation agricole — Face-à-face",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-78-q1",
+          "q": "Quel document enregistre, campagne après campagne, produits et charges d'une exploitation ?",
+          "r": "Le compte d'exploitation",
+          "choices": [
+            "Le compte d'exploitation",
+            "Le certificat foncier",
+            "Le bulletin météo décadaire",
+            "Le procès-verbal d'assemblée villageoise"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le compte d'exploitation retrace produits (ventes, autoconsommation, stocks) et charges de la campagne : c'est la base du diagnostic de gestion.",
+          "ref": "https://fr.wikipedia.org/wiki/Compte_de_r%C3%A9sultat",
+          "pts": 1
+        },
+        {
+          "id": "manche2-78-q2",
+          "q": "La différence essentielle entre charges opérationnelles et charges de structure tient à…",
+          "r": "Leur lien direct ou non avec le volume produit",
+          "choices": [
+            "Leur lien direct ou non avec le volume produit",
+            "Leur paiement en espèces ou en nature",
+            "Leur caractère légal ou illégal",
+            "Leur ancienneté comptable"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Opérationnelles (semences, engrais, saisonniers) : proportionnelles à l'activité et affectables par atelier ; de structure (amortissements, fermage, permanents) : indépendantes des surfaces à court terme.",
+          "ref": "https://fr.wikipedia.org/wiki/Charge_variable",
+          "pts": 2
+        },
+        {
+          "id": "manche2-78-q3",
+          "q": "Une marge brute maïs de 260 000 FCFA/ha avec 200 000 FCFA de charges opérationnelles correspond à un produit brut de…",
+          "r": "460 000 FCFA/ha",
+          "choices": [
+            "460 000 FCFA/ha",
+            "60 000 FCFA/ha",
+            "260 000 FCFA/ha",
+            "520 000 FCFA/ha"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Produit brut = marge brute + charges opérationnelles = 260 000 + 200 000 = 460 000 FCFA/ha.",
+          "ref": "https://fr.wikipedia.org/wiki/Marge_brute",
+          "pts": 3
+        },
+        {
+          "id": "manche2-78-q4",
+          "q": "L'annuité d'un emprunt d'équipement se rembourse sainement sur…",
+          "r": "L'excédent brut d'exploitation dégagé par la ferme",
+          "choices": [
+            "L'excédent brut d'exploitation dégagé par la ferme",
+            "Les charges opérationnelles",
+            "Le produit brut avant charges",
+            "Le capital social uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'EBE finance annuités, prélèvements familiaux et autofinancement : si annuités > 50-60 % de l'EBE, l'exploitation est en zone rouge de remboursement.",
+          "ref": "https://fr.wikipedia.org/wiki/Exc%C3%A9dent_brut_d%27exploitation",
+          "pts": 4
+        },
+        {
+          "id": "manche2-78-q5",
+          "q": "Le seuil de rentabilité en volume d'un atelier avicole s'obtient en divisant les charges fixes par…",
+          "r": "La marge sur coût variable unitaire (prix − coût variable par poulet)",
+          "choices": [
+            "La marge sur coût variable unitaire (prix − coût variable par poulet)",
+            "Le prix de vente du poulet",
+            "Le coût total de l'aliment",
+            "Le nombre de sujets par bande"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "SR(volume) = CF / MCV unitaire : chaque poulet vendu contribue de sa MCV à couvrir les fixes ; au-delà du seuil, elle devient du résultat.",
+          "ref": "https://fr.wikipedia.org/wiki/Seuil_de_rentabilit%C3%A9",
+          "pts": 5
+        },
+        {
+          "id": "manche2-78-q6",
+          "q": "Comparer ses coûts et rendements à ceux d'un réseau de fermes de référence permet surtout de…",
+          "r": "Situer ses performances et cibler les marges de progrès atelier par atelier",
+          "choices": [
+            "Situer ses performances et cibler les marges de progrès atelier par atelier",
+            "Obtenir un prix de vente garanti par l'État",
+            "Éviter de tenir sa propre comptabilité",
+            "Remplacer l'analyse de sol"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le benchmarking technico-économique (type réseaux de gestion) révèle les écarts anormaux — coût d'aliment, mortalité, rendement — et les pratiques des meilleurs.",
+          "ref": "https://fr.wikipedia.org/wiki/Analyse_comparative",
+          "pts": 6
+        }
+      ]
+    },
+    {
+      "id": "manche2-79",
+      "type": "manche2",
+      "titre": "Agriculture contractuelle et chaînes de valeur — Face-à-face",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-79-q1",
+          "q": "Un contrat agricole qui fixe à l'avance quantité, qualité, calendrier et mode de prix relève de…",
+          "r": "L'agriculture contractuelle",
+          "choices": [
+            "L'agriculture contractuelle",
+            "La vente au comptant sur le marché spot",
+            "Du métayage coutumier",
+            "De la réquisition administrative"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le contrat de production/commercialisation sécurise le débouché du producteur et l'approvisionnement de l'acheteur — fondement des chaînes de valeur organisées.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 1
+        },
+        {
+          "id": "manche2-79-q2",
+          "q": "L'« agrégateur » d'une chaîne de valeur est l'acteur qui…",
+          "r": "Fédère de nombreux petits producteurs autour d'un débouché et de services communs",
+          "choices": [
+            "Fédère de nombreux petits producteurs autour d'un débouché et de services communs",
+            "Fixe la fiscalité agricole nationale",
+            "Transporte uniquement les marchandises",
+            "Certifie les semences en laboratoire"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'agrégateur (entreprise, coopérative, union) mutualise intrants, conseil, collecte et négociation : il abaisse les coûts de transaction entre l'aval et des milliers d'exploitations.",
+          "ref": "https://fr.wikipedia.org/wiki/Coop%C3%A9rative_agricole",
+          "pts": 2
+        },
+        {
+          "id": "manche2-79-q3",
+          "q": "Un prix contractuel indexé (prix plancher + part du prix de marché) vise principalement à…",
+          "r": "Réduire la tentation de vente parallèle quand les cours montent",
+          "choices": [
+            "Réduire la tentation de vente parallèle quand les cours montent",
+            "Suppimer toute variation de revenu",
+            "Garantir un profit à l'État",
+            "Bloquer les prix à la consommation"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le producteur profite partiellement des hausses (moins d'intérêt à trahir le contrat) tout en gardant un plancher : meilleur compromis incitations/sécurité que le prix fixe pur.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 3
+        },
+        {
+          "id": "manche2-79-q4",
+          "q": "Dans un montage tripartite banque–agrégateur–producteurs, la « domiciliation » des paiements signifie que…",
+          "r": "L'acheteur paie sur un compte dédié où la banque prélève d'abord le crédit",
+          "choices": [
+            "L'acheteur paie sur un compte dédié où la banque prélève d'abord le crédit",
+            "Chaque producteur reçoit son argent en espèces au champ",
+            "La banque achète elle-même la récolte",
+            "Les paiements transitent par la mairie"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le circuit fermé des flux (récolte → acheteur → compte domicilié → remboursement → solde au producteur) sécurise la banque sans hypothèque : cœur du financement de chaîne de valeur.",
+          "ref": "https://fr.wikipedia.org/wiki/Financement_de_la_cha%C3%AEne_de_valeur",
+          "pts": 4
+        },
+        {
+          "id": "manche2-79-q5",
+          "q": "L'intégration verticale d'un agro-industriel (amont ou aval) se justifie économiquement quand…",
+          "r": "Les coûts de transaction du marché dépassent les coûts d'organisation interne",
+          "choices": [
+            "Les coûts de transaction du marché dépassent les coûts d'organisation interne",
+            "Les prix mondiaux sont parfaitement stables",
+            "La main-d'œuvre est gratuite",
+            "La demande disparaît"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Williamson : actifs spécifiques, incertitude et opportunisme renchérissent le recours au marché ; l'entreprise internalise alors (plantation propre, flotte, distribution).",
+          "ref": "https://fr.wikipedia.org/wiki/Int%C3%A9gration_verticale",
+          "pts": 5
+        },
+        {
+          "id": "manche2-79-q6",
+          "q": "La traçabilité « du champ à l'assiette » exigée par les chaînes intégrées repose sur…",
+          "r": "L'identification des lots et l'enregistrement de chaque étape (parcelle, collecte, transformation)",
+          "choices": [
+            "L'identification des lots et l'enregistrement de chaque étape (parcelle, collecte, transformation)",
+            "La bonne réputation orale du vendeur",
+            "Le seul contrôle au port d'arrivée",
+            "Un prix de vente plus bas"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Codes lots, registres de collecte, géolocalisation des parcelles : la traçabilité conditionne l'accès aux marchés exigeants (UE, bio, cacao « zéro déforestation »).",
+          "ref": "https://fr.wikipedia.org/wiki/Tra%C3%A7abilit%C3%A9_alimentaire",
+          "pts": 6
+        }
+      ]
+    },
+    {
+      "id": "manche2-80",
+      "type": "manche2",
+      "titre": "Commerce international des produits agricoles — Face-à-face",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": "25 s / question",
+      "questions": [
+        {
+          "id": "manche2-80-q1",
+          "q": "Entre FOB Lomé et CIF Rotterdam, la différence de prix couvre…",
+          "r": "Le fret maritime et l'assurance jusqu'au port de destination",
+          "choices": [
+            "Le fret maritime et l'assurance jusqu'au port de destination",
+            "La TVA togolaise",
+            "Le salaire des dockers de Lomé uniquement",
+            "Les droits de douane européens"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "CIF = FOB + fret + assurance : comparer des prix internationaux exige de toujours préciser l'Incoterm et le port de référence.",
+          "ref": "https://fr.wikipedia.org/wiki/Incoterm",
+          "pts": 1
+        },
+        {
+          "id": "manche2-80-q2",
+          "q": "Le certificat phytosanitaire qui accompagne un lot d'ananas exporté est délivré par…",
+          "r": "L'autorité nationale de protection des végétaux du pays exportateur",
+          "choices": [
+            "L'autorité nationale de protection des végétaux du pays exportateur",
+            "La compagnie maritime",
+            "Le supermarché de destination",
+            "La banque de l'exportateur"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'organisation nationale de protection des végétaux (au Togo, la direction en charge — DPV) atteste l'absence d'organismes de quarantaine, conformément à la CIPV.",
+          "ref": "https://fr.wikipedia.org/wiki/Certificat_phytosanitaire",
+          "pts": 2
+        },
+        {
+          "id": "manche2-80-q3",
+          "q": "La certification GlobalG.A.P. exigée par les distributeurs européens porte sur…",
+          "r": "Les bonnes pratiques agricoles à la production (sécurité sanitaire, environnement, travailleurs)",
+          "choices": [
+            "Les bonnes pratiques agricoles à la production (sécurité sanitaire, environnement, travailleurs)",
+            "Le taux de change du FCFA",
+            "La couleur des emballages",
+            "Le niveau des droits de douane"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Référentiel privé de pré-ferme à la sortie d'exploitation : enregistrements, usage raisonné des pesticides, hygiène, audités par des organismes tiers — passeport de fait pour la grande distribution.",
+          "ref": "https://fr.wikipedia.org/wiki/GlobalGAP",
+          "pts": 3
+        },
+        {
+          "id": "manche2-80-q4",
+          "q": "Pour se couvrir contre la baisse du cours du cacao d'ici la récolte, un exportateur peut…",
+          "r": "Vendre des contrats à terme (futures) sur le marché organisé",
+          "choices": [
+            "Vendre des contrats à terme (futures) sur le marché organisé",
+            "Acheter davantage de cacao physique",
+            "Attendre en espérant la hausse",
+            "Réduire la qualité de ses fèves"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La vente à terme fige aujourd'hui le prix de la vente future : la perte éventuelle sur le physique est compensée par le gain sur le contrat (couverture courte).",
+          "ref": "https://fr.wikipedia.org/wiki/Contrat_%C3%A0_terme",
+          "pts": 4
+        },
+        {
+          "id": "manche2-80-q5",
+          "q": "L'initiative européenne « Tout sauf les armes » (TSA/EBA) accorde aux PMA comme le Togo…",
+          "r": "Un accès au marché de l'UE sans droits ni quotas (hors armes)",
+          "choices": [
+            "Un accès au marché de l'UE sans droits ni quotas (hors armes)",
+            "Une subvention directe aux producteurs",
+            "Un taux de change préférentiel",
+            "La suppression des normes SPS"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "L'accès en franchise ne dispense PAS des exigences sanitaires et de traçabilité : la préférence tarifaire ne vaut que si l'on franchit la barrière des normes.",
+          "ref": "https://fr.wikipedia.org/wiki/Tout_sauf_les_armes",
+          "pts": 5
+        },
+        {
+          "id": "manche2-80-q6",
+          "q": "Les règles d'origine de la ZLECAf déterminent…",
+          "r": "Le caractère « africain » d'un produit, condition des préférences tarifaires",
+          "choices": [
+            "Le caractère « africain » d'un produit, condition des préférences tarifaires",
+            "Le prix minimum garanti continental",
+            "La langue des contrats commerciaux",
+            "Le pavillon des navires"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Critères de transformation substantielle ou de valeur ajoutée locale : sans origine conforme, pas de franchise ZLECAf — enjeu direct pour les agro-transformateurs togolais.",
+          "ref": "https://fr.wikipedia.org/wiki/Zone_de_libre-%C3%A9change_continentale_africaine",
+          "pts": 6
+        }
+      ]
     }
   ],
   "manche3": [
@@ -70350,16 +71154,342 @@
           "pts": 1
         }
       ]
+    },
+    {
+      "id": "manche3-49",
+      "type": "manche3",
+      "titre": "Agribusiness : gestion, business models et projets — Finale",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": "Buzz libre — 1 min 30 — 1 point par bonne réponse — 9 points gagnants",
+      "questions": [
+        {
+          "id": "manche3-49-q1",
+          "q": "L'indicateur de gestion qui compare les ateliers d'une même ferme indépendamment des charges fixes est…",
+          "r": "La marge brute par atelier",
+          "choices": [
+            "La marge brute par atelier",
+            "Le résultat net global",
+            "Le total du bilan",
+            "Le chiffre d'affaires TTC"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Les charges fixes étant communes, seule la marge brute isole la performance propre de chaque production.",
+          "ref": "https://fr.wikipedia.org/wiki/Marge_brute",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q2",
+          "q": "Amortir un tracteur de 15 000 000 FCFA sur 10 ans en linéaire donne une dotation annuelle de…",
+          "r": "1 500 000 FCFA",
+          "choices": [
+            "1 500 000 FCFA",
+            "150 000 FCFA",
+            "15 000 000 FCFA",
+            "3 000 000 FCFA"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Dotation = valeur amortissable / durée = 15 000 000/10 : charge calculée qui étale le coût du matériel sur sa vie utile.",
+          "ref": "https://fr.wikipedia.org/wiki/Amortissement_comptable",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q3",
+          "q": "Le « pitch » d'un business model agribusiness doit d'abord convaincre sur…",
+          "r": "Le problème client résolu et le marché visé",
+          "choices": [
+            "Le problème client résolu et le marché visé",
+            "La marque du véhicule du promoteur",
+            "Le nombre de pages du document",
+            "La couleur du logo"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Investisseurs et banquiers financent une réponse rentable à une demande réelle : marché d'abord, technique ensuite.",
+          "ref": "https://fr.wikipedia.org/wiki/Business_Model_Canvas",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q4",
+          "q": "Dans le canvas, les « partenaires clés » d'une laiterie togolaise incluent typiquement…",
+          "r": "Éleveurs collecteurs, transporteurs frigorifiques et distributeurs",
+          "choices": [
+            "Éleveurs collecteurs, transporteurs frigorifiques et distributeurs",
+            "Ses concurrents directs uniquement",
+            "Les clients finaux",
+            "Les impôts locaux"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Les partenaires clés sécurisent les ressources critiques (lait cru, chaîne du froid, débouchés) que l'entreprise ne possède pas en propre.",
+          "ref": "https://fr.wikipedia.org/wiki/Business_Model_Canvas",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q5",
+          "q": "Un projet agricole a une VAN positive au taux de 12 % : cela signifie que…",
+          "r": "Il crée de la valeur après rémunération du capital à 12 %",
+          "choices": [
+            "Il crée de la valeur après rémunération du capital à 12 %",
+            "Son TRI est inférieur à 12 %",
+            "Il est sans aucun risque",
+            "Ses recettes annuelles sont constantes"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "VAN > 0 au taux d'actualisation retenu ⇔ TRI > 12 % : le projet rapporte plus que le coût d'opportunité des fonds.",
+          "ref": "https://fr.wikipedia.org/wiki/Valeur_actuelle_nette",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q6",
+          "q": "Le délai de récupération (payback) d'un investissement agricole mesure…",
+          "r": "Le temps nécessaire pour que les flux cumulés remboursent la mise initiale",
+          "choices": [
+            "Le temps nécessaire pour que les flux cumulés remboursent la mise initiale",
+            "La durée de vie du matériel",
+            "Le délai de paiement des clients",
+            "La période de garantie du fournisseur"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Simple et parlant pour la trésorerie, mais aveugle aux flux postérieurs : à compléter par VAN/TRI.",
+          "ref": "https://fr.wikipedia.org/wiki/D%C3%A9lai_de_r%C3%A9cup%C3%A9ration",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q7",
+          "q": "L'analyse de sensibilité d'un plan d'affaires agro consiste à…",
+          "r": "Tester la rentabilité quand prix, rendements ou coûts varient",
+          "choices": [
+            "Tester la rentabilité quand prix, rendements ou coûts varient",
+            "Interroger les voisins du site",
+            "Changer de banque chaque année",
+            "Réduire la taille de l'étude"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Rendement −20 %, prix −15 %, intrants +25 % : si la VAN résiste aux scénarios pessimistes, le projet est robuste ; sinon, prévoir des atténuations.",
+          "ref": "https://fr.wikipedia.org/wiki/Analyse_de_sensibilit%C3%A9",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q8",
+          "q": "Séparer la caisse de l'exploitation de celle du ménage est une règle de gestion qui permet…",
+          "r": "De connaître la vraie rentabilité et de professionnaliser l'entreprise",
+          "choices": [
+            "De connaître la vraie rentabilité et de professionnaliser l'entreprise",
+            "De payer moins d'impôts illégalement",
+            "D'éviter de rembourser les crédits",
+            "De cacher les revenus au conjoint"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La confusion des caisses masque les prélèvements familiaux et fausse toute décision d'investissement — premier conseil des centres de gestion.",
+          "ref": "https://fr.wikipedia.org/wiki/Gestion_agricole",
+          "pts": 1
+        },
+        {
+          "id": "manche3-49-q9",
+          "q": "Un « agropole » comme la PIA d'Adétikopé vise à créer de la valeur en…",
+          "r": "Concentrant sur un site transformation, logistique et services autour des filières",
+          "choices": [
+            "Concentrant sur un site transformation, logistique et services autour des filières",
+            "Remplaçant toute production paysanne",
+            "Interdisant les exportations",
+            "Supprimant les coopératives"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le parc agro-industriel réduit les coûts (énergie, guichet unique, corridor) et attire les investisseurs de transformation — maillon aval des chaînes de valeur intégrées.",
+          "ref": "https://fr.wikipedia.org/wiki/Parc_industriel",
+          "pts": 1
+        }
+      ]
+    },
+    {
+      "id": "manche3-50",
+      "type": "manche3",
+      "titre": "De la ferme au marché mondial — Finale",
+      "theme": "Agribusiness et gestion",
+      "domain": "Économie agricole et agribusiness",
+      "timing": "Buzz libre — 1 min 30 — 1 point par bonne réponse — 9 points gagnants",
+      "questions": [
+        {
+          "id": "manche3-50-q1",
+          "q": "La chaîne de valeur se distingue de la simple filière par l'accent mis sur…",
+          "r": "La valeur créée à chaque maillon et la coordination entre acteurs",
+          "choices": [
+            "La valeur créée à chaque maillon et la coordination entre acteurs",
+            "Le seul transport physique",
+            "Les statistiques douanières",
+            "La météo des régions"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Analyse filière : flux et acteurs ; approche chaîne de valeur : où se crée la valeur, qui la capte, comment la gouvernance améliore la compétitivité.",
+          "ref": "https://fr.wikipedia.org/wiki/Cha%C3%AEne_de_valeur",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q2",
+          "q": "Le modèle contractuel « centralisé » de la FAO correspond à…",
+          "r": "Un acheteur unique contractant directement avec de nombreux producteurs",
+          "choices": [
+            "Un acheteur unique contractant directement avec de nombreux producteurs",
+            "Des producteurs sans aucun acheteur",
+            "Un marché de gros anonyme",
+            "Une bourse de matières premières"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Typique du coton ou de la canne : l'entreprise centrale fournit intrants et conseil, collecte et paie — avec un fort contrôle qualité.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q3",
+          "q": "Pour le producteur, l'avantage central du contrat par rapport au marché spot est…",
+          "r": "La sécurisation du débouché et l'accès aux intrants et au conseil",
+          "choices": [
+            "La sécurisation du débouché et l'accès aux intrants et au conseil",
+            "Un prix toujours supérieur au marché",
+            "L'absence de toute obligation",
+            "La propriété de l'usine"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Débouché garanti, intrants préfinancés, itinéraire technique : la contrepartie est l'engagement de livrer — le contrat échange de la flexibilité contre de la sécurité.",
+          "ref": "https://fr.wikipedia.org/wiki/Agriculture_contractuelle",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q4",
+          "q": "Une coopérative qui négocie collectivement le prix du soja de ses membres exerce…",
+          "r": "Un pouvoir de marché compensateur face aux acheteurs",
+          "choices": [
+            "Un pouvoir de marché compensateur face aux acheteurs",
+            "Une fraude commerciale",
+            "Un monopole d'État",
+            "Une activité bancaire illégale"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Galbraith : le « countervailing power » — l'agrégation rééquilibre la négociation entre des milliers de petits vendeurs et quelques gros acheteurs.",
+          "ref": "https://fr.wikipedia.org/wiki/Coop%C3%A9rative_agricole",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q5",
+          "q": "Le conteneur « reefer » utilisé pour l'ananas frais togolais est…",
+          "r": "Un conteneur frigorifique maintenant la chaîne du froid",
+          "choices": [
+            "Un conteneur frigorifique maintenant la chaîne du froid",
+            "Un sac de jute renforcé",
+            "Un entrepôt portuaire",
+            "Un navire spécialisé uniquement"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Le maintien de la température de la palettisation au port de destination conditionne la qualité à l'arrivée : la rupture de chaîne du froid détruit la valeur du lot.",
+          "ref": "https://fr.wikipedia.org/wiki/Conteneur_frigorifique",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q6",
+          "q": "La limite maximale de résidus (LMR) dépassée sur un lot exporté vers l'UE entraîne…",
+          "r": "Le refoulement ou la destruction du lot à la frontière",
+          "choices": [
+            "Le refoulement ou la destruction du lot à la frontière",
+            "Une simple remise de prix",
+            "Un délai de paiement allongé",
+            "Un changement d'Incoterm"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Les alertes RASFF européennes frappent régulièrement les produits tropicaux : le respect des LMR se joue au champ (choix et délais avant récolte des traitements).",
+          "ref": "https://fr.wikipedia.org/wiki/Limite_maximale_de_r%C3%A9sidus",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q7",
+          "q": "Le label Fairtrade/commerce équitable garantit principalement au producteur…",
+          "r": "Un prix minimum et une prime collective de développement",
+          "choices": [
+            "Un prix minimum et une prime collective de développement",
+            "L'absence de tout contrôle",
+            "Un rendement agronomique doublé",
+            "Une exonération des taxes togolaises"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Prix plancher (filet si les cours chutent) + prime investie collectivement (école, magasin d'intrants) : la certification a un coût, à comparer aux bénéfices.",
+          "ref": "https://fr.wikipedia.org/wiki/Commerce_%C3%A9quitable",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q8",
+          "q": "Sur le marché mondial, le prix du coton togolais dépend principalement…",
+          "r": "Des cours internationaux (indice Cotlook A) et du taux de change",
+          "choices": [
+            "Des cours internationaux (indice Cotlook A) et du taux de change",
+            "Du seul décret national annuel",
+            "Du prix du ciment local",
+            "De la température à Lomé"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "Petit pays preneur de prix : le prix au producteur dérive du cours mondial converti en FCFA, moins les coûts de la filière — d'où l'intérêt des mécanismes de lissage.",
+          "ref": "https://fr.wikipedia.org/wiki/Coton",
+          "pts": 1
+        },
+        {
+          "id": "manche3-50-q9",
+          "q": "L'exportation de produits agricoles « hors saison » vers l'Europe (haricot vert, mangue) exploite…",
+          "r": "Le décalage des calendriers de production entre hémisphères et climats",
+          "choices": [
+            "Le décalage des calendriers de production entre hémisphères et climats",
+            "Les droits de douane plus élevés",
+            "La baisse de qualité hivernale africaine",
+            "L'interdiction des serres en Europe"
+          ],
+          "correctIndices": [
+            0
+          ],
+          "e": "La contre-saison est un avantage comparatif temporel : vendre quand l'offre locale européenne est absente — à condition de maîtriser logistique aérienne/maritime et normes.",
+          "ref": "https://fr.wikipedia.org/wiki/Exportation",
+          "pts": 1
+        }
+      ]
     }
   ],
   "domains": [
     {
-      "name": "Suivi-évaluation des projets et politiques",
-      "count": 225
+      "name": "Économie agricole et agribusiness",
+      "count": 270
     },
     {
-      "name": "Économie agricole et agribusiness",
-      "count": 210
+      "name": "Suivi-évaluation des projets et politiques",
+      "count": 225
     },
     {
       "name": "IA, LLM et Agents intelligents",
@@ -70427,13 +71557,13 @@
     }
   ],
   "meta": {
-    "generatedAt": "2026-07-25T23:29:25.612Z",
-    "manche1Count": 691,
-    "manche2Count": 77,
-    "manche3Count": 48,
-    "questionsM1": 2764,
-    "questionsM2": 462,
-    "questionsM3": 432,
-    "questionsTotal": 3658
+    "generatedAt": "2026-08-03T03:42:11.547Z",
+    "manche1Count": 697,
+    "manche2Count": 80,
+    "manche3Count": 50,
+    "questionsM1": 2788,
+    "questionsM2": 480,
+    "questionsM3": 450,
+    "questionsTotal": 3718
   }
 }

@@ -82,14 +82,18 @@ window.MOOC_DATA = Object.assign(window.MOOC_DATA || {}, {
 
 "Économie agricole et agribusiness": {
   icon: "🌾",
-  tagline: "Du champ au marché : productivité, filières, risques et politiques agricoles au Togo et en Afrique.",
-  duree: "≈ 2 h 15",
+  tagline: "Du champ au marché mondial : production, gestion d'exploitation, business models, projets, chaînes de valeur, contrats et export.",
+  duree: "≈ 4 h 30",
   objectifs: [
     "Analyser la production agricole : facteurs, rendements, adoption technique",
     "Comprendre l'économie du ménage agricole et ses arbitrages",
     "Cartographier une filière (acteurs, marges, gouvernance) et l'agribusiness",
     "Gérer les risques agricoles : prix, climat, assurance, warrantage",
-    "Évaluer les politiques : subventions d'intrants, conseil, foncier, PNIASAN"
+    "Évaluer les politiques : subventions d'intrants, conseil, foncier, PNIASAN",
+    "Tenir le compte d'exploitation et piloter la gestion d'une entreprise agricole",
+    "Concevoir un business model et monter un projet d'agrobusiness bancable",
+    "Organiser chaînes de valeur intégrées et agriculture contractuelle",
+    "Maîtriser le commerce international des produits agricoles (Incoterms, SPS, certifications)"
   ],
   lecons: [
     { titre: "Produire : facteurs, rendements et adoption", duree: "20 min",
@@ -147,13 +151,78 @@ window.MOOC_DATA = Object.assign(window.MOOC_DATA || {}, {
         "Maputo/Malabo : ~10 % du budget vers l'agriculture",
         "Subventions : cibler, rendre dégressif, évaluer"
       ],
-      refs: ["Banque mondiale, Managing Agricultural Risk (worldbank.org)", "CEDEAO — ECOWAP ; Union africaine — Malabo (au.int)", "MAEP Togo / PNIASAN — agriculture.gouv.tg"] }
+      refs: ["Banque mondiale, Managing Agricultural Risk (worldbank.org)", "CEDEAO — ECOWAP ; Union africaine — Malabo (au.int)", "MAEP Togo / PNIASAN — agriculture.gouv.tg"] },
+    { titre: "Compte d'exploitation et gestion de l'entreprise agricole", duree: "25 min",
+      blocs: [
+        { t: "f", titre: "Du produit brut au revenu : la cascade de gestion", tx: "Produit brut d'un atelier = ventes + autoconsommation valorisée + variation de stocks. Marge brute = produit brut − charges opérationnelles (semences, engrais, produits, saisonniers) : c'est l'outil de comparaison des ateliers, car les charges de structure (amortissements, fermage, salariés permanents) sont communes. EBE = Σ marges brutes − charges de structure hors amortissements : le cash annuel qui doit couvrir annuités, prélèvements familiaux et autofinancement. Résultat = EBE − amortissements − frais financiers." },
+        { t: "m", titre: "Les réflexes du gestionnaire", tx: "Tenir le carnet technico-économique (opérations, quantités, coûts, temps de travaux) ; calculer le coût de production par kg et le comparer au prix ; établir le plan de trésorerie de campagne (les dépenses précèdent les recettes de plusieurs mois — dimensionner le crédit de campagne) ; séparer strictement caisse de l'exploitation et caisse du ménage ; se comparer à des fermes de référence (benchmarking) pour cibler les marges de progrès." },
+        { t: "e", titre: "Atelier avicole à Tsévié", tx: "1 000 poulets : prix de vente 3 500 FCFA, coût variable 2 600 (poussin, aliment ~70 % du coût, vaccins), charges fixes 700 000 FCFA/bande. Marge sur coût variable : 900 FCFA/sujet → seuil de rentabilité : 700 000/900 ≈ 778 poulets vendus. La mortalité et l'indice de consommation décident donc de tout : 2 points de mortalité en moins valent mieux qu'un prix de vente supérieur." },
+        { t: "p", titre: "Annuités contre EBE", tx: "Une règle prudentielle simple : si les annuités d'emprunt dépassent 50-60 % de l'EBE moyen, l'exploitation est en zone de danger — la moindre mauvaise campagne fait basculer en impayé. Investir « parce que le crédit est disponible » sans projeter l'EBE est la première cause de surendettement des exploitations en croissance." }
+      ],
+      retenir: [
+        "Marge brute = produit brut − charges opérationnelles (comparaison d'ateliers)",
+        "EBE = Σ MB − structure (hors amort.) : il paie annuités + famille + autofinancement",
+        "Seuil de rentabilité (volume) = charges fixes / MCV unitaire",
+        "Caisse exploitation ≠ caisse ménage ; carnet de bord = base de tout",
+        "Annuités ≤ 50-60 % de l'EBE : règle de sécurité"
+      ],
+      refs: ["Chombart de Lauwe J. et al., Nouvelle gestion des exploitations agricoles, Dunod", "FAO, Farm Business Analysis (fao.org)", "Réseaux de gestion type CER France — méthodologie marges brutes"] },
+    { titre: "Business models et montage de projets d'agrobusiness", duree: "25 min",
+      blocs: [
+        { t: "c", titre: "Le Business Model Canvas version agro", tx: "Neuf blocs : proposition de valeur (jus 100 % ananas togolais traçable, poulet local aux normes), segments de clients (ménages urbains, hôtels, export), canaux, relations clients, ressources clés (verger, chaîne du froid, agréments), activités clés, partenaires clés (producteurs agrégés, transporteurs frigorifiques, distributeurs), structure de coûts et flux de revenus. Spécificité agro : les coproduits font souvent la rentabilité (tourteau de l'huilerie, son de la rizerie, fumier de l'élevage) — et la saisonnalité impose de penser le canvas sur l'année complète." },
+        { t: "c", titre: "Modèles éprouvés en agribusiness", tx: "Nucleus estate + outgrowers (plantation-usine centrale + planteurs satellites sous contrat) ; agrégateur (fédérer des centaines de petits producteurs autour d'intrants, conseil et débouché) ; intégration coopérative (les producteurs possèdent l'outil de transformation) ; modèle de service (prestation mécanisée, froid, séchage à la demande) ; différenciation par la qualité (bio, équitable, indication géographique). Chaque modèle répartit différemment risques, financement et pouvoir de négociation." },
+        { t: "m", titre: "Monter un projet bancable", tx: "Séquence : idée → étude de faisabilité (marché d'abord ! puis technique, organisation, finances, environnement/social) → plan d'affaires chiffré → plan de financement (fonds propres + crédit + éventuelles subventions ; emplois durables financés par ressources durables) → exécution suivie (physique ET financier). Outils financiers : VAN et TRI sur la durée de vie (attention aux cultures pérennes : flux négatifs jusqu'à l'entrée en production), délai de récupération, et surtout analyse de sensibilité (rendement −20 %, prix −15 % : la VAN tient-elle ?). Ne JAMAIS sous-estimer le besoin en fonds de roulement initial." },
+        { t: "e", titre: "Mini-cas : unité de transformation de soja", tx: "Investissement 60 M FCFA (presse, chaudière, bâtiment) + BFR 25 M (stock de graines de 4 mois — la trituration tourne toute l'année mais la récolte est concentrée). Revenus : huile brute + tourteau (55 % du chiffre d'affaires !) + prestation. Sensibilité clé : le différentiel prix graine/prix tourteau et le taux d'utilisation de la capacité (en dessous de 60 %, les charges fixes étouffent). Le contrat d'approvisionnement avec les coopératives (leçon suivante) est la vraie garantie du projet." },
+        { t: "p", titre: "Le piège du « projet équipement »", tx: "Acheter le matériel d'abord et chercher le marché ensuite : l'erreur classique. Un séchoir sans contrats d'écoulement, une chambre froide sans volume régulier tournent à 20 % de capacité et ruinent leur promoteur. Le débouché se sécurise AVANT l'investissement — lettres d'intention, contrats cadres, tests de marché." }
+      ],
+      retenir: [
+        "Canvas agro : penser coproduits, saisonnalité et partenaires d'agrégation",
+        "Modèles : nucleus-outgrowers, agrégateur, coopérative, service, différenciation",
+        "Faisabilité : marché → technique → organisation → finances → E&S",
+        "VAN/TRI sur la durée de vie + analyse de sensibilité systématique",
+        "BFR sous-estimé = asphyxie ; débouché sécurisé AVANT l'équipement"
+      ],
+      refs: ["Osterwalder A. & Pigneur Y., Business Model Nouvelle Génération, Pearson", "FAO, Agribusiness Handbooks (fao.org)", "Gittinger J.P., Analyse économique des projets agricoles, Banque mondiale/Economica"] },
+    { titre: "Chaînes de valeur intégrées et agriculture contractuelle", duree: "25 min",
+      blocs: [
+        { t: "c", titre: "De la filière à la chaîne de valeur intégrée", tx: "La chaîne de valeur ajoute à l'analyse de filière la question de la VALEUR (où se crée-t-elle, qui la capte) et de la GOUVERNANCE (qui fixe les standards). Une chaîne intégrée coordonne les maillons par contrats, standards de qualité, traçabilité (lots, registres, géolocalisation des parcelles) et financement de chaîne : la banque prête au producteur parce qu'un acheteur fiable s'est engagé (montage tripartite avec domiciliation des paiements — le flux commercial remplace l'hypothèque). Les agropoles (PIA d'Adétikopé) concentrent transformation, logistique et services pour abaisser les coûts de l'aval." },
+        { t: "c", titre: "L'agriculture contractuelle : typologie FAO", tx: "Cinq modèles : centralisé (un acheteur, contrôle qualité fort — coton, canne), nucleus estate (plantation propre + satellites), multipartite (entreprise + producteurs + banque/État/ONG), intermédiaire (via collecteurs agréés), informel (accords saisonniers). Le contrat spécifie quantité, qualité, calendrier, mode de fixation du prix (fixe, indexé, plancher + partage de hausse) et les services liés : intrants à crédit remboursés à la livraison, itinéraire technique, conseil." },
+        { t: "m", titre: "Faire tenir un contrat dans la durée", tx: "Le talon d'Achille : le side-selling (vendre au plus offrant en trahissant le contrat quand le prix spot monte) — symétriquement, l'acheteur qui rejette abusivement des lots « pour qualité » quand les cours baissent. Remèdes éprouvés : prix indexés partageant les hausses, relation répétée et transparente (barème de qualité public, pesée contradictoire), services réellement utiles (le producteur perd plus qu'un écart de prix en quittant le dispositif), caution solidaire des groupements, et arbitrage rapide des litiges. Un contrat n'est durable que si CHACUN y gagne par rapport au marché spot." },
+        { t: "e", titre: "Le coton togolais, chaîne contractuelle type", tx: "La société cotonnière fournit semences et intrants à crédit, encadre l'itinéraire technique via les groupements, annonce un prix d'achat avant les semis, collecte et égrène ; le remboursement des intrants est déduit à la pesée. La caution solidaire des groupements limite les défauts individuels. Forces : accès aux intrants sans banque, débouché certain ; débats récurrents : niveau du prix, délais de paiement, gouvernance de l'interprofession — l'équilibre du partage de la valeur est le vrai baromètre de santé de la chaîne." },
+        { t: "p", titre: "Intégrer n'est pas tout posséder", tx: "L'intégration verticale complète (l'usine possède plantations, camions, magasins) ne se justifie que si les coûts de transaction du marché sont prohibitifs (Williamson : actifs spécifiques, opportunisme). Sinon, la coordination CONTRACTUELLE est plus flexible et partage mieux les risques. Beaucoup d'échecs d'agro-industries viennent d'avoir immobilisé du capital dans des plantations propres au lieu de fiabiliser un réseau de producteurs contractuels." }
+      ],
+      retenir: [
+        "Chaîne intégrée = contrats + standards + traçabilité + financement de chaîne",
+        "Montage tripartite : domiciliation des paiements = garantie sans hypothèque",
+        "FAO : centralisé, nucleus, multipartite, intermédiaire, informel",
+        "Side-selling : prix indexés, services liés, caution solidaire, arbitrage rapide",
+        "Contrat durable = gagnant-gagnant vs marché spot ; intégration totale = dernier recours"
+      ],
+      refs: ["FAO, L'agriculture contractuelle — partenariats pour la croissance (fao.org)", "Eaton C. & Shepherd A., Contract Farming, FAO Bulletin 145", "Williamson O., The Economic Institutions of Capitalism, Free Press", "Miller C. & Jones L., Agricultural Value Chain Finance, FAO/Practical Action"] },
+    { titre: "Le commerce international des produits agricoles", duree: "25 min",
+      blocs: [
+        { t: "c", titre: "Prix mondiaux, Incoterms et couverture", tx: "Les produits de base (cacao, café, coton, soja) se cotent sur des marchés internationaux (ICE, Euronext) : les pays exportateurs sont preneurs de prix, convertis en FCFA. Tout prix international se lit avec son Incoterm : FOB Lomé (le vendeur charge à bord, dédouané export) vs CIF port de destination (le vendeur paie en plus fret et assurance). Les exportateurs se couvrent contre la baisse des cours par des ventes à terme (futures) : la perte sur le physique est compensée par le gain sur le contrat." },
+        { t: "c", titre: "La vraie barrière : normes et certifications", tx: "L'accès aux marchés riches se joue moins sur les droits de douane (préférences TSA/EBA de l'UE pour les PMA, AGOA américain, franchise ZLECAf sous règles d'origine) que sur les NORMES : mesures SPS (limites de résidus de pesticides, aflatoxines, certificats phytosanitaires délivrés par la protection des végétaux), traçabilité, et certifications privées quasi obligatoires — GlobalG.A.P. pour la grande distribution, bio (règlement UE), Fairtrade (prix minimum + prime), Rainforest, et désormais les exigences « zéro déforestation » (règlement RDUE : géolocalisation des parcelles de cacao/café). Un dépassement de LMR = lot refoulé ou détruit (alertes RASFF)." },
+        { t: "m", titre: "Réussir une opération d'export", tx: "Chaîne opérationnelle : produit conforme dès le champ (traitements homologués, délais avant récolte) → agréage et conditionnement (calibre, emballage) → chaîne du froid ininterrompue pour le frais (conteneur reefer, pré-refroidissement) → documents (facture, certificat phytosanitaire, certificat d'origine pour les préférences, connaissement) → dédouanement export → paiement sécurisé (lettre de crédit irrévocable confirmée pour un nouveau client, à défaut acompte + solde documentaire). Calculer son prix de revient export par Incoterm AVANT de coter." },
+        { t: "e", titre: "Positionnements togolais", tx: "Soja (leader régional du soja bio vers l'Europe — prime de prix substantielle contre certification et traçabilité), ananas pain de sucre (frais par bateau et transformation en jus/séché), karité, cajou, café-cacao, et la contre-saison maraîchère. Le port de Lomé (eau profonde, hub régional) est l'atout logistique ; les défis : volumes réguliers, respect des LMR, coût de la certification pour les petits producteurs — mutualisable par les coopératives et l'agrégation (boucle avec la leçon précédente)." },
+        { t: "p", titre: "L'escalade tarifaire et la montée en gamme", tx: "Beaucoup de marchés taxent peu le brut et davantage le transformé (escalade tarifaire) : elle freine la transformation à l'origine. La riposte : jouer les préférences (TSA/ZLECAf), viser les niches où la transformation locale reste compétitive (jus, beurre de karité cosmétique, cacao certifié d'origine), et négocier collectivement (interprofessions, normes régionales). Exporter brut n'est pas une fatalité, mais transformer exige de gagner la bataille des normes ET des coûts logistiques." }
+      ],
+      retenir: [
+        "Toujours préciser l'Incoterm : CIF = FOB + fret + assurance",
+        "Couverture : vente à terme contre la baisse des cours",
+        "SPS/LMR + GlobalG.A.P./bio/Fairtrade/RDUE : la vraie barrière d'accès",
+        "Paiement sécurisé : lettre de crédit pour les nouveaux clients",
+        "Escalade tarifaire : viser préférences, niches et action collective"
+      ],
+      refs: ["Krugman, Obstfeld & Melitz, Économie internationale, Pearson", "Accord SPS de l'OMC (wto.org) ; règlement UE « déforestation » (RDUE)", "ITC (intracen.org) — guides export par produit", "CCI/ICC — Incoterms 2020 (iccwbo.org)"] }
   ],
   refsGlobales: [
     "de Janvry A. & Sadoulet E., Development Economics: Theory and Practice, Routledge",
     "Banque mondiale, WDR 2008 Agriculture for Development",
-    "FAO (fao.org, FAOSTAT) ; CIRAD (cirad.fr) ; IFPRI (ifpri.org)",
-    "MAEP Togo — politiques et statistiques agricoles nationales"
+    "FAO (fao.org) : Contract Farming Resource Centre, Agricultural Value Chain Finance, FAOSTAT",
+    "Gittinger J.P., Analyse économique des projets agricoles, Banque mondiale",
+    "Osterwalder & Pigneur, Business Model Nouvelle Génération, Pearson",
+    "ITC (intracen.org) et ICC — Incoterms 2020 ; MAEP Togo — politiques agricoles"
   ]
 },
 
